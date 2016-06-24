@@ -1,0 +1,66 @@
+<ion-view id="cartview">
+    <ion-header-bar class="bar-positive " title="CART" id="customheader">
+        <a class="button icon-left ion-chevron-left button-clear "></a>
+        <h1 class="title">CART</h1>
+        <div class="buttons buttons-right header-item">
+            <a class="button button-icon ion-android-cart">
+                <span class="badge badge-assertive" id="cartbadge">0</span>
+            </a>
+            <a class="button button-icon icon ion-edit "></a>
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <ul class="list">
+            <li class="item" ng-repeat="data in datas">
+                <span id="cartdetails">
+        {{data["Name"]}}
+        </span>
+                <span id="cartoriginal">
+                    <strike>
+                        <span class="striked-text">
+                            <strong>
+                                <del>&#2352;</del>
+                            </strong>{{data["Original_Price"]}}&nbsp; 
+                        </span>
+                        <span class="line-arrow right"></span>
+                    </strike>
+                </span>
+                <span id="fab2uPrice">
+                    <strong>
+                        <del>&#2352;</del>
+                    </strong>{{data["Fabtu_Price"]}}
+    
+                </span>
+                <div class="diagonal">
+                    <span id="cancelcartitem">
+                        <a class="button button-icon ion-ios-close-outline" id="closeiconcolor"></a>
+                    </span>
+                </div>
+            </li>
+        </ul>
+        <div class="button button-full button-positive" id="totalcart">
+            <span id="cartdetails">
+                <strong>Total </strong>
+            </span>
+            <strike id="totalfab2u">
+                <span class="striked-text" id="striketextcolor" >
+                    <strong>
+                        <del>&#2352;</del>
+                    </strong>{{total_original}}&nbsp; 
+                </span>
+                <span class="line-arrow right"></span>
+            </strike>
+            <span id="carttotalprice">
+                <strong>
+                    <del>&#2352;</del>
+                </strong>{{total_fabtu}}
+    
+            </span>
+        </div>
+    </ion-content>
+    <ion-footer-bar class="bar bar-stable" id="customfooter">
+        <center>
+            <h1 id="striketextcolor" class="title">SELECT DATE AND TIME</h1>
+        </center>
+    </ion-footer-bar>
+</ion-view>

@@ -1,0 +1,33 @@
+<ion-view class = "bill">
+  <ion-content>
+    <div id="bg"><img src="../../img/background.jpg" alt=""></div>
+    <div id = "container">
+      <div id = "thankYou">
+          <h4 style = "color: #D24248">THANK YOU</h4>
+          <h5 style = "color: #0DD1D1">Your Booking ID is {{bookingID}}</h5>
+      </div>
+          
+      <div>
+        <div  id = "myBill" class = "container">
+          <div class = "custom-border padding class"><b>Venue: </b>{{venue}}</div>
+          <div class = "custom-border padding class"><b>Address: </b>{{address}}</div>
+          <div class="padding class custom-border">
+            <b>Services </b>
+            <div ng-repeat = "service in services">{{service.name}}</div>
+          </div>
+        
+          <div class = "custom-border  padding class"><b>Amount Payable</b>: ₹{{amount}}</div>
+          <div class = "custom-border padding class"><b>Time</b>: {{time}}</div>
+          <div class = "custom-border padding class"><b>Date</b>: {{date}}</div>
+          <p align = "center"> <button class = "button button-assertive button-small custom-button">TAKE ME HOME</button></p>
+        </div>
+      </div>
+      <div align = "center" id = "smile"><img src = "../../img/happy.png" height="14%" width="14%">
+          <p style = "color: #FF8386">ENJOY YOUR SERVICES</p>
+          </div>
+          <div class="buttons" align = "center">
+            <button class="button button-positive icon ion-ios-location" id="location"  ></button>
+          </div>
+      </div>
+  </ion-content>
+</ion-view>

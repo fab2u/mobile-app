@@ -1,0 +1,18 @@
+<form name="newFeed" novalidate="true">
+   <div class="list list-inset">
+      <label class="item item-input">
+         <input type="text" placeholder="Title" ng-model="title">
+      </label>
+      <label class="item item-input">
+         <textarea placeholder="Content" ng-model="introduction"></textarea>
+      </label>
+      <ion-list>
+        <ion-radio ng-model="banner_type" ng-value="'Image'">Image</ion-radio>
+        <ion-radio ng-model="banner_type" ng-value="'Video'">Video</ion-radio>
+      </ion-list>
+      <label class="item item-input">
+         <input type="text" placeholder="URL" ng-model="banner_url"></input>
+      </label>
+      <button class="button button-positive" type="submit" ng-click="feed()">Submit</button>
+   </div>
+</form>

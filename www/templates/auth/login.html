@@ -1,0 +1,35 @@
+<ion-view>
+    <ion-content id="loginform">
+        <div id="formdetails">
+            <center>
+                <img src="img/fab2u.png" width=50%; height=50%></center>
+                <div class="list list-inset" >
+                    <label class="item item-input ion-ios-email-outline" id="formborder1">
+                        <input type="email" placeholder="Email Address" ng-model="user.user_email">
+                    </label>
+                    <label class="item item-input ion-ios-locked-outline" id="formborder2">
+                        <input type="password" placeholder="Password" ng-model="user.user_password">
+                    </label>
+                </div>
+                <div class=" button-icon ion-ios-close-empty"  id="formerase"></div>
+                <button class="button button-block" id="pinkbgcolor" ng-click="loginEmail()">Log In</button>
+                <div id="forgotpassword">
+                    Forgot Password? <a id="pinkcolor" ng-click="showPopup()"><strong>Reset</strong></a>
+                </div>
+                <div class="otherLoginOpts">
+                    <p><span>or Log In using</span></p>
+                </div>
+        </div>
+        <div class="socials" id="social-icons">
+            <div class="row">
+               <div class="col col-50" id="hexagon2" ng-click="loginGmail()">
+                  <i class="icon ion-social-googleplus"></i>
+               </div>
+            </div>
+        </div>
+        <div id="askforaccount">
+           Don't have an account? <a id="pinkcolor" href="#/signup"><strong>Create one</strong></a>
+        </div>
+    </ion-content>
+
+</ion-view>

@@ -1,0 +1,149 @@
+/* Empty. Add your own CSS if you like */
+
+.appointment .custom-bar {
+	background-color: #404040 !important;
+}
+
+.appointment .custom-title {
+	background-color: #404040 !important;
+}
+
+.appointment .custom-card {
+	border-radius: 10px;
+	padding-top:10px;
+	padding-bottom: 10px;
+	background-color: #ffffff !important;
+}
+
+.appointment .arrow-right {
+  width: 0; 
+  height: 0; 
+  border-top: 17px solid transparent;
+  border-bottom: 18px solid transparent;
+  border-left: 17px solid #38E1ED;
+  border-radius: 2px;
+}
+
+.appointment .arrow-left {
+  width: 0; 
+  height: 0; 
+  border-top: 17px solid transparent;
+  border-bottom: 18px solid transparent;  
+  border-right:17px solid #38E1ED;
+  border-radius: 2px;
+  float: right; 
+}
+
+.appointment .custom-col {
+	padding-top: 55px;	
+}
+
+.appointment .scroll-bar-indicator {
+	display: none;
+}
+
+.appointment .date {
+	font-size: 35px;
+	font-weight: lighter;
+	font-color: #000000;
+	display:block;
+	padding: 10px
+}
+
+.appointment .month {
+	display:block;
+	font-size: 17px;
+	font-color: #000000;
+	margin:-5px
+}
+
+.appointment .col.col-33 {
+	text-align: center
+}
+
+.appointment .custom-footer {
+	margin-left: 5px;
+	width: calc(100% - 10px);
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.appointment .custom-row {
+	margin-top:45px;
+	margin-bottom: -10px;
+	background-color: #444444;
+}
+
+.appointment .custom-divider {
+	border-width: 1px;
+    border-style: solid;
+    width: calc(25% + 2px);
+    font-size: 10px;
+    float:left;
+    text-align:center;
+    border-top: none;
+	border-bottom: none;
+	background-color: #F5F5F5;
+	padding-top: 15px;
+	padding-bottom:9px;
+}
+
+.appointment .scroll-bar {
+	width: 25%;
+	float: left;
+}
+
+.appointment .custom-item {
+	border-top: none;
+	border-bottom: none;
+	background-color: #F5F5F5;
+}
+
+.appointment .time-button {
+	border-bottom: 1px solid #aaaaaa;
+	margin-right:8px;
+	margin-left: 8px;
+	text-align: center;
+	font-size: 12px;
+	font-weight: lighter;
+}
+
+.item-divider {
+	border-top:none;
+	border-bottom: none;
+	border-right: 50%;
+}
+
+.appointment .selected-time {
+	font-weight:bold;
+	border-bottom: 4px solid #38E1ED;
+	border-bottom-left-radius: -5px;
+	border-bottom-right-radius: -5px;
+}
+
+.appointment .disabled-time-button {
+	  opacity: 0.35;
+}
+
+.appointment .bottom-screen {
+	background-color: #F5F5F5;
+	width: 100%;
+}
+
+.appointment .custom-icon {
+	font-size:20px;
+}
+
+.appointment .time-interval {
+	display: block;
+	font-size: 9px;
+}
+
+.appointment .fix-bar {
+	width:auto; 
+	height: 756px;
+}
+
+.appointment {
+	background-color:#F5F5F5;
+}

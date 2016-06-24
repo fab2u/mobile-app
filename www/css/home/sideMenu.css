@@ -1,0 +1,47 @@
+#side-menu .mainHeader {
+	background-color:#444444;
+	color:#fff;
+}
+
+#side-menu .mainHeader .ion-navicon , .mainHeader .ion-ios-heart, .mainHeader .ion-android-search{
+	color:#fff;
+}
+
+#side-menu .mainHeader .ion-location {
+	color:#fff;
+}
+
+#side-menu .mainHeader .location {
+	font-size:0.8em;
+}
+
+#side-menu .mainHeader .location .loc{
+	font-size:0.8em;
+	display:block;
+	line-height:10px;
+}
+
+#side-menu .mainHeader .location .break {
+	display:block;
+	line-height:20px;
+	font-size:0.9em;
+	font-weight: 600;
+}
+#side-menu div.title.title-left.header-item {
+    top: 10px;
+    left:30px !important;
+}
+
+#side-menu .pink {
+	color:#ff8683;
+}
+
+#side-menu .side-menu-header {
+	background-color:#444444;
+	
+}
+
+#side-menu .side-menu-header h1 {
+	color:#fff;
+}
+

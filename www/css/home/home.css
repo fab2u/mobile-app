@@ -1,0 +1,110 @@
+#home-page .row,
+#home-page .col {
+    padding: 0px;
+    margin: 0;
+}
+#home-page .title {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+#home-page .title h1,
+#home-page .title p{
+    width: 100%;
+    text-align: center;
+}
+
+#home-page .services-n-fab {
+    width:100%;
+    height:50px;
+    background:#f2f2f2;
+    text-align:center;
+    font-weight:500;
+}
+
+#home-page .services{
+    line-height:30px;
+    width:51%;
+    height:90%;
+    margin-top:4px;
+    background: #f2f2f2;
+    float:left;
+}
+
+
+#home-page .fab{
+    line-height:45px;
+    width:49%;
+    height:115%;
+    margin-top:-6px;
+    background:#d9d9d9;
+    float:left;
+    -webkit-transform: perspective(300px) rotateX(30deg);
+    -o-transform: perspective(300px) rotateX(30deg);
+    -moz-transform: perspective(300px) rotateX(30deg);
+    -webkit-transform-origin: 50% 50%;
+    -moz-transform-origin: 100% 50%;
+    -o-transform-origin: 100% 50%;
+    transform-origin: 100% 50%;
+}
+
+#home-page .no-border {
+    border-bottom:0px solid #ff8386;
+}
+
+#home-page .with-border {
+    border-bottom:8px solid #ff8386;
+}
+
+#home-page .fab-book {
+    width: 50%;
+    /* float: right; */
+    position: absolute;
+    right: 0px;
+    margin-top: 9px;
+}
+
+#home-page .offerList {
+    border-bottom:1px solid #000;
+    margin-top:2px;
+}
+
+#home-page .slider{
+     height: 100%;
+}
+
+#home-page .offer-img {
+    width: 96%;
+    margin: 1% 2%;
+}
+
+#home-page .offer-img img {
+    height:12em;
+    width:100%;
+}
+
+
+#home-page .category-list {
+    margin-top:8px;
+}
+
+#home-page .categories {
+    width:96%;
+    margin:2%;
+    height:12em;
+}
+
+#home-page .categories .catDescription {
+    text-align:center;
+}
+
+#home-page .categories .catDescription h3 {
+    padding-top: 2em;
+    color:#fff;
+}
+
+#home-page .categories .catDescription h5 {
+    color:#fff;
+    margin-top: -1%;
+}
+

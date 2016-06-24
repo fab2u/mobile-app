@@ -1,0 +1,75 @@
+<ion-view class="vendorList">
+    <div class="tabs tabs-icon-top col">
+        <a class="tab-item" style="border-radius: 10px 0px 0px 0px;">
+        <i class="icon ion-funnel"></i>
+        FILTER
+        </a>
+        <a class="tab-item" style="border-radius: 0px 0px 0px 10px">
+        <i class="icon ion-stats-bars"></i>
+        SORT BY
+        </a>
+    </div>
+    <ion-header-bar class="m-navColor">
+    <a href="" class="button icon-left ion-chevron-left button-clear"></a>
+    <h1 class="title">Select Vendors</h1>
+    <div id="toggleButton">
+        <label class="toggle">
+        <div class="track row">
+            <button class="col col-50 fa fa-female" id="female" ng-click="toggleColor()"></button>
+            <button class="col col-50 fa fa-male" id="male" ng-click="toggleColor()"></button>
+        </div>
+        </label>
+    </div>
+    </ion-header-bar>
+    <ion-content>
+    <div class="p-fix card" ng-repeat="vendor in vendors">
+        <div class="row">
+            <div class="col c-col-40">
+                <h6 class="c-title">Saundarya Shree Beauty Parlour</h6>
+                <p class="c-subtitle">in front of global school</p>
+            </div>
+            <div class="location-icon-container">
+                <div>
+                <i class="icon ion-ios-location c-location-icon">
+                </i>
+                </div>
+                <p class="c-location-distance">2.4 Km</p>
+            </div>
+            <div id="section2" class="col c-col-60">
+                <div id="rating">
+                    <i class="icon ion-star active" ng-repeat="counter in starRating(rating) track by $index"></i>
+                    <i class="icon ion-star" ng-repeat="counter in starRating(5-rating) track by $index"></i>
+                    <p>PLATINUM</p>
+                </div>
+            </div>
+            <div id="price-tag" class="col">
+                <div class="row original-price">
+                    <div id="line-through"></div>
+                    <span id="one" class="left-price badge">
+                        <i>&#x20B9;</i>
+                        30
+                    </span>
+                    <span id="two" class="badge">
+                        <i>&#x20B9;</i>
+                        30000
+                    </span>
+                </div>
+                <div class="row discounted-price">
+                    <div id="line-through-fb"></div>
+                    <span class="left-price badge">
+                        <i>&#x20B9;</i>
+                        10
+                    </span>
+                    <span class="badge">
+                        <i>&#x20B9;</i>
+                        10000
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </ion-content>
+    <button class="button button-assertive fab-button">
+    <i class="icon ion-ios-location"></i>
+    </button>
+</ion-view>

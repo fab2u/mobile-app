@@ -1,0 +1,54 @@
+<ion-view class="userWallet">
+	<ion-header-bar class="walletHeader"  align-title="center">
+        <i class="button icon-left ion-chevron-left"></i>
+        <h1 class="title">MY WALLET</h1>
+    </ion-header-bar>
+    <ion-content>
+    	<div class="card walletCard">
+    		<div class="walletImg">
+    			<img src="../../img/wallet.png">
+    		</div>
+    		<div class="walletBalance row">
+    			<div class="walletIcon col col-20">
+    				<i class="icon ion-laptop"></i>
+    			</div>
+    			<div class="col col-50">
+    				<p>WALLET BALANCE: </p>
+    			</div>
+    			<div class="col col-30">
+    				&#x20B9; 10000
+    			</div>
+    		</div>
+    		<div class="walletDescription">
+    			<div class=" history">
+    				WALLET HISTORY
+    			</div>
+    			<div class="row headings">
+    				<div class="col col-60">
+    					BOOKING ID
+    				</div>
+    				<div class="col col-40">
+    					USED AMOUNT
+    				</div>
+    			</div>
+    			<ion-scroll  direction="y"  has-bouncing="false" style="height:160px;">
+                	<div class="row allTransactions" ng-repeat="transaction in transactions">
+                    	<div class="col col-60 detail">
+        					<p>{{transaction.name}}({{transaction.id}})<p>
+        					<p><span style="color:#0DD1D1">Ref: </span>| {{transaction.date}}</p>
+        				</div>
+        				<div class="col col-40 amount">
+        					&#x20B9; {{transaction.amount}}
+        				</div>
+                	</div>
+                </ion-scroll>
+    		</div>
+    		<div class="referNearn">
+    			<p>Refer More! Earn More</p>
+    		</div>
+    	</div>
+    </ion-content>
+    <ion-footer-bar class="walletFooter" align-title="center">
+		<h1 class="title">REFER A FRIEND</h1>
+	</ion-footer-bar>
+</ion-view>

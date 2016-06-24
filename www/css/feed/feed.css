@@ -1,0 +1,43 @@
+.fabFeed .feeds{
+	padding:10px;
+	background-color:#d9d9d9;
+}
+
+.fabFeed .feed-name {
+	font-size:1.3em;
+	font-weight:500;
+}
+.fabFeed .feed-title {
+	font-size:1.1em;
+	font-weight:400;
+}
+
+.fabFeed .feed-img {
+	width:100%;
+	height:auto;
+	border:1px solid #000;
+	border-radius:5px;
+}
+
+.fabFeed .feed-introduction {
+	font-size:1em;
+	font-weight:400;
+	margin: 10px;
+}
+.fabFeed .likeFeed {
+	margin:10px;
+	font-size:1.5em;
+}
+
+.fabFeed .likeFeed i{
+	font-size:1.5em;
+	margin:10px;
+}
+
+.fabFeed .liked-heart{
+	color: #FF8386;
+}
+
+.fabFeed .normal-heart{
+	color: #e6e6e6;
+}

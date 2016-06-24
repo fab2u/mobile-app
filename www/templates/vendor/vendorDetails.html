@@ -1,0 +1,148 @@
+<ion-view class="vendorDetails">
+	<ion-content>
+		<div class="vendorImg">
+			<img src ="img/vendorImage.jpeg">
+			<div class="ratingNcategory">
+				<div class="rating">
+					<span ng-repeat="counter in starrating(3) track by $index" class="trueRating">&#9733</span>
+				    <span ng-repeat="counter in starrating(5-3) track by $index" class="remRating">&#9733</span>
+			    </div>
+			    <div class="category">
+			    	Platinum
+			    </div>
+			</div>
+			<div class="vendorContact">
+				<i class="icon ion-android-call"></i>
+			</div>
+			<div class="backButton icon ion-chevron-left"></div>
+			<div class="nameNlandmark">
+				<h4>SAUNDRYA SHREE BEAUTY PARLOUR</h4>
+				<p>In front of Global School</p>
+			</div>
+			<div class="likeOption" ng-click="likeVendor()">
+				<i class="icon ion-ios-heart" ng-class="liked?'likedHeart': 'normalHeart'"></i>
+			</div>
+			<div class="row" id="tabS">
+				<div class="col col-30 tabA" ng-click="changeSlide(0)" ng-class="currentValue==0? 'tabB':'tabA'">
+					<i class="icon ion-eye"></i>
+					<p>Overview</p>
+				</div>
+				<div class="col col-30 tabA" ng-click="changeSlide(1)" ng-class="currentValue==1? 'tabB':'tabA'">
+					<i class="icon ion-image"></i>
+					<p>Photos</p>
+				</div>
+				<div class="col col-30 tabA" ng-click="changeSlide(2)" ng-class="currentValue==2? 'tabB':'tabA'">
+					<i class="icon ion-ios-star"></i>
+					<p>Reviews</p>
+				</div>
+			</div>
+		</div>
+		<ion-slide-box on-slide-changed="slideHasChanged($index)" id="tabsSlider" delegate-handle="vendorMainDetails">
+			<ion-slide>
+			    <div class="mapImg">
+			    	<img src ="img/mapImage.jpg">
+			    	<div class="row addressNmap">
+			    		<div class="col col-90 address">
+			    			<p>1-Ch-8, Vigyan Nagar, Harmeet Medical, Kota</p>
+			    		</div>
+			    		<div class="col col-10 map">
+			    			<div class="icon ion-ios-location mapButton">
+			    			</div>
+			    		</div>
+			    	</div>
+			    </div>
+			    <div class="row amenities">
+			    	<div class="col col-15" ng-class="isPresent(1)?'available':'notAvailable'">
+			    		<i class="icon ion-card"></i>
+			    		<p>Card</p>
+			    	</div>
+			    	<div class="col col-15" ng-class="isPresent(2)?'available':'notAvailable'">
+			    		<i class="icon ion-laptop"></i>
+			    		<p>AC</p>
+			    	</div>
+			    	<div class="col col-15" ng-class="isPresent(3)?'available':'notAvailable'">
+			    		<i class="icon ion-android-car"></i>
+			    		<p>Parking</p>
+			    	</div>
+			    	<div class="col col-15" ng-class="isPresent(4)?'available':'notAvailable'">
+			    		<i class="icon ion-wifi"></i>
+			    		<p>Wifi</p>
+			    	</div>
+			    	<div class="col col-15" ng-class="isPresent(5)?'available':'notAvailable'">
+			    		<i class="icon ion-ios-location-outline"></i>
+			    		<p>2.5km</p>
+			    	</div>
+			    </div>
+			    <div class="timings" ng-click="showVendorTiming()">
+			    	<div class="showTimings row">
+			    		<div class="col col-20 clockIcon">
+			    			<i class="icon ion-clock"></i>
+			    		</div>
+			    		<div class="col col-60 workTime">
+			    			WORKING HOURS
+			    			<p>Today open till 8:00 PM</p>
+			    		</div>
+			    		<div class="col col-20 toggleIcon">
+			    			<i ng-class="!more? 'ion-android-add':'ion-android-remove'"></i>
+			    		</div>
+			    	</div>
+			    	<ion-list ng-show="more">
+			    		<ion-item ng-repeat="item in days" class="timingDetail">
+			    			{{item.name}}
+			    			<span ng-class="time" >{{item.startTime}} - {{item.endTime}}</span>
+			    		</ion-item>
+			    	</ion-list>
+			    </div>
+			</ion-slide>
+			<ion-slide>
+			    <div class="gallery">
+			    	<div class="row allImages" ng-repeat="image in images" ng-if="$index % 2 === 0">
+				        <div class="col col-50" ng-if="$index < images.length" ng-click="goToSlide($index)">
+				            <img ng-src="{{images[$index].src}}" width="100%" />
+				        </div>
+				        <div class="col col-50" ng-if="$index + 1 < images.length" ng-click="goToSlide($index+1)">
+				            <img ng-src="{{images[$index + 1].src}}" width="100%" />
+				        </div>
+				        <!-- <div class="col col-33" ng-if="$index + 2 < images.length" ng-click="goToSlide($index+2)">
+				            <img ng-src="{{images[$index + 2].src}}" width="100%" />
+				        </div> -->
+				    </div>
+			    </div>
+			</ion-slide>
+			<ion-slide>
+			    <div class="Reviews">
+			    	<div class="card ratingCard" ng-repeat="review in reviews">
+			    		<div class="row">
+				    		<div class="col col-20 imgNname">
+				    			<img src="{{review.image}}" class="profilePic">
+				    			<p class="profileName">{{review.name}}</p>
+				    		</div>
+				    		<div class="col col-80 reviewNRating">
+				    			<div class="rating1">
+									<div ng-repeat="counter in starrating(review.rating) track by $index" style="float:left;"><span class="trueRatingBox">&#9733</span></div>
+								    <div ng-repeat="counter in starrating(5-review.rating) track by $index" style="float:left;"><span class="remRatingBox">&#9733</span></div>
+								</div>
+								<div class="review">
+									<p>{{review.review}}</p>
+								</div>
+				    		</div>
+			    		</div>
+			    	</div>
+			 
+			    </div>
+			</ion-slide>
+		</ion-slide-box>
+		
+
+	</ion-content>
+	<ion-footer-bar class="footer">
+	    <div class="rateNow" ng-show="currentValue==2">
+	    	<i class="icon ion-android-star"></i>
+			<p>Rate Now</p>
+		</div>
+	  	<div class="row newFooter">
+			<div class="col col-33" id="menu">MENU</div>
+			<div class="col col-66" id="proceed">PROCEED</div>
+		</div>
+	</ion-footer-bar>
+</ion-view>

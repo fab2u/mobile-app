@@ -1,0 +1,48 @@
+<ion-view class = "confirmation">
+  <ion-content>
+      <button class = "button button-dark button-small icon ion-chevron-left" id = "backbutton"></button> 
+          <div class = "card myCard">
+            <br>
+            <div id ="image"> <img src = "../../img/confirmation.png" ></div>
+            <div id = "totalAmount">
+                TOTAL AMOUNT &nbsp; ₹{{discountedAmount}} 
+                <span style ="color:red;text-decoration:line-through">
+                    <span style='color:white'>₹({{totalAmount}})</span>
+                </span> 
+            </div>
+            
+            <div id = "paidFromWallet">            
+              <p>PAID FROM WALLET &nbsp ₹{{paidFromWallet}}</p>             
+            </div>
+            <div id = "amountPayable" align="center">
+                <p>AMOUNT PAYABLE &nbsp ₹{{amountPayable}}</p>
+            </div>
+            </div>
+            
+            <br>
+          
+            <div id = "havePromo">
+              <div align="center" ng-click="isOpen=!isOpen" id = "haveCode">
+                  HAVE PROMO CODE ?
+              </div>
+              <div ng-hide = "!isOpen" id = "applyCode">
+                <div id = "applyCodeDiv">
+                  <input type="text" ng-model="couponCode" placeholder="Apply Code Here">
+                </div>
+                <div id ="applyCodeButton">
+                  <button class = "button button-dark" ng-click="addCoupon()">APPLY</button>
+                </div>
+                <br>
+              </div>
+            </div>
+      <ion-checkbox ng-model="isChecked" ng-click = "useWallet()" id="check" >&nbsp; WALLET MONEY &nbsp; ₹{{walletAmount}}</ion-checkbox>
+      
+  </ion-content>
+  
+  <div style = "text-align: center;">
+      <ion-footer-bar class = 'bar bar-assertive custom-footer ' >
+        <div id ="footerContent">BOOK NOW</div>
+      </ion-footer-bar>
+  </div>
+
+</ion-view>

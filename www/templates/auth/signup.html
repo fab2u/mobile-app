@@ -1,0 +1,52 @@
+<ion-view id="signupform" scroll="false">
+   <form name="signupForm" novalidate>
+      <!-- TODO: form validations -->
+      <ion-content >
+         <button class = "button button-dark button-small icon ion-chevron-left" id = "backbutton"></button>
+         <div id="detailsform">
+            <center>
+               <img src="img/fab2u.png" width=50%; height=50%>
+            </center>
+            <div style="margin-top:15px">
+               <center>
+                  <h5> CREATE YOUR ACCOUNT </h5>
+               </center>
+            </div>
+            <div>
+               <center>
+                  <h6> Explore the World of Fab2u </h6>
+               </center>
+            </div>
+            <div class="card c1" >
+               <div class="item item-text-wrap c1">
+                  <div class="list " >
+                     <label class="item item-input c1" >
+                        <input type="text" placeholder="Enter Your Name" ng-model="user.name">
+                     </label>
+                     <label class="item item-input c1">
+                        <input type="email" placeholder="Email like abc@gmail.com" ng-model="user.email">
+                     </label>
+                     <label class="item item-input c1">
+                        <input type="text" placeholder="Mobile number" ng-model="user.mobile_num">
+                     </label>
+                     <label class="item item-input c1">
+                        <input type="password" placeholder="Password" ng-model="user.password">
+                     </label>
+                     <label class="item item-input c1">
+                        <input type="text" placeholder="Referral Code (Optional)" ng-model="user.referral_code">
+                     </label>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <center >
+            <!-- TODO: style the radio buttons -->
+            <input type="radio" name="gender" value="male" ng-model="user.gender"> Male
+           <input type="radio" name="gender" value="female" ng-model="user.gender"> Female
+         </center>
+      </ion-content>
+      <ion-footer-bar class="bar " id="customfooter" align-title="center">
+         <h1 class="title "  id="customfootertext" ng-click="signup()">SIGN UP</h1>
+      </ion-footer-bar>
+   </form>
+</ion-view>

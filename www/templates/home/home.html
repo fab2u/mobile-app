@@ -1,0 +1,28 @@
+<ion-view id="home-page">
+   <ion-content class="has-header">
+        <div class="services-n-fab">
+            <div class="services" ng-class="fabSelected? 'no-border':'with-border'" ng-click="selectMain(1)">SERVICES</div>
+            <div class="fab" ng-class="fabSelected? 'with-border':'no-border'" ng-click="selectMain(2)"></div>
+            <div class="fab-book" ng-click="selectMain(2)">FAB BOOK</div>
+        </div>
+        <div class="offerList">
+            <ion-slide-box class="offers">
+                <ion-slide ng-repeat="offer in offers" class="offer-slide">
+                    <div class="offer-img">
+                        <img src="{{offer.imgsrc}}"/>
+                        <!-- <div class="description"></div> -->
+                    </div>
+                </ion-slide>
+          </ion-slide-box>
+      </div>
+      <div class="category-list">
+          <div class="categories" ng-repeat="category in categories" ng-style="{'background-image':'url({{category.catImg}}'}">
+                <!-- <img src="{{category.catImg}}"> -->
+                <div class="catDescription">
+                    <h3>{{category.catHeading}}</h3>
+                    <h5>{{category.catSubheading}}</h5>
+                </div>
+          </div>
+      </div>
+   </ion-content>
+</ion-view>

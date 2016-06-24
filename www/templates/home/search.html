@@ -1,0 +1,22 @@
+<ion-view class="searchservices">
+   <div class="bar bar-header search-services-header" >
+      <label class="item item-input search-input ">
+         <i  class="input-icons icon ion-search placeholder-icon"></i>
+         <input  type="text" placeholder="Search Salons or Services" />
+         <button class="button button-clear button-dark input-icons">
+         X
+         </button>
+      </label>
+   </div>
+   </div>
+   <ion-content>
+      <ion-list class="servicelist">
+         <ion-item ng-repeat="item in searchresults" class="vendorservicelist">
+            {{item.name}}
+            <div class="vendororservice" >
+               {{item.type}}
+            </div>
+         </ion-item>
+      </ion-list>
+   </ion-content>
+</ion-view>

@@ -1,0 +1,142 @@
+#cartview #customheader
+{
+  background-color: #3C3C3C; 
+  border:2px  #3C3C3C;
+}
+
+#cartview #striketextcolor
+{
+ color:white;
+}
+
+#cartview #closeiconcolor
+{
+  color:cyan;
+}
+
+
+#cartview #cartbadge
+{
+  position: absolute;
+   top:-20%;
+   right:0%;
+}
+#cartview #cartdetails
+{
+  position:absolute;
+  left:3%;
+}
+
+#cartview #cartoriginal
+{
+  color:black;
+  position:absolute;
+  right:30%;
+}
+#cartview #fab2uPrice
+{
+  position:absolute;
+  right:17%;
+}
+#cartview #cancelcartitem
+{
+  position:absolute;
+  right:1%;
+  top:-5%;'
+}
+#cartview #totalcart
+{
+  background-color:#3C3C3C;
+  margin-top: -20px;
+}
+
+#cartview #totalfab2u
+{
+  position:absolute;
+  right:30%;
+}
+#cartview #carttotalprice
+{
+  color:white;
+  position:absolute;
+  right:17%;
+}
+#cartview #customfooter
+{
+margin-left:5px;
+width:calc(100% - 10px);
+border-top-left-radius:10px;
+border-top-right-radius:10px;
+background-color: #FF8385;
+border:5px #FF8385;
+}
+#cartview .diagonal {
+  border-top: 60px solid #3C3C3C;
+  border-left: 60px solid rgba(0, 0, 0, 0);
+  display: block;
+  height: 0;
+  width:5%;
+  float: right;
+  margin:-16px;
+}
+
+#cartview .reviews{
+  margin-top: 28px;
+}
+#cartview .reviews div{
+  display: inline-block;
+  positon: absolute;
+  left: 260px;
+  //left: 156px;
+}
+#cartview .socials div{
+  display: inline-block;
+}
+
+
+#cartview .c1
+{
+	background-color: #EEEEEE;
+	color:black;
+}
+
+#cartview .line-arrow {
+        display: inline-block;
+        font-size: 4px;
+        width: 8px;
+        height: 8px;
+        margin-top: 10px;
+        margin-left: -10px;
+    }
+    
+#cartview .line-arrow.right {
+        border-top: 1px solid red;
+        border-left: 1px solid red;
+        transform: rotate(145deg) skew(20deg);
+    }
+    
+#cartview strike {
+        color: red;
+    }
+    
+#cartview .striked-text {
+        color: black;
+}
+#cartview table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+}
+#cartview th, td {
+    padding: 5px;
+    text-align: left;
+}
+#cartview th
+{
+  background-color: #3C3C3C;
+  color:white;
+}
+#cartview td
+{
+  background-color: #464646;
+  color:white;
+}

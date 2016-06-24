@@ -1,0 +1,120 @@
+.userWallet .walletHeader {
+	background-color:#3D3D3D;
+}
+
+.userWallet .walletHeader h1 {
+	color:#fff;
+}
+
+.userWallet .walletHeader i{
+	background-color: #3D3D3D;
+	color:#fff;
+}
+
+.userWallet .walletImg{
+	text-align:center;
+}
+
+.userWallet .walletImg img{
+	width:45%;
+}
+
+.userWallet .walletBalance {
+	background-color: #3D3D3D;
+    width: 92%;
+    border-radius: 5px;
+    margin: -11px auto -3px auto;
+    color: #fff;
+}
+
+.userWallet .walletIcon {
+	padding:10px 10px 10px 0px;
+}
+
+.userWallet .walletBalance i {
+	font-size:2em;
+	color:#fff;
+}
+
+.userWallet .walletBalance div {
+	display: inline-block;
+    padding: 6px 4px 0px 4px;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.userWallet .walletDescription {
+	background-color: #3D3D3D;
+    width: 92%;
+    border-radius: 5px;
+    margin: 8px auto 0px auto;
+    color: #fff;
+}
+
+.userWallet .history {
+	width: 100%!important;
+	text-align: center;
+	padding:7px 10px;
+	font-weight:500;
+	font-size:0.9em;
+	border-bottom:1px solid #fff;
+}
+
+.userWallet .walletDescription .headings{
+	text-align:center;
+	font-size:0.8em;
+	font-weight:500;
+	padding:0;
+	border-bottom:1px solid #1a1a1a;
+	margin-bottom:-10px;
+}
+
+.userWallet .amount {
+	 background-color: #4d4d4d;
+    font-size: 0.8em;
+    font-weight: 500;
+    padding: 0px;
+    margin: 5px 0px -4px 1px;
+    text-align: center;
+}
+
+.userWallet .detail {
+	font-size:0.8em;
+	font-weight:500;
+	padding:0px;
+	margin:5px auto 0px auto;
+}
+
+.userWallet .detail p{
+	margin: 0px 0px -2px 0px;
+}
+
+.userWallet .allTransactions{
+	border-bottom: 1px solid white;
+}
+
+.userWallet .headings .col-40 {
+	background-color:#4D4D4D;
+}
+
+.userWallet .referNearn {
+	text-align: center;
+    color: #FF8386;
+    font-size: 1.3em;
+    font-weight:500;
+    margin: 11px;
+}
+
+.userWallet .walletFooter {
+	background-color:#FF8386;
+	border-top-right-radius: 8px;
+	border-top-left-radius: 8px;
+	padding:0px;
+	width:98%;
+	margin:0px 1%;
+	height:50px;
+}
+
+.userWallet .walletFooter h1{
+	color:#fff;
+}

@@ -11,7 +11,8 @@ app.controller("newFeedCtrl", ['$scope', '$timeout', function($scope, $timeout){
          introduction: $scope.introduction,
          user: {
             user_name: uname,
-            user_id: localStorage.getItem("uid")
+            user_id: localStorage.getItem("uid"),
+            user_email: localStorage.getItem("email")
          },
          banner: {
             banner_url: $scope.banner_url,

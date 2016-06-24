@@ -3,7 +3,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 	$scope.tagName = $stateParams.tag;
 	console.log($scope.tagName);
 	var ref = db.ref().child("tags").child($scope.tagName);
-	ref.once("value", function(snapshot){
+	ref.on("value", function(snapshot){
 		// console.log(snapshot.val());
 		// console.log(snapshot.val().blogs);
 		blogList = snapshot.val().blogs;
@@ -12,9 +12,10 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 		for(var i in blogList){
 			console.log(i); // i is the key of blogs object or the id of each blog
 			var blogData = db.ref().child("blogs").child(i);
-			blogData.once("value", function(snap){ //access individual blog
+			blogData.on("value", function(snap){ //access individual blog
 				console.log(snap.val());
 				single_blog = snap.val();
+				single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 				$scope.blogArr.push(single_blog);
 				console.log($scope.blogArr);
 			});
@@ -22,30 +23,3 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 	})
 
 }]);
-
-
-//working slow code
-// app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($scope, $stateParams, $timeout){
-//
-// 	$scope.tagName = $stateParams.tag;
-// 	console.log($scope.tagName);
-// 	var ref = db.ref().child("tags").child($scope.tagName);
-// 	ref.once("value", function(snapshot){
-// 		// console.log(snapshot.val());
-// 		// console.log(snapshot.val().blogs);
-// 		blogList = snapshot.val().blogs;
-// 		console.log(blogList);
-// 		$scope.blogArr = [];
-// 		for(var i in blogList){
-// 			console.log(i); // i is the key of blogs object or the id of each blog
-// 			var blogData = db.ref().child("blogs").child(i);
-// 			blogData.once("value", function(snap){ //access individual blog
-// 				console.log(snap.val());
-// 				single_blog = snap.val();
-// 				$scope.blogArr.push(single_blog);
-// 				console.log($scope.blogArr);
-// 			});
-// 		}
-// 	})
-//
-// }]);

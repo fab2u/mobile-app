@@ -1,15 +1,15 @@
 <ion-view class="fabFeed">
 	<ion-content>
 		<div class="card feeds" ng-repeat="feed in blogArr">
-			<p class="feed-name">{{feed.user.user_name}}</p>
-			<p class="feed-title">{{feed.title}}</p>
-			<img ng-src="{{feed.banner.banner_url}}" class="feed-img">
-			<div ng-bind-html="feed.introduction" class="feed-introduction"></div>
-			<div class="{{feed.user.user_name}}"></div>
-			<div class="likeFeed" ng-click="likeThisFeed(feed.blog_id)">
-				<i class="icon ion-heart" ng-class="liked? 'liked-heart': normal-heart"></i>
-				<span>{{feed.likes}}</span>
-			</div>
-		</div>
+	      <p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_email}}</a></p>
+	      <p class="feed-title">{{feed.title}}</p>
+	      <img ng-src="{{feed.banner.banner_url}}" class="feed-img">
+	      <div ng-bind-html="feed.introduction" class="feed-introduction"></div>
+	      <div class="{{feed.user.user_name}}"></div>
+	      <div class="likeFeed" ng-click="likeThisFeed(feed.blog_id)">
+	         <i class="icon ion-heart" ng-class="liked? 'liked-heart': normal-heart"></i>
+	         <span>{{feed.likes}}</span>
+	      </div>
+	   </div>
 	</ion-content>
 </ion-view>

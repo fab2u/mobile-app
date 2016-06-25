@@ -186,7 +186,7 @@ app
       controller: 'tagFeedCtrl'
    })
    .state('userFeed', {
-      url: '/user/:uid',
+      url: '/user/:user_id',
       templateUrl: 'templates/feed/user-feed.html',
       controller: 'userFeedCtrl'
    })

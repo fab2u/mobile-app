@@ -4,7 +4,7 @@
 }
 
 .fabFeed .feed-name {
-	font-size:1.3em;
+	font-size:1.2em;
 	font-weight:500;
 }
 .fabFeed .feed-title {
@@ -26,11 +26,11 @@
 }
 .fabFeed .likeFeed {
 	margin:10px;
-	font-size:1.5em;
+	font-size:1em;
 }
 
 .fabFeed .likeFeed i{
-	font-size:1.5em;
+	font-size:1em;
 	margin:10px;
 }
 

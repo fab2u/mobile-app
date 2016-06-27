@@ -1,8 +1,9 @@
 // Edit By Deepank
 app.controller("profileCtrl", ['$scope', '$timeout', function($scope, $timeout){
-   console.log('profile');
-   $scope.email = window.localStorage.email;
-   $scope.img_hash = md5($scope.email);
+   $scope.uid = window.localStorage.uid;
+   console.log($scope.uid);
+   // $scope.email = window.localStorage.email;
+   $scope.img_hash = md5($scope.uid);
    jdenticon.update("#identicon", $scope.img_hash);
    var uid = window.localStorage.uid;
    var ref = db.ref("users/data/"+uid);

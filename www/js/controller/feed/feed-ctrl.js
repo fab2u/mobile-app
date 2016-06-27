@@ -8,10 +8,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 		$scope.events2 = [];
 		angular.forEach(snapshot.val(), function(value, key){
 			value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-			$timeout(function () {
-				$scope.events2.push(value);
-				console.log($scope.events2);
-			}, 0);
+			$scope.events2.push(value);
 		});
 	}, function(errorObject){
 		console.log(errorObject);

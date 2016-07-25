@@ -6,13 +6,18 @@
       <label class="item item-input">
          <textarea placeholder="Content" ng-model="introduction"></textarea>
       </label>
-      <ion-list>
-        <ion-radio ng-model="banner_type" ng-value="'Image'">Image</ion-radio>
-        <ion-radio ng-model="banner_type" ng-value="'Video'">Video</ion-radio>
-      </ion-list>
-      <label class="item item-input">
-         <input type="text" placeholder="URL" ng-model="banner_url"></input>
-      </label>
+      <img id="myImage" style="width:50%; height:auto;">
+      <div style="text-align: center" ng-click="showUploadOptions = !showUploadOptions">
+         <i class="icon profile-cam ion-camera"></i>
+         <p style="text-align; center">Upload Image</p>
+      </div>
+      <div class="profile-details padding">
+         <div class="button-bar" ng-show="showUploadOptions">
+            <a class="button button-activated" ng-click="cameraUpload()">Camera</a>
+            <a class="button button-positive" ng-click="galleryUpload()">Gallery</a>
+         </div>
+      </div>
+
       <button class="button button-positive" type="submit" ng-click="feed()">Submit</button>
    </div>
 </form>

@@ -5,7 +5,7 @@ app.controller("newFeedCtrl", ['$scope', '$timeout', function($scope, $timeout){
    console.log(uname);
    $scope.feed = function(){
       var newBlogKey = db.ref().child("blogs").push().key;
-      var blogData = {
+      blogData = {
          blog_id: newBlogKey,
          title: $scope.title,
          introduction: $scope.introduction,
@@ -13,10 +13,6 @@ app.controller("newFeedCtrl", ['$scope', '$timeout', function($scope, $timeout){
             user_name: uname,
             user_id: localStorage.getItem("uid"),
             user_email: localStorage.getItem("email")
-         },
-         banner: {
-            banner_url: $scope.banner_url,
-            banner_type: $scope.banner_type
          },
          likes: 0,
          active: true,
@@ -56,5 +52,80 @@ app.controller("newFeedCtrl", ['$scope', '$timeout', function($scope, $timeout){
       authUpdate['/users/data/'+ blogData.user.user_id+ '/blogs/' + newBlogKey] = true;
       console.log(authUpdate);
       db.ref().update(authUpdate);
+   }
+
+   $scope.galleryUpload = function() {
+      var options = {
+         destinationType : Camera.DestinationType.FILE_URI,
+         sourceType :   Camera.PictureSourceType.PHOTOLIBRARY, //, Camera.PictureSourceType.CAMERA,
+         allowEdit : false,
+         encodingType: Camera.EncodingType.JPEG,
+         popoverOptions: CameraPopoverOptions,
+      };
+
+      $cordovaCamera.getPicture(options).then(function(imageURI) {
+         var image = document.getElementById('myImage');
+         image.src = imageURI;
+         $scope.url = imageURI;
+         resizeImage(imageURI);
+      }, function(err) {
+         console.log(err);
+      });
+   };
+
+   $scope.cameraUpload = function() {
+      var options = {
+         destinationType : Camera.DestinationType.FILE_URI,
+         sourceType :   Camera.PictureSourceType.CAMERA,
+         allowEdit : false,
+         encodingType: Camera.EncodingType.JPEG,
+         popoverOptions: CameraPopoverOptions,
+      };
+
+      $cordovaCamera.getPicture(options).then(function(imageURI) {
+         var image = document.getElementById('myImage');
+         image.src = imageURI;
+         $scope.url = imageURI;
+         alert(JSON.stringify(imageURI)+ 'line number 283, imageURI');
+         resizeImage(imageURI);
+      }, function(err) {
+         console.log(err);
+      });
+   };
+
+   function resizeImage(source){
+      alert('resizeImage called')
+      var canvas = document.createElement("canvas");
+      var ctx = canvas.getContext("2d");
+
+      img = new Image();
+      alert('img '+ img);
+      img.onload = function () {
+         // alert("onload called javascript");
+         canvas.height = canvas.width * (img.height / img.width);
+         /// step 1
+         var oc = document.createElement('canvas');
+         var octx = oc.getContext('2d');
+         oc.width = img.width * 0.5;
+         oc.height = img.height * 0.5;
+         octx.drawImage(img, 0, 0, oc.width, oc.height);
+         /// step 2
+         octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
+         ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5, 0, 0, canvas.width, canvas.height);
+         // alert(canvas.width+" "+canvas.height+" "+img.width+" "+img.height);
+         var dataURL = canvas.toDataURL("image/jpeg");
+         alert('dataURL ' + dataURL);
+
+         $http.post("http://139.162.3.205/api/testupload", {path: dataURL})
+         .success(function(response){
+            console.log(response.Message);
+            blogData.photoUrl = response.Message;
+         })
+         .error(function(response){
+            console.log(response);
+         });
+      }
+      alert('source '+ source);
+      img.src = source;
    }
 }]);

@@ -1,9 +1,10 @@
 <ion-view class="fabFeed">
 	<ion-content>
-		<div class="card feeds" ng-repeat="feed in events2">
+		<ion-refresher on-refresh="doRefresh()"></ion-refresher>
+		<div class="card feeds" ng-repeat="feed in events2 | orderBy:'-created_time'">
 			<p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_email}}</a></p>
 			<p class="feed-title">{{feed.title}}</p>
-			<img ng-src="{{feed.banner.banner_url}}" class="feed-img">
+			<img ng-src="{{feed.photoUrl}}" class="feed-img">
 			<div ng-bind-html="feed.introduction" class="feed-introduction"></div>
 			<div class="{{feed.user.user_name}}"></div>
 			<div class="likeFeed" ng-click="likeThisFeed(feed.blog_id)">
@@ -11,5 +12,6 @@
 				<span>{{feed.likes}}</span>
 			</div>
 		</div>
+		<ion-infinite-scroll on-infinite="loadMore()" distance="1%"> </ion-infinite-scroll>
 	</ion-content>
 </ion-view>

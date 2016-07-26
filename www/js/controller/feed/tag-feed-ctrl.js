@@ -4,8 +4,6 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 	console.log($scope.tagName);
 	var ref = db.ref().child("tags").child($scope.tagName);
 	ref.on("value", function(snapshot){
-		// console.log(snapshot.val());
-		// console.log(snapshot.val().blogs);
 		blogList = snapshot.val().blogs;
 		console.log(blogList);
 		$scope.blogArr = [];

@@ -1,6 +1,6 @@
 <ion-view class="fabFeed">
 	<ion-content>
-		<ion-refresher on-refresh="doRefresh()"></ion-refresher>
+		<ion-refresher pulling-text="Loading New Feed" on-refresh="doRefresh()"></ion-refresher>
 		<div class="card feeds" ng-repeat="feed in events2 | orderBy:'-created_time'">
 			<p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_name}}</a></p>
 			<p class="feed-title">{{feed.title}}</p>
@@ -12,7 +12,7 @@
 				<span>{{feed.likes}}</span>
 			</div>
 		</div>
-		<div ng-hide="moreMessages">You are at the end of the feed</div>
-		<ion-infinite-scroll ng-if="moreMessages" immediate-check="false" on-infinite="loadMore()" distance="1%"> </ion-infinite-scroll>
+		<div ng-hide="moreMessagesScroll">You are at the end of the feed</div>
+		<ion-infinite-scroll ng-if="moreMessagesScroll" immediate-check="false" on-infinite="loadMore()" distance="1%"> </ion-infinite-scroll>
 	</ion-content>
 </ion-view>

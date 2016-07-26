@@ -1,7 +1,7 @@
 <ion-view class="fabFeed">
 	<ion-content>
 		<div class="card feeds" ng-repeat="feed in blogArr">
-	      <p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_email}}</a></p>
+	      <p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_name}}</a></p>
 	      <p class="feed-title">{{feed.title}}</p>
 	      <img ng-src="{{feed.photoUrl}}" class="feed-img">
 	      <div ng-bind-html="feed.introduction" class="feed-introduction"></div>

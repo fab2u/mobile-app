@@ -6,11 +6,12 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', function($
    jdenticon.update("#identicon", $scope.img_hash);
    var uid = window.localStorage.uid;
    var ref = db.ref("users/data/"+uid +"/blogs");
-   ref.on("value", function(snapshot){
+   ref.once("value", function(snapshot){
       $scope.blogArr = [];
+      console.log(snapshot.val());
       for(var i in snapshot.val()){
          var blogData = db.ref("blogs/" + i);
-         blogData.on("value", function(snap){
+         blogData.once("value", function(snap){
             single_blog = snap.val();
             single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
             console.log(single_blog);

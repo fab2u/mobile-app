@@ -1,17 +1,21 @@
 <!-- Edit By Deepank -->
 <ion-view class="fabFeed">
-   <canvas id="identicon" width="100" height="100"></canvas>
-   <p>{{img_hash}}</p>
-   <p>{{email}}</p>
-   <div class="card feeds" ng-repeat="feed in blogArr">
-      <p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_email}}</a></p>
-      <p class="feed-title">{{feed.title}}</p>
-      <img ng-src="{{feed.photoUrl}}" class="feed-img">
-      <div ng-bind-html="feed.introduction" class="feed-introduction"></div>
-      <div class="{{feed.user.user_name}}"></div>
-      <div class="likeFeed" ng-click="likeThisFeed(feed.blog_id)">
-         <i class="icon ion-heart" ng-class="liked? 'liked-heart': normal-heart"></i>
-         <span>{{feed.likes}}</span>
+   <ion-content>
+      <canvas id="identicon" width="100" height="100"></canvas>
+      <p>{{img_hash}}</p>
+      <p>{{email}}</p>
+      <div class="card feeds" ng-repeat="feed in blogArr | orderBy : '-created_time'">
+         <p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_name}}</a></p>
+         <p class="feed-title">{{feed.title}}</p>
+         <img ng-src="{{feed.photoUrl}}" class="feed-img">
+         <div ng-bind-html="feed.introduction" class="feed-introduction"></div>
+         <div class="{{feed.user.user_name}}"></div>
+         <div class="likeFeed" ng-click="likeThisFeed(feed.blog_id)">
+            <i class="icon ion-heart" ng-class="liked? 'liked-heart': normal-heart"></i>
+            <span>{{feed.likes}}</span>
+         </div>
       </div>
-   </div>
+      <div ng-hide="moreMessagesScroll">You are at the end of the feed</div>
+		<ion-infinite-scroll ng-if="moreMessagesScroll" immediate-check="false" on-infinite="loadMore()" distance="1%"> </ion-infinite-scroll>
+   </ion-content>
 </ion-view>

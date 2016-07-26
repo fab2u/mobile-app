@@ -69,6 +69,8 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 					$scope.events2.push(value);
 				});
+				$timeout(function () {
+				}, 0);
 			}, function(errorObject){
 				console.log(errorObject);
 			});

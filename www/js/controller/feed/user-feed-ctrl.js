@@ -8,6 +8,11 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', function($
    $scope.blogIdList = {};
    $scope.moreMessagesScroll = true;
 
+   db.ref("users/data/"+uid).once("value", function(snapshot){
+      console.log(snapshot.val());
+      $scope.userDetails = snapshot.val();
+   });
+
    $scope.goBack = function(){
 		history.back();
 	}
@@ -55,6 +60,8 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', function($
       				$scope.blogArr.push(single_blog);
                });
             }
+            $timeout(function () {
+				}, 0);
          });
       }
    }

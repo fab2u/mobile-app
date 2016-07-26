@@ -3,6 +3,11 @@ app.controller("newFeedCtrl", ['$scope', '$timeout', '$cordovaCamera', function(
    uname = localStorage.getItem("name");
    console.log(uid);
    console.log(uname);
+
+   $scope.goBack = function(){
+		history.back();
+	}
+   
    $scope.feed = function(){
       var newBlogKey = db.ref().child("blogs").push().key;
       blogData = {

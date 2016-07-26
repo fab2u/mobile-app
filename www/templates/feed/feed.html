@@ -12,6 +12,7 @@
 				<span>{{feed.likes}}</span>
 			</div>
 		</div>
-		<ion-infinite-scroll immediate-check="false" on-infinite="loadMore()" distance="1%"> </ion-infinite-scroll>
+		<div ng-hide="moreMessages">You are at the end of the feed</div>
+		<ion-infinite-scroll ng-if="moreMessages" immediate-check="false" on-infinite="loadMore()" distance="1%"> </ion-infinite-scroll>
 	</ion-content>
 </ion-view>

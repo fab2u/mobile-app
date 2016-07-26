@@ -44,12 +44,10 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 					console.log(snap.val());
 					console.log(Object.keys(snap.val())[0]);
 					$scope.bottomKey = Object.keys(snap.val())[0];
-					var count = 0;
 					angular.forEach(snap.val(), function(value, key){
 						value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 						$scope.events2.push(value);
-						console.log(value);
-						// console.log($scope.events2);
+						console.log($scope.events2);
 					});
 					$scope.$broadcast('scroll.infiniteScrollComplete');
 				}

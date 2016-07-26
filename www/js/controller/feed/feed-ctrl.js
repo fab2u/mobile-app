@@ -7,6 +7,10 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 	$scope.moreMessagesScroll = true;
 	$scope.moreMessagesRefresh = true;
 
+	$scope.goBack = function(){
+		history.back();
+	}
+
 	// $scope.liked = false;
 	// console.log($scope.liked);
 	// $scope.likeThisFeed = function(id){

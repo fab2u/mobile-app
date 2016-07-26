@@ -8,6 +8,10 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', function($
    $scope.blogIdList = {};
    $scope.moreMessagesScroll = true;
 
+   $scope.goBack = function(){
+		history.back();
+	}
+
    $scope.loadMore = function(){
       console.log(Object.keys($scope.blogIdList).length);
 		if(Object.keys($scope.blogIdList).length > 0){

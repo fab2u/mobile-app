@@ -6,6 +6,10 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 	console.log($scope.tagName);
 	$scope.blogIdList = {};
 
+	$scope.goBack = function(){
+		history.back();
+	}
+
 	$scope.doRefresh = function(){
 		console.log('pull to refresh');
 		db.ref("tags/"+$scope.tagName+"/blogs").orderByKey().startAt($scope.topKey).once("value", function(snapshot){

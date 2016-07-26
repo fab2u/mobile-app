@@ -1,4 +1,4 @@
-app.controller("newFeedCtrl", ['$scope', '$timeout', function($scope, $timeout){
+app.controller("newFeedCtrl", ['$scope', '$timeout', '$cordovaCamera', function($scope, $timeout, $cordovaCamera){
    uid = localStorage.getItem("uid");
    uname = localStorage.getItem("name");
    console.log(uid);
@@ -118,11 +118,14 @@ app.controller("newFeedCtrl", ['$scope', '$timeout', function($scope, $timeout){
 
          $http.post("http://139.162.3.205/api/testupload", {path: dataURL})
          .success(function(response){
-            console.log(response.Message);
+            alert('success');
+            alert(JSON.stringify(response.Message));
             blogData.photoUrl = response.Message;
+            alert(JSON.stringify(blogData));
          })
          .error(function(response){
-            console.log(response);
+            alert('error');
+            alert(response);
          });
       }
       alert('source '+ source);

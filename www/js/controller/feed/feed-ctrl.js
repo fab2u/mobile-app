@@ -17,10 +17,8 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 	}
 
 	function firstTimeLoad(){
-		var ref = db.ref().child("blogs").limitToLast(5);
-		ref.once("value", function(snapshot){
+		db.ref().child("blogs").limitToLast(5).once("value", function(snapshot){
 			console.log(snapshot.val());
-			console.log(Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1]);
 			console.log(Object.keys(snapshot.val())[0]);
 			$scope.firstKey = Object.keys(snapshot.val())[0];
 			$scope.events2 = [];
@@ -34,6 +32,27 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 	}
 
 	$scope.loadMore = function(){
+		console.log($scope.firstKey);
+		db.ref("blogs").orderByKey().limitToFirst(5).endAt($scope.firstKey).once("value", function(snap){
+			console.log(snap.val());
+			console.log(Object.keys(snap.val())[0]);
+			$scope.firstKey = Object.keys(snap.val())[0];
+			angular.forEach(snap.val(), function(value, key){
+				value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+				$scope.events2.push(value);
+			});
 
+			$scope.$broadcast('scroll.infiniteScrollComplete');
+		});
 	}
+	$scope.$on('$stateChangeSuccess', function() {
+   	$scope.loadMore();
+	});
 }]);
+
+
+// angular.forEach(snapshot.val(), function(value, key){
+// 	value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+// 	$scope.events2.push(value);
+// });
+// $scope.$broadcast('scroll.infiniteScrollComplete');

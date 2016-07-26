@@ -23,6 +23,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 			else{
 				console.log(snapshot.val());
 				angular.forEach(snapshot.val(), function(value, key){
+					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 					$scope.events2.unshift(value);
 				});
 			}

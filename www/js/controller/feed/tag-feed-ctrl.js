@@ -20,6 +20,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 			}
 			else{
 				console.log(snapshot.val());
+				$scope.topKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1];
 				var single_blog = {};
 				for(var i in snapshot.val()){
 					// console.log(i); // i is the key of blogs object or the id of each blog
@@ -85,6 +86,8 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 						// console.log($scope.blogArr);
 					});
 				}
+				$timeout(function () {
+				}, 0);
 			})
 		}
 	}

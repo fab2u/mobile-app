@@ -1,4 +1,4 @@
-<ion-view class="newFeed">
+<ion-view class="new-feed">
    <ion-header-bar class="bar-stable" title="Profile">
       <a class="button icon ion-chevron-left button-clear" ng-click="goBack()"></a>
       <h1 class="title">Add New Feed</h1>
@@ -7,10 +7,10 @@
       <form name="newFeed" novalidate="true">
          <div class="list list-inset">
             <label class="item item-input">
-               <input type="text" placeholder="Title" ng-model="title">
+               <input type="text" placeholder="Title" ng-model="feed.title">
             </label>
             <label class="item item-input">
-               <textarea placeholder="Content" ng-model="introduction"></textarea>
+               <textarea placeholder="Content" ng-model="feed.introduction"></textarea>
             </label>
             <img id="myImage" style="width:50%; height:auto;">
             <div style="text-align: center" ng-click="showUploadOptions = !showUploadOptions">
@@ -24,7 +24,7 @@
                </div>
             </div>
 
-            <button class="button button-positive" type="submit" ng-click="feed()">Submit</button>
+            <button class="button button-positive" type="submit" ng-click="submitFeed()">Submit</button>
          </div>
       </form>
    </ion-content>

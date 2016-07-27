@@ -3,12 +3,16 @@ app.controller("newFeedCtrl", ['$scope', '$timeout', '$cordovaCamera', function(
    uname = localStorage.getItem("name");
    console.log(uid);
    console.log(uname);
-   $scope.feed = function(){
+   $scope.goBack = function(){
+		history.back();
+	}
+   $scope.feed = {};
+   $scope.submitFeed = function(){
       var newBlogKey = db.ref().child("blogs").push().key;
       blogData = {
          blog_id: newBlogKey,
-         title: $scope.title,
-         introduction: $scope.introduction,
+         title: $scope.feed.title,
+         introduction: $scope.feed.introduction,
          user: {
             user_name: uname,
             user_id: localStorage.getItem("uid"),
@@ -18,9 +22,10 @@ app.controller("newFeedCtrl", ['$scope', '$timeout', '$cordovaCamera', function(
          active: true,
          created_time: new Date().getTime(),
       };
+      console.log(blogData);
 
       var re = /#(\w+)(?!\w)/g, hashTag, tagsValue = [];
-      while (hashTag = re.exec($scope.introduction)) {
+      while (hashTag = re.exec($scope.feed.introduction)) {
          tagsValue.push(hashTag[1]);
       }
       console.log(tagsValue);

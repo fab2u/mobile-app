@@ -11,13 +11,6 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 		history.back();
 	}
 
-	// $scope.liked = false;
-	// console.log($scope.liked);
-	// $scope.likeThisFeed = function(id){
-	// 	$scope.liked = !$scope.liked;
-	// 	console.log($scope.liked);
-	// }
-
 	$scope.doRefresh = function(){
 		console.log('pull to refresh');
 		db.ref("blogs").orderByKey().startAt($scope.topKey).once('value', function(snapshot){
@@ -26,6 +19,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 			}
 			else{
 				console.log(snapshot.val());
+				$scope.topKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1];
 				angular.forEach(snapshot.val(), function(value, key){
 					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 					$scope.events2.unshift(value);
@@ -69,6 +63,8 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 					$scope.events2.push(value);
 				});
+				$timeout(function () {
+				}, 0);
 			}, function(errorObject){
 				console.log(errorObject);
 			});

@@ -55,6 +55,8 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', function($
       				$scope.blogArr.push(single_blog);
                });
             }
+            $timeout(function () {
+				}, 0);
          });
       }
    }

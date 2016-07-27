@@ -1,6 +1,11 @@
-<!-- Edit By Deepank -->
 <ion-view>
-   <canvas id="identicon" width="100" height="100"></canvas>
-   <p>{{img_hash}}</p>
-   <p>{{email}}</p>
+   <ion-header-bar class="bar-stable" title="Profile">
+      <a class="button icon ion-chevron-left button-clear" ng-click="goBack()"></a>
+      <h1 class="title">My Profile</h1>
+   </ion-header-bar>
+	<ion-content class="has-header">
+      <canvas id="identicon" width="100" height="100"></canvas>
+      <p>{{email}}</p>
+      <p>{{userDetails.name}}
+   </ion-content>
 </ion-view>

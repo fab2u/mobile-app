@@ -2,7 +2,7 @@
 app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', function($scope, $timeout, $stateParams){
    $scope.user_id = $stateParams.user_id;
    $scope.email = window.localStorage.email;
-   $scope.img_hash = md5($scope.email);
+   $scope.img_hash = md5($scope.user_id);
    jdenticon.update("#identicon", $scope.img_hash);
    var uid = window.localStorage.uid;
    $scope.blogIdList = {};
@@ -36,6 +36,9 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', function($
 							// console.log(snap.val());
 							single_blog = snap.val();
 							single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+                     $timeout(function () {
+   							jdenticon.update("#"+single_blog.blog_id, md5(single_blog.user.user_id));
+   						}, 0);
 							$scope.blogArr.push(single_blog);
 							// console.log($scope.blogArr);
 						});
@@ -46,9 +49,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', function($
       }
       else if(Object.keys($scope.blogIdList).length == 0){
          db.ref("users/data/"+uid +"/blogs").limitToLast(5).once("value", function(snapshot){
-            console.log(snapshot.val());
             $scope.blogIdList = snapshot.val();
-				console.log($scope.blogIdList);
 				$scope.bottomKey = Object.keys($scope.blogIdList)[0];
             $scope.blogArr = [];
             for(var i in snapshot.val()){
@@ -56,7 +57,9 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', function($
                blogData.once("value", function(snap){
                   single_blog = snap.val();
                   single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-                  console.log(single_blog);
+                  $timeout(function () {
+							jdenticon.update("#"+single_blog.blog_id, md5(single_blog.user.user_id));
+						}, 0);
       				$scope.blogArr.push(single_blog);
                });
             }
@@ -68,5 +71,4 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', function($
    $scope.$on('$stateChangeSuccess', function() {
    	$scope.loadMore();
 	});
-
 }]);

@@ -9,6 +9,7 @@
       {{userDetails.email.user_email}}
       {{userDetails.mobile.mobile_num}}
       <div class="card feeds" ng-repeat="feed in blogArr | orderBy : '-created_time'">
+         <canvas id="{{feed.blog_id}}" width="40" height="40"></canvas>
          <p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_name}}</a></p>
          <p class="feed-title">{{feed.title}}</p>
          <img ng-src="{{feed.photoUrl}}" class="feed-img">

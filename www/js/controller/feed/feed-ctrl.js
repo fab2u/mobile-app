@@ -22,6 +22,9 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 				$scope.topKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1];
 				angular.forEach(snapshot.val(), function(value, key){
 					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+					$timeout(function () {
+						jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
+					}, 0);
 					$scope.events2.unshift(value);
 				});
 			}
@@ -45,8 +48,10 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 					$scope.bottomKey = Object.keys(snap.val())[0];
 					angular.forEach(snap.val(), function(value, key){
 						value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+						$timeout(function () {
+							jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
+						}, 0);
 						$scope.events2.push(value);
-						console.log($scope.events2);
 					});
 					$scope.$broadcast('scroll.infiniteScrollComplete');
 				}
@@ -61,6 +66,9 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 				$scope.topKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1];
 				angular.forEach(snapshot.val(), function(value, key){
 					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+					$timeout(function () {
+						jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
+					}, 0);
 					$scope.events2.push(value);
 				});
 				$timeout(function () {

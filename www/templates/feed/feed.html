@@ -6,6 +6,7 @@
 	<ion-content class="has-header">
 		<ion-refresher pulling-text="Loading New Feed" on-refresh="doRefresh()"></ion-refresher>
 		<div class="card feeds" ng-repeat="feed in events2 | orderBy:'-created_time'">
+			<canvas id="{{feed.blog_id}}" width="40" height="40"></canvas>
 			<p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_name}}</a></p>
 			<p class="feed-title">{{feed.title}}</p>
 			<img ng-src="{{feed.photoUrl}}" class="feed-img">

@@ -1,12 +1,24 @@
 app
 .config(function($stateProvider, $urlRouterProvider) {
 
-	$stateProvider
-		.state('landing', {
-			url: '/landing',
-			templateUrl: 'templates/auth/landing.html',
-			controller: 'LandingCtrl'
-		})
+    // App starting controller
+
+    $stateProvider.state('app-start', {
+        url: '/app-start',
+        abstract: false,
+        templateUrl: 'templates/app/app-start.html',
+        controller: 'appStartCtrl'
+    });
+
+    // App landing controller
+    $stateProvider.state('landing', {
+        url: '/landing',
+        abstract: false,
+        templateUrl: 'templates/app/app-landing.html',
+        controller: 'appLandingCtrl'
+    });
+
+    	$stateProvider
 		.state('intro-slider', {
 			url: '/intro-slider',
 			templateUrl: 'templates/auth/intro-slider.html',
@@ -193,5 +205,5 @@ app
 			controller: 'newFeedCtrl'
 		});
 
-	$urlRouterProvider.otherwise('/landing');
+	$urlRouterProvider.otherwise('/app-start');
 });

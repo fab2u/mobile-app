@@ -1,23 +1,105 @@
-app
-.controller('IntroSliderCtrl', ['$scope', '$ionicSlideBoxDelegate', '$state', function($scope,$ionicSlideBoxDelegate,$state) {
-    console.log("Intro Slider Controller");
-    $scope.firstTime = true;
+app.controller('IntroSliderCtrl', ['$scope', '$ionicSlideBoxDelegate', '$state', '$ionicLoading', '$interval', function($scope, $ionicSlideBoxDelegate, $state, $ionicLoading, $interval) {
 
-    $scope.skipSlide = function(){
-        console.log("next");
-        $state.go('app.home');
-        localStorage.setItem('firstTime', false);
+    $scope.pager = true;
+    var count = 0;
+    var location = {};
 
-
-        console.log(localStorage.getItem('firstTime'));
+    var hasLocation = checkLocalStorage('selectedLocation');
+    if (hasLocation) {
+        location = JSON.parse(window.localStorage['selectedLocation']);
+    } else {
+        location = {
+            cityId:"-KOe8n_TOSKc29trcGJh",
+            cityName: "Gurgaon",
+            country: "India",
+            latitude: 28.4595,
+            locationId: "-KOe9LJSgmcLJx5GzaRJ",
+            locationName: "Sohna Road",
+            longitude: 77.0266,
+            state: "Haryana",
+            zoneId: "-KOe9DIxKASx33GdHx1P",
+            zoneName: "Sohna Road"
+        }
+        window.localStorage['selectedLocation'] = JSON.stringify(location);
     }
-    $scope.nextSlide = function(){
-        if($ionicSlideBoxDelegate.currentIndex()<3){
+
+    updateLocalData();
+
+    function updateLocalData() {
+        db.ref('appStatus').once('value', function(snapshot) {
+            updateAppStatus(snapshot.val());
+            // updateLocationData();
+            // updateNearbyData();
+            // updateProjectData();
+        });
+    };
+
+
+    // function updateLocationData() {
+    //     db.ref('location/' + location.cityId).once('value', function(data) {
+    //         window.localStorage['allLocations'] = JSON.stringify(data.val());
+    //         count = count + 1;
+    //     })
+    // }
+
+    // function updateNearbyData() {
+    //     db.ref('nearby/' + location.cityId).once('value', function(data) {
+    //         window.localStorage['allnearbyLocations'] = JSON.stringify(data.val());
+    //         count = count + 1;
+    //     });
+
+    //     db.ref('nearbyDistance/' + location.cityId).once('value', function(data2) {
+    //         window.localStorage['allnearbyDistances'] = JSON.stringify(data2.val());
+    //         count = count + 1;
+    //     });
+    // }
+
+    // function updateProjectData() {
+    //     db.ref('projects/' + location.cityId + '/residential').once('value', function(data) {
+    //         window.localStorage['allProjectsData'] = JSON.stringify(data.val());
+    //         count = count + 1;
+    //     });
+
+    //     db.ref('projectDisplayData/' + location.cityId + '/residential').once('value', function(data2) {
+    //         window.localStorage['allDisplayData'] = JSON.stringify(data2.val());
+    //         count = count + 1;
+    //     });
+    // }
+
+
+
+    function updateAppStatus(newData) {
+        var appStatus = {
+            live: '',
+            version: 1
+        }
+        appStatus.live = newData.live;
+        appStatus.version = newData.version;
+        window.localStorage['appStatus'] = JSON.stringify(appStatus);
+    }
+
+    $scope.skipSlide = function() {
+        $ionicSlideBoxDelegate.slide(5);
+    }
+
+    $scope.nextSlide = function() {
+        
             $ionicSlideBoxDelegate.next();
-        }else{
-            console.log("next");
-            $state.go('app.home');
-            localStorage.setItem('firstTime', false);
+        
+    }
+
+    $scope.slideChanged = function() {
+        if ($ionicSlideBoxDelegate.currentIndex() == 4){
+            $scope.pager = false;
+            $ionicSlideBoxDelegate.update();
+            $ionicLoading.show();
+            stop = $interval(function() {
+                // if (count == 5) {
+                    $ionicLoading.hide();
+                    $interval.cancel(stop);
+                    $state.go('app.home');
+                // }
+            }, 200);
         }
     }
 }]);

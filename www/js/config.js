@@ -37,13 +37,9 @@ app
 					templateUrl: 'templates/home/home.html',
 					controller: 'HomeCtrl'
 				}
-			},
-			resolve: {
-				currentAuth: function(AuthenticationService){
-					return AuthenticationService.checkAuthentication();
-				}
 			}
 		})
+		
 		.state('termsnConditions', {
 			url: '/termsnConditions',
 			templateUrl: 'templates/legal/termsnConditions.html'

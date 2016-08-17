@@ -22,7 +22,10 @@
     </div>
     </ion-header-bar>
     <ion-content>
-    <div class="p-fix card" ng-repeat="vendor in vendors">
+    <!--<div class="p-fix card" ng-repeat="vendor in vendor_list">-->
+    <div ng-repeat="vendors in vendor_list">
+
+        <div class="p-fix card" ng-repeat="vendor in vendors">
         <div class="row">
             <div class="col c-col-40">
                 <h6 class="c-title">Saundarya Shree Beauty Parlour</h6>
@@ -66,6 +69,7 @@
                     </span>
                 </div>
             </div>
+        </div>
         </div>
     </div>
     </ion-content>

@@ -91,6 +91,27 @@ app
 		controller: 'SearchCtrl'
 	});
 
+	//State for location
+	$stateProvider.state('location', {
+		url: '/location',
+		templateUrl: 'templates/home/location.html',
+		controller: 'LocationCtrl'
+	});
+
+	$stateProvider.state('contact', {
+		url: '/contact',
+		templateUrl: 'templates/legal/contact.html',
+		controller:'ContactCtrl'
+
+	});
+
+	//State for favorates vendor
+	$stateProvider.state('favorate', {
+		url: '/favorate',
+		templateUrl: 'templates/home/favorate.html',
+		controller: 'FavorateCtrl'
+	});
+
 	//State for cart
 	$stateProvider.state('cart', {
 		url: '/cart',

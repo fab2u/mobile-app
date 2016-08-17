@@ -26,6 +26,7 @@ app.controller("SignupCtrl", ['$scope', '$http', function($scope, $http){
          })
          .error(function(response){
             console.log("error");
+            console.log("error hhh",JSON.stringify(config));
             console.log(response);
          });
    }

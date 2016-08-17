@@ -7,15 +7,15 @@
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
       </ion-nav-buttons>
-      <ion-nav-title class="location">
+      <ion-nav-title class="location" ng-click="location_option()">
 
       <span class="loc"><i class="icon ion-location"></i> Your location</span>
       <span class="break">Sohna Road</span>
       </ion-nav-title>
       <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-ios-heart" ng-class="liked? 'pink':'normal'" ng-click="likePage()">
+        <button class="button button-icon button-clear ion-ios-heart" ng-class="liked? 'pink':'normal'" ng-click="favorate_list()">
         </button>
-        <button class="button button-icon button-clear ion-android-search">
+        <button class="button button-icon button-clear ion-android-search" ng-click="search_text()">
         </button>
       </ion-nav-buttons>
     </ion-nav-bar>
@@ -55,6 +55,9 @@
         </ion-item>
         <ion-item menu-close href="#/termsnConditions">
           Terms and Conditions
+        </ion-item>
+        <ion-item menu-close href="#/contact">
+        Contact Us
         </ion-item>
         <!-- Deepank Start -->
         <ion-item menu-close href="#/login">

@@ -13,6 +13,7 @@ app.controller('LoginCtrl', ['$scope', 'AuthenticationService', '$ionicPopup', f
       AuthenticationService.LoginEmail($scope.user.user_email, $scope.user.user_password, function(result){
          console.log(result);
          if(result === true){
+             alert('logged in successfully!')
             console.log(result);
          }
          else{

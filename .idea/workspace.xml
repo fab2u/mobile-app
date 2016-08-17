@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a90707b-bb48-47ba-9167-7f50f00e366c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/img/home/cat/fitness.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/img/home/cat/salon.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/img/home/cat/spa.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/img/home/cat/tattoo.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/img/home/cat/wedding.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/img/home/slider/slider1.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/img/home/slider/slider2.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/auth/signup-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/auth/signup-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/home/home-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/home/home-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/vendor/vendor-list-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/vendor/vendor-list-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/home/home.html" afterPath="$PROJECT_DIR$/www/templates/home/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/vendor/vendorList.html" afterPath="$PROJECT_DIR$/www/templates/vendor/vendorList.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/auth/login-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/auth/login-ctrl.js" />
     </list>
     <ignored path="mobile-app.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -45,6 +33,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="login-ctrl.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/www/js/controller/auth/login-ctrl.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="43" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="vendorList.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/templates/vendor/vendorList.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -70,7 +68,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="signup-ctrl.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="signup-ctrl.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/js/controller/auth/signup-ctrl.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="405">
@@ -148,6 +146,7 @@
         <option value="$PROJECT_DIR$/www/js/controller/vendor/vendor-list-ctrl.js" />
         <option value="$PROJECT_DIR$/www/templates/vendor/vendorList.html" />
         <option value="$PROJECT_DIR$/www/js/controller/auth/signup-ctrl.js" />
+        <option value="$PROJECT_DIR$/www/js/controller/auth/login-ctrl.js" />
       </list>
     </option>
   </component>
@@ -547,12 +546,12 @@
       <updated>1471005823404</updated>
       <workItem from="1471005829029" duration="93000" />
       <workItem from="1471324068878" duration="12045000" />
-      <workItem from="1471412358509" duration="19921000" />
+      <workItem from="1471412358509" duration="20128000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32059000" />
+    <option name="totallyTimeSpent" value="32266000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
@@ -878,14 +877,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/auth/login-ctrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controller/legal/contact-ctrl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -985,6 +976,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="27" column="44" selection-start-line="27" selection-start-column="44" selection-end-line="27" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/auth/login-ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="43" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
           <folding />
         </state>
       </provider>

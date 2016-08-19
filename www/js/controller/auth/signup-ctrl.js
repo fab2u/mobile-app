@@ -1,4 +1,4 @@
-app.controller("SignupCtrl", ['$scope', '$http', function($scope, $http){
+app.controller("SignupCtrl", ['$scope', '$http', '$state','$cordovaDevice',function($scope, $http,$state,$cordovaDevice){
 
    $scope.user = {
       name: '',
@@ -6,15 +6,25 @@ app.controller("SignupCtrl", ['$scope', '$http', function($scope, $http){
       mobile_num: '',
       referral_code: '',
       gender: ''
+   };
+
+   $scope.loginPage = function(){
+       $state.go('login');
    }
 
-   $scope.signup = function(){
-      var userData = {
+    // deviceInformation/Registered
+    firebase.database().ref('deviceInformation/Registered').once('value',function(response){
+        $scope.device_list = response.val();
+        console.log("response for device_list",JSON.stringify(response.val()));
+    });
+
+    $scope.signup = function(){
+        var userData = {
          name: $scope.user.name,
          email: $scope.user.email,
          mobileNum: $scope.user.mobile_num,
          referralCode: $scope.user.referral_code,
-         deviceId:'1234'
+         deviceId: $cordovaDevice.getDevice().uuid
       }
       $http.post("http://139.162.27.64/api/addUser", userData)
          .success(function(response){

@@ -1,4 +1,4 @@
-app.factory("AuthenticationService", function($http, $location, $timeout){
+app.factory("AuthenticationService", function($http, $location,$rootScope, $timeout){
    var service = {};
    service.LoginEmail = LoginEmail;
    service.LoginGmail = LoginGmail;
@@ -9,9 +9,6 @@ app.factory("AuthenticationService", function($http, $location, $timeout){
 
    function LoginEmail(email, password, callback){
       firebase.auth().signInWithEmailAndPassword(email, password).then(function(user){
-         console.log(user);
-         console.log('uid',user.uid);
-         console.log("success login");
          db.ref().child("users").child("data").child(user.uid).on("value", function(snapshot){
             console.log(snapshot.val().name);
             window.localStorage.setItem("name", snapshot.val().name);
@@ -25,6 +22,7 @@ app.factory("AuthenticationService", function($http, $location, $timeout){
 
          window.localStorage.setItem("email", email);
          window.localStorage.setItem("uid", user.uid);
+         $rootScope.$broadcast('logged_in', { message: 'login successfully' });
       }).catch(function(error) {
          var errorCode = error.code;
          var errorMessage = error.message;

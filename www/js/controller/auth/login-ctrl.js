@@ -5,10 +5,9 @@ app.controller('LoginCtrl', ['$scope', 'AuthenticationService', '$ionicPopup', f
 	$scope.user = {
       user_email: '',
       user_password: '',
-   }
+    };
 
 	$scope.loginEmail = function(){
-		console.log("email login clicked");
 		// console.log($scope.user.user_email, $scope.user.user_password);
       AuthenticationService.LoginEmail($scope.user.user_email, $scope.user.user_password, function(result){
          console.log(result);
@@ -29,7 +28,7 @@ app.controller('LoginCtrl', ['$scope', 'AuthenticationService', '$ionicPopup', f
 	$scope.loginGmail = function(){
 		console.log("gmail login button clicked");
 		AuthenticationService.LoginGmail();
-	}
+	};
 
 
 	$scope.showPopup = function() {
@@ -55,7 +54,6 @@ app.controller('LoginCtrl', ['$scope', 'AuthenticationService', '$ionicPopup', f
 								var auth = firebase.auth();
 						      var emailAddress = $scope.data.model;
 						      auth.sendPasswordResetEmail(emailAddress).then(function() {
-						         console.log("email sent");
 									sentPopup();
 						      }, function(error) {
 						         console.log(error);

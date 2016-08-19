@@ -1,4 +1,20 @@
-app.controller("SignupCtrl", ['$scope', '$http', '$state','$cordovaDevice',function($scope, $http,$state,$cordovaDevice){
+app.controller("SignupCtrl", ['$scope', '$http', '$state','$cordovaDevice','$ionicLoading','$ionicPopup','$timeout','$rootScope',
+    function($scope, $http,$state, $cordovaDevice,$ionicLoading,$ionicPopup,$timeout,$rootScope){
+
+
+        // deviceInformation for Registered user
+        firebase.database().ref('deviceInformation/Registered/'+$cordovaDevice.getDevice().uuid).once('value',function(response){
+            console.log("device_list",JSON.stringify(response.val().registeredUsers));
+            if(response.val().registeredUsers){
+                $scope.user_device_register = true;
+            console.log("if")
+        }
+        else{
+                $scope.user_device_register = false;
+
+                console.log("else")
+        }
+        });
 
    $scope.user = {
       name: '',
@@ -8,40 +24,175 @@ app.controller("SignupCtrl", ['$scope', '$http', '$state','$cordovaDevice',funct
       gender: ''
    };
 
-   $scope.loginPage = function(){
-       $state.go('login');
-   }
+        $scope.loginPage = function(){
+        $state.go('login');
+   };
 
-    // deviceInformation/Registered
-    firebase.database().ref('deviceInformation/Registered').once('value',function(response){
-        $scope.device_list = response.val();
-        console.log("response for device_list",JSON.stringify(response.val()));
-    });
+        $scope.showMobileVerify = false;
+        $scope.showOTPfield = false;
+
+        $scope.newOtp= {
+            code: ''
+        };
+        var storedOTP = [];
+
+        //localStorage.removeItem('previousOtp');
+        console.log(window.localStorage['previousOtp']);
+
+        if(checkLocalStorage('previousOtp')){
+            console.log('otp exists');
+            $scope.showOTPfield = true;
+            $scope.showMobileVerify = true;
+            storedOTP = JSON.parse(window.localStorage['previousOtp'] || {});
+        } else {
+            console.log('otp not exists');
+        }
+
 
     $scope.signup = function(){
-        var userData = {
-         name: $scope.user.name,
-         email: $scope.user.email,
-         mobileNum: $scope.user.mobile_num,
-         referralCode: $scope.user.referral_code,
-         deviceId: $cordovaDevice.getDevice().uuid
-      }
-      $http.post("http://139.162.27.64/api/addUser", userData)
-         .success(function(response){
+        if(window.localStorage.getItem('mobile_verify') == 'true'){
+            var userData = {
+             name: $scope.user.name,
+             email: $scope.user.email,
+             mobileNum: $scope.user.mobile_num,
+             referralCode: $scope.user.referral_code,
+             deviceId: $cordovaDevice.getDevice().uuid
+            }
+            $http.post("http://139.162.27.64/api/addUser", userData)
+               .success(function(response){
+                  if(response.StatusCode == 200){
+                     alert(response.Message);
+                  }
+                  else if(response.StatusCode == 400){
+                      alert(response.Message);
+                  }
+                  else{
+                     alert('some thing went wrong!');
+                  }
+               })
+               .error(function(response){
+                  console.log("error");
+                  console.log(response);
+             });
+        }
+     else{
+            $scope.sendVerification();
+        }
+
+    };
+
+    $scope.sendVerification = function(){
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
+        $http({
+            url:'http://139.162.3.205/api/sendOtp',
+            method: 'POST',
+            params: {
+                mobno: $scope.user.mobile_num
+            }
+        }).success(function(response){
+            $ionicLoading.hide();
+            console.log(response);
             if(response.StatusCode == 200){
-               alert(response.Message);
+                $scope.otp = response.OTP;
+                storedOTP.push($scope.otp);
+                window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
+                $ionicPopup.alert({
+                    title: 'Verification Code Sent',
+                    template: 'We have sent a verification code to your registered mobile number'
+                }).then(function(){
+                    $scope.showOTPfield = true;
+                    $scope.showPopup();
+                })
+            } else {
+                $ionicPopup.alert({
+                    title: 'Verification Code not sent',
+                    template: 'An error occurred. Please try again later.'
+                });
             }
-            else if(response.StatusCode == 400){
-                alert(response.Message);
+        })
+    };
+    $scope.showPopup = function() {
+            $scope.data = {};
+            $ionicPopup.show({
+                template: '<input type="tel" ng-model="data.otp">',
+                title: 'Please, enter otp',
+                // subTitle: 'Please Enter Username',
+                scope: $scope,
+                buttons: [
+                    { text: 'Resend' ,
+                    onTap:function () {
+                        $scope.sendVerification();
+                    }
+                    },
+                    {
+                        text: '<b>Verify</b>',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            if (!$scope.data.otp) {
+                                //don't allow the user to close unless he enters otp
+                                e.preventDefault();
+                            } else {
+                                $scope.verifyOTP($scope.data.otp);
+                               // return $scope.data.otp;
+                            }
+                        }
+                    }
+                ]
+            });
+    };
+
+    $scope.verifyOTP = function(verify_otp){
+        $scope.newOtp.code = verify_otp;
+        console.log($scope.newOtp.code);
+        console.log(storedOTP);
+        var verified = false;
+        for(var i = 0; i < storedOTP.length; i++){
+            console.log($scope.newOtp.code, parseInt(storedOTP[i]));
+            if($scope.newOtp.code == parseInt(storedOTP[i])){
+                    verified = true;
+                    $ionicPopup.alert({
+                        title: 'Mobile Number Verified'
+                    }).then(function(){
+                        window.localStorage.setItem('mobile_verify','true');
+                        var userData = {
+                            name: $scope.user.name,
+                            email: $scope.user.email,
+                            mobileNum: $scope.user.mobile_num,
+                            referralCode: $scope.user.referral_code,
+                            deviceId: $cordovaDevice.getDevice().uuid
+                        }
+                        $http.post("http://139.162.27.64/api/addUser", userData)
+                           .success(function(response){
+                              if(response.StatusCode == 200){
+                                 alert(response.Message);
+                              }
+                              else if(response.StatusCode == 400){
+                                  alert(response.Message);
+                              }
+                              else{
+                                 alert('some thing went wrong!');
+                              }
+                           })
+                           .error(function(response){
+                              console.log("error");
+                              console.log(response);
+                         });
+                    })
+
             }
-            else{
-               alert('some thing went wrong!');
+        }
+        $timeout(function(){
+            if(i == storedOTP.length && !verified){
+                $ionicPopup.alert({
+                    title: 'Incorrect Code'
+                }).then(function(){
+                    $scope.newOtp = {
+                        code: ''
+                    }
+                })
             }
-            console.log(response);
-         })
-         .error(function(response){
-            console.log("error");
-            console.log(response);
-         });
-   }
+        }, 1000);
+    }
 }]);

@@ -34,5 +34,9 @@ app.controller('ReferCtrl', ['$scope', '$state','$cordovaSocialSharing', functio
 			});
 	};
 
+	$scope.go_home = function () {
+		$state.go('app.home')
+	};
+
 
 }]);

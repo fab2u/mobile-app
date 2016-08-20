@@ -1,4 +1,4 @@
-app.controller('UserWalletCtrl', ['$scope', function($scope){
+app.controller('UserWalletCtrl', ['$scope','$state', function($scope,$state){
 
 	console.log('user wallet');
 	$scope.transactions = [
@@ -11,5 +11,9 @@ app.controller('UserWalletCtrl', ['$scope', function($scope){
 		{name: 'Nishtha Agarwal', id: 'AB23CD', date: '14th Jan 2016', amount: '200'},
 		{name: 'Payal Patel', id: 'AB23CD', date: '14th Jan 2016', amount: '200'}
 	];
+
+	$scope.go_home = function () {
+		$state.go('app.home')
+	};
 
 }]);

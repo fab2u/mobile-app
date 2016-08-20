@@ -8,7 +8,7 @@
 		<div class="card custom-card">
 	    	<img class="image" src="../../img/refer.png"/>
 	    	<p class="referral-text">SHARE YOUR REFERRAL CODE</p>
-	    	<div class="referral-code">KANT961</div>
+	    	<div class="referral-code">{{myReferralCode}}</div>
 		</div>
 
 		<div class="referral-description">
@@ -22,10 +22,10 @@
 	</ion-content>
 
 	<div class="bar bar-footer custom-footer container">
-	    <div class="left-half">
+	    <div class="left-half" ng-click="WhatsApp()">
 	      <p class = "footer-text">Share using Whatsapp  <i class = "ion-social-whatsapp-outline"></i></p>
 	    </div>
-	    <div class="right-half">
+	    <div class="right-half" ng-click="Facebook()">
 	      <p class = "footer-text">Share using Facebook  <i class = "ion-android-share-alt"></i></p>
 	    </div>
 	</div>

@@ -1,15 +1,6 @@
 app
-.controller('NewSliderCtrl',[
-    '$scope',
-    '$ionicSlideBoxDelegate',
-    '$ionicScrollDelegate',
-    '$timeout',
-    function(
-        $scope,
-        $ionicSlideBoxDelegate,
-        $ionicScrollDelegate,
-        $timeout
-        ) {
+.controller('NewSliderCtrl',['$scope', '$ionicSlideBoxDelegate', '$ionicScrollDelegate', '$timeout','$state',
+    function($scope, $ionicSlideBoxDelegate, $ionicScrollDelegate, $timeout,$state) {
 
     $scope.selectedServices = {}; // Stores selected services
     $scope.currSlide = 0; // Current slide index
@@ -125,20 +116,57 @@ app
 
    // handel back button
    $scope.backButton = function() {
-        console.log("Back");
-        // TODO
-   }
+       $state.go('app.home');
+   };
 
    // handel on click search button
    $scope.searchButton = function() {
         console.log("Search");
         // TODO
-   }
+   };
 
    
    // handel on click findVendor button
    $scope.findVendors = function() {
         console.log("Find Vendors");
         // TODO
-   }
+   };
+
+
+   /// list of service provide for pre listed category ////
+
+        $scope.services = {
+            "Face":
+            {
+                "name": ['Bleach', 'Eyebrow/EyeLash', 'Face Threading', 'Face Waxing', 'Facials', 'Clean-up', 'Laser Treatment', 'Shaving', 'Skin Treatments', 'Skincare Consultations'],
+                "image": 'img/home/new-slider/face.jpg'
+            },
+            "Hair":
+                {
+                    "name": ['Beard Styling', 'Blow Dry', 'Hair Coloring', 'Hair Consulting', 'Hair Cut', 'Hair Extension', 'Head Massage', 'Hair Spa', 'Hair Transplant', 'Hair Wash', 'Other Hair Treatments', 'Straightening/ Perming', 'Anti HairFall Treatment'],
+                    "image": 'img/home/new-slider/hair.jpg'
+                },
+            "HairRemoval":{
+                "name": ['Underarms', 'Arms', 'Legs', 'Full Body', 'Full Back', 'Midriff', 'Bikini', 'Waxing For Men', 'Laser Hair Removal'],
+                "image": 'img/home/new-slider/hair-removal.jpg'
+            },
+            "Body": {
+                "name": ['Body Polishing', 'Body Toning', 'Bleach', 'Body Scrub', 'Boby wrap', 'Body Treatments', 'Botox Treatment', 'Body Shaping and Contouring', 'Tanning'],
+                "image": 'img/home/new-slider/Body.jpg'
+            },
+            "HandsNfeets": {
+                "name": ['Pedicure', 'Manicure', 'Cleanings'],
+                "image": 'img/home/new-slider/Hands-and-Feet.jpg'
+            },
+            "Nails": {
+                "name": ['Nail Art', 'Nail Extension/Bar'],
+                "image": 'img/home/new-slider/Nails.jpg'
+            },
+            "Packages": {
+                "name": ['Packages'],
+                "image": 'img/home/new-slider/packages.jpg'
+            }
+        };
+
+
 }])

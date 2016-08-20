@@ -24,7 +24,13 @@ app
 		{catHeading: 'Tattoo', catSubheading: 'Show The Word Your Story', catImg: 'img/home/cat/tattoo.jpg'}
 	];
 
-	$scope.vendor_list = function(){
-		$state.go('vendorList');
+	$scope.services = function(cat){
+		console.log("cat",cat);
+		if(cat == 'Salons'){
+			$state.go('new-slider');
+		}
+		else{
+			alert("To be shown vendor list");
+		}
 	};
 }]);

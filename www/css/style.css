@@ -17,10 +17,11 @@
 
 @import url("feed/feed.css");
 
-@import url("home/new-slider.css");
+/*@import url("home/new-slider.css");*/
 @import url("vendor/vendor-services-list.css");
 @import url("home/home.css");
 @import url("legal/contact.css");
+@import url("home/service-list.css");
 
 /*
 **********************************************************

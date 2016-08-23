@@ -27,7 +27,7 @@ app
 	$scope.services = function(cat){
 		console.log("cat",cat);
 		if(cat == 'Salons'){
-			$state.go('new-slider');
+			$state.go('services');
 		}
 		else{
 			alert("To be shown vendor list");

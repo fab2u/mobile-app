@@ -1,6 +1,8 @@
 app
-.config(function($stateProvider, $urlRouterProvider) {
-
+.config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+	if (!ionic.Platform.isIOS()) {
+		$ionicConfigProvider.scrolling.jsScrolling(false);
+	}
     // App starting controller
 
     $stateProvider.state('app-start', {
@@ -96,6 +98,13 @@ app
 		url: '/location',
 		templateUrl: 'templates/home/location.html',
 		controller: 'LocationCtrl'
+	});
+
+	//State for service list
+	$stateProvider.state('services', {
+		url: '/services',
+		templateUrl: 'templates/home/service-list.html',
+		controller: 'ServiceListCtrl'
 	});
 
 	$stateProvider.state('contact', {
@@ -224,3 +233,5 @@ app
 
 	$urlRouterProvider.otherwise('/app-start');
 });
+
+

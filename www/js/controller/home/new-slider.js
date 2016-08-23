@@ -2,7 +2,8 @@ app
 .controller('NewSliderCtrl',['$scope', '$ionicSlideBoxDelegate', '$ionicScrollDelegate', '$timeout','$state',
     function($scope, $ionicSlideBoxDelegate, $ionicScrollDelegate, $timeout,$state) {
 
-    $scope.selectedServices = {}; // Stores selected services
+
+        $scope.selectedServices = {}; // Stores selected services
     $scope.currSlide = 0; // Current slide index
 
     // Get selected services if previously stored in localstorage
@@ -169,4 +170,5 @@ app
         };
 
 
-}])
+
+}]);

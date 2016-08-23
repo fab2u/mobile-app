@@ -231,7 +231,18 @@ app
 			controller: 'newFeedCtrl'
 		});
 
-	$urlRouterProvider.otherwise('/app-start');
+	// $urlRouterProvider.otherwise('/app-start');
+
+
+	if(window.localStorage.getItem('SkipIntro')== "true"){
+		console.log("if");
+		$urlRouterProvider.otherwise("/home");
+	}else{
+		console.log(window.localStorage.getItem('SkipIntro'));
+		console.log('else');
+		$urlRouterProvider.otherwise("/app-start");
+
+	}
 });
 
 

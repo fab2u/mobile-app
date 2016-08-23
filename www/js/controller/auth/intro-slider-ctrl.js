@@ -80,20 +80,31 @@ app.controller('IntroSliderCtrl', ['$scope', '$ionicSlideBoxDelegate', '$state',
 
     $scope.skipSlide = function() {
         $ionicSlideBoxDelegate.slide(5);
-    }
+        $scope.pager = false;
+        $ionicSlideBoxDelegate.update();
+        $ionicLoading.show();
+        stop = $interval(function() {
+            // if (count == 5) {
+            window.localStorage.setItem('SkipIntro','true');
+            $ionicLoading.hide();
+            $interval.cancel(stop);
+            $state.go('app.home');
+            // }
+        }, 200);
+    };
 
     $scope.nextSlide = function() {
-        
             $ionicSlideBoxDelegate.next();
-        
-    }
+    };
 
     $scope.slideChanged = function() {
-        if ($ionicSlideBoxDelegate.currentIndex() == 4){
+        if ($ionicSlideBoxDelegate.currentIndex() == 5){
             $scope.pager = false;
             $ionicSlideBoxDelegate.update();
             $ionicLoading.show();
             stop = $interval(function() {
+                window.localStorage.setItem('SkipIntro','true');
+
                 // if (count == 5) {
                     $ionicLoading.hide();
                     $interval.cancel(stop);

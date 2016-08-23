@@ -29,8 +29,13 @@
             <ion-slide-box on-slide-changed="slideHasChanged($index,false)" show-pager="false">
                 <ion-slide  ng-repeat="service in services">
                     <ion-list>
-                        <ion-item ng-repeat="serviceItem in service.name">
+                        <ion-item ng-repeat="serviceItem in service.name" ng-click="selectItem($index,serviceItem)">
                            {{serviceItem}}
+                            <div class="diagonal" ng-show="selectedServices[serviceItem]">
+                                <span>
+                                    <i class="icon ion-ios-checkmark-empty"></i>
+                                </span>
+                            </div>
                         </ion-item>
                     </ion-list>
                 </ion-slide>

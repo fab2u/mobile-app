@@ -1,5 +1,11 @@
 app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate,$timeout,$ionicScrollDelegate) {
 
+    $scope.selectedServices = {}; // Stores selected services
+
+    if (localStorage.getItem("slectedItem") != null) {
+        $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+    }
+
     $scope.backButton = function(){
         $state.go('app.home');
     };
@@ -10,13 +16,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
 
     $scope.tabActive = false;
 
-
-    $scope.demo = function () {
-        alert("clicked");
-    };
-
     $scope.searchButton = function () {
-
         $state.go('search');
     };
 
@@ -60,16 +60,13 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
 //             update the slide number for slide box
 
     $scope.slideHasChanged = function(index,activeTab) {
-
         if(activeTab == true){
             $scope.currSlide = index;
             $scope.tabActive = false;
         }
         else if(activeTab == false){
-            console.log("inside ijjjjjj",$scope.currSlide,$ionicSlideBoxDelegate.currentIndex());
             $scope.currSlide = $ionicSlideBoxDelegate.currentIndex();
         }
-        console.log("current slide no.",$scope.currSlide);
     };
 
     $scope.scrollToBottom = function($event) {
@@ -84,9 +81,22 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
     $scope.findVendors = function() {
         console.log("Find Vendors");
     };
-
     $scope.tabWithSlideChanged = function (indexNum) {
+        console.log(indexNum);
         $scope.tabActive = true;
-        $scope.slideHasChanged(indexNum,$scope.tabActive);
+        $ionicSlideBoxDelegate.slide(indexNum);
+    };
+
+    $scope.selectItem = function(index, serviceName) {
+        console.log(index, serviceName);
+
+        // TODO
+        // If not already present remove else store the name/id
+        if($scope.selectedServices[serviceName]){
+            delete $scope.selectedServices[serviceName];
+        }else{
+            $scope.selectedServices[serviceName] = true;
+        }
+        localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
     };
 });

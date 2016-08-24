@@ -25,8 +25,9 @@ app
 	];
 
 	$scope.services = function(cat){
-		console.log("cat",cat);
 		if(cat == 'Salons'){
+			console.log("cat",cat);
+
 			$state.go('services');
 		}
 		else{

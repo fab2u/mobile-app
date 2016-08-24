@@ -15,16 +15,21 @@
                 <i class="icon ion-ios-search-strong"></i>
             </div>
         </div>
-
-        <ion-scroll zooming="false" direction="x" style="width: 100%; height: 100px">
-            <div style="width: 1200px;">
-            <span style="display: inline-block; padding: 10px 20px;"
-                  ng-click="tabWithSlideChanged($index)"
-            ng-repeat="item in ['FACE', 'HAIR','HAIR REMOVAL', 'BODY', 'HANDS & FEET','NAILS','PACKAGES']">
-                <p>{{item}}</p>
-            </span>
+        <ion-scroll zooming="false" direction="x" id="scrollTabs" delegate-handle="myhandel">
+            <div id="container">
+                <div style="width:1800px;">
+                    <div class="tab"
+                         ng-class="$index == 0 ? 'active':''"
+                         ng-repeat="item in ['FACE', 'HAIR','HAIR REMOVAL', 'BODY', 'HANDS & FEET','NAILS','PACKAGES']"
+                         ng-click="tabWithSlideChanged($index)">
+                        <i class="icon ion-social-reddit-outline"></i>
+                        <p>{{item}}</p>
+                    </div>
+                </div>
             </div>
         </ion-scroll>
+        <div class="moreButton icon ion-chevron-right" ng-click="scrollToRight($event)"></div>
+
         <div>
             <ion-slide-box on-slide-changed="slideHasChanged($index,false)" show-pager="false">
                 <ion-slide  ng-repeat="service in services">
@@ -40,62 +45,10 @@
                     </ion-list>
                 </ion-slide>
             </ion-slide-box>
-
-            <!--<ion-slide-box on-slide-changed="slideHasChanged($index,false)" show-pager="false">-->
-                <!--<ion-slide>-->
-                    <!--<ion-list ng-if="currSlide === 0" ng-repeat="service in services.Face.name">-->
-                        <!--<ion-item>-->
-                            <!--{{service}}-->
-                        <!--</ion-item>-->
-                    <!--</ion-list>-->
-                <!--</ion-slide>-->
-                <!--<ion-slide>-->
-                    <!--<ion-list ng-if="currSlide === 1" ng-repeat="service in services.Hair.name">-->
-                        <!--<ion-item>-->
-                            <!--{{service}}-->
-                        <!--</ion-item>-->
-                    <!--</ion-list>-->
-                <!--</ion-slide>-->
-                <!--<ion-slide>-->
-                    <!--<ion-list ng-if="currSlide === 2" ng-repeat="service in services.HairRemoval.name">-->
-                        <!--<ion-item>-->
-                            <!--{{service}}-->
-                        <!--</ion-item>-->
-                    <!--</ion-list>-->
-                <!--</ion-slide>-->
-                <!--<ion-slide>-->
-                    <!--<ion-list ng-if="currSlide === 3" ng-repeat="service in services.Body.name">-->
-                        <!--<ion-item>-->
-                            <!--{{service}}-->
-                        <!--</ion-item>-->
-                    <!--</ion-list>-->
-                <!--</ion-slide>-->
-                <!--<ion-slide>-->
-                    <!--<ion-list ng-if="currSlide === 4" ng-repeat="service in services.HandsNfeets.name">-->
-                        <!--<ion-item>-->
-                            <!--{{service}}-->
-                        <!--</ion-item>-->
-                    <!--</ion-list>-->
-                <!--</ion-slide>-->
-                <!--<ion-slide>-->
-                    <!--<ion-list ng-if="currSlide === 5" ng-repeat="service in services.Nails.name">-->
-                        <!--<ion-item>-->
-                            <!--{{service}}-->
-                        <!--</ion-item>-->
-                    <!--</ion-list>-->
-                <!--</ion-slide>-->
-                <!--<ion-slide>-->
-                    <!--<ion-list ng-if="currSlide === 6" ng-repeat="service in services.Packages.name">-->
-                        <!--<ion-item>-->
-                            <!--{{service}}-->
-                        <!--</ion-item>-->
-                    <!--</ion-list>-->
-                <!--</ion-slide>-->
-            <!--</ion-slide-box>-->
         </div>
     </ion-content>
     <div class="moreDownButton icon ion-chevron-down" ng-click="scrollToBottom($event)">
-    </div> <!--.moreDownButton -->
+    </div>
     <ion-footer-bar id="footer-bar" align-title="center" ng-click="findVendors()">
         <h1 class="title">FIND VENDORS</h1>
     </ion-footer-bar>

@@ -78,11 +78,19 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
         }
     };
 
+    $scope.scrollToRight = function($event) {
+        $($event.currentTarget).toggleClass("ion-chevron-right ion-chevron-left");
+        if($($event.currentTarget).hasClass("ion-chevron-right")){
+            $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(0, 0, true);
+        }else{
+            $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(500, 0, true);
+        }
+    };
+
     $scope.findVendors = function() {
         console.log("Find Vendors");
     };
     $scope.tabWithSlideChanged = function (indexNum) {
-        console.log(indexNum);
         $scope.tabActive = true;
         $ionicSlideBoxDelegate.slide(indexNum);
     };

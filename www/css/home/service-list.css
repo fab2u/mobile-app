@@ -47,3 +47,58 @@
     color: #FFFFFF;
     font-size: 20px;
 }
+#servicelistslider #scrollTabs {
+    width:100%;
+    margin-top:-80px;
+    background-color: #3D3D3D;
+}
+#servicelistslider #container {
+    width:500px;
+    height: 80px;
+    background-color: #3d3d3d;
+}
+#servicelistslider .tab {
+    width: auto;
+    height: 80px;
+    float: left;
+    text-align: center;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #ff8386;
+}
+
+#servicelistslider .tab i {
+    font-size: 2em;
+}
+#servicelistslider .active {
+    color: #FFFFFF;
+    background-color: #ff8386
+}
+#servicelistslider #footer-bar {
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    width:97%!important;
+    margin:0 auto;
+    background-color:#ff8386;
+}
+
+#servicelistslider #footer-bar h1{
+    color: #FFFFFF;
+}
+
+#servicelistslider #slideBox {
+    width: 100%!important;
+    height: auto;
+    padding: 0px;
+    background-color: white;
+}
+#servicelistslider .moreButton {
+    position:absolute;
+    height:auto;
+    width:auto;
+    padding-right: 10px;
+    right:0;
+    margin-top: -66px;
+    color: #FFFFFF;
+    font-size: 25px;
+}

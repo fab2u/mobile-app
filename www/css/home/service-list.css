@@ -102,3 +102,10 @@
     color: #FFFFFF;
     font-size: 25px;
 }
+#servicelistslider .img_icon{
+    max-width: 40px;
+    max-height: 40px;
+}
+#servicelistslider .list_view{
+    min-height: 60px;
+}

@@ -101,8 +101,8 @@ app
 	});
 
 	//State for service list
-	$stateProvider.state('services', {
-		url: '/services',
+	$stateProvider.state('salonServices', {
+		url: '/salonServices',
 		templateUrl: 'templates/home/service-list.html',
 		controller: 'ServiceListCtrl'
 	});
@@ -178,11 +178,11 @@ app
 	});
 
 
-	$stateProvider.state('new-slider', {
-		url: '/new-slider',
-		templateUrl: 'templates/home/new-slider.html',
-		controller: 'NewSliderCtrl'
-	});
+	// $stateProvider.state('new-slider', {
+	// 	url: '/new-slider',
+	// 	templateUrl: 'templates/home/new-slider.html',
+	// 	controller: 'NewSliderCtrl'
+	// });
 
 	//State for user wallet
 	$stateProvider.state('userWallet', {
@@ -235,13 +235,9 @@ app
 
 
 	if(window.localStorage.getItem('SkipIntro')== "true"){
-		console.log("if");
 		$urlRouterProvider.otherwise("/home");
 	}else{
-		console.log(window.localStorage.getItem('SkipIntro'));
-		console.log('else');
 		$urlRouterProvider.otherwise("/app-start");
-
 	}
 });
 

@@ -88,17 +88,15 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
     };
 
     $scope.findVendors = function() {
-        console.log("Find Vendors");
+        $state.go('vendorList');
     };
+
     $scope.tabWithSlideChanged = function (indexNum) {
         $scope.tabActive = true;
         $ionicSlideBoxDelegate.slide(indexNum);
     };
 
     $scope.selectItem = function(index, serviceName) {
-        console.log(index, serviceName);
-
-        // TODO
         // If not already present remove else store the name/id
         if($scope.selectedServices[serviceName]){
             delete $scope.selectedServices[serviceName];

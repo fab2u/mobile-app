@@ -1,10 +1,13 @@
-app.controller('VendorListCtrl', ['$scope', function($scope){
+app.controller('VendorListCtrl', ['$scope','$ionicHistory','$state', function($scope,$ionicHistory,$state){
 
-    firebase.database().ref('vendors').once('value',function(response){
-        $scope.vendor_list = response.val();
-        console.log("response for city",response.val());
-    });
+    // firebase.database().ref('vendors').once('value',function(response){
+    //     $scope.vendor_list = response.val();
+    //     console.log("response for city",response.val());
+    // });
 
+    $scope.backButton = function () {
+        $state.go($ionicHistory.backView().stateName);
+    };
 
     $scope.rating = 3;
     function defaultColor() {

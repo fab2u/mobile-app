@@ -10,7 +10,7 @@
         </a>
     </div>
     <ion-header-bar class="m-navColor">
-    <a href="" class="button icon-left ion-chevron-left button-clear"></a>
+    <a href="" class="button icon-left ion-chevron-left button-clear" ng-click="backButton()"></a>
     <h1 class="title">Select Vendors</h1>
     <div id="toggleButton">
         <label class="toggle">
@@ -23,7 +23,7 @@
     </ion-header-bar>
     <ion-content>
     <!--<div class="p-fix card" ng-repeat="vendor in vendor_list">-->
-    <div ng-repeat="vendors in vendor_list">
+    <!--<div class="p-fix card" ng-repeat="vendors in vendor_list">-->
 
         <div class="p-fix card" ng-repeat="vendor in vendors">
         <div class="row">

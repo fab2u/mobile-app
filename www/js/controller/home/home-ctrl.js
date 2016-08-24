@@ -26,12 +26,11 @@ app
 
 	$scope.services = function(cat){
 		if(cat == 'Salons'){
-			console.log("cat",cat);
-
-			$state.go('services');
+			$state.go('salonServices');
 		}
-		else{
-			alert("To be shown vendor list");
+		else if(cat != 'Salons') {
+			$state.go('vendorList');
+			console.log("To be shown vendor list");
 		}
 	};
 }]);

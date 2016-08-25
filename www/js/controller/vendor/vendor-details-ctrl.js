@@ -1,5 +1,5 @@
-app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionicModal','$stateParams','$cordovaGeolocation',
-    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$cordovaGeolocation){
+app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionicModal','$stateParams','$state',
+    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state){
 
     // here after vendor string will change later as per city selected by user
       $scope.images =[];
@@ -42,7 +42,6 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
     };
 
     $scope.more = false;
-        $scope.map_open = false;
 
 
         $scope.days = [];
@@ -69,8 +68,14 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
         $scope.more = !$scope.more;
     };
 
-    $scope.open_map = function(){
-        $scope.map_open = true;
+    $scope.open_map = function(latitude,longitude,line1,line2,vendorName){
+       $state.go('map',{
+                'lat': latitude,
+                'lng': longitude,
+                'add1': line1,
+                'add2': line2,
+                'name': vendorName
+        });
     };
 
     $scope.starrating=function(rating) {

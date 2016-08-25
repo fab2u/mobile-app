@@ -178,6 +178,12 @@ app
 		controller: 'BillCtrl'
 	});
 
+	$stateProvider.state('map', {
+		url: '/map/:lat/:lng/:add1/:add2/:name',
+		templateUrl: 'templates/vendor/map.html',
+		controller: 'mapCtrl'
+	});
+
 
 	// $stateProvider.state('new-slider', {
 	// 	url: '/new-slider',

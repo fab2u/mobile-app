@@ -46,8 +46,8 @@
 			    			<p>{{vendor_detail.address.address1}},{{vendor_detail.address.address2}}</p>
 			    		</div>
 			    		<div class="col col-10 map">
-			    			<div class="icon ion-ios-location mapButton" ng-click="open_map()">
-								<div id="map" ng-show="map_open" data-tap-disabled="true"></div>
+			    			<div class="icon ion-ios-location mapButton"
+								 ng-click="open_map(vendor_detail.address.latitude,vendor_detail.address.longitude,vendor_detail.address.address1,vendor_detail.address.address2,vendor_detail.vendorName)">
 			    			</div>
 			    		</div>
 			    	</div>

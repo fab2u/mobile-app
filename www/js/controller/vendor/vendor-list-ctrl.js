@@ -1,9 +1,10 @@
-app.controller('VendorListCtrl', ['$scope','$ionicHistory','$state', function($scope,$ionicHistory,$state){
+app.controller('VendorListCtrl', ['$scope','$ionicHistory','$state', function($scope,$ionicHistory,$state,$stateParams){
 
     firebase.database().ref('vendors').once('value',function(response){
         angular.forEach(response.val(), function(value, key) {
-            console.log(key + ': ' + JSON.stringify(value));
             $scope.vendor_list = value;
+            console.log("aaa", JSON.stringify($scope.vendor_list));
+
         });
     });
 
@@ -30,7 +31,7 @@ app.controller('VendorListCtrl', ['$scope','$ionicHistory','$state', function($s
         male.classList.add('is-active');
         female.classList.remove('is-active');
       }
-    }
+    };
 
     $scope.vendors = [
     	{id: '1'},
@@ -44,7 +45,7 @@ app.controller('VendorListCtrl', ['$scope','$ionicHistory','$state', function($s
       return new Array(rating);   //ng-repeat will run as many times as size of array
    };
 
-   $scope.vendor_detail = function(){
-       $state.go('vendorDetails');
+   $scope.vendor_detail = function(id){
+       $state.go('vendorDetails',{'vendor_id':id});
    }
 }]);

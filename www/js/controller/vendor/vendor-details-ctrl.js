@@ -1,4 +1,18 @@
-app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionicModal',function($scope, $ionicSlideBoxDelegate, $ionicModal){
+app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionicModal','$stateParams','$cordovaGeolocation',
+    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$cordovaGeolocation){
+
+    // here after vendor string will change later as per city selected by user
+      $scope.images =[];
+
+    firebase.database().ref('vendors/-KPmb38ud4KmLAhn00Cn/'+$stateParams.vendor_id).once('value',function(response){
+        $scope.vendor_detail = response.val();
+        angular.forEach(response.val().images, function(value, key) {
+            $scope.images.push({id : key, src:value.url})
+        });
+    });
+
+
+
 
   $scope.currentValue = 0;
   $scope.liked = false;
@@ -25,56 +39,98 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
     $scope.slideHasChanged = function(value){
       console.log(value);
       $scope.currentValue = value;
-    }
+    };
 
     $scope.more = false;
+        $scope.map_open = false;
 
-    $scope.showVendorTiming = function(){
-      console.log("working");
-      console.log($scope.more);
-      $scope.more = !$scope.more;
-    }
+
+        $scope.days = [];
+        var d = new Date();
+        var weekday = new Array(7);
+        weekday[0]=  "sunday";
+        weekday[1] = "monday";
+        weekday[2] = "tuesday";
+        weekday[3] = "wednesday";
+        weekday[4] = "thursday";
+        weekday[5] = "friday";
+        weekday[6] = "saturday";
+
+        var n = weekday[d.getDay()];
+
+    $scope.showVendorTiming = function(time_info){
+        angular.forEach(time_info, function(value, key) {
+            console.log(key,value);
+            if(key == n){
+                $scope.today_end_time = value.pm;
+            }
+            $scope.days.push({name : key,startTime:value.am , endTime:value.pm})
+        });
+        $scope.more = !$scope.more;
+    };
+
+    $scope.open_map = function(){
+        $scope.map_open = true;
+    };
 
     $scope.starrating=function(rating) {
       return new Array(rating);   //ng-repeat will run as many times as size of array
-    }
+    };
 
    $scope.changeSlide = function(val){
       $scope.currentValue = val;
       $ionicSlideBoxDelegate.$getByHandle('vendorMainDetails').slide(val);
-   }
+   };
 
-    $scope.days = [
-      {name: 'MON', startTime: '9:00 AM', endTime: '9:00 PM'},
-      {name: 'TUE', startTime: '9:00 AM', endTime: '9:00 PM'},
-      {name: 'WED', startTime: '9:00 AM', endTime: '9:00 PM'},
-      {name: 'THU', startTime: '9:00 AM', endTime: '9:00 PM'},
-      {name: 'FRI', startTime: '9:00 AM', endTime: '9:00 PM'},
-      {name: 'SAT', startTime: '9:00 AM', endTime: '9:00 PM'},
-      {name: 'SUN', startTime: '9:00 AM', endTime: '9:00 PM'}
-    ];
+    // $scope.days = [
+    //   {name: 'MON', startTime: '9:00 AM', endTime: '9:00 PM'},
+    //   {name: 'TUE', startTime: '9:00 AM', endTime: '9:00 PM'},
+    //   {name: 'WED', startTime: '9:00 AM', endTime: '9:00 PM'},
+    //   {name: 'THU', startTime: '9:00 AM', endTime: '9:00 PM'},
+    //   {name: 'FRI', startTime: '9:00 AM', endTime: '9:00 PM'},
+    //   {name: 'SAT', startTime: '9:00 AM', endTime: '9:00 PM'},
+    //   {name: 'SUN', startTime: '9:00 AM', endTime: '9:00 PM'}
+    // ];
 
-    $scope.images = [
-      {id:'1', src:'http://placehold.it/50x50'},
-      {id:'2', src:'http://placehold.it/50x50'},
-      {id:'3', src:'http://placehold.it/50x50'},
-      {id:'4', src:'http://placehold.it/50x50'},
-      {id:'5', src:'http://theflaticons.com/wp-content/uploads/2015/09/girl.png'},
-      {id:'6', src:'http://placehold.it/50x50'},
-      {id:'7', src:'http://placehold.it/50x50'},
-      {id:'8', src:'http://placehold.it/50x50'},
-      {id:'9', src:'http://placehold.it/50x50'},
-      {id:'10', src:'http://placehold.it/50x50'},
-      {id:'11', src:'http://placehold.it/50x50'}
-    ];
+    // $scope.images = [
+    //   {id:'1', src:'http://placehold.it/50x50'},
+    //   {id:'2', src:'http://placehold.it/50x50'},
+    //   {id:'3', src:'http://placehold.it/50x50'},
+    //   {id:'4', src:'http://placehold.it/50x50'},
+    //   {id:'5', src:'http://theflaticons.com/wp-content/uploads/2015/09/girl.png'},
+    //   {id:'6', src:'http://placehold.it/50x50'},
+    //   {id:'7', src:'http://placehold.it/50x50'},
+    //   {id:'8', src:'http://placehold.it/50x50'},
+    //   {id:'9', src:'http://placehold.it/50x50'},
+    //   {id:'10', src:'http://placehold.it/50x50'},
+    //   {id:'11', src:'http://placehold.it/50x50'}
+    // ];
 
-    $scope.isPresent= function(value) {
-      if(value == 1 || value == 3 || value == 4 || value == 5){
-        return true;
-      } else {
-        return false;
-      }
-    }
+    // $scope.isPresent= function(value) {
+    //   if(value == 1 || value == 3 || value == 4 || value == 5){
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // };
+
+        $scope.get_distance = function(latitude1,longitude1,latitude2,longitude2,units) {
+            console.log(latitude1,longitude1,latitude2,longitude2,units)
+            var p = 0.017453292519943295;    //This is  Math.PI / 180
+            var c = Math.cos;
+            var a = 0.5 - c((latitude2 - latitude1) * p)/2 +
+                c(latitude1 * p) * c(latitude2 * p) *
+                (1 - c((longitude2 - longitude1) * p))/2;
+            var R = 6371; //  Earth distance in km so it will return the distance in km
+            $scope.dist = Math.round(2 * R * Math.asin(Math.sqrt(a)));
+            if($scope.dist){
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        };
 
     $scope.reviews = [
       {name: 'Anu',rating: 3,review: 'This example demonstrates how to display the entire text when hover over the element.',image: 'http://theflaticons.com/wp-content/uploads/2015/09/girl.png'},

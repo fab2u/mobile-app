@@ -1,15 +1,19 @@
 app.controller('VendorListCtrl', ['$scope','$ionicHistory','$state', function($scope,$ionicHistory,$state){
 
-    // firebase.database().ref('vendors').once('value',function(response){
-    //     $scope.vendor_list = response.val();
-    //     console.log("response for city",response.val());
-    // });
+    firebase.database().ref('vendors').once('value',function(response){
+        angular.forEach(response.val(), function(value, key) {
+            console.log(key + ': ' + JSON.stringify(value));
+            $scope.vendor_list = value;
+        });
+    });
+
+
 
     $scope.backButton = function () {
         $state.go($ionicHistory.backView().stateName);
     };
 
-    $scope.rating = 3;
+    // $scope.rating = 3;
     function defaultColor() {
         male.classList.add('is-active');
         female.classList.remove('is-active');
@@ -38,5 +42,9 @@ app.controller('VendorListCtrl', ['$scope','$ionicHistory','$state', function($s
 
     $scope.starRating = function(rating) {
       return new Array(rating);   //ng-repeat will run as many times as size of array
-   }	
+   };
+
+   $scope.vendor_detail = function(){
+       $state.go('vendorDetails');
+   }
 }]);

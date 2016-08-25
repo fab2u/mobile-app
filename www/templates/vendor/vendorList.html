@@ -25,11 +25,11 @@
     <!--<div class="p-fix card" ng-repeat="vendor in vendor_list">-->
     <!--<div class="p-fix card" ng-repeat="vendors in vendor_list">-->
 
-        <div class="p-fix card" ng-repeat="vendor in vendors">
+        <div class="p-fix card" ng-repeat="vendor in vendor_list" ng-click="vendor_detail()">
         <div class="row">
             <div class="col c-col-40">
-                <h6 class="c-title">Saundarya Shree Beauty Parlour</h6>
-                <p class="c-subtitle">in front of global school</p>
+                <h6 class="c-title">{{vendor.vendorName}}</h6>
+                <p class="c-subtitle">{{vendor.address.landmark}}</p>
             </div>
             <div class="location-icon-container">
                 <div>
@@ -40,12 +40,12 @@
             </div>
             <div id="section2" class="col c-col-60">
                 <div id="rating">
-                    <i class="icon ion-star active" ng-repeat="counter in starRating(rating) track by $index"></i>
-                    <i class="icon ion-star" ng-repeat="counter in starRating(5-rating) track by $index"></i>
-                    <p>PLATINUM</p>
+                    <i class="icon ion-star active" ng-repeat="counter in starRating(vendor.rating) track by $index"></i>
+                    <i class="icon ion-star" ng-repeat="counter in starRating(5-vendor.rating) track by $index"></i>
+                    <p>{{vendor.type}}</p>
                 </div>
             </div>
-            <div id="price-tag" class="col">
+            <div id="price-tag" class="col" ng-repeat="price in vendor.menu">
                 <div class="row original-price">
                     <div id="line-through"></div>
                     <span id="one" class="left-price badge">

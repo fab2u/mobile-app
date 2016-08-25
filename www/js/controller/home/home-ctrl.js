@@ -12,8 +12,8 @@ app
 	};
 
 	$scope.offers = [
-		{offer: 'Refer a friend and get hidden gift', imgsrc: 'img/home/slider/slider1.jpg'},
-		{offer: 'Refer a friend and get hidden gift', imgsrc: 'img/home/slider/slider2.jpg'}
+		{offer: 'Refer a friend and get hidden gift', image: 'img/home/slider/slider1.jpg'},
+		{offer: 'Refer a friend and get hidden gift', image: 'img/home/slider/slider2.jpg'}
 		];
 
 	$scope.categories = [
@@ -30,7 +30,6 @@ app
 		}
 		else if(cat != 'Salons') {
 			$state.go('vendorList');
-			console.log("To be shown vendor list");
 		}
 	};
 }]);

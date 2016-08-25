@@ -34,6 +34,7 @@ app
 		})
 		.state('app.home', {
 			url: '/home',
+			cache:false,
 			views: {
 				'menuContent': {
 					templateUrl: 'templates/home/home.html',
@@ -235,7 +236,7 @@ app
 
 
 	if(window.localStorage.getItem('SkipIntro')== "true"){
-		$urlRouterProvider.otherwise("/home");
+		$urlRouterProvider.otherwise("/app/home");
 	}else{
 		$urlRouterProvider.otherwise("/app-start");
 	}

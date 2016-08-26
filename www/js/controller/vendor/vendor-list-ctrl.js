@@ -31,7 +31,7 @@ app.controller('VendorListCtrl', ['$scope','$ionicHistory','$state', function($s
         female.classList.remove('is-active');
       }
     };
-    
+
     $scope.starRating = function(rating) {
       return new Array(rating);   //ng-repeat will run as many times as size of array
    };

@@ -89,7 +89,7 @@
 			    		</div>
 			    	</div>
 			    	<ion-list ng-show="more">
-			    		<ion-item ng-repeat="item in days" class="timingDetail">
+			    		<ion-item ng-repeat="item in days" class="timingDetail capitalize">
 			    			{{item.name}}
 			    			<span ng-class="time" >
                                 {{item.startTime | date:"h:mma"}} - {{item.endTime | date:"h:mma"}}

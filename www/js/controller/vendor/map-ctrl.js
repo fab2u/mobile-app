@@ -1,18 +1,5 @@
 app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $ionicLoading, $ionicHistory, $stateParams){
 
-
-    // $ionicLoading.show({
-    //     content: 'Loading',
-    //     animation: 'fade-in',
-    //     showBackdrop: true,
-    //     maxWidth: 200,
-    //     showDelay: 0
-    // });
-    //
-    // $timeout(function () {
-    //     $ionicLoading.hide();
-    // }, 1000);
-
     $scope.showPrevious = function(){
         $scope.hashistory = Object.keys($ionicHistory.viewHistory().views).length;
 

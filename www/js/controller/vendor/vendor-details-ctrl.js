@@ -1,10 +1,43 @@
-app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionicModal','$stateParams','$state',
-    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state){
+app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionicModal','$stateParams','$state','$cordovaGeolocation',
+    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,$cordovaGeolocation){
 
-    // here after vendor string will change later as per city selected by user
+
+        var posOptions = {timeout: 10000, enableHighAccuracy: false};
+        $cordovaGeolocation
+            .getCurrentPosition(posOptions)
+
+            .then(function (position) {
+                var lat  = position.coords.latitude
+                var long = position.coords.longitude
+                console.log(lat + '   ' + long)
+            }, function(err) {
+                console.log(err)
+            });
+
+        // var watchOptions = {timeout : 3000, enableHighAccuracy: false};
+        // var watch = $cordovaGeolocation.watchPosition(watchOptions);
+        //
+        // watch.then(
+        //     null,
+        //
+        //     function(err) {
+        //         console.log(err)
+        //     },
+        //
+        //     function(position) {
+        //         var lat  = position.coords.latitude
+        //         var long = position.coords.longitude
+        //         console.log(lat + '' + long)
+        //     }
+        // );
+        //
+        // watch.clearWatch();
+
+
+        // here after vendor string will change later as per city selected by user
       $scope.images =[];
 
-    firebase.database().ref('vendors/-KPmb38ud4KmLAhn00Cn/'+$stateParams.vendor_id).once('value',function(response){
+    firebase.database().ref('vendors/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.vendor_id).once('value',function(response){
         $scope.vendor_detail = response.val();
         angular.forEach(response.val().images, function(value, key) {
             $scope.images.push({id : key, src:value.url})
@@ -88,8 +121,10 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
    };
 
 
+
+
+
         $scope.get_distance = function(latitude1,longitude1,latitude2,longitude2,units) {
-            console.log(latitude1,longitude1,latitude2,longitude2,units)
             var p = 0.017453292519943295;    //This is  Math.PI / 180
             var c = Math.cos;
             var a = 0.5 - c((latitude2 - latitude1) * p)/2 +

@@ -11,6 +11,13 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 		history.back();
 	}
 
+	// $scope.liked = false;
+	// console.log($scope.liked);
+	// $scope.likeThisFeed = function(id){
+	// 	$scope.liked = !$scope.liked;
+	// 	console.log($scope.liked);
+	// }
+
 	$scope.doRefresh = function(){
 		console.log('pull to refresh');
 		db.ref("blogs").orderByKey().startAt($scope.topKey).once('value', function(snapshot){
@@ -44,14 +51,21 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 				}
 				else{
 					console.log(snap.val());
+					console.log($scope.bottomKey);
+					$scope.oldBottomKey = $scope.bottomKey;
 					console.log(Object.keys(snap.val())[0]);
 					$scope.bottomKey = Object.keys(snap.val())[0];
 					angular.forEach(snap.val(), function(value, key){
-						value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-						$timeout(function () {
-							jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
-						}, 0);
-						$scope.events2.push(value);
+						if(key == $scope.oldBottomKey){
+							// do nothing
+						}
+						else{
+							value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+							$timeout(function () {
+								jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
+							}, 0);
+							$scope.events2.push(value);
+						}
 					});
 					$scope.$broadcast('scroll.infiniteScrollComplete');
 				}
@@ -64,6 +78,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 				$scope.bottomKey = Object.keys(snapshot.val())[0];
 				console.log(Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1]);
 				$scope.topKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1];
+				console.log($scope.bottomKey, $scope.topKey);
 				angular.forEach(snapshot.val(), function(value, key){
 					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 					$timeout(function () {

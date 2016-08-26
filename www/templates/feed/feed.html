@@ -11,6 +11,7 @@
 			<p class="feed-title">{{feed.title}}</p>
 			<img ng-src="{{feed.photoUrl}}" class="feed-img">
 			<div ng-bind-html="feed.introduction" class="feed-introduction"></div>
+			<div>{{feed.blog_id}}</div>
 			<div class="{{feed.user.user_name}}"></div>
 			<div class="likeFeed" ng-click="likeThisFeed(feed.blog_id)">
 				<i class="icon ion-heart" ng-class="liked? 'liked-heart': normal-heart"></i>

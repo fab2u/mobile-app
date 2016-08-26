@@ -124,6 +124,7 @@ app.controller("newFeedCtrl", ['$scope', '$timeout', '$cordovaCamera', function(
          var dataURL = canvas.toDataURL("image/jpeg");
          alert('dataURL ' + dataURL);
 
+         // change api for fab2u
          $http.post("http://139.162.3.205/api/testupload", {path: dataURL})
          .success(function(response){
             alert('success');

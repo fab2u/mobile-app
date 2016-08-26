@@ -87,37 +87,6 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
       $ionicSlideBoxDelegate.$getByHandle('vendorMainDetails').slide(val);
    };
 
-    // $scope.days = [
-    //   {name: 'MON', startTime: '9:00 AM', endTime: '9:00 PM'},
-    //   {name: 'TUE', startTime: '9:00 AM', endTime: '9:00 PM'},
-    //   {name: 'WED', startTime: '9:00 AM', endTime: '9:00 PM'},
-    //   {name: 'THU', startTime: '9:00 AM', endTime: '9:00 PM'},
-    //   {name: 'FRI', startTime: '9:00 AM', endTime: '9:00 PM'},
-    //   {name: 'SAT', startTime: '9:00 AM', endTime: '9:00 PM'},
-    //   {name: 'SUN', startTime: '9:00 AM', endTime: '9:00 PM'}
-    // ];
-
-    // $scope.images = [
-    //   {id:'1', src:'http://placehold.it/50x50'},
-    //   {id:'2', src:'http://placehold.it/50x50'},
-    //   {id:'3', src:'http://placehold.it/50x50'},
-    //   {id:'4', src:'http://placehold.it/50x50'},
-    //   {id:'5', src:'http://theflaticons.com/wp-content/uploads/2015/09/girl.png'},
-    //   {id:'6', src:'http://placehold.it/50x50'},
-    //   {id:'7', src:'http://placehold.it/50x50'},
-    //   {id:'8', src:'http://placehold.it/50x50'},
-    //   {id:'9', src:'http://placehold.it/50x50'},
-    //   {id:'10', src:'http://placehold.it/50x50'},
-    //   {id:'11', src:'http://placehold.it/50x50'}
-    // ];
-
-    // $scope.isPresent= function(value) {
-    //   if(value == 1 || value == 3 || value == 4 || value == 5){
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // };
 
         $scope.get_distance = function(latitude1,longitude1,latitude2,longitude2,units) {
             console.log(latitude1,longitude1,latitude2,longitude2,units)

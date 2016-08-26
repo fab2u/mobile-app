@@ -12,8 +12,8 @@ app
 
 	$scope.uid = window.localStorage.getItem('uid');
 
-	$scope.location = "Gurgaon";
-
+	$scope.location_info = JSON.parse(window.localStorage['selectedLocation']);
+	
 	$scope.uid = window.localStorage.getItem("uid");
 
 	$scope.search_text = function(){

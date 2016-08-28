@@ -56,10 +56,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 					console.log(Object.keys(snap.val())[0]);
 					$scope.bottomKey = Object.keys(snap.val())[0];
 					angular.forEach(snap.val(), function(value, key){
-						if(key == $scope.oldBottomKey){
-							// do nothing
-						}
-						else{
+						if(key != $scope.oldBottomKey){
 							value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 							$timeout(function () {
 								jdenticon.update("#"+value.blog_id, md5(value.user.user_id));

@@ -5,14 +5,21 @@
    </ion-header-bar>
 	<ion-content class="has-header">
 		<ion-refresher pulling-text="Loading New Feed" on-refresh="doRefresh()"></ion-refresher>
-		<div class="card feeds" ng-repeat="feed in events2 | orderBy:'-created_time'">
-			<canvas id="{{feed.blog_id}}" width="40" height="40"></canvas>
-			<p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_name}}</a></p>
+		<div class="feeds" ng-repeat="feed in events2 | orderBy:'-created_time'">
+			<div class="row">
+				<div class="col">
+					<canvas class="user_icon img-circle" id="{{feed.blog_id}}" width="40" height="40"></canvas>
+				</div>
+				<div class="col">
+					<p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_name}}</a></p>
+				</div>
+				<div class="col">
+					<a href="#" class="follow-btn">Follow</a>
+				</div>
+			</div>
 			<p class="feed-title">{{feed.title}}</p>
 			<img ng-src="{{feed.photoUrl}}" class="feed-img">
 			<div ng-bind-html="feed.introduction" class="feed-introduction"></div>
-			<div>{{feed.blog_id}}</div>
-			<div class="{{feed.user.user_name}}"></div>
 			<div class="likeFeed" ng-click="likeThisFeed(feed.blog_id)">
 				<i class="icon ion-heart" ng-class="liked? 'liked-heart': normal-heart"></i>
 				<span>{{feed.likes}}</span>

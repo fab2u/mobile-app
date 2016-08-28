@@ -44,7 +44,6 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 	$scope.loadMore = function(){
 		console.log(Object.keys($scope.blogIdList).length);
 		if(Object.keys($scope.blogIdList).length > 0){
-			console.log($scope.bottomKey);
 			db.ref("tags/"+$scope.tagName+"/blogs").orderByKey().limitToFirst(5).endAt($scope.bottomKey).once("value", function(snap){
 				console.log(snap.val());
 				if(snap.numChildren() == 1){
@@ -52,18 +51,23 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 					$scope.$broadcast('scroll.infiniteScrollComplete');
 				}
 				else{
+					console.log($scope.bottomKey);
+					$scope.oldBottomKey = $scope.bottomKey;
 					$scope.bottomKey = Object.keys(snap.val())[0];
+					console.log($scope.bottomKey);
 					for(var i in snap.val()){
 						// console.log(i); // i is the key of blogs object or the id of each blog
-						var blogData = db.ref().child("blogs").child(i);
-						blogData.once("value", function(snap){ //access individual blog
-							single_blog = snap.val();
-							single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-							$timeout(function () {
-								jdenticon.update("#"+snap.val().blog_id, md5(snap.val().user.user_id));
-							}, 0);
-							$scope.blogArr.push(single_blog);
-						});
+						if (i != $scope.oldBottomKey){
+							var blogData = db.ref().child("blogs").child(i);
+							blogData.once("value", function(snap){ //access individual blog
+								single_blog = snap.val();
+								single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+								$timeout(function () {
+									jdenticon.update("#"+snap.val().blog_id, md5(snap.val().user.user_id));
+								}, 0);
+								$scope.blogArr.push(single_blog);
+							});
+						}
 					}
 					$scope.$broadcast('scroll.infiniteScrollComplete');
 				}

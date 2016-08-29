@@ -105,7 +105,7 @@ app.controller('IntroSliderCtrl', ['$scope', '$ionicSlideBoxDelegate', '$state',
     };
 
     $scope.slideChanged = function() {
-        if ($ionicSlideBoxDelegate.currentIndex() == 5){
+        if ($ionicSlideBoxDelegate.currentIndex() == 3){
             $scope.pager = false;
             $ionicSlideBoxDelegate.update();
             $ionicLoading.show();

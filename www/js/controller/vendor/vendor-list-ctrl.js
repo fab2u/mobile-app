@@ -5,6 +5,8 @@ app.controller('VendorListCtrl', ['$scope','$ionicHistory','$state', function($s
 
     firebase.database().ref('vendors/'+JSON.parse(window.localStorage['selectedLocation']).cityId).once('value',function(response){
         $scope.vendor_list = response.val();
+
+        console.log("vendor list",JSON.stringify(response.val()))
     });
 
 
@@ -37,6 +39,6 @@ app.controller('VendorListCtrl', ['$scope','$ionicHistory','$state', function($s
    };
 
    $scope.vendor_detail = function(id){
-       $state.go('vendorDetails',{'vendor_id':id});
+       $state.go('vendor-services-list',{vendor_id:id});
    }
 }]);

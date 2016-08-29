@@ -164,6 +164,12 @@ app
 		controller: 'VendorListCtrl'
 	});
 
+	$stateProvider.state('vendorMenu', {
+		url: '/vendorMenu/:vendor_id',
+		templateUrl: 'templates/vendor/vendor-menu.html',
+		controller: 'vendorMenuCtrl'
+	});
+
 	//State for confirmation
 	$stateProvider.state('confirmation', {
 		url: '/confirmation',
@@ -200,7 +206,7 @@ app
 
 	//State for user wallet
 	$stateProvider.state('vendor-services-list', {
-		url: '/vendor-services-list',
+		url: '/vendor-services-list/:vendor_id',
 		templateUrl: 'templates/vendor/vendor-services-list.html',
 		controller: 'VendorServicesListCtrl'
 	});

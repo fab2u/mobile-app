@@ -181,6 +181,10 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
     $scope.goToSlide = function(value){
       $ionicSlideBoxDelegate.$getByHandle('ImgGallery').slide(value);
       $scope.modal.show();
+    };
+
+    $scope.cart = function(){
+        $state.go('cart');
     }
 
 }]);

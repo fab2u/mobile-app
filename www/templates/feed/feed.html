@@ -32,16 +32,16 @@
 			</div>
 			<img ng-src="{{feed.photoUrl}}" class="feed-img">
 			<div class="row">
-				<div class="col">
+				<div class="col col-60 likenum">
 					<i class="icon ion-heart"></i>
-					<span>{{feed.likes}}</span>
+					<span>{{feed.likes}} likes</span>
 				</div>
-				<div class="col">
-					<i class="icon ion-heart" id="{{feed.blog_id}}-likeFeed" ng-click="likeThisFeed(feed.blog_id)"></i>
+				<div class="col col-40">
+					<i class="like-btn icon ion-heart" id="{{feed.blog_id}}-likeFeed" ng-click="likeThisFeed(feed.blog_id)"></i>
 				</div>
 			</div>
 		</div>
-		<div ng-hide="moreMessagesScroll">You are at the end of the feed</div>
+		<div ng-hide="moreMessagesScroll" class="feedend">You are at the end of the feed</div>
 		<ion-infinite-scroll ng-if="moreMessagesScroll" immediate-check="false" on-infinite="loadMore()" distance="1%"> </ion-infinite-scroll>
 	</ion-content>
 </ion-view>

@@ -1,8 +1,9 @@
-app.controller("newFeedCtrl", ['$scope', '$timeout', '$cordovaCamera', function($scope, $timeout, $cordovaCamera){
+app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cordovaCamera', '$ionicLoading', function($scope, $http, $location, $timeout, $cordovaCamera, $ionicLoading){
    uid = localStorage.getItem("uid");
    uname = localStorage.getItem("name");
    console.log(uid);
    console.log(uname);
+   var blogData;
 
    $scope.goBack = function(){
 		history.back();
@@ -25,20 +26,26 @@ app.controller("newFeedCtrl", ['$scope', '$timeout', '$cordovaCamera', function(
          active: true,
          created_time: new Date().getTime(),
       };
-      console.log(blogData);
+      alert($scope.image_url)
+      // blogData['photoUrl'] = $scope.image_url;
+      if ($scope.image_url != undefined){
+         alert('inside if');
+         blogData['photoUrl'] = $scope.image_url;
+      }
+      alert(blogData.photoUrl)
 
       var re = /#(\w+)(?!\w)/g, hashTag, tagsValue = [];
       while (hashTag = re.exec($scope.feed.introduction)) {
          tagsValue.push(hashTag[1]);
       }
       console.log(tagsValue);
-
+      alert('1');
       // blog object update without tags, functional
       var updateBlog = {};
       updateBlog['/blogs/' + newBlogKey] = blogData;
       console.log(updateBlog);
       db.ref().update(updateBlog);
-
+      alert('2');
       for(var i=0; i<tagsValue.length; i++){
          //tags object update, functional
          var tagsData = db.ref().child("tags").child(tagsValue[i]);
@@ -54,12 +61,17 @@ app.controller("newFeedCtrl", ['$scope', '$timeout', '$cordovaCamera', function(
          console.log(updates);
          db.ref().update(updates);
       }
-
+      alert('3');
       // user object update, functional
       var authUpdate = {};
       authUpdate['/users/data/'+ blogData.user.user_id+ '/blogs/' + newBlogKey] = true;
       console.log(authUpdate);
-      db.ref().update(authUpdate);
+      alert('4');
+      db.ref().update(authUpdate).then(function(){
+         $timeout(function () {
+            $location.path("/feed");
+         }, 0);
+      });
    }
 
    $scope.galleryUpload = function() {
@@ -122,15 +134,16 @@ app.controller("newFeedCtrl", ['$scope', '$timeout', '$cordovaCamera', function(
          ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5, 0, 0, canvas.width, canvas.height);
          // alert(canvas.width+" "+canvas.height+" "+img.width+" "+img.height);
          var dataURL = canvas.toDataURL("image/jpeg");
+         alert('before api 1');
          alert('dataURL ' + dataURL);
-
+         alert('before api 2');
          // change api for fab2u
          $http.post("http://139.162.3.205/api/testupload", {path: dataURL})
          .success(function(response){
             alert('success');
             alert(JSON.stringify(response.Message));
-            blogData.photoUrl = response.Message;
-            alert(JSON.stringify(blogData));
+            $scope.image_url = response.Message;
+            alert($scope.image_url);
          })
          .error(function(response){
             alert('error');

@@ -43,6 +43,20 @@
 	margin:10px;
 }
 
+.fabFeed i.like-btn.ion-heart {
+  font-size: 30px;
+}
+
+.fabFeed .likenum{
+	color: #FF8386;
+	line-height: 41px;
+}
+
+.fabFeed .feedend{
+	color: #FF8386;
+	text-align: center;
+}
+
 .fabFeed .user_icon {
 	margin: 0 auto;
 	display: block;

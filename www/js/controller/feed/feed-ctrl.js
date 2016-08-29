@@ -11,12 +11,24 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 		history.back();
 	}
 
-	// $scope.liked = false;
-	// console.log($scope.liked);
-	// $scope.likeThisFeed = function(id){
-	// 	$scope.liked = !$scope.liked;
-	// 	console.log($scope.liked);
-	// }
+	$scope.likeThisFeed = function(feedId){
+      if($("#"+feedId+"-likeFeed").hasClass('clicked')){
+         console.log('inside remove');
+         db.ref("blogs/"+feedId+"/likedBy/"+$scope.uid).remove().then(function(){
+            console.log('removed successfully');
+				$("#"+feedId+"-likeFeed").removeClass("clicked");
+         });
+      }
+      else {
+         console.log(feedId, $scope.uid);
+         var updates = {};
+         updates["blogs/"+feedId+"/likedBy/"+$scope.uid] = true;
+         db.ref().update(updates).then(function(){
+            console.log('success');
+            $("#"+feedId+"-likeFeed").addClass("clicked");
+         });
+      }
+   }
 
 	$scope.doRefresh = function(){
 		console.log('pull to refresh');
@@ -79,6 +91,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 				angular.forEach(snapshot.val(), function(value, key){
 					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 					$timeout(function () {
+						console.log(value.user.user_id);
 						jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
 					}, 0);
 					$scope.events2.push(value);

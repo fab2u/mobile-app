@@ -1,4 +1,10 @@
-<ion-view class="fabFeed">
+<style>
+   .clicked{
+      color: #F0563B;
+   }
+</style>
+
+<ion-view class="fabFeed" cache-view="false">
 	<ion-header-bar class="bar-stable" title="Profile">
       <a class="button icon ion-chevron-left button-clear" ng-click="goBack()"></a>
       <h1 class="title">Fab Book</h1>
@@ -7,22 +13,32 @@
 		<ion-refresher pulling-text="Loading New Feed" on-refresh="doRefresh()"></ion-refresher>
 		<div class="feeds" ng-repeat="feed in events2 | orderBy:'-created_time'">
 			<div class="row">
-				<div class="col">
+				<div class="col col-25">
 					<canvas class="user_icon img-circle" id="{{feed.blog_id}}" width="40" height="40"></canvas>
 				</div>
-				<div class="col">
+				<div class="col col-50">
 					<p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_name}}</a></p>
 				</div>
-				<div class="col">
+				<div class="col col-25">
 					<a href="#" class="follow-btn">Follow</a>
 				</div>
 			</div>
-			<p class="feed-title">{{feed.title}}</p>
+			<div class="row">
+				<div class="col col-25"></div>
+				<div class="col col-75">
+					<p class="feed-title">{{feed.title}}</p>
+					<p ng-bind-html="feed.introduction" class="feed-introduction"></p>
+				</div>
+			</div>
 			<img ng-src="{{feed.photoUrl}}" class="feed-img">
-			<div ng-bind-html="feed.introduction" class="feed-introduction"></div>
-			<div class="likeFeed" ng-click="likeThisFeed(feed.blog_id)">
-				<i class="icon ion-heart" ng-class="liked? 'liked-heart': normal-heart"></i>
-				<span>{{feed.likes}}</span>
+			<div class="row">
+				<div class="col">
+					<i class="icon ion-heart"></i>
+					<span>{{feed.likes}}</span>
+				</div>
+				<div class="col">
+					<i class="icon ion-heart" id="{{feed.blog_id}}-likeFeed" ng-click="likeThisFeed(feed.blog_id)"></i>
+				</div>
 			</div>
 		</div>
 		<div ng-hide="moreMessagesScroll">You are at the end of the feed</div>

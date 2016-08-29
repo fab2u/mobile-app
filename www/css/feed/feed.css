@@ -32,7 +32,6 @@
 .fabFeed .feed-introduction {
 	font-size:1em;
 	font-weight:400;
-	margin: 10px;
 }
 .fabFeed .likeFeed {
 	margin:10px;
@@ -42,14 +41,6 @@
 .fabFeed .likeFeed i{
 	font-size:1em;
 	margin:10px;
-}
-
-.fabFeed .liked-heart{
-	color: #FF8386;
-}
-
-.fabFeed .normal-heart{
-	color: #e6e6e6;
 }
 
 .fabFeed .user_icon {

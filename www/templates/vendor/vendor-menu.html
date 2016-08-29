@@ -1,51 +1,85 @@
-<ion-view id="servicelistslider">
+<ion-view id="vendor-services">
     <ion-content delegate-handle="mainScroll">
-        <!--<div  id="img-container" class="row">-->
-            <!--<img  ng-if="currSlide === 0" ng-src="{{services.Face.image}}">-->
-            <!--<img  ng-if="currSlide === 1" ng-src="{{services.Hair.image}}">-->
-            <!--<img  ng-if="currSlide === 2" ng-src="{{services.HairRemoval.image}}">-->
-            <!--<img  ng-if="currSlide === 3" ng-src="{{services.Body.image}}">-->
-            <!--<img  ng-if="currSlide === 4" ng-src="{{services.HandsNfeets.image}}">-->
-            <!--<img  ng-if="currSlide === 5" ng-src="{{services.Nails.image}}">-->
-            <!--<img  ng-if="currSlide === 6" ng-src="{{services.Packages.image}}">-->
-
-            <!--<div class="backButton icon ion-chevron-left" ng-click="backButton()">-->
-            <!--</div>-->
-            <!--<div class="searchButton" ng-click="searchButton()">-->
-                <!--<i class="icon ion-ios-search-strong"></i>-->
-            <!--</div>-->
-        <!--</div>-->
-        <ion-scroll zooming="false" direction="x" id="scrollTabs" delegate-handle="myhandel">
-            <div id="container">
-                <div style="width:1800px;">
-                    <div class="tab"
-                         ng-class="$index == 0 ? 'active':''"
-                         ng-repeat="item in ['FACE', 'HAIR','HAIR REMOVAL', 'BODY', 'HANDS & FEET','NAILS','PACKAGES']"
-                         ng-click="tabWithSlideChanged($index)">
-                        <i class="icon ion-social-reddit-outline"></i>
-                        <p>{{item}}</p>
-                    </div>
+        <div class="header">
+            <div class="title row">
+                <div class="col-20">
+                    <div class="backButton icon ion-chevron-left" ng-click="backButton()"></div>
                 </div>
-            </div>
-        </ion-scroll>
-        <div class="moreButton icon ion-chevron-right" ng-click="scrollToRight($event)"></div>
-        <div>
-            <ion-slide-box on-slide-changed="slideHasChanged($index,false)" show-pager="false">
-                <ion-slide  ng-repeat="service in vendor_menu">
-                    <ion-list>
-                        <ion-item ng-repeat="serviceItem in service"
-                                  class="item-thumbnail-right list_view" ng-click="selectItem($index,serviceItem)">
-                            {{serviceItem.menuItemName}}
-                            <!--<img src="img/home/new-slider/square-blue.png" class="img_icon" ng-show="selectedServices[serviceItem]">-->
-                        </ion-item>
-                    </ion-list>
+                <div class="col-80">
+                    <h1>SAUNDARYA BEAUTY PARLOUR</h1><br>
+                </div>
+            </div> <!-- .title -->
+            <div class="cart-details row">
+                <div class="col">
+
+                </div> <!-- .col -->
+                <div class="col" style="text-align:center;">
+                    <div class="cart">
+                        <span class="total-cart">5</span>
+                        <i class="icon ion-ios-cart"></i>
+                    </div> <!-- .cart -->
+                </div> <!-- .col -->
+                <div class="col">
+                    <div class="row cart-price">
+                        <div class="col currency">&#x20B9;</div>
+                        <div class="col price">1000</div>
+                    </div> <!-- .cart-price -->
+                </div> <!-- .col -->
+            </div> <!-- .cart-details -->
+        </div> <!-- .header -->
+        <div id="scroll-tabs" class="row">
+            <ion-scroll id="scrollTabs" direction="x" delegate-handle="myhandel">
+                <div id="container">
+                    <div style="width:1800px;">
+                        <div
+                                class="tab"
+                                ng-class="$index == 0 ? 'active':''"
+                                ng-repeat="item in menu"
+                                ng-click="tabHasChanged($index)"
+                                ng-if="item.menuList.length > 0">
+                            <i class="icon ion-social-reddit-outline"></i>
+                            <p>{{item.name}}</p>
+                        </div> <!-- .tab -->
+                    </div>
+                </div><!-- #container -->
+            </ion-scroll>
+            <div class="moreButton icon ion-chevron-right" ng-click="scrollToRight($event)"></div>
+        </div> <!-- #scroll-tabs -->
+
+
+        <div class="row padding" id="slideBox">
+            <ion-slide-box style="width:100%!important; background-color: #FFF;" class="slideBox" on-slide-changed="slideHasChanged($index)" show-pager="false" delegate-handle="my-handle">
+                <ion-slide ng-repeat="item in menu">
+                    <div class="col" ng-repeat="x in item.menuList " style="width: 100%;margin:= auto; ">
+                        <div class="item item-text-wrap list-heading " id="contact">{{x.serviceName}}</div>
+                        <div id= "y.id " class="item item-text-wrap row" id="custom-servicelist"
+                             ng-click="selectItem($index, x.menuItemName)">
+                            <div ng-show="selectedServices[x.menuItemName]" style="background-color:#0dd1d1; width:20px;">
+                            </div>
+                            <div class="col col-50 item-text-wrap p-15">
+                                <span style="font-size: 0.9em;">{{x.menuItemName}}</span>
+                            </div>
+                            <div class="col col-33 p-15" style="text-align:right;font-color:black;">
+                                <strike>
+                                    <span class="striked-text" style="font-size: 0.9em;">&#x20B9;{{x.vendorPrice}} </span>
+                                    <span class="line-arrow right" style="position:relative;bottom:1px ;left:4px;"></span>
+                                </strike>
+                                <span style="font-size: 0.9em;">
+                                  &nbsp &#x20B9; {{x.fab2uPrice}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </ion-slide>
             </ion-slide-box>
         </div>
+
     </ion-content>
-    <div class="moreDownButton icon ion-chevron-down" ng-click="scrollToBottom($event)">
-    </div>
-    <!--<ion-footer-bar id="footer-bar" align-title="center" ng-click="findVendors()">-->
-        <!--<h1 class="title">FIND VENDORS</h1>-->
-    <!--</ion-footer-bar>-->
+
+    <ion-footer-bar class="footer">
+        <div class="row newFooter">
+            <div class="col col-33" id="overview" ng-click="overviewButton()">OVERVIEW</div>
+            <div class="col col-66" id="proceed" ng-click="proceedButton()">SELECT DATE AND TIME</div>
+        </div> <!-- .newFooter -->
+    </ion-footer-bar>
 </ion-view>

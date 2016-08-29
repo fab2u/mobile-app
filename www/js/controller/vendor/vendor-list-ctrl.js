@@ -39,6 +39,6 @@ app.controller('VendorListCtrl', ['$scope','$ionicHistory','$state', function($s
    };
 
    $scope.vendor_detail = function(id){
-       $state.go('vendor-services-list',{vendor_id:id});
+       $state.go('vendorMenu',{vendor_id:id});
    }
 }]);

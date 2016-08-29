@@ -3,12 +3,108 @@ app
     function($scope, $ionicSlideBoxDelegate, $ionicScrollDelegate, $timeout,$stateParams) {
 
 
+$scope.menu = [];
+        $scope.menu[0] = {
+            name:"SELECTED",
+            Id:'0000',
+            menuList:[]
+        };
+        $scope.menu[1] = {
+            name:"HAIR",
+            Id:'1000',
+            menuList:[]
+        };
+        $scope.menu[2] = {
+            name:"FACE",
+            Id:'2000',
+            menuList:[]
+        };
+        $scope.menu[3] = {
+            name:"HAIR REMOVAL",
+            Id:'3000',
+            menuList:[]
+        };
+        $scope.menu[4] = {
+            name:"BODY",
+            Id:'4000',
+            menuList:[]
+        };
+        $scope.menu[5] = {
+            name:"HANDS & FEETS",
+            Id:'5000',
+            menuList:[]
+        };
+        $scope.menu[6] = {
+            name:"NAILS",
+            Id:'6000',
+            menuList:[]
+        };
+        $scope.menu[7] = {
+            name:"PACKAGES",
+            Id:'7000',
+            menuList:[]
+        };
+
         firebase.database().ref('vendors/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.vendor_id).once('value',function(response){
-            $scope.vendor_menu = response.val().menu;
-            console.log("vendor menu :",JSON.stringify($scope.vendor_menu))
-            // angular.forEach(response.val().images, function(value, key) {
-            //     $scope.images.push({id : key, src:value.url})
-            // });
+            angular.forEach(response.val().menu, function(value, key) {
+
+                if(key > '1000' && key <'1015'){
+                    angular.forEach(value, function(value, key) {
+                        $scope.menu[1].menuList.push(value)
+
+                    })
+                }
+               else if(key > '2000' && key <'2011'){
+                    angular.forEach(value, function(value, key) {
+                        $scope.menu[2].menuList.push(value)
+
+                    })
+                }
+                else if(key > '3000' && key <'3010'){
+                    angular.forEach(value, function(value, key) {
+                        $scope.menu[3].menuList.push(value)
+
+                    })
+                }
+                else if(key > '4000' && key <'4010'){
+                    angular.forEach(value, function(value, key) {
+                        $scope.menu[4].menuList.push(value)
+
+                    })
+                }
+                else if(key > '5000' && key <'5004'){
+                    angular.forEach(value, function(value, key) {
+                        $scope.menu[5].menuList.push(value)
+
+                    })
+                }
+                else if(key > '6000' && key <'6003'){
+                    angular.forEach(value, function(value, key) {
+                        $scope.menu[6].menuList.push(value)
+
+                    })
+                }
+                else if(key == '7001'){
+                    angular.forEach(value, function(value, key) {
+                        $scope.menu[7].menuList.push(value)
+
+                    })
+                }
+
+
+                // name:"HAIR",
+                //     Id:'1000',
+                //     value:[
+                //     {
+                //         "serviceName": "Beard Styling",
+                //         "serviceid": "1001"
+                //     }
+
+
+
+            });
+
+            console.log("menu itemeee",JSON.stringify($scope.menu))
         });
 
         $scope.services=[
@@ -192,8 +288,7 @@ app
                {
                    "serviceName": "LIST WILL BE SOON HERE",
                    "serviceid": "0001"
-               }
-               ]
+               }]
        },
        {
            name:"HAIR",
@@ -401,17 +496,13 @@ app
            name:"NAILS",
            Id:'6000',
            value:[
-               {
-            "serviceName": "Pedicure",
-                "serviceid": "5001"
-        },
-        {
-            "serviceName": "Manicure",
-                "serviceid": "5002"
+              {
+            "serviceName": "Nail Art",
+                "serviceid": "6001"
         },
        {
-            "serviceName": "Cleanings",
-                "serviceid": "5003"
+            "serviceName": "Nail Extension/ Bar",
+                "serviceid": "6002"
         }]
        },
        {

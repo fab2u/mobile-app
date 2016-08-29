@@ -167,7 +167,7 @@ app
 	$stateProvider.state('vendorMenu', {
 		url: '/vendorMenu/:vendor_id',
 		templateUrl: 'templates/vendor/vendor-menu.html',
-		controller: 'vendorMenuCtrl'
+		controller: 'VendorServicesListCtrl'
 	});
 
 	//State for confirmation

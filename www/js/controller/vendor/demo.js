@@ -4,7 +4,6 @@ app
 
 
             $scope.menu = [];
-
             // $scope.menu[0] = {
             //     name:"SELECTED",
             //     Id:'0000',
@@ -74,17 +73,24 @@ app
                     //             };
                     if(key == 'cat-01'){
                         $scope.catName.push("HAIR");
-                        $scope.menu.push(value)
+                        angular.forEach(value, function(value, key) {
+                            if(key == '1001'){
+                                $scope.menu.push({ name: 'Beard Styling', value: value })
+                            }
+                            else if(key =='1002'){
+                                $scope.menu.push({ name: 'Blow Dry', value: value })
+
+                            }
+                        });
+                        // $scope.menu.push(value)
                     }
                     else if(key =='cat-02'){
                         $scope.catName.push("FACE");
-
-                        // $scope.menu[2] = {
-                        //     name:"FACE",
-                        //     Id:'2000',
-                        //     menuList:[]
-                        // };
-                        $scope.menu.push(value)
+                        angular.forEach(value, function(value, key) {
+                            if(key == '2007'){
+                                $scope.menu.push({ name: 'Laser Treatment', value: value })
+                            }
+                        });
                     }
                     else if(key =='cat-03'){
                         $scope.catName.push("HAIR REMOVAL");
@@ -167,14 +173,13 @@ app
                     }
                     else if(key =='cat-12'){
                         $scope.catName.push("TATTOO");
-
-                        // $scope.menu[12] = {
-                        //     name:"TATTOO",
-                        //     Id:'1200',
-                        //     menuList:[]
-                        // };
-                        $scope.menu.push(value)
+                        angular.forEach(value, function(value, key) {
+                            if(key == '1201'){
+                                $scope.menu.push({ name: 'Tattoo', value: value })
+                            }
+                        });
                     }
+
                 });
                 //     $scope.menu[0] = {
                 //         name:"SELECTED",
@@ -316,14 +321,9 @@ app
                 // var str = JSON.stringify($scope.menu, null, 2);
                 // console.log(str);
                 console.log("menu items",JSON.stringify($scope.menu,null,2))
-                $timeout( function() {
-                    $ionicSlideBoxDelegate.update();
-                },200);
                 console.log("catname",JSON.stringify($scope.catName))
 
             });
-
-
 
 
             $scope.services=[
@@ -390,11 +390,10 @@ app
             // Notify slide change
             // @param (int) slide index
             $scope.slideHasChanged = function(index) {
-                // $ionicSlideBoxDelegate.update();
+                $ionicSlideBoxDelegate.update();
                 tabPositionCenter(index);
                 $scope.currSlide = $ionicSlideBoxDelegate.currentIndex();
                 $timeout( function() {
-                    $ionicSlideBoxDelegate.update();
                     $ionicScrollDelegate.$getByHandle('mainScroll').resize();
                 },100);
 
@@ -774,3 +773,4 @@ app
             //
             // ];
         }])
+

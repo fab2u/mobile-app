@@ -15,9 +15,6 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 		if($("#"+feedId+"-likeFeed").hasClass('clicked')){
 			console.log('inside remove');
 			db.ref("blogs/"+feedId+"/likedBy/"+$scope.uid).remove().then(function(){
-				db.ref("blogs/"+feedId+"/likedBy").on("value", function(snap){
-					console.log(snap.numChildren());
-				});
 				console.log('removed successfully');
 				$("#"+feedId+"-likeFeed").removeClass("clicked");
 			});
@@ -27,13 +24,13 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 			var updates = {};
 			updates["blogs/"+feedId+"/likedBy/"+$scope.uid] = true;
 			db.ref().update(updates).then(function(){
-				db.ref("blogs/"+feedId+"/likedBy").on("value", function(snap){
-					console.log(snap.numChildren());
-				});
 				console.log('success');
 				$("#"+feedId+"-likeFeed").addClass("clicked");
 			});
 		}
+		db.ref("blogs/"+feedId+"/likedBy").on("value", function(snap){
+			console.log(snap.numChildren());
+		});
 	}
 
 	$scope.doRefresh = function(){

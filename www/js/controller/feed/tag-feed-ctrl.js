@@ -42,31 +42,34 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 			}
 			else{
 				console.log(snapshot.val());
+				$scope.prevTopKey = $scope.topKey;
 				$scope.topKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1];
 				var single_blog = {};
 				for(var i in snapshot.val()){
 					// console.log(i); // i is the key of blogs object or the id of each blog
-					var blogData = db.ref().child("blogs").child(i);
-					blogData.once("value", function(snap){ //access individual blog
-						// console.log(snap.val());
-						single_blog = snap.val();
-						single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-						$timeout(function () {
-							jdenticon.update("#"+snap.val().blog_id, md5(snap.val().user.user_id));
-						}, 0);
-						if(single_blog.likedBy){
-							count = Object.keys(single_blog.likedBy).length;
-							console.log(single_blog.likedBy);
-							console.log(count);
-							if($scope.uid in single_blog.likedBy){
-								$timeout(function () {
-									$("#"+key+"-likeFeed").addClass("clicked");
-								}, 0);
+					if (i != $scope.prevTopKey){
+						var blogData = db.ref().child("blogs").child(i);
+						blogData.once("value", function(snap){ //access individual blog
+							// console.log(snap.val());
+							single_blog = snap.val();
+							single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+							$timeout(function () {
+								jdenticon.update("#"+snap.val().blog_id, md5(snap.val().user.user_id));
+							}, 0);
+							if(single_blog.likedBy){
+								count = Object.keys(single_blog.likedBy).length;
+								console.log(single_blog.likedBy);
+								console.log(count);
+								if($scope.uid in single_blog.likedBy){
+									$timeout(function () {
+										$("#"+key+"-likeFeed").addClass("clicked");
+									}, 0);
+								}
 							}
-						}
-						$scope.blogArr.push(single_blog);
-						// console.log($scope.blogArr);
-					});
+							$scope.blogArr.push(single_blog);
+							// console.log($scope.blogArr);
+						});
+					}
 				}
 			}
 			$scope.$broadcast('scroll.refreshComplete');

@@ -15,6 +15,9 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
       if($("#"+feedId+"-likeFeed").hasClass('clicked')){
          console.log('inside remove');
          db.ref("blogs/"+feedId+"/likedBy/"+$scope.uid).remove().then(function(){
+				db.ref("blogs/"+feedId+"/likedBy").on("value", function(snap){
+					console.log(snap.numChildren());
+				});
             console.log('removed successfully');
 				$("#"+feedId+"-likeFeed").removeClass("clicked");
          });
@@ -24,6 +27,9 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
          var updates = {};
          updates["blogs/"+feedId+"/likedBy/"+$scope.uid] = true;
          db.ref().update(updates).then(function(){
+				db.ref("blogs/"+feedId+"/likedBy").on("value", function(snap){
+					console.log(snap.numChildren());
+				});
             console.log('success');
             $("#"+feedId+"-likeFeed").addClass("clicked");
          });
@@ -94,6 +100,17 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 						console.log(value.user.user_id);
 						jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
 					}, 0);
+					if(value.likedBy){
+						count = Object.keys(value.likedBy).length;
+						console.log(value.likedBy);
+						console.log(count);
+						if($scope.uid in value.likedBy){
+		               $timeout(function () {
+		                  // $("#"+key+"-yesBtn").addClass("clicked");
+								$("#"+key+"-likeFeed").addClass("clicked");
+		               }, 0);
+		            }
+					}
 					$scope.events2.push(value);
 				});
 				$timeout(function () {

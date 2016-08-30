@@ -12,29 +12,29 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 	}
 
 	$scope.likeThisFeed = function(feedId){
-      if($("#"+feedId+"-likeFeed").hasClass('clicked')){
-         console.log('inside remove');
-         db.ref("blogs/"+feedId+"/likedBy/"+$scope.uid).remove().then(function(){
+		if($("#"+feedId+"-likeFeed").hasClass('clicked')){
+			console.log('inside remove');
+			db.ref("blogs/"+feedId+"/likedBy/"+$scope.uid).remove().then(function(){
 				db.ref("blogs/"+feedId+"/likedBy").on("value", function(snap){
 					console.log(snap.numChildren());
 				});
-            console.log('removed successfully');
+				console.log('removed successfully');
 				$("#"+feedId+"-likeFeed").removeClass("clicked");
-         });
-      }
-      else {
-         console.log(feedId, $scope.uid);
-         var updates = {};
-         updates["blogs/"+feedId+"/likedBy/"+$scope.uid] = true;
-         db.ref().update(updates).then(function(){
+			});
+		}
+		else {
+			console.log(feedId, $scope.uid);
+			var updates = {};
+			updates["blogs/"+feedId+"/likedBy/"+$scope.uid] = true;
+			db.ref().update(updates).then(function(){
 				db.ref("blogs/"+feedId+"/likedBy").on("value", function(snap){
 					console.log(snap.numChildren());
 				});
-            console.log('success');
-            $("#"+feedId+"-likeFeed").addClass("clicked");
-         });
-      }
-   }
+				console.log('success');
+				$("#"+feedId+"-likeFeed").addClass("clicked");
+			});
+		}
+	}
 
 	$scope.doRefresh = function(){
 		console.log('pull to refresh');
@@ -55,11 +55,10 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 						console.log(value.likedBy);
 						console.log(count);
 						if($scope.uid in value.likedBy){
-		               $timeout(function () {
-		                  // $("#"+key+"-yesBtn").addClass("clicked");
+							$timeout(function () {
 								$("#"+key+"-likeFeed").addClass("clicked");
-		               }, 0);
-		            }
+							}, 0);
+						}
 					}
 					$scope.events2.unshift(value);
 				});
@@ -95,11 +94,10 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 								console.log(value.likedBy);
 								console.log(count);
 								if($scope.uid in value.likedBy){
-				               $timeout(function () {
-				                  // $("#"+key+"-yesBtn").addClass("clicked");
+									$timeout(function () {
 										$("#"+key+"-likeFeed").addClass("clicked");
-				               }, 0);
-				            }
+									}, 0);
+								}
 							}
 							$scope.events2.push(value);
 						}
@@ -127,11 +125,10 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 						console.log(value.likedBy);
 						console.log(count);
 						if($scope.uid in value.likedBy){
-		               $timeout(function () {
-		                  // $("#"+key+"-yesBtn").addClass("clicked");
+							$timeout(function () {
 								$("#"+key+"-likeFeed").addClass("clicked");
-		               }, 0);
-		            }
+							}, 0);
+						}
 					}
 					$scope.events2.push(value);
 				});
@@ -143,6 +140,6 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 		}
 	}
 	$scope.$on('$stateChangeSuccess', function() {
-   	$scope.loadMore();
+		$scope.loadMore();
 	});
 }]);

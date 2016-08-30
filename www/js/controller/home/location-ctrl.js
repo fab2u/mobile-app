@@ -1,4 +1,4 @@
-app.controller('LocationCtrl', function($state, $scope,$timeout,$ionicLoading) {
+app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ionicLoading) {
 
 	$scope.show = function() {
 		$ionicLoading.show({
@@ -27,6 +27,8 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$ionicLoading) {
         	selectedLocation.state = city.state;
         	selectedLocation.country = city.country;
         	window.localStorage['selectedLocation'] = JSON.stringify(selectedLocation);
+		  $rootScope.$broadcast('location', { message: 'location changed' });
+
         	$timeout( function() {
         		$state.go('app.home');
         	}, 500);

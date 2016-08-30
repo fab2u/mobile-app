@@ -13,6 +13,9 @@ app.controller('VendorListCtrl',
         if($scope.vendor_list){
             $ionicLoading.hide();
         }
+        else if(!$scope.vendor_list){
+            $ionicLoading.hide();
+        }
     });
 
 

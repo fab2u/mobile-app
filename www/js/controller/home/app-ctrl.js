@@ -14,6 +14,11 @@ app
 
 	$scope.location_info = JSON.parse(window.localStorage['selectedLocation']);
 
+	$rootScope.$on('location', function (event, args) {
+		$scope.message = args.message;
+		$scope.location_info = JSON.parse(window.localStorage['selectedLocation']);
+	});
+
 	$scope.uid = window.localStorage.getItem("uid");
 
 	$scope.search_text = function(){

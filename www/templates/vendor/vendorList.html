@@ -24,8 +24,13 @@
     <ion-content>
     <!--<div class="p-fix card" ng-repeat="vendor in vendor_list">-->
     <!--<div class="p-fix card" ng-repeat="vendors in vendor_list">-->
+        <div ng-hide="vendor_list">
+        <p class="text-center" style="margin-top: 60px;">
+            No,vendor found for this location.Please select another location!
+        </p>
+        </div>
 
-        <div class="p-fix card" ng-repeat="vendor in vendor_list" ng-click="vendor_detail(vendor.vendorId)">
+        <div class="p-fix card" ng-repeat="vendor in vendor_list" ng-click="vendor_detail(vendor.vendorId)" ng-show="vendor_list">
         <div class="row">
             <div class="col c-col-40">
                 <h6 class="c-title">{{vendor.vendorName}}</h6>

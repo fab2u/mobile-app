@@ -50,6 +50,17 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 					$timeout(function () {
 						jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
 					}, 0);
+					if(value.likedBy){
+						count = Object.keys(value.likedBy).length;
+						console.log(value.likedBy);
+						console.log(count);
+						if($scope.uid in value.likedBy){
+		               $timeout(function () {
+		                  // $("#"+key+"-yesBtn").addClass("clicked");
+								$("#"+key+"-likeFeed").addClass("clicked");
+		               }, 0);
+		            }
+					}
 					$scope.events2.unshift(value);
 				});
 			}
@@ -79,6 +90,17 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 							$timeout(function () {
 								jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
 							}, 0);
+							if(value.likedBy){
+								count = Object.keys(value.likedBy).length;
+								console.log(value.likedBy);
+								console.log(count);
+								if($scope.uid in value.likedBy){
+				               $timeout(function () {
+				                  // $("#"+key+"-yesBtn").addClass("clicked");
+										$("#"+key+"-likeFeed").addClass("clicked");
+				               }, 0);
+				            }
+							}
 							$scope.events2.push(value);
 						}
 					});

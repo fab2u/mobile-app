@@ -11,4 +11,7 @@ app.controller('SearchCtrl', function($state, $scope) {
             type: "Vendor"
         }
     ];
+    $scope.home = function(){
+        $state.go('app.home');
+    };
 });

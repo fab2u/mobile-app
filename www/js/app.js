@@ -24,3 +24,11 @@ var app = angular.module('Fab2u', ['ionic', 'ngCordova'])
 });
 
 var db = firebase.database();
+
+function checkLocalStorage(item) {
+    if (localStorage.getItem(item) === null || typeof window.localStorage[item] === 'undefined') {
+        return false
+    } else {
+        return true
+    }
+}

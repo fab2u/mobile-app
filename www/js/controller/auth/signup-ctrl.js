@@ -13,19 +13,25 @@ app.controller("SignupCtrl", ['$scope', '$http', function($scope, $http){
       var userData = {
          name: $scope.user.name,
          email: $scope.user.email,
-         mobile_num: $scope.user.mobile_num,
-         password: $scope.user.password,
-         referral_code: $scope.user.referral_code,
-         gender: $scope.user.gender
+         mobileNum: $scope.user.mobile_num,
+         referralCode: $scope.user.referral_code,
+         deviceId:'1234'
       }
       console.log(userData);
-      $http.post("http://139.162.63.158/addNewUser", userData)
+      $http.post("http://139.162.27.64/api/addUser", userData)
          .success(function(response){
             console.log("success");
+            if(response.StatusCode == 200){
+               alert(response.Message)
+            }
+            else{
+               alert('some thing went wrong!')
+            }
             console.log(response);
          })
          .error(function(response){
             console.log("error");
+            console.log("error hhh",JSON.stringify(config));
             console.log(response);
          });
    }

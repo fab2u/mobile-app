@@ -1,4 +1,11 @@
 app.controller('VendorListCtrl', ['$scope', function($scope){
+
+    firebase.database().ref('vendors').once('value',function(response){
+        $scope.vendor_list = response.val();
+        console.log("response for city",response.val());
+    });
+
+
     $scope.rating = 3;
     function defaultColor() {
         male.classList.add('is-active');

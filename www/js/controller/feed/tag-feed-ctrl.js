@@ -62,7 +62,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 								console.log(count);
 								if($scope.uid in single_blog.likedBy){
 									$timeout(function () {
-										$("#"+key+"-likeFeed").addClass("clicked");
+										$("#"+i+"-likeFeed").addClass("clicked");
 									}, 0);
 								}
 							}
@@ -106,7 +106,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 									console.log(count);
 									if($scope.uid in single_blog.likedBy){
 										$timeout(function () {
-											$("#"+key+"-likeFeed").addClass("clicked");
+											$("#"+i+"-likeFeed").addClass("clicked");
 										}, 0);
 									}
 								}
@@ -144,7 +144,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 							console.log(count);
 							if($scope.uid in single_blog.likedBy){
 								$timeout(function () {
-									$("#"+key+"-likeFeed").addClass("clicked");
+									$("#"+i+"-likeFeed").addClass("clicked");
 								}, 0);
 							}
 						}
@@ -158,7 +158,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 		}
 	}
 	$scope.$on('$stateChangeSuccess', function() {
-   	$scope.loadMore();
+		$scope.loadMore();
 	});
 
 }]);

@@ -1,8 +1,8 @@
 // Edit By Deepank
 app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', function($scope, $timeout, $stateParams){
-	$scope.user_id = $stateParams.user_id;
+	$scope.uid = $stateParams.user_id;
 	$scope.email = window.localStorage.email;
-	$scope.img_hash = md5($scope.user_id);
+	$scope.img_hash = md5($scope.uid);
 	jdenticon.update("#identicon", $scope.img_hash);
 	var uid = window.localStorage.uid;
 	$scope.blogIdList = {};

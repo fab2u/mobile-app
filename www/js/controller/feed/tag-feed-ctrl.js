@@ -1,5 +1,8 @@
 app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($scope, $stateParams, $timeout){
 
+	$scope.uid = window.localStorage.getItem("uid");
+	console.log($scope.uid);
+
 	$scope.moreMessagesScroll = true;
 	$scope.moreMessagesRefresh = true;
 	$scope.tagName = $stateParams.tag;

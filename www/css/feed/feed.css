@@ -1,5 +1,8 @@
-.fabFeed .feeds{
-	padding:10px;
+.fabFeed .upper-row{
+	padding: 10px 10px 0px 10px;
+}
+.fabFeed .upper-row1{
+	padding: 0px 10px;
 }
 
 .fabFeed a{
@@ -13,10 +16,18 @@
 	padding: 1px 10px;
 }
 
-.fabFeed .feed-name {
-	font-size:1.2em;
+.fabFeed .feed-name a{
 	font-weight:500;
+	color: #000;
+	text-decoration: none;
+	font-weight: bold;
 }
+
+.fabFeed .feed-name{
+	/*font-size: 1em;*/
+	margin: 0px;
+}
+
 .fabFeed .feed-title {
 	font-size:1.1em;
 	font-weight:400;
@@ -25,7 +36,6 @@
 .fabFeed .feed-img {
 	width:100%;
 	height:auto;
-	border-radius:5px;
 }
 
 .fabFeed .feed-introduction {
@@ -43,12 +53,13 @@
 }
 
 .fabFeed i.like-btn.ion-heart {
-  font-size: 30px;
+  font-size: 25px;
+  /*color: #FF8386;*/
 }
 
 .fabFeed .likenum{
 	color: #FF8386;
-	line-height: 41px;
+	/*line-height: 41px;*/
 }
 
 .fabFeed .feedend{

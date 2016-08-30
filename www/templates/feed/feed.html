@@ -12,26 +12,29 @@
 	<ion-content class="has-header">
 		<ion-refresher pulling-text="Loading New Feed" on-refresh="doRefresh()"></ion-refresher>
 		<div class="feeds" ng-repeat="feed in events2 | orderBy:'-created_time'">
-			<div class="row">
-				<div class="col col-25">
-					<canvas class="user_icon img-circle" id="{{feed.blog_id}}" width="40" height="40"></canvas>
+			<div class="upper-row">
+				<div class="row">
+					<div class="col col-20">
+						<canvas class="user_icon img-circle" id="{{feed.blog_id}}" width="40" height="40"></canvas>
+					</div>
+					<div class="col col-55">
+						<p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_name}}</a> | {{feed.created_time | date:'d MMM yy'}}</p>
+						<p class="feed-name"><i class="ion ion-location"></i> Gurgaon</p>
+					</div>
+					<!-- <div class="col col-25">
+						<a href="#" class="follow-btn">Follow</a>
+					</div> -->
 				</div>
-				<div class="col col-50">
-					<p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_name}}</a></p>
-				</div>
-				<div class="col col-25">
-					<a href="#" class="follow-btn">Follow</a>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col col-25"></div>
-				<div class="col col-75">
-					<p class="feed-title">{{feed.title}}</p>
-					<p ng-bind-html="feed.introduction" class="feed-introduction"></p>
+				<div class="row">
+					<div class="col col-20"></div>
+					<div class="col col-80">
+						<!-- <p class="feed-title">{{feed.title}}</p> -->
+						<p ng-bind-html="feed.introduction" class="feed-introduction"></p>
+					</div>
 				</div>
 			</div>
 			<img ng-src="{{feed.photoUrl}}" class="feed-img">
-			<div class="row">
+			<div class="row upper-row1">
 				<div class="col col-60 likenum">
 					<i class="icon ion-heart"></i>
 					<span>{{feed.likes}} likes</span>

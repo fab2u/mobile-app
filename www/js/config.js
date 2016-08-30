@@ -175,22 +175,42 @@ app
 		.state('feed', {
 			url: '/feed',
 			templateUrl: 'templates/feed/feed.html',
-			controller: 'FeedCtrl'
+			controller: 'FeedCtrl',
+			resolve: {
+				currentAuth: function(AuthenticationService){
+					return AuthenticationService.checkAuthentication();
+				}
+			}
 		})
 		.state('tagFeed', {
 			url: '/tag/:tag',
 			templateUrl: 'templates/feed/tag-feed.html',
-			controller: 'tagFeedCtrl'
+			controller: 'tagFeedCtrl',
+			resolve: {
+				currentAuth: function(AuthenticationService){
+					return AuthenticationService.checkAuthentication();
+				}
+			}
 		})
 		.state('userFeed', {
 			url: '/user/:user_id',
 			templateUrl: 'templates/feed/user-feed.html',
-			controller: 'userFeedCtrl'
+			controller: 'userFeedCtrl',
+			resolve: {
+				currentAuth: function(AuthenticationService){
+					return AuthenticationService.checkAuthentication();
+				}
+			}
 		})
 		.state('newFeed', {
 			url: '/new-feed',
 			templateUrl: 'templates/feed/new-feed.html',
-			controller: 'newFeedCtrl'
+			controller: 'newFeedCtrl',
+			resolve: {
+				currentAuth: function(AuthenticationService){
+					return AuthenticationService.checkAuthentication();
+				}
+			}
 		});
 
 	$urlRouterProvider.otherwise('/landing');

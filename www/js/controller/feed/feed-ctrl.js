@@ -41,23 +41,28 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 			}
 			else{
 				console.log(snapshot.val());
+				$scope.prevTopKey = $scope.topKey;
 				$scope.topKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1];
 				angular.forEach(snapshot.val(), function(value, key){
-					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-					$timeout(function () {
-						jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
-					}, 0);
-					if(value.likedBy){
-						count = Object.keys(value.likedBy).length;
-						console.log(value.likedBy);
-						console.log(count);
-						if($scope.uid in value.likedBy){
-							$timeout(function () {
-								$("#"+key+"-likeFeed").addClass("clicked");
-							}, 0);
+					console.log(key, $scope.prevTopKey);
+					if (key != $scope.prevTopKey){
+						value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+						$timeout(function () {
+							console.log(value.blog_id, value.user.user_id);
+							jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
+						}, 0);
+						if(value.likedBy){
+							count = Object.keys(value.likedBy).length;
+							console.log(value.likedBy);
+							console.log(count);
+							if($scope.uid in value.likedBy){
+								$timeout(function () {
+									$("#"+key+"-likeFeed").addClass("clicked");
+								}, 0);
+							}
 						}
+						$scope.events2.unshift(value);
 					}
-					$scope.events2.unshift(value);
 				});
 			}
 			$scope.$broadcast('scroll.refreshComplete');
@@ -106,15 +111,15 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 		else if($scope.events2.length == 0){
 			db.ref().child("blogs").limitToLast(5).once("value", function(snapshot){
 				console.log(snapshot.val());
-				console.log(Object.keys(snapshot.val())[0]);
+				// console.log(Object.keys(snapshot.val())[0]);
 				$scope.bottomKey = Object.keys(snapshot.val())[0];
-				console.log(Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1]);
+				// console.log(Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1]);
 				$scope.topKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1];
-				console.log($scope.bottomKey, $scope.topKey);
+				// console.log($scope.bottomKey, $scope.topKey);
 				angular.forEach(snapshot.val(), function(value, key){
 					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 					$timeout(function () {
-						console.log(value.user.user_id);
+						console.log(value.user.user_id, value.blog_id);
 						jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
 					}, 0);
 					if(value.likedBy){

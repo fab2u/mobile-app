@@ -35,8 +35,7 @@
                                 class="tab"
                                 ng-class="$index == 0 ? 'active':''"
                                 ng-repeat="item in menu"
-                                ng-click="tabHasChanged($index)"
-                                ng-if="item.menuList.length > 0">
+                                ng-click="tabHasChanged($index)">
                             <i class="icon ion-social-reddit-outline"></i>
                             <p>{{item.name}}</p>
                         </div> <!-- .tab -->
@@ -48,11 +47,12 @@
 
 
         <div class="row padding" id="slideBox">
-            <ion-slide-box style="width:100%!important; background-color: #FFF;" class="slideBox" on-slide-changed="slideHasChanged($index)" show-pager="false" delegate-handle="my-handle">
-                <ion-slide ng-repeat="item in menu">
-                    <div class="col" ng-repeat="x in item.menuList " style="width: 100%;margin:= auto; ">
+            <ion-slide-box style="width:100%!important; background-color: #FFF;" class="slideBox" on-slide-changed="slideHasChanged($index)"
+                           show-pager="false" delegate-handle="my-handle">
+                <ion-slide ng-repeat="serv in menu">
+                    <div class="col" ng-repeat="x in serv.menuList" style="width: 100%;margin: auto; ">
                         <div class="item item-text-wrap list-heading " id="contact">{{x.serviceName}}</div>
-                        <div id= "y.id " class="item item-text-wrap row" id="custom-servicelist"
+                        <div id= "x.serviceId " class="item item-text-wrap row" id="custom-servicelist"
                              ng-click="selectItem($index, x.menuItemName)">
                             <div ng-show="selectedServices[x.menuItemName]" style="background-color:#0dd1d1; width:20px;">
                             </div>

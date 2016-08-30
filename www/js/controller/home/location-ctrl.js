@@ -1,6 +1,17 @@
-app.controller('LocationCtrl', function($state, $scope,$timeout) {
+app.controller('LocationCtrl', function($state, $scope,$timeout,$ionicLoading) {
+
+	$scope.show = function() {
+		$ionicLoading.show({
+			template: 'Loading...'
+		})
+	};
+	$scope.show();
+
     firebase.database().ref('city').once('value',function(response){
         $scope.location_list = response.val();
+		if($scope.location_list){
+			$ionicLoading.hide();
+		}
     });
 
     $scope.home = function(){

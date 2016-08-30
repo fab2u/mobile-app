@@ -97,6 +97,7 @@ app
 	//State for location
 	$stateProvider.state('location', {
 		url: '/location',
+		cache:false,
 		templateUrl: 'templates/home/location.html',
 		controller: 'LocationCtrl'
 	});
@@ -160,6 +161,7 @@ app
 	//State for vendorList
 	$stateProvider.state('vendorList', {
 		url: '/vendorList',
+		cache:false,
 		templateUrl: 'templates/vendor/vendorList.html',
 		controller: 'VendorListCtrl'
 	});

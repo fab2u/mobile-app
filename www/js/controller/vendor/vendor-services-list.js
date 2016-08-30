@@ -3,109 +3,40 @@ app
     function($scope, $ionicSlideBoxDelegate, $ionicScrollDelegate, $timeout,$stateParams) {
 
 
-$scope.menu = [];
-        $scope.menu[0] = {
-            name:"SELECTED",
-            Id:'0000',
-            menuList:[]
-        };
-        $scope.menu[1] = {
-            name:"HAIR",
-            Id:'1000',
-            menuList:[]
-        };
-        $scope.menu[2] = {
-            name:"FACE",
-            Id:'2000',
-            menuList:[]
-        };
-        $scope.menu[3] = {
-            name:"HAIR REMOVAL",
-            Id:'3000',
-            menuList:[]
-        };
-        $scope.menu[4] = {
-            name:"BODY",
-            Id:'4000',
-            menuList:[]
-        };
-        $scope.menu[5] = {
-            name:"HANDS & FEETS",
-            Id:'5000',
-            menuList:[]
-        };
-        $scope.menu[6] = {
-            name:"NAILS",
-            Id:'6000',
-            menuList:[]
-        };
-        $scope.menu[7] = {
-            name:"PACKAGES",
-            Id:'7000',
-            menuList:[]
-        };
 
-        firebase.database().ref('vendors/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.vendor_id).once('value',function(response){
-            angular.forEach(response.val().menu, function(value, key) {
+        firebase.database().ref('menu/'+$stateParams.vendor_id + '/services/').once('value',function(response){
+            var count = {};
+            $scope.topCat = [];
+            $scope.serviceList = {};
+            angular.forEach(response.val(), function(value, key) {
+                // console.log("vahsjhaasasa",JSON.stringify(response.val()))
+                var startkey = key.substring(0, 2);
 
-                if(key > '1000' && key <'1015'){
-                    angular.forEach(value, function(value, key) {
-                        $scope.menu[1].menuList.push(value)
-
-                    })
+                // console.log("start key:",startkey)
+                if(!$scope.serviceList[startkey]){
+                    $scope.serviceList[startkey] = [];
+                    $scope.serviceList[startkey] .push(value);
                 }
-               else if(key > '2000' && key <'2011'){
-                    angular.forEach(value, function(value, key) {
-                        $scope.menu[2].menuList.push(value)
-
-                    })
-                }
-                else if(key > '3000' && key <'3010'){
-                    angular.forEach(value, function(value, key) {
-                        $scope.menu[3].menuList.push(value)
-
-                    })
-                }
-                else if(key > '4000' && key <'4010'){
-                    angular.forEach(value, function(value, key) {
-                        $scope.menu[4].menuList.push(value)
-
-                    })
-                }
-                else if(key > '5000' && key <'5004'){
-                    angular.forEach(value, function(value, key) {
-                        $scope.menu[5].menuList.push(value)
-
-                    })
-                }
-                else if(key > '6000' && key <'6003'){
-                    angular.forEach(value, function(value, key) {
-                        $scope.menu[6].menuList.push(value)
-
-                    })
-                }
-                else if(key == '7001'){
-                    angular.forEach(value, function(value, key) {
-                        $scope.menu[7].menuList.push(value)
-
-                    })
+                else{
+                    $scope.serviceList[startkey] .push(value);
                 }
 
+                var tsr = startkey.toString();
 
-                // name:"HAIR",
-                //     Id:'1000',
-                //     value:[
-                //     {
-                //         "serviceName": "Beard Styling",
-                //         "serviceid": "1001"
-                //     }
-
-
+                if(!count[tsr]) {
+                    count[tsr] = true;
+                    $scope.topCat.push(value.catName);
+                }
 
             });
 
-            console.log("menu itemeee",JSON.stringify($scope.menu))
+           console.log("scroller data", $scope.topCat);
+            console.log("cat detailll",JSON.stringify($scope.serviceList,null, 2));
+
+            // var str = JSON.stringify(response.val().menu, null, 2);
         });
+
+
 
         $scope.services=[
         {
@@ -280,276 +211,276 @@ $scope.menu = [];
         // TODO
    }
 
-   $scope.service_list = [
-       {
-           name: "SELECTED",
-           Id: '0000',
-           value: [
-               {
-                   "serviceName": "LIST WILL BE SOON HERE",
-                   "serviceid": "0001"
-               }]
-       },
-       {
-           name:"HAIR",
-           Id:'1000',
-           value:[
-              {
-                "serviceName": "Beard Styling",
-                "serviceid": "1001"
-        },
-        {
-            "serviceName": "Blow Dry",
-                "serviceid": "1002"
-        },
-        {
-            "serviceName": "Hair Coloring",
-                "serviceid": "1003"
-        },
-       {
-            "serviceName": "Hair Consulting",
-                "serviceid": "1004"
-        },
-        {
-            "serviceName": "Hair Cut",
-                "serviceid": "1005"
-        },
-       {
-            "serviceName": "Hair Extension",
-                "serviceid": "1007"
-        },
-       {
-            "serviceName": "Head Massage",
-                "serviceid": "1008"
-        },
-        {
-            "serviceName": "Hair Spa",
-                "serviceid": "1009"
-        },
-       {
-            "serviceName": "Hair Transplant",
-                "serviceid": "1010"
-        },
-        {
-            "serviceName": "Hair Wash",
-                "serviceid": "1011"
-        },
-       {
-            "serviceName": "Other Hair Treatments",
-                "serviceid": "1012"
-        },
-       {
-            "serviceName": "Straightening/ Perming",
-                "serviceid": "1013"
-        },
-       {
-            "serviceName": "Anti HairFall Treatment",
-                "serviceid": "1014"
-        }],
-       },
-       {
-           name:"FACE",
-           Id:'2000',
-           value:[
-               {
-            "serviceName": "Face Bleach",
-                "serviceid": "2001"
-        },
-        {
-            "serviceName": "Eyebrow/Eyelash",
-                "serviceid": "2002"
-        },
-        {
-            "serviceName": "Face Threading",
-                "serviceid": "2003"
-        },
-       {
-            "serviceName": "Face Waxing",
-                "serviceid": "2004"
-        },
-       {
-            "serviceName": "Facials",
-                "serviceid": "2005"
-        },
-        {
-            "serviceName": "Clean-up",
-                "serviceid": "2006"
-        },
-       {
-            "serviceName": "Laser Treatment",
-                "serviceid": "2007"
-        },
-       {
-            "serviceName": "Shaving",
-                "serviceid": "2008"
-        },
-        {
-            "serviceName": "Skin Treatments",
-                "serviceid": "2009"
-        },
-       {
-            "serviceName": "Skincare Consultations",
-                "serviceid": "2010"
-        }
-           ]
-       },
-       {
-           name: "HAIR REMOVAL",
-           Id: '3000',
-           value: [
-              {
-            "serviceName": "Underarms",
-                "serviceid": "3001"
-        },
-       {
-            "serviceName": "Arms",
-                "serviceid": "3002"
-        },
-        {
-            "serviceName": "Legs",
-                "serviceid": "3003"
-        },
-        {
-            "serviceName": "Full Body",
-                "serviceid": "3004"
-        },
-       {
-            "serviceName": "Full Back",
-                "serviceid": "3005"
-        },
-       {
-            "serviceName": "Midriff",
-                "serviceid": "3006"
-        },
-       {
-            "serviceName": "Bikini",
-                "serviceid": "3007"
-        },
-        {
-            "serviceName": "Side Locks",
-                "serviceid": "3008"
-        },
-        {
-            "serviceName": "Laser Hair Removal",
-                "serviceid": "3009"
-        }]
-       },
-       {
-           name:"BODY",
-           Id:'4000',
-           value:[
-               {
-            "serviceName": "Body Polishing",
-                "serviceid": "4001"
-        },
-       {
-            "serviceName": "Body Toning",
-                "serviceid": "4002"
-        },
-       {
-            "serviceName": "Body Bleach",
-                "serviceid": "4003"
-        },
-       {
-            "serviceName": "Body Scrub",
-                "serviceid": "4004"
-        },
-        {
-            "serviceName": "Boby Wrap",
-                "serviceid": "4005"
-        },
-       {
-            "serviceName": "Body Treatments",
-                "serviceid": "4006"
-        },
-       {
-            "serviceName": "Botox Treatment",
-                "serviceid": "4007"
-        },
-       {
-            "serviceName": "Body Shaping and Contouring",
-                "serviceid": "4008"
-        },
-        {
-            "serviceName": "Tanning",
-                "serviceid": "4009"
-        }]
-       },
-       {
-           name:"HANDS & FEETS",
-           Id:'5000',
-           value:[
-               {
-            "serviceName": "Pedicure",
-                "serviceid": "5001"
-        },
-        {
-            "serviceName": "Manicure",
-                "serviceid": "5002"
-        },
-       {
-            "serviceName": "Cleanings",
-                "serviceid": "5003"
-        }]
-       },
-       {
-           name:"NAILS",
-           Id:'6000',
-           value:[
-              {
-            "serviceName": "Nail Art",
-                "serviceid": "6001"
-        },
-       {
-            "serviceName": "Nail Extension/ Bar",
-                "serviceid": "6002"
-        }]
-       },
-       {
-           name:"PACKAGES",
-           Id:'7000',
-           value:[
-               {
-                    "serviceName": "Packages",
-                   "serviceid": "7001"
-        }]
-       },
-       {
-           name:"SPA & MASSAGES",
-           Id:'8000',
-           value:[
-               {
-            "serviceName": "Spa & Massages",
-                "serviceid": "8001"
-        }]
-       },
-       {
-           name:"FITNESS",
-           Id:'9000',
-           value:[
-             {
-                "serviceName": "Fitness",
-                "serviceid": "9001"
-        }]
-       },
-       {
-           name:"WEDDING & PARTY",
-           Id:'1100',
-           value:[
-               {
-            "serviceName": "Wedding & Party",
-                "serviceid": "1101"
-        }]
-       },  {
-           name:"TATTOO",
-           Id:'1200',
-           value:[
-              {
-            "serviceName": "Tattoo",
-                "serviceid": "1111"
-            }
-           ]
-       }
-
-   ];
+   // $scope.service_list = [
+   //     {
+   //         name: "SELECTED",
+   //         Id: '0000',
+   //         value: [
+   //             {
+   //                 "serviceName": "LIST WILL BE SOON HERE",
+   //                 "serviceid": "0001"
+   //             }]
+   //     },
+   //     {
+   //         name:"HAIR",
+   //         Id:'1000',
+   //         value:[
+   //            {
+   //              "serviceName": "Beard Styling",
+   //              "serviceid": "1001"
+   //      },
+   //      {
+   //          "serviceName": "Blow Dry",
+   //              "serviceid": "1002"
+   //      },
+   //      {
+   //          "serviceName": "Hair Coloring",
+   //              "serviceid": "1003"
+   //      },
+   //     {
+   //          "serviceName": "Hair Consulting",
+   //              "serviceid": "1004"
+   //      },
+   //      {
+   //          "serviceName": "Hair Cut",
+   //              "serviceid": "1005"
+   //      },
+   //     {
+   //          "serviceName": "Hair Extension",
+   //              "serviceid": "1007"
+   //      },
+   //     {
+   //          "serviceName": "Head Massage",
+   //              "serviceid": "1008"
+   //      },
+   //      {
+   //          "serviceName": "Hair Spa",
+   //              "serviceid": "1009"
+   //      },
+   //     {
+   //          "serviceName": "Hair Transplant",
+   //              "serviceid": "1010"
+   //      },
+   //      {
+   //          "serviceName": "Hair Wash",
+   //              "serviceid": "1011"
+   //      },
+   //     {
+   //          "serviceName": "Other Hair Treatments",
+   //              "serviceid": "1012"
+   //      },
+   //     {
+   //          "serviceName": "Straightening/ Perming",
+   //              "serviceid": "1013"
+   //      },
+   //     {
+   //          "serviceName": "Anti HairFall Treatment",
+   //              "serviceid": "1014"
+   //      }],
+   //     },
+   //     {
+   //         name:"FACE",
+   //         Id:'2000',
+   //         value:[
+   //             {
+   //          "serviceName": "Face Bleach",
+   //              "serviceid": "2001"
+   //      },
+   //      {
+   //          "serviceName": "Eyebrow/Eyelash",
+   //              "serviceid": "2002"
+   //      },
+   //      {
+   //          "serviceName": "Face Threading",
+   //              "serviceid": "2003"
+   //      },
+   //     {
+   //          "serviceName": "Face Waxing",
+   //              "serviceid": "2004"
+   //      },
+   //     {
+   //          "serviceName": "Facials",
+   //              "serviceid": "2005"
+   //      },
+   //      {
+   //          "serviceName": "Clean-up",
+   //              "serviceid": "2006"
+   //      },
+   //     {
+   //          "serviceName": "Laser Treatment",
+   //              "serviceid": "2007"
+   //      },
+   //     {
+   //          "serviceName": "Shaving",
+   //              "serviceid": "2008"
+   //      },
+   //      {
+   //          "serviceName": "Skin Treatments",
+   //              "serviceid": "2009"
+   //      },
+   //     {
+   //          "serviceName": "Skincare Consultations",
+   //              "serviceid": "2010"
+   //      }
+   //         ]
+   //     },
+   //     {
+   //         name: "HAIR REMOVAL",
+   //         Id: '3000',
+   //         value: [
+   //            {
+   //          "serviceName": "Underarms",
+   //              "serviceid": "3001"
+   //      },
+   //     {
+   //          "serviceName": "Arms",
+   //              "serviceid": "3002"
+   //      },
+   //      {
+   //          "serviceName": "Legs",
+   //              "serviceid": "3003"
+   //      },
+   //      {
+   //          "serviceName": "Full Body",
+   //              "serviceid": "3004"
+   //      },
+   //     {
+   //          "serviceName": "Full Back",
+   //              "serviceid": "3005"
+   //      },
+   //     {
+   //          "serviceName": "Midriff",
+   //              "serviceid": "3006"
+   //      },
+   //     {
+   //          "serviceName": "Bikini",
+   //              "serviceid": "3007"
+   //      },
+   //      {
+   //          "serviceName": "Side Locks",
+   //              "serviceid": "3008"
+   //      },
+   //      {
+   //          "serviceName": "Laser Hair Removal",
+   //              "serviceid": "3009"
+   //      }]
+   //     },
+   //     {
+   //         name:"BODY",
+   //         Id:'4000',
+   //         value:[
+   //             {
+   //          "serviceName": "Body Polishing",
+   //              "serviceid": "4001"
+   //      },
+   //     {
+   //          "serviceName": "Body Toning",
+   //              "serviceid": "4002"
+   //      },
+   //     {
+   //          "serviceName": "Body Bleach",
+   //              "serviceid": "4003"
+   //      },
+   //     {
+   //          "serviceName": "Body Scrub",
+   //              "serviceid": "4004"
+   //      },
+   //      {
+   //          "serviceName": "Boby Wrap",
+   //              "serviceid": "4005"
+   //      },
+   //     {
+   //          "serviceName": "Body Treatments",
+   //              "serviceid": "4006"
+   //      },
+   //     {
+   //          "serviceName": "Botox Treatment",
+   //              "serviceid": "4007"
+   //      },
+   //     {
+   //          "serviceName": "Body Shaping and Contouring",
+   //              "serviceid": "4008"
+   //      },
+   //      {
+   //          "serviceName": "Tanning",
+   //              "serviceid": "4009"
+   //      }]
+   //     },
+   //     {
+   //         name:"HANDS & FEETS",
+   //         Id:'5000',
+   //         value:[
+   //             {
+   //          "serviceName": "Pedicure",
+   //              "serviceid": "5001"
+   //      },
+   //      {
+   //          "serviceName": "Manicure",
+   //              "serviceid": "5002"
+   //      },
+   //     {
+   //          "serviceName": "Cleanings",
+   //              "serviceid": "5003"
+   //      }]
+   //     },
+   //     {
+   //         name:"NAILS",
+   //         Id:'6000',
+   //         value:[
+   //            {
+   //          "serviceName": "Nail Art",
+   //              "serviceid": "6001"
+   //      },
+   //     {
+   //          "serviceName": "Nail Extension/ Bar",
+   //              "serviceid": "6002"
+   //      }]
+   //     },
+   //     {
+   //         name:"PACKAGES",
+   //         Id:'7000',
+   //         value:[
+   //             {
+   //                  "serviceName": "Packages",
+   //                 "serviceid": "7001"
+   //      }]
+   //     },
+   //     {
+   //         name:"SPA & MASSAGES",
+   //         Id:'8000',
+   //         value:[
+   //             {
+   //          "serviceName": "Spa & Massages",
+   //              "serviceid": "8001"
+   //      }]
+   //     },
+   //     {
+   //         name:"FITNESS",
+   //         Id:'9000',
+   //         value:[
+   //           {
+   //              "serviceName": "Fitness",
+   //              "serviceid": "9001"
+   //      }]
+   //     },
+   //     {
+   //         name:"WEDDING & PARTY",
+   //         Id:'1100',
+   //         value:[
+   //             {
+   //          "serviceName": "Wedding & Party",
+   //              "serviceid": "1101"
+   //      }]
+   //     },  {
+   //         name:"TATTOO",
+   //         Id:'1200',
+   //         value:[
+   //            {
+   //          "serviceName": "Tattoo",
+   //              "serviceid": "1201"
+   //          }
+   //         ]
+   //     }
+   //
+   // ];
 }])

@@ -1,12 +1,18 @@
-app.controller('VendorListCtrl', ['$scope','$ionicHistory','$state', function($scope,$ionicHistory,$state,$stateParams){
+app.controller('VendorListCtrl',
+    function($scope,$ionicHistory,$state,$stateParams,$ionicLoading){
 
-    // $scope.location_info = JSON.parse(window.localStorage['selectedLocation']).cityId;
-
+    $scope.show = function() {
+        $ionicLoading.show({
+            template: 'Loading...'
+        })
+    };
+    $scope.show();
 
     firebase.database().ref('vendors/'+JSON.parse(window.localStorage['selectedLocation']).cityId).once('value',function(response){
         $scope.vendor_list = response.val();
-
-        console.log("vendor list",JSON.stringify(response.val()))
+        if($scope.vendor_list){
+            $ionicLoading.hide();
+        }
     });
 
 
@@ -41,4 +47,4 @@ app.controller('VendorListCtrl', ['$scope','$ionicHistory','$state', function($s
    $scope.vendor_detail = function(id){
        $state.go('vendorMenu',{vendor_id:id});
    }
-}]);
+})

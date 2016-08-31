@@ -4,23 +4,23 @@
         <h1 class="title">CART</h1>
         <div class="buttons buttons-right header-item">
             <a class="button button-icon ion-android-cart">
-                <span class="badge badge-assertive" id="cartbadge">0</span>
+                <span class="badge badge-assertive" id="cartbadge">{{cart_item}}</span>
             </a>
             <a class="button button-icon icon ion-edit "></a>
         </div>
     </ion-header-bar>
     <ion-content>
         <ul class="list">
-            <li class="item" ng-repeat="data in datas">
+            <li class="item" ng-repeat="data in cartItems">
                 <span id="cartdetails">
-        {{data["Name"]}}
+        {{data.name}}
         </span>
                 <span id="cartoriginal">
                     <strike>
                         <span class="striked-text">
                             <strong>
                                 <del>&#2352;</del>
-                            </strong>{{data["Original_Price"]}}&nbsp; 
+                            </strong>{{data.ven_price}}&nbsp;
                         </span>
                         <span class="line-arrow right"></span>
                     </strike>
@@ -28,10 +28,9 @@
                 <span id="fab2uPrice">
                     <strong>
                         <del>&#2352;</del>
-                    </strong>{{data["Fabtu_Price"]}}
-    
+                    </strong>{{data.fab_price}}
                 </span>
-                <div class="diagonal">
+                <div class="diagonal" ng-click="list_changed(data.serv_id)">
                     <span id="cancelcartitem">
                         <a class="button button-icon ion-ios-close-outline" id="closeiconcolor"></a>
                     </span>
@@ -46,7 +45,7 @@
                 <span class="striked-text" id="striketextcolor" >
                     <strong>
                         <del>&#2352;</del>
-                    </strong>{{total_original}}&nbsp; 
+                    </strong>{{total_original}}&nbsp;
                 </span>
                 <span class="line-arrow right"></span>
             </strike>
@@ -54,7 +53,6 @@
                 <strong>
                     <del>&#2352;</del>
                 </strong>{{total_fabtu}}
-    
             </span>
         </div>
     </ion-content>

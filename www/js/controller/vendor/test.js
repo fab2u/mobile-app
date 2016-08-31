@@ -11,19 +11,6 @@ app
 
             firebase.database().ref('menu/'+$stateParams.vendor_id+'/services').once('value',function(response){
                 angular.forEach(response.val(), function(value, key) {
-                    // $scope.menu[0] = {
-                    //                 name:"SELECTED",
-                    //                 Id:'0000',
-                    //                 menuList:[
-                    //                     {
-                    //                         "serviceName": "DUMMY",
-                    //                         "serviceid": "0001",
-                    //                         "fab2uPrice":"500",
-                    //                         "vendorPrice":"600",
-                    //                         "menuItemName":"SOON UPDATED"
-                    //                     }
-                    //                 ]
-                    //             };
                     if(key == 'cat-01'){
                         $scope.catName.push("HAIR");
                         $scope.menu.push(value)
@@ -69,50 +56,46 @@ app
                         $scope.menu.push(value)
                     }
                 });
-                // console.log("menu items",JSON.stringify($scope.menu,null,2))
                 $timeout( function() {
                     $ionicSlideBoxDelegate.update();
                 },200);
-                // console.log("catname",JSON.stringify($scope.catName))
             });
 
 
             $scope.selectedServices = {}; // Stores selected services
+            $scope.begItems = {};
+
             $scope.currSlide = 0; // Current slide index
 
             // Get selected services if previously stored in localstorage
             if (localStorage.getItem("slectedItem") != null) {
                 $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
                 $scope.cart_item = _.size($scope.selectedServices);
-
             }
 
             $rootScope.$on('cart', function (event, args) {
                 $scope.message = args.message;
                 $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
                 $scope.cart_item = _.size($scope.selectedServices);
-
             });
 
             // Notify slide change
             // @param (int) slide index
             $scope.slideHasChanged = function(index) {
-                // $ionicSlideBoxDelegate.update();
                 tabPositionCenter(index);
                 $scope.currSlide = $ionicSlideBoxDelegate.currentIndex();
                 $timeout( function() {
                     $ionicSlideBoxDelegate.update();
                     $ionicScrollDelegate.$getByHandle('mainScroll').resize();
                 },100);
-
-            }
+            };
 
             // notify tab change
             //@param (int) tab click index
             $scope.tabHasChanged = function(index) {
                 $ionicSlideBoxDelegate.slide(index);
                 tabPositionCenter(index);
-            }
+            };
 
             // Scroll the tab to the center position
             // @param (int) tab index
@@ -165,22 +148,51 @@ app
             // save selected item on click
             //@param1 (int) click item index
             //@param1 (string) click item name
-            $scope.selectItem = function(index, serviceName,service_price) {
-                // console.log(index, serviceName);
+
+            //
+            // $scope.clicked = function(data){
+            //     if($scope.services[data.id]) {
+            //         delete $scope.services[data.id]
+            //     } else {
+            //         $scope.services[data.id] = data;
+            //     }
+            // }
+
+            $scope.selectItem = function(index, serviceName,f_price,v_price,id) {
+                var data = {
+                    'name':serviceName,
+                    'fab_price':f_price,
+                    'ven_price':v_price,
+                    'serv_id':id
+                }
+                if(($scope.begItems[data.serv_id]) && ($scope.selectedServices[serviceName])){
+                    delete $scope.begItems[data.serv_id];
+                    delete $scope.selectedServices[serviceName];
+
+                }else {
+                    $scope.begItems[data.serv_id] = data;
+                    $scope.selectedServices[serviceName] = true;
+                }
+                localStorage.setItem('BegItems', JSON.stringify($scope.begItems));
+                localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
+                $rootScope.$broadcast('cart', { message: 'cart length changed' });
+
+
 
                 // TODO
                 // If not already present remove else store the name/id
-                if($scope.selectedServices[serviceName]){
-                  delete $scope.selectedServices[serviceName];
-                  delete  $scope.cart_price[service_price];
-
-                }else{
-                    $scope.selectedServices[serviceName] = true;
-                    $scope.cart_price[service_price] = true;
-                }
-                localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
-                $rootScope.$broadcast('cart', { message: 'cart length changed' });
+                // if($scope.selectedServices[serviceName]){
+                //   delete $scope.selectedServices[serviceName];
+                //   // delete  $scope.cart_price[service_price];
+                //
+                // }else{
+                //     $scope.selectedServices[serviceName] = true;
+                //     // $scope.cart_price[service_price] = true;
+                // }
+                // localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
+                // $rootScope.$broadcast('cart', { message: 'cart length changed' });
             };
+
 
 
             // Scroll tabs to right/left
@@ -198,20 +210,18 @@ app
             $scope.backButton = function() {
                 console.log("Back");
                 // TODO
-            }
+            };
 
             // handel on click overview button
             $scope.overviewButton = function() {
                 $state.go('vendorDetails',{'ven_id':$stateParams.vendor_id})
-                console.log("overview");
                 // TODO
-            }
+            };
 
 
             // handel on click proceed button
             $scope.proceedButton = function() {
-                console.log("Proceed");
-                // TODO
+                $state.go('cart');
             };
 
             $scope.services = {

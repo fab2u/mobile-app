@@ -145,19 +145,6 @@ app
 
             }//tabPositionCenter
 
-            // save selected item on click
-            //@param1 (int) click item index
-            //@param1 (string) click item name
-
-            //
-            // $scope.clicked = function(data){
-            //     if($scope.services[data.id]) {
-            //         delete $scope.services[data.id]
-            //     } else {
-            //         $scope.services[data.id] = data;
-            //     }
-            // }
-
             $scope.selectItem = function(index, serviceName,f_price,v_price,id) {
                 var data = {
                     'name':serviceName,
@@ -176,21 +163,6 @@ app
                 localStorage.setItem('BegItems', JSON.stringify($scope.begItems));
                 localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
                 $rootScope.$broadcast('cart', { message: 'cart length changed' });
-
-
-
-                // TODO
-                // If not already present remove else store the name/id
-                // if($scope.selectedServices[serviceName]){
-                //   delete $scope.selectedServices[serviceName];
-                //   // delete  $scope.cart_price[service_price];
-                //
-                // }else{
-                //     $scope.selectedServices[serviceName] = true;
-                //     // $scope.cart_price[service_price] = true;
-                // }
-                // localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
-                // $rootScope.$broadcast('cart', { message: 'cart length changed' });
             };
 
 

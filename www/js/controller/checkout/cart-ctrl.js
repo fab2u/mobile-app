@@ -22,8 +22,15 @@ app.controller("CartCtrl",function($scope,$rootScope){
         $scope.cart_item = _.size($scope.selectedServices);
     });
 
-    $scope.list_changed = function (id) {
-
+    $scope.list_changed = function (serv_id,serviceName) {
+        console.log("dddd",$scope.cartItems[serv_id])
+        if(($scope.cartItems[serv_id]) && ($scope.selectedServices[serviceName])){
+            delete $scope.cartItems[serv_id];
+            delete $scope.selectedServices[serviceName];
+        }
+        localStorage.setItem('BegItems', JSON.stringify($scope.cartItems));
+        localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
+        $rootScope.$broadcast('cart', { message: 'cart length changed' });
     };
 
     $scope.datas= [

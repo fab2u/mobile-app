@@ -5,7 +5,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/checkout/cart-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/checkout/cart-ctrl.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/vendor/test.js" afterPath="$PROJECT_DIR$/www/js/controller/vendor/test.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/checkout/cart.html" afterPath="$PROJECT_DIR$/www/templates/checkout/cart.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/vendor/vendor-menu.html" afterPath="$PROJECT_DIR$/www/templates/vendor/vendor-menu.html" />
     </list>
     <ignored path="mobile-app.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,8 +38,8 @@
       <file leaf-file-name="cart.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/templates/checkout/cart.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="32" column="60" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="60" />
+            <state relative-caret-position="175">
+              <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -66,21 +65,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cart-ctrl.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cart-ctrl.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/js/controller/checkout/cart-ctrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" column="6" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="6" />
+            <state relative-caret-position="420">
+              <caret line="28" column="56" selection-start-line="28" selection-start-column="56" selection-end-line="28" selection-end-column="56" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="172" column="3" selection-start-line="172" selection-start-column="3" selection-end-line="172" selection-end-column="3" />
+            <state relative-caret-position="301">
+              <caret line="154" column="13" selection-start-line="154" selection-start-column="13" selection-end-line="164" selection-end-column="82" />
               <folding>
                 <element signature="e#4232#6305#0" expanded="false" />
               </folding>
@@ -165,9 +164,9 @@
         <option value="$PROJECT_DIR$/www/templates/vendor/vendorDetails.html" />
         <option value="$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js" />
         <option value="$PROJECT_DIR$/www/templates/vendor/vendor-menu.html" />
+        <option value="$PROJECT_DIR$/www/js/controller/vendor/test.js" />
         <option value="$PROJECT_DIR$/www/templates/checkout/cart.html" />
         <option value="$PROJECT_DIR$/www/js/controller/checkout/cart-ctrl.js" />
-        <option value="$PROJECT_DIR$/www/js/controller/vendor/test.js" />
       </list>
     </option>
   </component>
@@ -560,12 +559,12 @@
       <workItem from="1472187670144" duration="15326000" />
       <workItem from="1472451376577" duration="23521000" />
       <workItem from="1472537214339" duration="24280000" />
-      <workItem from="1472627106396" duration="17876000" />
+      <workItem from="1472627106396" duration="18507000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="225648000" />
+    <option name="totallyTimeSpent" value="226279000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
@@ -612,7 +611,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/www/js/controller/checkout/cart-ctrl.js</url>
-          <line>40</line>
+          <line>47</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -978,29 +977,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="154" column="13" selection-start-line="154" selection-start-column="13" selection-end-line="164" selection-end-column="82" />
+          <folding>
+            <element signature="e#4232#6305#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/checkout/cart.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="32" column="60" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="60" />
+        <state relative-caret-position="175">
+          <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controller/checkout/cart-ctrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="6" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="6" />
+        <state relative-caret-position="420">
+          <caret line="28" column="56" selection-start-line="28" selection-start-column="56" selection-end-line="28" selection-end-column="56" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="172" column="3" selection-start-line="172" selection-start-column="3" selection-end-line="172" selection-end-column="3" />
-          <folding>
-            <element signature="e#4232#6305#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>

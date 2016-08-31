@@ -46,7 +46,7 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
       var newBlogKey = db.ref().child("blogs").push().key;
       blogData = {
          blog_id: newBlogKey,
-         title: $scope.feed.title,
+         // title: $scope.feed.title,
          introduction: $scope.feed.introduction,
          user: {
             user_name: uname,

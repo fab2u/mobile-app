@@ -5,55 +5,6 @@ app
 
             $scope.menu = [];
 
-            // $scope.menu[0] = {
-            //     name:"SELECTED",
-            //     Id:'0000',
-            //     menuList:[
-            //         {
-            //             "serviceName": "DUMMY",
-            //             "serviceid": "0001",
-            //             "fab2uPrice":"500",
-            //             "vendorPrice":"600",
-            //             "menuItemName":"SOON UPDATED"
-            //         }
-            //     ]
-            // };
-            // $scope.menu[1] = {
-            //     name:"HAIR",
-            //     Id:'1000',
-            //     menuList:[]
-            // };
-            // $scope.menu[2] = {
-            //     name:"FACE",
-            //     Id:'2000',
-            //     menuList:[]
-            // };
-            // $scope.menu[3] = {
-            //     name:"HAIR REMOVAL",
-            //     Id:'3000',
-            //     menuList:[]
-            // };
-            // $scope.menu[4] = {
-            //     name:"BODY",
-            //     Id:'4000',
-            //     menuList:[]
-            // };
-            // $scope.menu[5] = {
-            //     name:"HANDS & FEETS",
-            //     Id:'5000',
-            //     menuList:[]
-            // };
-            // $scope.menu[6] = {
-            //     name:"NAILS",
-            //     Id:'6000',
-            //     menuList:[]
-            // };
-            // $scope.menu[7] = {
-            //     name:"PACKAGES",
-            //     Id:'7000',
-            //     menuList:[]
-            // };
-
             $scope.catName = [];
 
             firebase.database().ref('menu/'+$stateParams.vendor_id+'/services').once('value',function(response){
@@ -78,305 +29,51 @@ app
                     }
                     else if(key =='cat-02'){
                         $scope.catName.push("FACE");
-
-                        // $scope.menu[2] = {
-                        //     name:"FACE",
-                        //     Id:'2000',
-                        //     menuList:[]
-                        // };
                         $scope.menu.push(value)
                     }
                     else if(key =='cat-03'){
                         $scope.catName.push("HAIR REMOVAL");
-
-                        $scope.menu[3] = {
-                            name:"HAIR REMOVAL",
-                            Id:'3000',
-                            menuList:[]
-                        };
-                        $scope.menu[3].menuList.push(value)
+                        $scope.menu.push(value)
                     }
                     else if(key =='cat-04'){
                         $scope.catName.push("BODY");
-                        $scope.menu[4] = {
-                            name:"BODY",
-                            Id:'4000',
-                            menuList:[]
-                        };
-                        $scope.menu[4].menuList.push(value)
+                        $scope.menu.push(value)
                     }
                     else if(key =='cat-05'){
                         $scope.catName.push("HANDS & FEETS");
-
-                        $scope.menu[5] = {
-                            name:"HANDS & FEETS",
-                            Id:'5000',
-                            menuList:[]
-                        };
-                        $scope.menu[5].menuList.push(value)
+                        $scope.menu.push(value)
                     }
                     else if(key =='cat-06'){
                         $scope.catName.push("NAILS");
-
-                        $scope.menu[6] = {
-                            name:"NAILS",
-                            Id:'6000',
-                            menuList:[]
-                        };
-                        $scope.menu[6].menuList.push(value)
+                        $scope.menu.push(value)
                     }
                     else if(key =='cat-07'){
                         $scope.catName.push("PACKAGES");
-
-                        $scope.menu[7] = {
-                            name:"PACKAGES",
-                            Id:'7000',
-                            menuList:[]
-                        };
-                        $scope.menu[7].menuList.push(value)
+                        $scope.menu.push(value)
                     }
                     else if(key =='cat-08'){
                         $scope.catName.push("SPA & MASSAGES");
-
-                        $scope.menu[8] = {
-                            name:"SPA & MASSAGES",
-                            Id:'8000',
-                            menuList:[]
-                        };
-                        $scope.menu[8].menuList.push(value)
+                        $scope.menu.push(value)
                     }
                     else if(key =='cat-09'){
                         $scope.catName.push("FITNESS");
-
-                        $scope.menu[9] = {
-                            name:"FITNESS",
-                            Id:'9000',
-                            menuList:[]
-                        };
-                        $scope.menu[9].menuList.push(value)
+                        $scope.menu.push(value)
                     }
                     else if(key =='cat-11'){
                         $scope.catName.push("WEDDING & PARTY");
-
-                        $scope.menu[11] = {
-                            name:"WEDDING & PARTY",
-                            Id:'1100',
-                            menuList:[]
-                        };
-                        $scope.menu[11].menuList.push(value)
+                        $scope.menu.push(value)
                     }
                     else if(key =='cat-12'){
                         $scope.catName.push("TATTOO");
-
-                        // $scope.menu[12] = {
-                        //     name:"TATTOO",
-                        //     Id:'1200',
-                        //     menuList:[]
-                        // };
                         $scope.menu.push(value)
                     }
                 });
-                //     $scope.menu[0] = {
-                //         name:"SELECTED",
-                //         Id:'0000',
-                //         menuList:[
-                //             {
-                //                 "serviceName": "DUMMY",
-                //                 "serviceid": "0001",
-                //                 "fab2uPrice":"500",
-                //                 "vendorPrice":"600",
-                //                 "menuItemName":"SOON UPDATED"
-                //             }
-                //         ]
-                //     };
-                //     if(key > '1000' && key <'1015'){
-                //         $scope.menu[1] = {
-                //             name:"HAIR",
-                //             Id:'1000',
-                //             menuList:[]
-                //         };
-                //         angular.forEach(value, function(value, key) {
-                //
-                //             $scope.menu[1].menuList.push(value)
-                //
-                //         })
-                //     }
-                //     else if(key > '2000' && key <'2011'){
-                //         $scope.menu[2] = {
-                //             name:"FACE",
-                //             Id:'2000',
-                //             menuList:[]
-                //         };
-                //         angular.forEach(value, function(value, key) {
-                //
-                //             $scope.menu[2].menuList.push(value)
-                //
-                //         })
-                //     }
-                //     else if(key > '3000' && key <'3010'){
-                //         $scope.menu[3] = {
-                //             name:"HAIR REMOVAL",
-                //             Id:'3000',
-                //             menuList:[]
-                //         };
-                //         angular.forEach(value, function(value, key) {
-                //             $scope.menu[3].menuList.push(value)
-                //
-                //         })
-                //     }
-                //     else if(key > '4000' && key <'4010'){
-                //         $scope.menu[4] = {
-                //             name:"BODY",
-                //             Id:'4000',
-                //             menuList:[]
-                //         };
-                //         angular.forEach(value, function(value, key) {
-                //             $scope.menu[4].menuList.push(value)
-                //
-                //         })
-                //     }
-                //     else if(key > '5000' && key <'5004'){
-                //         $scope.menu[5] = {
-                //             name:"HANDS & FEETS",
-                //             Id:'5000',
-                //             menuList:[]
-                //         };
-                //         angular.forEach(value, function(value, key) {
-                //             $scope.menu[5].menuList.push(value)
-                //
-                //         })
-                //     }
-                //     else if(key > '6000' && key <'6003'){
-                //         $scope.menu[6] = {
-                //             name:"NAILS",
-                //             Id:'6000',
-                //             menuList:[]
-                //         };
-                //         angular.forEach(value, function(value, key) {
-                //             $scope.menu[6].menuList.push(value)
-                //
-                //         })
-                //     }
-                //     else if(key == '7001'){
-                //         $scope.menu[7] = {
-                //             name:"PACKAGES",
-                //             Id:'7000',
-                //             menuList:[]
-                //         };
-                //         angular.forEach(value, function(value, key) {
-                //             $scope.menu[7].menuList.push(value)
-                //
-                //         })
-                //     }
-                //     else if(key == '8001'){
-                //         $scope.menu[8] = {
-                //             name:"SPA & MASSAGES",
-                //             Id:'8000',
-                //             menuList:[]
-                //         };
-                //         angular.forEach(value, function(value, key) {
-                //             $scope.menu[8].menuList.push(value)
-                //
-                //         })
-                //     }
-                //     else if(key == '9001'){
-                //         $scope.menu[9] = {
-                //             name:"FITNESS",
-                //             Id:'9000',
-                //             menuList:[]
-                //         };
-                //         angular.forEach(value, function(value, key) {
-                //             $scope.menu[9].menuList.push(value)
-                //
-                //         })
-                //     }
-                //     else if(key == '1101'){
-                //         $scope.menu[11] = {
-                //             name:"WEDDING & PARTY",
-                //             Id:'1100',
-                //             menuList:[]
-                //         };
-                //         angular.forEach(value, function(value, key) {
-                //             $scope.menu[11].menuList.push(value)
-                //
-                //         })
-                //     }
-                //     else if(key == '1201'){
-                //         $scope.menu[12] = {
-                //             name:"TATTOO",
-                //             Id:'1200',
-                //             menuList:[]
-                //         };
-                //         angular.forEach(value, function(value, key) {
-                //             $scope.menu[12].menuList.push(value)
-                //
-                //         })
-                //     }
-                // });
-                // var str = JSON.stringify($scope.menu, null, 2);
-                // console.log(str);
                 console.log("menu items",JSON.stringify($scope.menu,null,2))
                 $timeout( function() {
                     $ionicSlideBoxDelegate.update();
                 },200);
                 console.log("catname",JSON.stringify($scope.catName))
-
             });
-
-
-
-
-            $scope.services=[
-                {
-                    name:"Blow dry",
-                    value:[
-                        {
-                            id:"1",
-                            service:"Variable1 acc to data",
-                            price:"6000",
-                            discountprice:"600",
-                            added:false
-                        }]
-                },{
-                    name:"Hair dry",
-                    value:[
-                        {
-                            id:"2",
-                            service:"Variable2 according to data",
-                            price:"6000",
-                            discountprice:"600",
-                            added:false
-                        },{
-                            id:"3",
-                            service:"Variable3 according to data",
-                            price:"6000",
-                            discountprice:"600",
-                            added:false
-                        },{
-                            id:"4",
-                            service:"Variable4 according to data",
-                            price:"6000",
-                            discountprice:"600",
-                            added:false
-                        }]
-                },{
-                    name:"Hair dry",
-                    value:[
-                        {
-                            id:"5",
-                            service:"Variable acc to data",
-                            price:"6000",
-                            discountprice:"600",
-                            added:false
-                        },{
-                            id:"6",
-                            service:"Variable acc to data",
-                            price:"6000",
-                            discountprice:"600",
-                            added:false
-                        }]
-                }
-            ];
 
 
             $scope.selectedServices = {}; // Stores selected services
@@ -773,4 +470,212 @@ app
             //     }
             //
             // ];
+
+            $scope.services = {
+                "1001":{
+                    "serviceName": "Beard Styling",
+                    "serviceid": "1001"
+                },
+                "1002":{
+                    "serviceName": "Blow Dry",
+                    "serviceid": "1002"
+                },
+                "1003":{
+                    "serviceName": "Hair Coloring",
+                    "serviceid": "1003"
+                },
+                "1004":{
+                    "serviceName": "Hair Consulting",
+                    "serviceid": "1004"
+                },
+                "1005":{
+                    "serviceName": "Hair Cut",
+                    "serviceid": "1005"
+                },
+                "1007":{
+                    "serviceName": "Hair Extension",
+                    "serviceid": "1007"
+                },
+                "1008":{
+                    "serviceName": "Head Massage",
+                    "serviceid": "1008"
+                },
+                "1009":{
+                    "serviceName": "Hair Spa",
+                    "serviceid": "1009"
+                },
+                "1010":{
+                    "serviceName": "Hair Transplant",
+                    "serviceid": "1010"
+                },
+                "1011":{
+                    "serviceName": "Hair Wash",
+                    "serviceid": "1011"
+                },
+                "1012":{
+                    "serviceName": "Other Hair Treatments",
+                    "serviceid": "1012"
+                },
+                "1013":{
+                    "serviceName": "Straightening/ Perming",
+                    "serviceid": "1013"
+                },
+                "1014":{
+                    "serviceName": "Anti HairFall Treatment",
+                    "serviceid": "1014"
+                },
+                "2001":{
+                    "serviceName": "Face Bleach",
+                    "serviceid": "2001"
+                },
+                "2002":{
+                    "serviceName": "Eyebrow/Eyelash",
+                    "serviceid": "2002"
+                },
+                "2003":{
+                    "serviceName": "Face Threading",
+                    "serviceid": "2003"
+                },
+                "2004":{
+                    "serviceName": "Face Waxing",
+                    "serviceid": "2004"
+                },
+                "2005":{
+                    "serviceName": "Facials",
+                    "serviceid": "2005"
+                },
+                "2006":{
+                    "serviceName": "Clean-up",
+                    "serviceid": "2006"
+                },
+                "2007":{
+                    "serviceName": "Laser Treatment",
+                    "serviceid": "2007"
+                },
+                "2008":{
+                    "serviceName": "Shaving",
+                    "serviceid": "2008"
+                },
+                "2009":{
+                    "serviceName": "Skin Treatments",
+                    "serviceid": "2009"
+                },
+                "2010":{
+                    "serviceName": "Skincare Consultations",
+                    "serviceid": "2010"
+                },
+                "3001":{
+                    "serviceName": "Underarms",
+                    "serviceid": "3001"
+                },
+                "3002":{
+                    "serviceName": "Arms",
+                    "serviceid": "3002"
+                },
+                "3003":{
+                    "serviceName": "Legs",
+                    "serviceid": "3003"
+                },
+                "3004":{
+                    "serviceName": "Full Body",
+                    "serviceid": "3004"
+                },
+                "3005":{
+                    "serviceName": "Full Back",
+                    "serviceid": "3005"
+                },
+                "3006":{
+                    "serviceName": "Midriff",
+                    "serviceid": "3006"
+                },
+                "3007":{
+                    "serviceName": "Bikini",
+                    "serviceid": "3007"
+                },
+                "3008":{
+                    "serviceName": "Side Locks",
+                    "serviceid": "3008"
+                },
+                "3009":{
+                    "serviceName": "Laser Hair Removal",
+                    "serviceid": "3009"
+                },
+                "4001":{
+                    "serviceName": "Body Polishing",
+                    "serviceid": "4001"
+                },
+                "4002":{
+                    "serviceName": "Body Toning",
+                    "serviceid": "4002"
+                },
+                "4003":{
+                    "serviceName": "Body Bleach",
+                    "serviceid": "4003"
+                },
+                "4004":{
+                    "serviceName": "Body Scrub",
+                    "serviceid": "4004"
+                },
+                "4005":{
+                    "serviceName": "Boby Wrap",
+                    "serviceid": "4005"
+                },
+                "4006":{
+                    "serviceName": "Body Treatments",
+                    "serviceid": "4006"
+                },
+                "4007":{
+                    "serviceName": "Botox Treatment",
+                    "serviceid": "4007"
+                },
+                "4008":{
+                    "serviceName": "Body Shaping and Contouring",
+                    "serviceid": "4008"
+                },
+                "4009":{
+                    "serviceName": "Tanning",
+                    "serviceid": "4009"
+                },
+                "5001":{
+                    "serviceName": "Pedicure",
+                    "serviceid": "5001"
+                },
+                "5002":{
+                    "serviceName": "Manicure",
+                    "serviceid": "5002"
+                },
+                "5003":{
+                    "serviceName": "Cleanings",
+                    "serviceid": "5003"
+                },
+                "6001":{
+                    "serviceName": "Nail Art",
+                    "serviceid": "6001"
+                },
+                "6002":{
+                    "serviceName": "Nail Extension/ Bar",
+                    "serviceid": "6002"
+                },
+                "7001":{
+                    "serviceName": "Packages",
+                    "serviceid": "7001"
+                },
+                "8001":{
+                    "serviceName": "Spa & Massages",
+                    "serviceid": "8001"
+                },
+                "9001":{
+                    "serviceName": "Fitness",
+                    "serviceid": "9001"
+                },
+                "1101":{
+                    "serviceName": "Wedding & Party",
+                    "serviceid": "1101"
+                },
+                "1201":{
+                    "serviceName": "Tattoo",
+                    "serviceid": "1111"
+                }
+            };
+
         }])

@@ -94,3 +94,58 @@
 	float:left;
 	margin-right:10px;
 }
+
+.new-feed, .new-feed form{
+	background: url("../../img/new-feed-bg.jpg") no-repeat center center;
+}
+
+.new-feed .des{
+	padding: 20px 0px;
+	text-align: center;
+}
+.new-feed .des1{
+	padding: 10px 0px;
+	text-align: center;
+}
+.new-feed .des label, .new-feed .des1 label{
+	font-size: 1.2em;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.new-feed .upload{
+	width:200px;
+	height:180px;
+	border:1px solid #cccccc;
+	margin:0 auto;
+	padding:30px 10px;
+	border-radius:5px;
+	background:#fff;
+	text-align: center;
+}
+.new-feed .upload img{
+	padding-bottom:20px;
+	width:50px;
+	margin:0 auto;
+}
+.new-feed .upload label{
+	color:#666666;
+	font-weight:normal;
+	font-size:13px;
+	margin:0 auto;
+}
+
+.new-feed .profile-details{
+	padding: 10px 10px 0px 10px;
+}
+
+.new-feed .feed-comment{
+	margin: 10px;
+}
+
+.new-feed button.pink-bg{
+	background-color: #FF8386;
+	border: none;
+	color: #fff;
+	font-weight: bold;
+}

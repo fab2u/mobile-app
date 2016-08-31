@@ -15,9 +15,13 @@
          </div>
       </section>
       <div class="profile-details">
-         <div class="button-bar" ng-show="showUploadOptions">
-            <a class="button button-activated" ng-click="cameraUpload()">Camera</a>
-            <a class="button button-positive" ng-click="galleryUpload()">Gallery</a>
+         <div class="row" ng-show="showUploadOptions">
+            <div class="col">
+               <a class="follow-btn" ng-click="cameraUpload()">Camera</a>
+            </div>
+            <div class="col">
+               <a class="follow-btn" ng-click="galleryUpload()">Gallery</a>
+            </div>
          </div>
       </div>
       <div class="des1">

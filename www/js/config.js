@@ -54,7 +54,7 @@ app
 
 	//State for vendor details
 	$stateProvider.state('vendorDetails', {
-		url: '/vendorDetails/:vendor_id',
+		url: '/vendorDetails/:ven_id',
 		templateUrl: 'templates/vendor/vendorDetails.html',
 		controller: 'VendorDetailsCtrl'
 	});

@@ -91,8 +91,10 @@
 			    	<ion-list ng-show="more">
 			    		<ion-item ng-repeat="item in days" class="timingDetail capitalize">
 			    			{{item.name}}
-			    			<span ng-class="time" >
-                                {{item.startTime | date:"h:mma"}} - {{item.endTime | date:"h:mma"}}
+			    			<span ng-class="time" ng-repeat="slots in item.Times">
+								<p>
+									{{slots.start | date:"h:mma"}} - {{slots.end | date:"h:mma"}}
+								</p>
 							</span>
 			    		</ion-item>
 			    	</ion-list>
@@ -144,7 +146,7 @@
 			<p>Rate Now</p>
 		</div>
 	  	<div class="row newFooter">
-			<div class="col col-33" id="menu">MENU</div>
+			<div class="col col-33" id="menu" ng-click="vendorMenu()">MENU</div>
 			<div class="col col-66" id="proceed" ng-click="cart()">PROCEED</div>
 		</div>
 	</ion-footer-bar>

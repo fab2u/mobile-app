@@ -15,7 +15,7 @@
                 </div> <!-- .col -->
                 <div class="col" style="text-align:center;">
                     <div class="cart">
-                        <span class="total-cart">5</span>
+                        <span class="total-cart">{{cart_item}}</span>
                         <i class="icon ion-ios-cart"></i>
                     </div> <!-- .cart -->
                 </div> <!-- .col -->
@@ -56,52 +56,9 @@
             <ion-slide-box style="width:100%!important; background-color: #FFF;" class="slideBox" on-slide-changed="slideHasChanged($index)" show-pager="false" delegate-handle="my-handle">
                 <ion-slide ng-repeat="data in menu">
                     <div class="col" ng-repeat="(key, value) in data " style="width: 100%;margin:= auto; ">
-
                         <div class="item item-text-wrap list-heading" ng-repeat="(key1, value1) in services" ng-if="key == key1">{{value1.serviceName}}</div>
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key =='1001'">Beard Styling</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '1002'">Blow Dry</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '1003'">Hair Coloring</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '1004'">Hair Consulting</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '1005'">Hair Cut</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '1006'">Hair Extension</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '1007'">Head Massage</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '1008'">Hair Spa</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '1009'">Hair Transplant</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '1010'">Hair Wash</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '1011'">Other Hair Treatments</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '1012'">Straightening/ Perming</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '1013'">Anti HairFall Treatment</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '2001'">Face Bleach</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '2002'">Eyebrow/Eyelash</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '2003'">Face Threading</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '2004'">Face Waxing</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '2005'">Facials</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '2006'">Clean-up</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '2007'">Laser Treatment</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '2008'">Shaving</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '2009'">Skin Treatments</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '2010'">Skincare Consultations</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '3001'">Underarms</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '3002'">Arms</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '3003'">Legs</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '3004'">Full Body</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '3005'">Full Back</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '3006'">Midriff</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '3007'">Bikini</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '3008'">Side Locks</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '3009'">Laser Hair Removal</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '4001'">Body Polishing</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '4002'">Body Toning</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '4003'">Body Bleach</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '4004'">Body Scrub</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '4005'">Boby Wrap</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '4006'">Body Treatments</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '4007'">Botox Treatment</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '4008'">Body Shaping and Contouring</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '4009'">Tanning</div>-->
-                        <!--<div class="item item-text-wrap list-heading " ng-if="key == '1201'">Tattoo</div>-->
                         <div id= "y.id " class="item item-text-wrap row" id="custom-servicelist" ng-repeat="y in value"
-                             ng-click="selectItem($index, y.menuItemName)">
+                             ng-click="selectItem($index, y.menuItemName,y.fab2uPrice)">
                             <div ng-show="selectedServices[y.menuItemName]" style="background-color:#0dd1d1; width:20px;">
                             </div>
                             <div class="col col-50 item-text-wrap p-15">

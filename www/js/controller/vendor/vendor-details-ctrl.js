@@ -1,51 +1,15 @@
-app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionicModal','$stateParams','$state','$cordovaGeolocation',
+app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionicModal','$stateParams',
+    '$state','$cordovaGeolocation',
     function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,$cordovaGeolocation){
 
-
-        var posOptions = {timeout: 10000, enableHighAccuracy: false};
-        $cordovaGeolocation
-            .getCurrentPosition(posOptions)
-
-            .then(function (position) {
-                var lat  = position.coords.latitude
-                var long = position.coords.longitude
-                console.log(lat + '   ' + long)
-            }, function(err) {
-                console.log(err)
-            });
-
-        // var watchOptions = {timeout : 3000, enableHighAccuracy: false};
-        // var watch = $cordovaGeolocation.watchPosition(watchOptions);
-        //
-        // watch.then(
-        //     null,
-        //
-        //     function(err) {
-        //         console.log(err)
-        //     },
-        //
-        //     function(position) {
-        //         var lat  = position.coords.latitude
-        //         var long = position.coords.longitude
-        //         console.log(lat + '' + long)
-        //     }
-        // );
-        //
-        // watch.clearWatch();
-
-
-        // here after vendor string will change later as per city selected by user
       $scope.images =[];
 
-    firebase.database().ref('vendors/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.vendor_id).once('value',function(response){
+    firebase.database().ref('vendors/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id).once('value',function(response){
         $scope.vendor_detail = response.val();
         angular.forEach(response.val().images, function(value, key) {
             $scope.images.push({id : key, src:value.url})
         });
     });
-
-
-
 
   $scope.currentValue = 0;
   $scope.liked = false;
@@ -53,7 +17,7 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
   $scope.likeVendor = function(){
     console.log('clicked');
     $scope.liked  = !$scope.liked ;
-  }
+  };
 
 	$scope.next = function() {
     	$ionicSlideBoxDelegate.next();
@@ -92,13 +56,16 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
 
     $scope.showVendorTiming = function(time_info){
         angular.forEach(time_info, function(value, key) {
-            console.log(key,value);
+            console.log(key,JSON.stringify(value));
             if(key == n){
                 $scope.today_end_time = value.pm;
             }
-            $scope.days.push({name : key,startTime:value.am , endTime:value.pm})
+            // $scope.days.push({name : key,startTime:value.am , endTime:value.pm})
+            $scope.days.push({name : key,Times:value})
         });
         $scope.more = !$scope.more;
+
+        console.log("sonam tets",JSON.stringify($scope.days))
     };
 
     $scope.open_map = function(latitude,longitude,line1,line2,vendorName){
@@ -185,6 +152,10 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
 
     $scope.cart = function(){
         $state.go('cart');
+    }
+
+    $scope.vendorMenu = function(){
+        $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id})
     }
 
 }]);

@@ -6,7 +6,7 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
 
     firebase.database().ref('vendors/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id).once('value',function(response){
         $scope.vendor_detail = response.val();
-        angular.forEach(response.val().images, function(value, key) {
+        angular.forEach(response.val().images.gallery, function(value, key) {
             $scope.images.push({id : key, src:value.url})
         });
     });

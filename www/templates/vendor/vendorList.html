@@ -28,7 +28,10 @@
         </p>
         </div>
 
-        <div class="p-fix card" ng-repeat="vendor in vendor_list" ng-click="vendor_detail(vendor.vendorId)" ng-show="vendor_list">
+        <div class="p-fix card" ng-repeat="vendor in vendor_list"
+             ng-click="vendor_detail(vendor.vendorId)" ng-show="vendor_list"
+        style="background-image: url({{vendor.images.main.url || '../../img/vendorImage.jpeg'}});">
+            <!--profile_img || 'img/dummy.png'-->
         <div class="row">
             <div class="col c-col-40">
                 <h6 class="c-title">{{vendor.vendorName}}</h6>

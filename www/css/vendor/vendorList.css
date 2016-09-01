@@ -53,7 +53,7 @@
 }
 
 .vendorList .p-fix.card {
-    background-image: url('../../img/vendorImage.jpeg');
+    /*background-image: url('../../img/vendorImage.jpeg');*/
     position: relative;
     border: 1px darkgrey;
     margin: 7px;

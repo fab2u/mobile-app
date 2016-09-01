@@ -4,9 +4,18 @@ app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$state){
 
     $scope.cartItems = {};
     $scope.cart_item = 0;
+
+    $scope.calPrice = function (item_list) {
+        $scope.total_fabtu=0;
+        $scope.total_original=0;
+        angular.forEach(item_list, function(value, key) {
+            $scope.total_fabtu += value.fab_price;
+            $scope.total_original += value.ven_price;
+        })
+    };
     if(localStorage.getItem('BegItems') != null){
         $scope.cartItems = JSON.parse(localStorage.getItem('BegItems'));
-        console.log("sonam",JSON.stringify($scope.cartItems));
+        $scope.calPrice($scope.cartItems);
     }
     $scope.selectedServices = {};
 
@@ -29,8 +38,11 @@ app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$state){
         }
         localStorage.setItem('BegItems', JSON.stringify($scope.cartItems));
         localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
+        $scope.calPrice(JSON.parse(localStorage.getItem('BegItems')));
         $rootScope.$broadcast('cart', { message: 'cart length changed' });
     };
+
+
 
     $scope.edit_cart = function(){
         $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id});
@@ -40,5 +52,9 @@ app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$state){
         //later on back trake history will be here////////
         $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id});
 
-    }
+    };
+
+$scope.select_time = function(){
+    $state.go('dateTime');
+}
 })

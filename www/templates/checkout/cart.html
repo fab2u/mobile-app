@@ -1,12 +1,12 @@
 <ion-view id="cartview">
     <ion-header-bar class="bar-positive " title="CART" id="customheader">
-        <a class="button icon-left ion-chevron-left button-clear "></a>
+        <a class="button icon-left ion-chevron-left button-clear " ng-click="backButton()"></a>
         <h1 class="title">CART</h1>
         <div class="buttons buttons-right header-item">
             <a class="button button-icon ion-android-cart">
                 <span class="badge badge-assertive" id="cartbadge">{{cart_item}}</span>
             </a>
-            <a class="button button-icon icon ion-edit "></a>
+            <a class="button button-icon icon ion-edit " ng-click="edit_cart()"></a>
         </div>
     </ion-header-bar>
     <ion-content>

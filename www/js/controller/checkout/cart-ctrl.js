@@ -1,4 +1,4 @@
-app.controller("CartCtrl",function($scope,$rootScope){
+app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$state){
   $scope.total_original=0;
   $scope.total_fabtu=0;
 
@@ -23,9 +23,8 @@ app.controller("CartCtrl",function($scope,$rootScope){
     });
 
     $scope.list_changed = function (serv_id,serviceName) {
-        console.log("dddd",$scope.cartItems[serv_id])
-        if(($scope.cartItems[serv_id]) && ($scope.selectedServices[serviceName])){
-            delete $scope.cartItems[serv_id];
+        if(($scope.cartItems[serviceName]) && ($scope.selectedServices[serviceName])){
+            delete $scope.cartItems[serviceName];
             delete $scope.selectedServices[serviceName];
         }
         localStorage.setItem('BegItems', JSON.stringify($scope.cartItems));
@@ -33,45 +32,13 @@ app.controller("CartCtrl",function($scope,$rootScope){
         $rootScope.$broadcast('cart', { message: 'cart length changed' });
     };
 
-    $scope.datas= [
-    {
-      "Name":"Beard Styling",
-      "Original_Price":"6000",
-      "Fabtu_Price":"600"
-    }, 
-    {
-      "Name":"Blow Dry",
-      "Original_Price":"6000",
-      "Fabtu_Price":"600"
-    },
-    {
-      "Name":"Hair Coloring",
-      "Original_Price":"6000",
-      "Fabtu_Price":"600"
-    },
-     {
-      "Name":"Hair Consulting ",
-      "Original_Price":"6000",
-      "Fabtu_Price":"600"
-    }, 
-    {
-      "Name":"Hair Cut",
-      "Original_Price":"6000",
-      "Fabtu_Price":"600"
-    },
-    {
-      "Name":"Hair Spa",
-      "Original_Price":"6000",
-      "Fabtu_Price":"600"
-    },
-     {
-      "Name":"Firebase Spa",
-      "Original_Price":"6000",
-      "Fabtu_Price":"600"
+    $scope.edit_cart = function(){
+        $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id});
+    };
+
+    $scope.backButton = function () {
+        //later on back trake history will be here////////
+        $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id});
+
     }
-    
-   
-];
-
-
 })

@@ -125,7 +125,8 @@ app
 
 	//State for cart
 	$stateProvider.state('cart', {
-		url: '/cart',
+		url: '/cart/:ven_id',
+		cache:false,
 		templateUrl: 'templates/checkout/cart.html',
 		controller: 'CartCtrl'
 	});
@@ -168,6 +169,7 @@ app
 
 	$stateProvider.state('vendorMenu', {
 		url: '/vendorMenu/:vendor_id',
+		cache:false,
 		templateUrl: 'templates/vendor/vendor-menu.html',
 		controller: 'VendorServicesListCtrl'
 	});

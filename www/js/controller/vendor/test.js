@@ -68,14 +68,17 @@ app
             $scope.currSlide = 0; // Current slide index
 
             // Get selected services if previously stored in localstorage
-            if (localStorage.getItem("slectedItem") != null) {
+            if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
                 $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+                $scope.begItems = JSON.parse(localStorage.getItem('BegItems'))
+
                 $scope.cart_item = _.size($scope.selectedServices);
             }
 
             $rootScope.$on('cart', function (event, args) {
                 $scope.message = args.message;
                 $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+                $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
                 $scope.cart_item = _.size($scope.selectedServices);
             });
 
@@ -152,16 +155,18 @@ app
                     'ven_price':v_price,
                     'serv_id':id
                 }
-                if(($scope.begItems[data.serv_id]) && ($scope.selectedServices[serviceName])){
-                    delete $scope.begItems[data.serv_id];
+                if(($scope.begItems[data.name]) && ($scope.selectedServices[serviceName])){
+                    console.log("inside if",$scope.begItems[data.name],$scope.selectedServices[serviceName])
+                    delete $scope.begItems[data.name];
                     delete $scope.selectedServices[serviceName];
 
                 }else {
-                    $scope.begItems[data.serv_id] = data;
+                    $scope.begItems[data.name] = data;
                     $scope.selectedServices[serviceName] = true;
                 }
                 localStorage.setItem('BegItems', JSON.stringify($scope.begItems));
                 localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
+                console.log("testing",JSON.stringify(localStorage.getItem('BegItems')))
                 $rootScope.$broadcast('cart', { message: 'cart length changed' });
             };
 
@@ -176,7 +181,7 @@ app
                 }else{
                     $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(500, 0, true);
                 }
-            }
+            };
 
             // handel back button
             $scope.backButton = function() {
@@ -193,7 +198,7 @@ app
 
             // handel on click proceed button
             $scope.proceedButton = function() {
-                $state.go('cart');
+                $state.go('cart',{'ven_id':$stateParams.vendor_id});
             };
 
             $scope.services = {

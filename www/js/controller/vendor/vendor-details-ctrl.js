@@ -151,7 +151,7 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
     };
 
     $scope.cart = function(){
-        $state.go('cart');
+        $state.go('cart',{'ven_id':$stateParams.ven_id});
     }
 
     $scope.vendorMenu = function(){

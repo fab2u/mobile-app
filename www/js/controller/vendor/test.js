@@ -185,7 +185,7 @@ app
 
             // handel back button
             $scope.backButton = function() {
-                console.log("Back");
+              $state.go('vendorList');
                 // TODO
             };
 

@@ -17,11 +17,11 @@ app.controller('LoginCtrl', ['$scope', 'AuthenticationService', '$ionicPopup', f
          }
          else{
             console.log("result = false, error in login");
-            $mdToast.show(
-               $mdToast.simple()
-                 .textContent("Successfully Logged Out!")
-                 .hideDelay(3000)
-            );
+            // $mdToast.show(
+            //    $mdToast.simple()
+            //      .textContent("Successfully Logged Out!")
+            //      .hideDelay(3000)
+            // );
          }
       });
    }

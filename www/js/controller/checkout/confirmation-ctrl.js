@@ -44,7 +44,7 @@ app.controller('ConfirmationCtrl', ['$scope', function($scope){
 			'vendorId':'-KPmj7NTUSz0kW3H10MJ',
 			'totalAmount':totalVendor,
 			'serviceInfo':services,
-			'createdDate':'02/09/2016',
+			'createdDate':new Date().getTime(),
 			'appointmentDate':'04/09/2016',
 			'versionNumber':'1-1',
 			'status':'upComing',
@@ -54,7 +54,6 @@ app.controller('ConfirmationCtrl', ['$scope', function($scope){
 			'discountTransId':'0',
 			'specialRequest':'updated soon!'
 		};
-
 	};
 	$scope.calPrice = function (services) {
 		var total_fabtu=0;

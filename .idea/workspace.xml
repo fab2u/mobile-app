@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a90707b-bb48-47ba-9167-7f50f00e366c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/auth/authentication.service.js" afterPath="$PROJECT_DIR$/www/js/controller/auth/authentication.service.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/checkout/date-time-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/checkout/date-time-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/checkout/confirmation.html" afterPath="$PROJECT_DIR$/www/templates/checkout/confirmation.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/checkout/dateTime.html" afterPath="$PROJECT_DIR$/www/templates/checkout/dateTime.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/vendor/vendorList.html" afterPath="$PROJECT_DIR$/www/templates/vendor/vendorList.html" />
     </list>
     <ignored path="mobile-app.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,8 +36,8 @@
       <file leaf-file-name="confirmation-ctrl.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="57" column="6" selection-start-line="57" selection-start-column="6" selection-end-line="57" selection-end-column="6" />
+            <state relative-caret-position="150">
+              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -527,16 +522,16 @@
       <workItem from="1472451376577" duration="23521000" />
       <workItem from="1472537214339" duration="24280000" />
       <workItem from="1472627106396" duration="31994000" />
-      <workItem from="1472797394688" duration="15825000" />
+      <workItem from="1472797394688" duration="17365000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="255591000" />
+    <option name="totallyTimeSpent" value="257131000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25749424" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -992,8 +987,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="57" column="6" selection-start-line="57" selection-start-column="6" selection-end-line="57" selection-end-column="6" />
+        <state relative-caret-position="150">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
         </state>
       </provider>

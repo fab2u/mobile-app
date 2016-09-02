@@ -10,8 +10,9 @@ app.factory("AuthenticationService", function($http, $location,$rootScope, $time
    function LoginEmail(email, password, callback){
       firebase.auth().signInWithEmailAndPassword(email, password).then(function(user){
          db.ref().child("users").child("data").child(user.uid).on("value", function(snapshot){
-            console.log(snapshot.val().name);
+            console.log(snapshot.val());
             window.localStorage.setItem("name", snapshot.val().name);
+            window.localStorage.setItem("mobileNumber", snapshot.val().mobile.mobileNum);
          });
          // TODO: set path to redirect to after login
          $timeout(function(){

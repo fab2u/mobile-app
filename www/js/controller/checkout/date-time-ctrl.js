@@ -1,4 +1,4 @@
-app.controller('DateTimeCtrl', function($scope, $ionicPopup) {
+app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
 
   $scope.chosenTime = ''; // will store the time selected by the user*/
 
@@ -127,6 +127,8 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup) {
     }
   };
 
+  console.log($scope.date, $scope.currentMonth, $scope.year,new Date())
+
   $scope.leftArrowClicked = function() {
     $scope.countForward = 0;
     if (($scope.date > (new Date()).getDate()) && ($scope.month >= (new Date()).getMonth())) {
@@ -154,4 +156,9 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup) {
   $scope.getItemHeight = function() {
     return ($(window).height() - 226)+'px';  // 226 is the height of header + footer + the upper part(row)
   };
+
+  $scope.confirmation = function(){
+    $state.go('confirmation');
+  };
+
 });

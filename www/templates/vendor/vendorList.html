@@ -27,7 +27,6 @@
             No,vendor found for this location.Please select another location!
         </p>
         </div>
-
         <div class="p-fix card" ng-repeat="vendor in vendor_list"
              ng-click="vendor_detail(vendor.vendorId)" ng-show="vendor_list"
         style="background-image: url({{vendor.images.main.url || '../../img/vendorImage.jpeg'}})">

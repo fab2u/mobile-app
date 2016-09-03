@@ -77,6 +77,8 @@ app.factory("AuthenticationService", function($http, $location,$rootScope, $time
             delete window.localStorage.email;
             delete window.localStorage.uid;
             delete window.localStorage.name;
+            delete window.localStorage.mobileNumber;
+
             // delete window.localStorage;
             console.log("Successfully deleted from localStorage");
             console.log(window.localStorage);

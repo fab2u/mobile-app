@@ -1,6 +1,10 @@
 app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$state){
   $scope.total_original=0;
   $scope.total_fabtu=0;
+    $scope.total_customer = 0;
+
+    window.localStorage.setItem("vendorId", $stateParams.ven_id);
+
 
     $scope.cartItems = {};
     $scope.cart_item = 0;
@@ -8,9 +12,12 @@ app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$state){
     $scope.calPrice = function (item_list) {
         $scope.total_fabtu=0;
         $scope.total_original=0;
+        $scope.total_customer = 0;
+
         angular.forEach(item_list, function(value, key) {
             $scope.total_fabtu += value.fab_price;
             $scope.total_original += value.ven_price;
+            $scope.total_customer += value.cus_price;
         })
     };
     if(localStorage.getItem('BegItems') != null){
@@ -42,8 +49,6 @@ app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$state){
         $rootScope.$broadcast('cart', { message: 'cart length changed' });
     };
 
-
-
     $scope.edit_cart = function(){
         $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id});
     };
@@ -56,5 +61,7 @@ app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$state){
 
 $scope.select_time = function(){
     $state.go('dateTime');
-}
-})
+};
+
+
+});

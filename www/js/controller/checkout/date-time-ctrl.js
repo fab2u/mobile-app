@@ -1,5 +1,6 @@
 app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
 
+
   $scope.chosenTime = ''; // will store the time selected by the user*/
 
   $scope.monthName = ['JAN', 'FUB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
@@ -49,10 +50,21 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
   $scope.day = weekday[$scope.fromDate.getDay()];
   $scope.countForward = 0;
 
+
+  var appointmentDate = {
+    'date':$scope.date,
+    'month':$scope.currentMonth,
+    'year':$scope.year
+  }
+  localStorage.setItem('appointmentDate', JSON.stringify(appointmentDate));
+
+  window.localStorage.setItem("chosenTime", '');
+
+
   $scope.timeSelected = function(index, id) {
-    //console.log($scope.timeSlots[index].selected);
-    console.log(index);
-    console.log(id);
+    console.log("index",index);
+    console.log("id",id);
+    // console.log($scope.timeSlots[index].selected);
     for (var key in $scope.timeSlots9To12) {
       if ($scope.timeSlots9To12[key].id != id) {
   
@@ -64,6 +76,8 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
     /** using jquery to add the class */
           $('#'+id).addClass('selected-time');
           $scope.chosenTime = $scope.timeSlots9To12[key].time+'AM';
+          window.localStorage.setItem("chosenTime", $scope.chosenTime);
+
           console.log($scope.chosenTime);
         }
       }
@@ -75,6 +89,8 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
         if ($scope.timeSlots12To3[key].isDisabled != true) {
           $('#'+id).addClass('selected-time');
           $scope.chosenTime = $scope.timeSlots12To3[key].time+'PM';
+          window.localStorage.setItem("chosenTime", $scope.chosenTime);
+
           console.log($scope.chosenTime);
         }
       }
@@ -86,6 +102,8 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
         if ($scope.timeSlots3To6[key].isDisabled != true) {
           $('#'+id).addClass('selected-time');
           $scope.chosenTime = $scope.timeSlots3To6[key].time+'PM';
+          window.localStorage.setItem("chosenTime", $scope.chosenTime);
+
           console.log($scope.chosenTime);
         }
       }
@@ -97,6 +115,8 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
         if ($scope.timeSlots6To9[key].isDisabled != true) {
           $('#'+id).addClass('selected-time');
           $scope.chosenTime = $scope.timeSlots6To9[key].time+'PM';
+          window.localStorage.setItem("chosenTime", $scope.chosenTime);
+
           console.log($scope.chosenTime);
         }
       }
@@ -125,9 +145,18 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
          template: 'Please select a previous date!'
        });
     }
+    var appointmentDate = {
+      'date':$scope.date,
+      'month':$scope.currentMonth,
+      'year':$scope.year
+    }
+    localStorage.setItem('appointmentDate', JSON.stringify(appointmentDate));
+
+
+    console.log($scope.date, $scope.currentMonth, $scope.year)
+
   };
 
-  console.log($scope.date, $scope.currentMonth, $scope.year,new Date())
 
   $scope.leftArrowClicked = function() {
     $scope.countForward = 0;
@@ -151,6 +180,14 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
          template: 'Please select a valid date!'
        });
     }
+    var appointmentDate = {
+      'date':$scope.date,
+      'month':$scope.currentMonth,
+      'year':$scope.year
+    }
+    localStorage.setItem('appointmentDate', JSON.stringify(appointmentDate));
+    console.log($scope.date, $scope.currentMonth, $scope.year)
+
   };
 
   $scope.getItemHeight = function() {
@@ -158,7 +195,13 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
   };
 
   $scope.confirmation = function(){
-    $state.go('confirmation');
+    if((JSON.parse(localStorage.getItem('appointmentDate'))) && (window.localStorage.getItem("chosenTime"))){
+      $state.go('confirmation');
+    }
+    else{
+      alert('Please select time for appointment!');
+    }
+    // $state.go('confirmation');
   };
 
 });

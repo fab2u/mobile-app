@@ -50,7 +50,7 @@
                     <div class="col" ng-repeat="(key, value) in data " style="width: 100%;margin:= auto; ">
                         <div class="item item-text-wrap list-heading" ng-repeat="(key1, value1) in services" ng-if="key == key1">{{value1.serviceName}}</div>
                         <div id= "y.id " class="item item-text-wrap row" id="custom-servicelist" ng-repeat="y in value"
-                             ng-click="selectItem($index, y.menuItemName,y.fab2uPrice,y.vendorPrice,y.serviceId,y.customerPrice)">
+                             ng-click="selectItem($index, y.menuItemName,y)">
                             <div ng-show="selectedServices[y.menuItemName]" style="background-color:#0dd1d1; width:20px;">
                             </div>
                             <div class="col col-50 item-text-wrap p-15">

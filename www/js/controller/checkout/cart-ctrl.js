@@ -6,6 +6,10 @@ app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$state){
     window.localStorage.setItem("vendorId", $stateParams.ven_id);
 
 
+    console.log(JSON.parse(localStorage.getItem('BegItems')))
+
+
+
     $scope.cartItems = {};
     $scope.cart_item = 0;
 
@@ -13,11 +17,10 @@ app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$state){
         $scope.total_fabtu=0;
         $scope.total_original=0;
         $scope.total_customer = 0;
-
         angular.forEach(item_list, function(value, key) {
-            $scope.total_fabtu += value.fab_price;
-            $scope.total_original += value.ven_price;
-            $scope.total_customer += value.cus_price;
+            $scope.total_fabtu += value.fab2uPrice;
+            $scope.total_original += value.vendorPrice;
+            $scope.total_customer += value.customerPrice;
         })
     };
     if(localStorage.getItem('BegItems') != null){

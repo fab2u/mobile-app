@@ -148,20 +148,21 @@ app
 
             }//tabPositionCenter
 
-            $scope.selectItem = function(index, serviceName,f_price,v_price,id,customerPrice) {
-                var data = {
-                    'name':serviceName,
-                    'fab_price':f_price,
-                    'ven_price':v_price,
-                    'serv_id':id,
-                    'cus_price':customerPrice
-                }
-                if(($scope.begItems[data.name]) && ($scope.selectedServices[serviceName])){
-                    delete $scope.begItems[data.name];
+            $scope.selectItem = function(index, serviceName,selectObj) {
+                var data = selectObj;
+                // var data = {
+                //     'name':serviceName,
+                //     'fab_price':f_price,
+                //     'ven_price':v_price,
+                //     'serv_id':id,
+                //     'cus_price':customerPrice
+                // }
+                if(($scope.begItems[data.menuItemName]) && ($scope.selectedServices[serviceName])){
+                    delete $scope.begItems[data.menuItemName];
                     delete $scope.selectedServices[serviceName];
 
                 }else {
-                    $scope.begItems[data.name] = data;
+                    $scope.begItems[data.menuItemName] = data;
                     $scope.selectedServices[serviceName] = true;
                 }
                 localStorage.setItem('BegItems', JSON.stringify($scope.begItems));

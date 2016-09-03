@@ -11,12 +11,7 @@ app.controller('ConfirmationCtrl', ['$scope', function($scope){
 
 	var timeOfAppointment = window.localStorage.getItem("chosenTime");
 
-	console.log(timeOfAppointment,JSON.stringify(appointmentDate));
-
-
 	var cartItems = JSON.parse(localStorage.getItem('BegItems'));
-
-	// console.log("cart info",cartItems);
 
 	var newCart = [];
 
@@ -29,37 +24,6 @@ app.controller('ConfirmationCtrl', ['$scope', function($scope){
 
 	var appointmentDateInfo = appointmentDate.date + '/'+ appointmentDate.month + '/'+appointmentDate.year;
 
-	console.log("appointmentDateInfo",appointmentDateInfo);
-
-
-	// firebase.database().ref('bookings/'+locationInfo.cityId+'/services').key();
-
-	// var services = [
-	// {
-	//     'name':'demo1',
-	// 	'fabPrice':100,
-	// 	'serviceId':'1001',
-	// 	'customerPrice':100,
-	// 	'vendorPrice':120,
-	// 	'discountPrice':'10'
-	// },
-	// {
-	// 	'name':'demo2',
-	// 	'fabPrice':120,
-	// 	'serviceId':'1002',
-	// 	'customerPrice':120,
-	// 	'vendorPrice':140,
-	// 	'discountPrice':'0'
-	// },
-	// 	{
-	// 		'name':'demo3',
-	// 		'fabPrice':1200,
-	// 		'serviceId':'1002',
-	// 		'customerPrice':1200,
-	// 		'vendorPrice':1400,
-	// 		'discountPrice':'0'
-	// 	}
-	// ];
 	$scope.bookingInfo =function (totalFab,totalVendor,totalCustomer) {
 		firebase.database().ref('protectedVendorsVersions/'+locationInfo.cityId+'/'+window.localStorage.getItem("vendorId")+'/live/version').once('value',function(response){
         var version = response.val();
@@ -83,6 +47,8 @@ app.controller('ConfirmationCtrl', ['$scope', function($scope){
 				'discountTransId':'0',
 				'specialRequest':'updated soon!'
 			};
+
+			console.log("tetsts",JSON.stringify($scope.bookingDetail))
 		});
 		// $scope.bookingDetail = {
 		// 	'userId':localStorage.getItem('uid'),
@@ -111,9 +77,9 @@ app.controller('ConfirmationCtrl', ['$scope', function($scope){
 		var customer_price = 0;
 
 		angular.forEach(cartItems, function(value, key) {
-			total_fabtu += value.fab_price;
-			total_original += value.ven_price;
-			customer_price += value.cus_price;
+			total_fabtu += value.fab2uPrice;
+			total_original += value.vendorPrice;
+			customer_price += value.customerPrice;
 		});
 		$scope.bookingInfo(total_fabtu,total_original,customer_price);
 

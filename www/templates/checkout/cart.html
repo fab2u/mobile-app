@@ -13,14 +13,14 @@
         <ul class="list">
             <li class="item" ng-repeat="data in cartItems">
                 <span id="cartdetails">
-        {{data.name}}
+        {{data.menuItemName}}
         </span>
                 <span id="cartoriginal">
                     <strike>
                         <span class="striked-text">
                             <strong>
                                 <del>&#2352;</del>
-                            </strong>{{data.ven_price}}&nbsp;
+                            </strong>{{data.vendorPrice}}&nbsp;
                         </span>
                         <span class="line-arrow right"></span>
                     </strike>
@@ -28,9 +28,9 @@
                 <span id="fab2uPrice">
                     <strong>
                         <del>&#2352;</del>
-                    </strong>{{data.cus_price}}
+                    </strong>{{data.customerPrice}}
                 </span>
-                <div class="diagonal" ng-click="list_changed(data.serv_id,data.name)">
+                <div class="diagonal" ng-click="list_changed(data.serviceId,data.menuItemName)">
                     <span id="cancelcartitem">
                         <a class="button button-icon ion-ios-close-outline" id="closeiconcolor"></a>
                     </span>

@@ -4,21 +4,21 @@
     <div id = "container">
       <div id = "thankYou">
           <h4 style = "color: #D24248">THANK YOU</h4>
-          <h5 style = "color: #0DD1D1">Your Booking ID is {{bookingID}}</h5>
+          <h5 style = "color: #0DD1D1">Your Booking ID is {{bookingId}}</h5>
       </div>
           
       <div>
         <div  id = "myBill" class = "container">
-          <div class = "custom-border padding class"><b>Venue: </b>{{venue}}</div>
-          <div class = "custom-border padding class"><b>Address: </b>{{address}}</div>
+          <div class = "custom-border padding class"><b>Venue: </b>{{bookingAddress.address1}}</div>
+          <div class = "custom-border padding class"><b>Address: </b>{{bookingAddress.address2}}</div>
           <div class="padding class custom-border">
             <b>Services </b>
-            <div ng-repeat = "service in services">{{service.name}}</div>
+            <div ng-repeat = "service in bookingInformation.serviceInfo">{{service.menuItemName}}</div>
           </div>
         
-          <div class = "custom-border  padding class"><b>Amount Payable</b>: ₹{{amount}}</div>
-          <div class = "custom-border padding class"><b>Time</b>: {{time}}</div>
-          <div class = "custom-border padding class"><b>Date</b>: {{date}}</div>
+          <div class = "custom-border  padding class"><b>Amount Payable</b>: ₹{{bookingInformation.totalAmount}}</div>
+          <div class = "custom-border padding class"><b>Time</b>: {{bookingInformation.appointmentTime}}</div>
+          <div class = "custom-border padding class"><b>Date</b>: {{bookingInformation.appointmentDate}}</div>
           <p align = "center"> <button class = "button button-assertive button-small custom-button">TAKE ME HOME</button></p>
         </div>
       </div>

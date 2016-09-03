@@ -5,9 +5,10 @@
             <br>
             <div id ="image"> <img src = "../../img/confirmation.png" ></div>
             <div id = "totalAmount">
-                TOTAL AMOUNT &nbsp; ₹{{discountedAmount}} 
+                <!--discount price later-->
+                TOTAL AMOUNT &nbsp; ₹{{customer_price}}
                 <span style ="color:red;text-decoration:line-through">
-                    <span style='color:white'>₹({{totalAmount}})</span>
+                    <span style='color:white'>₹({{customer_price}})</span>
                 </span> 
             </div>
             
@@ -18,9 +19,7 @@
                 <p>AMOUNT PAYABLE &nbsp ₹{{amountPayable}}</p>
             </div>
             </div>
-            
             <br>
-          
             <div id = "havePromo">
               <div align="center" ng-click="isOpen=!isOpen" id = "haveCode">
                   HAVE PROMO CODE ?

@@ -66,18 +66,52 @@ app.controller('ConfirmationCtrl', function($scope,$state){
 	$scope.calPrice(cartItems);
 
 	$scope.confirmedBooking = function(bookingDetails){
-		var bookingId = firebase.database().ref('bookings/'+locationInfo.cityId+'/'+localStorage.getItem('uid')).push().key;
-		bookingDetails['bookingId']=bookingId;
-		firebase.database().ref('bookings/'+locationInfo.cityId+'/'+localStorage.getItem('uid')+'/'+bookingId).set(bookingDetails,function(response) {
-			console.log("booking", JSON.stringify(response));
-			if(response == null){
-				alert('Booking confirmed!');
-				$state.go('bill');
+
+		// check the upcoming booking regarding to an user  ///
+
+		firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active').once	('value',function(response){
+			console.log("valuee",response.val())
+
+			if(!response.val()){
+				var bookingId = firebase.database().ref('bookings').push().key;
+				bookingDetails['bookingId']=bookingId;
+				firebase.database().ref('bookings/'+bookingId)
+					.set(bookingDetails,function(response) {
+					console.log("booking", JSON.stringify(response));
+					if(response == null){
+						firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active').push({
+							'bookingId':bookingId
+						},function(response) {
+							console.log("booking user", JSON.stringify(response));
+						})
+						firebase.database().ref('cityBookings/'+locationInfo.cityId+'/'+window.localStorage.getItem("vendorId"))
+							.push({
+							'bookingId':bookingId
+
+						},function(response) {
+							console.log("booking city", JSON.stringify(response));
+						})
+						firebase.database().ref('vendorBookings/'+window.localStorage.getItem("vendorId")+'/active')
+							.push({
+								'bookingId':bookingId
+
+							},function(response) {
+								console.log("booking vendor", JSON.stringify(response));
+							})
+						alert('Booking confirmed!');
+						$state.go('bill');
+					}
+					else{
+						alert('Try again!');
+					}
+				})
 			}
 			else{
-				alert('Try again!');
+				alert('Availed your previous booking first!')
 			}
-		})
+		});
+
+
 	};
 });
 

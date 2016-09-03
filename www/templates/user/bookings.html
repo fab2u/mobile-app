@@ -12,16 +12,16 @@
             <div class="first-cont"></div>
             <div class="second-cont">
                  <div id = "salon">{{booking.salonName}} </div>
-                <div id ="landmark" >{{booking.landmark}}</div>
+                <div id ="landmark" >{{bookingAddress.landmark}}</div>
                 <div id = "booking" >Booking ID {{booking.bookingId}}</div>
-                <div id = "amount" >Amount Payable {{booking.amount}}</div>
-                <div id ="date" ><b><i class = "icon ion-calendar" id = "calendar"></i></b><br>{{booking.date}}</div> 
-                <div id="time"  ><b><i class = "icon ion-clock" id = "clock" ></i></b><br>{{booking.time}}</div>
+                <div id = "amount" >Amount Payable {{booking.finalAmount}}</div>
+                <div id ="date" ><b><i class = "icon ion-calendar" id = "calendar"></i></b><br>{{booking.appointmentDate}}</div>
+                <div id="time"  ><b><i class = "icon ion-clock" id = "clock" ></i></b><br>{{booking.appointmentTime}}</div>
             </div>
           </div>
           <div class = "button-bar myButtonsDiv">
               <!-- <button class = "button button-positive">CANCEL</button> -->
-              <button class = "button" id="cancel" >CANCEL</button>
+              <button class = "button" id="cancel" ng-click="bookingCancel(booking.bookingId)">CANCEL</button>
               <button class = "button" id="details" >VIEW DETAILS</button>
           </div>
         </div>

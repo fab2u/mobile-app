@@ -16,12 +16,16 @@ app.controller('ConfirmationCtrl', ['$scope', function($scope){
 
 	var cartItems = JSON.parse(localStorage.getItem('BegItems'));
 
-	// protectedVendorsVersions
-
 	// console.log("cart info",cartItems);
 
+	var newCart = [];
 
 
+	if(cartItems){
+		angular.forEach(cartItems, function(value, key) {
+			newCart.push(value)
+		});
+	}
 
 	var appointmentDateInfo = appointmentDate.date + '/'+ appointmentDate.month + '/'+appointmentDate.year;
 
@@ -66,7 +70,7 @@ app.controller('ConfirmationCtrl', ['$scope', function($scope){
 				'cityId':locationInfo.cityId,
 				'vendorId':window.localStorage.getItem("vendorId"),
 				'totalAmount':totalVendor,
-				'serviceInfo':cartItems,
+				'serviceInfo':newCart,
 				'createdDate':new Date().getTime(),
 				'appointmentDate':appointmentDateInfo,
 				'appointmentTime':timeOfAppointment,
@@ -117,7 +121,9 @@ app.controller('ConfirmationCtrl', ['$scope', function($scope){
 	$scope.calPrice(cartItems);
 
 	$scope.confirmedBooking = function(bookingDetails){
-		firebase.database().ref('bookings/'+locationInfo.cityId).push(bookingDetails,function(response) {
+		var bookingId = firebase.database().ref('bookings/'+locationInfo.cityId+'/'+localStorage.getItem('uid')).push().key;
+		bookingDetails['bookingId']=bookingId;
+		firebase.database().ref('bookings/'+locationInfo.cityId+'/'+localStorage.getItem('uid')+'/'+bookingId).set(bookingDetails,function(response) {
 			console.log("booking", JSON.stringify(response));
 			if(response == null){
 				alert('Booking confirmed!');

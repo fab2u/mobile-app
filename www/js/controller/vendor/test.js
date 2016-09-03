@@ -157,7 +157,6 @@ app
                     'cus_price':customerPrice
                 }
                 if(($scope.begItems[data.name]) && ($scope.selectedServices[serviceName])){
-                    console.log("inside if",$scope.begItems[data.name],$scope.selectedServices[serviceName])
                     delete $scope.begItems[data.name];
                     delete $scope.selectedServices[serviceName];
 
@@ -167,7 +166,6 @@ app
                 }
                 localStorage.setItem('BegItems', JSON.stringify($scope.begItems));
                 localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
-                console.log("testing",JSON.stringify(localStorage.getItem('BegItems')))
                 $rootScope.$broadcast('cart', { message: 'cart length changed' });
             };
 

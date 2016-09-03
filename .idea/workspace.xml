@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a90707b-bb48-47ba-9167-7f50f00e366c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/auth/authentication.service.js" afterPath="$PROJECT_DIR$/www/js/controller/auth/authentication.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/checkout/cart-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/checkout/cart-ctrl.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/checkout/date-time-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/checkout/date-time-ctrl.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/vendor/test.js" afterPath="$PROJECT_DIR$/www/js/controller/vendor/test.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/checkout/cart.html" afterPath="$PROJECT_DIR$/www/templates/checkout/cart.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/vendor/vendor-menu.html" afterPath="$PROJECT_DIR$/www/templates/vendor/vendor-menu.html" />
     </list>
     <ignored path="mobile-app.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,8 +47,8 @@
       <file leaf-file-name="test.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="167" column="63" selection-start-line="167" selection-start-column="54" selection-end-line="167" selection-end-column="63" />
+            <state relative-caret-position="324">
+              <caret line="168" column="0" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
               <folding>
                 <element signature="e#4432#6505#0" expanded="false" />
               </folding>
@@ -61,20 +56,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="confirmation-ctrl.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="confirmation-ctrl.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-515">
-              <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+            <state relative-caret-position="438">
+              <caret line="125" column="99" selection-start-line="125" selection-start-column="99" selection-end-line="125" selection-end-column="99" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vendor-menu.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="vendor-menu.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/templates/vendor/vendor-menu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
+            <state relative-caret-position="280">
               <caret line="52" column="127" selection-start-line="52" selection-start-column="127" selection-end-line="52" selection-end-column="127" />
               <folding />
             </state>
@@ -164,10 +159,10 @@
         <option value="$PROJECT_DIR$/www/templates/checkout/confirmation.html" />
         <option value="$PROJECT_DIR$/www/js/controller/auth/authentication.service.js" />
         <option value="$PROJECT_DIR$/www/templates/vendor/vendor-menu.html" />
-        <option value="$PROJECT_DIR$/www/js/controller/vendor/test.js" />
         <option value="$PROJECT_DIR$/www/js/controller/checkout/cart-ctrl.js" />
         <option value="$PROJECT_DIR$/www/templates/checkout/cart.html" />
         <option value="$PROJECT_DIR$/www/js/controller/checkout/date-time-ctrl.js" />
+        <option value="$PROJECT_DIR$/www/js/controller/vendor/test.js" />
         <option value="$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js" />
       </list>
     </option>
@@ -537,12 +532,12 @@
       <workItem from="1472537214339" duration="24280000" />
       <workItem from="1472627106396" duration="31994000" />
       <workItem from="1472797394688" duration="17365000" />
-      <workItem from="1472879761478" duration="9917000" />
+      <workItem from="1472879761478" duration="11525000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="267048000" />
+    <option name="totallyTimeSpent" value="268656000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
@@ -640,7 +635,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js</url>
-          <line>116</line>
+          <line>120</line>
           <properties />
           <option name="timeStamp" value="14" />
         </line-breakpoint>
@@ -937,14 +932,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/vendor/vendor-menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="52" column="127" selection-start-line="52" selection-start-column="127" selection-end-line="52" selection-end-column="127" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/checkout/cart.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="393">
@@ -958,16 +945,6 @@
         <state relative-caret-position="255">
           <caret line="17" column="49" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="49" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="167" column="63" selection-start-line="167" selection-start-column="54" selection-end-line="167" selection-end-column="63" />
-          <folding>
-            <element signature="e#4432#6505#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -989,8 +966,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-515">
-          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+        <state relative-caret-position="438">
+          <caret line="125" column="99" selection-start-line="125" selection-start-column="99" selection-end-line="125" selection-end-column="99" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="168" column="0" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
+          <folding>
+            <element signature="e#4432#6505#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/vendor/vendor-menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="52" column="127" selection-start-line="52" selection-start-column="127" selection-end-line="52" selection-end-column="127" />
           <folding />
         </state>
       </provider>

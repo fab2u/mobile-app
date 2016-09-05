@@ -7,7 +7,7 @@
       
       <ion-content>
 
-        <div ng-repeat = "booking in allBookings">
+        <div ng-repeat ="booking in allBookings">
           <div class="main-cont">
             <div class="first-cont"></div>
             <div class="second-cont">
@@ -21,7 +21,8 @@
           </div>
           <div class = "button-bar myButtonsDiv">
               <!-- <button class = "button button-positive">CANCEL</button> -->
-              <button class = "button" id="cancel" ng-click="bookingCancel(booking.bookingId)">CANCEL</button>
+              <button class = "button" id="cancel" ng-click="bookingCancel(booking.bookingId)"
+                      ng-if="activeBookingId == booking.bookingId">CANCEL</button>
               <button class = "button" id="details" >VIEW DETAILS</button>
           </div>
         </div>

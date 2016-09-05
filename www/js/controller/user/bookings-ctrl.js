@@ -6,6 +6,15 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading){
 	$scope.bookingIds = [];
 
 	$scope.allBookings = [];
+	$scope.activeBookingId = '';
+
+	firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active').once('value', function (response) {
+		angular.forEach(response.val(), function (value, key) {
+			console.log(value.bookingId,key)
+			$scope.activeBookingId = value.bookingId;
+
+		});
+	})
 
 	$scope.bookingInfo = function() {
 		$ionicLoading.show();
@@ -47,6 +56,7 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading){
 							console.log('Synchronization failed');
 						} else {
 							console.log('Synchronization succeeded');
+							$scope.bookingInfo();
 						}
 					};
 					firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active/'+key).remove(onComplete)
@@ -71,8 +81,6 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading){
 
 			});
 		})
-
-
 	};
 
 });

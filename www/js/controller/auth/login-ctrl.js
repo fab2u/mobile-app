@@ -1,4 +1,5 @@
-app.controller('LoginCtrl', ['$scope', 'AuthenticationService', '$ionicPopup', function($scope, AuthenticationService, $ionicPopup){
+app.controller('LoginCtrl', ['$scope', 'AuthenticationService', '$ionicPopup','$ionicHistory',
+    function($scope, AuthenticationService, $ionicPopup,$ionicHistory){
 
 	AuthenticationService.Logout();
 

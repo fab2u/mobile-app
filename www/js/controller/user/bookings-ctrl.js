@@ -8,6 +8,10 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading){
 	$scope.allBookings = [];
 	$scope.activeBookingId = '';
 
+
+	// booking id for active booking for a particular user
+
+
 	firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active').once('value', function (response) {
 		angular.forEach(response.val(), function (value, key) {
 			console.log(value.bookingId,key)
@@ -15,6 +19,8 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading){
 
 		});
 	})
+
+	// All the booking id for cancelled booking and active booking and their detail
 
 	$scope.bookingInfo = function() {
 		$ionicLoading.show();
@@ -46,6 +52,8 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading){
 		$state.go('app.home')
 	};
 
+	// Delete an active node for the database and save boking id for cancelled booking in user and vendor database
+
 	$scope.bookingCancel = function(bookingId){
 		firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active').once('value', function (response) {
 			angular.forEach(response.val(), function (value, key) {
@@ -53,9 +61,9 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading){
 				if(bookingId == value.bookingId){
 					var onComplete = function(error) {
 						if (error) {
-							console.log('Synchronization failed');
+							console.log('booking cancellation failed');
 						} else {
-							console.log('Synchronization succeeded');
+							console.log('booking cancellation succeeded');
 							$scope.bookingInfo();
 						}
 					};

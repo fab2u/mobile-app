@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a90707b-bb48-47ba-9167-7f50f00e366c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/user/bookings-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/user/bookings-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/user/bookings.html" afterPath="$PROJECT_DIR$/www/templates/user/bookings.html" />
     </list>
     <ignored path="mobile-app.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,7 +27,7 @@
       <file leaf-file-name="date-time-ctrl.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/js/controller/checkout/date-time-ctrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
+            <state relative-caret-position="885">
               <caret line="59" column="71" selection-start-line="59" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
               <folding />
             </state>
@@ -38,24 +37,24 @@
       <file leaf-file-name="confirmation-ctrl.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="62" selection-end-column="11" />
+            <state relative-caret-position="-245">
+              <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bookings-ctrl.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="bookings-ctrl.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/js/controller/user/bookings-ctrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="26" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="26" />
+            <state relative-caret-position="324">
+              <caret line="65" column="61" selection-start-line="65" selection-start-column="61" selection-end-line="65" selection-end-column="61" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bookings.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="bookings.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/templates/user/bookings.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="360">
@@ -129,10 +128,10 @@
         <option value="$PROJECT_DIR$/www/js/controller/checkout/bill-ctrl.js" />
         <option value="$PROJECT_DIR$/www/js/controller/auth/login-ctrl.js" />
         <option value="$PROJECT_DIR$/www/js/controller/auth/authentication.service.js" />
-        <option value="$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js" />
         <option value="$PROJECT_DIR$/www/templates/user/bookingDetail.html" />
-        <option value="$PROJECT_DIR$/www/js/controller/user/bookings-ctrl.js" />
         <option value="$PROJECT_DIR$/www/templates/user/bookings.html" />
+        <option value="$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js" />
+        <option value="$PROJECT_DIR$/www/js/controller/user/bookings-ctrl.js" />
       </list>
     </option>
   </component>
@@ -153,9 +152,9 @@
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
     <option name="x" value="65" />
-    <option name="y" value="24" />
+    <option name="y" value="-4" />
     <option name="width" value="1301" />
-    <option name="height" value="744" />
+    <option name="height" value="772" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -182,7 +181,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -394,6 +392,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -492,14 +491,15 @@
       <workItem from="1472627106396" duration="31994000" />
       <workItem from="1472797394688" duration="17365000" />
       <workItem from="1472879761478" duration="34047000" />
+      <workItem from="1473140184218" duration="587000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="291178000" />
+    <option name="totallyTimeSpent" value="291765000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1301" height="744" extended-state="6" />
+    <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -595,7 +595,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js</url>
           <line>65</line>
-          <properties />
           <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
@@ -631,7 +630,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1815">
           <caret line="121" column="5" selection-start-line="121" selection-start-column="5" selection-end-line="121" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -781,7 +779,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
           <caret line="97" column="3" selection-start-line="97" selection-start-column="3" selection-end-line="98" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -789,7 +786,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="447">
           <caret line="61" column="30" selection-start-line="61" selection-start-column="30" selection-end-line="61" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -811,7 +807,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -826,7 +821,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="436">
           <caret line="89" column="104" selection-start-line="89" selection-start-column="92" selection-end-line="89" selection-end-column="104" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -844,7 +838,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
           <caret line="52" column="74" selection-start-line="52" selection-start-column="74" selection-end-line="52" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -860,9 +853,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" column="16" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
-          <folding>
-            <element signature="e#400#406#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -878,7 +868,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" column="35" selection-start-line="3" selection-start-column="35" selection-end-line="3" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -886,7 +875,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" column="19" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -894,7 +882,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" column="89" selection-start-line="14" selection-start-column="79" selection-end-line="14" selection-end-column="89" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -902,10 +889,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" column="41" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
-          <folding>
-            <element signature="e#1335#2877#0" expanded="false" />
-            <element signature="e#3688#3991#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -913,7 +896,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="21" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -927,41 +909,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controller/checkout/date-time-ctrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
+        <state relative-caret-position="885">
           <caret line="59" column="71" selection-start-line="59" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="62" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/user/bookingDetail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="33" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/user/bookingDetail.html" />
     <entry file="file://$PROJECT_DIR$/www/templates/checkout/bill.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
           <caret line="32" column="11" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/user/bookings-ctrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="26" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -969,6 +927,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="24" column="48" selection-start-line="24" selection-start-column="48" selection-end-line="24" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-245">
+          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/user/bookings-ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="65" column="61" selection-start-line="65" selection-start-column="61" selection-end-line="65" selection-end-column="61" />
           <folding />
         </state>
       </provider>

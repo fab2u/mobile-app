@@ -66,7 +66,7 @@ app.controller('ConfirmationCtrl', function($scope,$state){
 	$scope.calPrice(cartItems);
 
 	$scope.confirmedBooking = function(bookingDetails){
-		console.log(localStorage.getItem('uid'));
+		// check user is logged in or not
 		if((localStorage.getItem('uid') == null) ||(localStorage.getItem('uid')== undefined)){
 			localStorage.setItem('confirmation', true);
 			$state.go('login');

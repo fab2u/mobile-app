@@ -1,8 +1,6 @@
 app.controller('ConfirmationCtrl', function($scope,$ionicLoading,$state){
 	
 	$scope.paidFromWallet = 0;
-	$scope.discountedAmount = 12000;
-	$scope.totalAmount = 15000;
 	$scope.amountPayable = 0;
 	$scope.walletAmount = 0;
 	$scope.total_fabtu=0;
@@ -12,6 +10,8 @@ app.controller('ConfirmationCtrl', function($scope,$ionicLoading,$state){
 	$scope.discountedPrice = 0;
 	$scope.subtotal = 0;
 	$scope.isChecked = false;
+	$scope.amount = 0;
+
 	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
 
 	var appointmentDate = JSON.parse(localStorage.getItem('appointmentDate'));
@@ -27,7 +27,6 @@ app.controller('ConfirmationCtrl', function($scope,$ionicLoading,$state){
 			newCart.push(value)
 		});
 	}
-	$scope.userWalletInfo = {}
 
 	var appointmentDateInfo = appointmentDate.date + '/'+ appointmentDate.month + '/'+appointmentDate.year;
 
@@ -38,11 +37,12 @@ app.controller('ConfirmationCtrl', function($scope,$ionicLoading,$state){
 			template: 'Loading...'
 		})
 		firebase.database().ref('userWallet/data/' + localStorage.getItem('uid')).once('value', function (response) {
-			// $scope.userWalletInfo = response.val();
+			$scope.userWalletInfo = response.val();
 
-			$scope.userWalletInfo.amount = 300;
+			$scope.amount = $scope.userWalletInfo.amount;
 
 			if($scope.userWalletInfo){
+				$scope.useWalletAmount();
 				$ionicLoading.hide();
 			}
 			else{
@@ -53,7 +53,9 @@ app.controller('ConfirmationCtrl', function($scope,$ionicLoading,$state){
 	$scope.getWalletInfo();
 
 
-	$scope.bookingInfo =function (totalFab,totalVendor,totalCustomer) {
+	$scope.bookingInfo =function () {
+		console.log($scope.paidFromWallet,$scope.amountPayable)
+		console.log($scope.total_fabtu,$scope.total_original,$scope.customer_price)
 		firebase.database().ref('protectedVendorsVersions/'+locationInfo.cityId+'/'+window.localStorage.getItem("vendorId")+'/live/version').once('value',function(response){
         var version = response.val();
 			$scope.bookingDetail = {
@@ -62,16 +64,17 @@ app.controller('ConfirmationCtrl', function($scope,$ionicLoading,$state){
 				'userMobile':localStorage.getItem('mobileNumber'),
 				'cityId':locationInfo.cityId,
 				'vendorId':window.localStorage.getItem("vendorId"),
-				'totalAmount':totalVendor,
+				'totalAmount':$scope.total_original,
 				'serviceInfo':newCart,
 				'createdDate':new Date().getTime(),
 				'appointmentDate':appointmentDateInfo,
 				'appointmentTime':timeOfAppointment,
 				'versionNumber':version,
 				'status':'upComing',
-				'walletAmount':'0',
+				'walletAmount':$scope.paidFromWallet,
 				'discountPrice':'0',
-				'finalAmount':totalCustomer,
+				'finalAmount':$scope.customer_price,
+				'amountPayable':$scope.amountPayable,
 				'walletTransId':'0',
 				'discountTransId':'0',
 				'specialRequest':'updated soon!'
@@ -93,7 +96,8 @@ app.controller('ConfirmationCtrl', function($scope,$ionicLoading,$state){
 			$scope.customer_price += value.customerPrice;
 		});
 		if($scope.count == _.size(cartItems)){
-			$scope.bookingInfo($scope.total_fabtu,$scope.total_original,$scope.customer_price);
+			// $scope.bookingInfo($scope.total_fabtu,$scope.total_original,$scope.customer_price);
+			$scope.bookingInfo();
 		}
 	};
 	$scope.calPrice(cartItems);
@@ -102,14 +106,19 @@ app.controller('ConfirmationCtrl', function($scope,$ionicLoading,$state){
 // To calculate total payable amount after using wallet
 
 	$scope.calculateAmountPayable = function() {
+		$scope.isChecked = !$scope.isChecked;
 		if ($scope.isChecked == true) {
 			$scope.paidFromWallet = $scope.walletAmount;
 			$scope.amountPayable = Math.abs($scope.subtotal - $scope.walletAmount);
+			$scope.amount = $scope.userWalletInfo.amount - $scope.walletAmount;
+			$scope.bookingInfo();
 			if ($scope.amountPayable < 0) {
 				$scope.amountPayable = 0;
 			}
 		} else {
 			$scope.paidFromWallet = 0;
+			$scope.amount = $scope.userWalletInfo.amount;
+
 			$scope.amountPayable = Math.abs($scope.subtotal);
 		}
 	};
@@ -117,8 +126,7 @@ app.controller('ConfirmationCtrl', function($scope,$ionicLoading,$state){
 	// Calculate the amount for using in a booking from wallet
 
 	$scope.useWalletAmount = function () {
-		$scope.isChecked = !$scope.isChecked;
-       console.log($scope.customer_price,$scope.userWalletInfo.amount,$scope.isChecked)
+		console.log($scope.isChecked,$scope.userWalletInfo.amount,$scope.customer_price)
 	   $scope.subtotal = $scope.customer_price;
 		if ($scope.userWalletInfo.amount > 0) {
 			if (($scope.subtotal) > $scope.userWalletInfo.amount) {
@@ -159,10 +167,7 @@ app.controller('ConfirmationCtrl', function($scope,$ionicLoading,$state){
 			$scope.useWalletAmount = 0;
 		}
 		console.log('wallet amount is ' + $scope.walletAmount);
-		$scope.calculateAmountPayable();
 	};
-
-
 
 
 	$scope.confirmedBooking = function(bookingDetails){

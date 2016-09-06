@@ -1,14 +1,17 @@
-app.controller('ConfirmationCtrl', function($scope,$state){
+app.controller('ConfirmationCtrl', function($scope,$ionicLoading,$state){
 	
 	$scope.paidFromWallet = 0;
 	$scope.discountedAmount = 12000;
 	$scope.totalAmount = 15000;
-	$scope.amountPayable = 11900;
-	$scope.walletAmount = 100;
+	$scope.amountPayable = 0;
+	$scope.walletAmount = 0;
 	$scope.total_fabtu=0;
+	$scope.walletBalance = 0;
 	$scope.total_original=0;
 	$scope.customer_price = 0;
 	$scope.discountedPrice = 0;
+	$scope.subtotal = 0;
+	$scope.isChecked = false;
 	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
 
 	var appointmentDate = JSON.parse(localStorage.getItem('appointmentDate'));
@@ -24,8 +27,31 @@ app.controller('ConfirmationCtrl', function($scope,$state){
 			newCart.push(value)
 		});
 	}
+	$scope.userWalletInfo = {}
 
 	var appointmentDateInfo = appointmentDate.date + '/'+ appointmentDate.month + '/'+appointmentDate.year;
+
+	// To get the amount information for an user
+
+	$scope.getWalletInfo = function () {
+		$ionicLoading.show({
+			template: 'Loading...'
+		})
+		firebase.database().ref('userWallet/data/' + localStorage.getItem('uid')).once('value', function (response) {
+			// $scope.userWalletInfo = response.val();
+
+			$scope.userWalletInfo.amount = 300;
+
+			if($scope.userWalletInfo){
+				$ionicLoading.hide();
+			}
+			else{
+				$ionicLoading.hide();
+			}
+		})
+	};
+	$scope.getWalletInfo();
+
 
 	$scope.bookingInfo =function (totalFab,totalVendor,totalCustomer) {
 		firebase.database().ref('protectedVendorsVersions/'+locationInfo.cityId+'/'+window.localStorage.getItem("vendorId")+'/live/version').once('value',function(response){
@@ -52,18 +78,92 @@ app.controller('ConfirmationCtrl', function($scope,$state){
 			};
 		});
 	};
+
+	// To calculate total amount for pay from cart
+
 	$scope.calPrice = function (services) {
 		$scope.total_fabtu=0;
 		$scope.total_original=0;
 		$scope.customer_price = 0;
+		$scope.count = 0;
 		angular.forEach(cartItems, function(value, key) {
+			$scope.count++;
 			$scope.total_fabtu += value.fab2uPrice;
 			$scope.total_original += value.vendorPrice;
 			$scope.customer_price += value.customerPrice;
 		});
-		$scope.bookingInfo($scope.total_fabtu,$scope.total_original,$scope.customer_price);
+		if($scope.count == _.size(cartItems)){
+			$scope.bookingInfo($scope.total_fabtu,$scope.total_original,$scope.customer_price);
+		}
 	};
 	$scope.calPrice(cartItems);
+
+
+// To calculate total payable amount after using wallet
+
+	$scope.calculateAmountPayable = function() {
+		if ($scope.isChecked == true) {
+			$scope.paidFromWallet = $scope.walletAmount;
+			$scope.amountPayable = Math.abs($scope.subtotal - $scope.walletAmount);
+			if ($scope.amountPayable < 0) {
+				$scope.amountPayable = 0;
+			}
+		} else {
+			$scope.paidFromWallet = 0;
+			$scope.amountPayable = Math.abs($scope.subtotal);
+		}
+	};
+
+	// Calculate the amount for using in a booking from wallet
+
+	$scope.useWalletAmount = function () {
+		$scope.isChecked = !$scope.isChecked;
+       console.log($scope.customer_price,$scope.userWalletInfo.amount,$scope.isChecked)
+	   $scope.subtotal = $scope.customer_price;
+		if ($scope.userWalletInfo.amount > 0) {
+			if (($scope.subtotal) > $scope.userWalletInfo.amount) {
+				var amount1 = parseInt(($scope.subtotal) / 2);
+				console.log(amount1);
+				var amount2 = $scope.userWalletInfo.amount;
+				var balance = 0;
+				if (amount1 < amount2) {
+					balance = amount1;
+				} else {
+					balance = amount2;
+				}
+				if (balance > 200) {
+					$scope.walletAmount = 200;
+				} else {
+					$scope.walletAmount = balance;
+				}
+				// $scope.walletAmount = $scope.walletBalance;
+			} else {
+				var amount1 = parseInt(($scope.subtotal) / 2);
+				console.log(amount1);
+				var amount2 = $scope.userWalletInfo.amount;
+				var balance = 0;
+				if (amount1 < amount2) {
+					balance = amount1;
+				} else {
+					balance = amount2;
+				}
+				if (balance > 200) {
+					$scope.walletAmount = 200;
+				} else {
+					$scope.walletAmount = balance;
+				}
+				// $scope.walletAmount = ($scope.finalCart.subtotal-$scope.discountAmount);
+			}
+			$scope.useWalletAmount = true;
+		} else {
+			$scope.useWalletAmount = 0;
+		}
+		console.log('wallet amount is ' + $scope.walletAmount);
+		$scope.calculateAmountPayable();
+	};
+
+
+
 
 	$scope.confirmedBooking = function(bookingDetails){
 		// check user is logged in or not

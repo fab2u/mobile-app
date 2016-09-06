@@ -3,7 +3,7 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
 
   $scope.chosenTime = ''; // will store the time selected by the user*/
 
-  $scope.monthName = ['JAN', 'FUB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+  $scope.monthName = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
 
   $scope.timeSlots9To12 = [{time:'9:00',selected:false, isDisabled:false, id:0}, {time:'9:15', selected:false,isDisabled:false, id:1},

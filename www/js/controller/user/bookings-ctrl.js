@@ -68,7 +68,6 @@ $scope.getActiveBookingId = function () {
 							console.log('booking cancellation succeeded');
 							$scope.bookingInfo();
 							$scope.getActiveBookingId();
-
 						}
 					};
 					firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active/'+key).remove(onComplete)

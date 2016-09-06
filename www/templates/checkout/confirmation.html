@@ -7,16 +7,17 @@
             <div id = "totalAmount">
                 <!--discount price later-->
                 TOTAL AMOUNT &nbsp; ₹{{customer_price}}
-                <span style ="color:red;text-decoration:line-through">
-                    <span style='color:white'>₹({{customer_price}})</span>
+                <span style ="color:red;text-decoration:line-through" ng-if="customer_price != total_original">
+                    <span style='color:white'>₹({{total_original}})</span>
                 </span> 
             </div>
             
             <div id = "paidFromWallet">            
-              <p>PAID FROM WALLET &nbsp ₹{{paidFromWallet}}</p>             
+              <p>PAID FROM WALLET &nbsp ₹{{walletAmount}}</p>
             </div>
             <div id = "amountPayable" align="center">
-                <p>AMOUNT PAYABLE &nbsp ₹{{amountPayable}}</p>
+                <p ng-hide="isChecked">AMOUNT PAYABLE &nbsp ₹{{customer_price}}</p>
+                <p ng-show="isChecked">AMOUNT PAYABLE &nbsp ₹{{amountPayable}}</p>
             </div>
             </div>
             <br>
@@ -34,7 +35,11 @@
                 <br>
               </div>
             </div>
-      <ion-checkbox ng-model="isChecked" ng-click = "useWallet()" id="check" >&nbsp; WALLET MONEY &nbsp; ₹{{walletAmount}}</ion-checkbox>
+      <ion-checkbox ng-model="isChecked" ng-click = "useWalletAmount()" id="check" >
+          &nbsp; WALLET MONEY &nbsp; ₹{{userWalletInfo.amount}}</ion-checkbox>
+      <div ng-show="isChecked" id = "walletPayableAmount" align="center">
+          You can pay from wallet ₹{{walletAmount}}
+      </div>
       
   </ion-content>
   

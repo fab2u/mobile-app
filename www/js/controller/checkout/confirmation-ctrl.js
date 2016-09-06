@@ -54,8 +54,6 @@ app.controller('ConfirmationCtrl', function($scope,$ionicLoading,$state){
 
 
 	$scope.bookingInfo =function () {
-		console.log($scope.paidFromWallet,$scope.amountPayable)
-		console.log($scope.total_fabtu,$scope.total_original,$scope.customer_price)
 		firebase.database().ref('protectedVendorsVersions/'+locationInfo.cityId+'/'+window.localStorage.getItem("vendorId")+'/live/version').once('value',function(response){
         var version = response.val();
 			$scope.bookingDetail = {
@@ -96,7 +94,6 @@ app.controller('ConfirmationCtrl', function($scope,$ionicLoading,$state){
 			$scope.customer_price += value.customerPrice;
 		});
 		if($scope.count == _.size(cartItems)){
-			// $scope.bookingInfo($scope.total_fabtu,$scope.total_original,$scope.customer_price);
 			$scope.bookingInfo();
 		}
 	};
@@ -182,36 +179,91 @@ app.controller('ConfirmationCtrl', function($scope,$ionicLoading,$state){
 				if(!response.val()){
 					var bookingId = firebase.database().ref('bookings').push().key;
 					bookingDetails['bookingId']=bookingId;
-					firebase.database().ref('bookings/'+bookingId)
-						.set(bookingDetails,function(response) {
-						console.log("booking", JSON.stringify(response));
-						if(response == null){
-							firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active').push({
-								'bookingId':bookingId
-							},function(response) {
-								console.log("booking user", JSON.stringify(response));
-							})
-							firebase.database().ref('cityBookings/'+locationInfo.cityId+'/'+window.localStorage.getItem("vendorId"))
-								.push({
-								'bookingId':bookingId
 
-							},function(response) {
-								console.log("booking city", JSON.stringify(response));
-							})
-							firebase.database().ref('vendorBookings/'+window.localStorage.getItem("vendorId")+'/active')
-								.push({
-									'bookingId':bookingId
+					// if wallet amount used for booking by user
 
-								},function(response) {
-									console.log("booking vendor", JSON.stringify(response));
-								})
-							alert('Booking confirmed!');
-							$state.go('bill');
-						}
-						else{
-							alert('Try again!');
-						}
-					})
+					if(bookingDetails.walletAmount != 0){
+						var transId = firebase.database().ref('userWallet/data/' + localStorage.getItem('uid')+'/Trans/').push().key;
+						bookingDetails.walletTransId = transId;
+						firebase.database().ref('userWallet/data/' + localStorage.getItem('uid')+'/Trans/'+transId)
+							.set({
+								'type':'debit',
+								'amount':bookingDetails.walletAmount,
+								'TransId':transId,
+								'BookingId':bookingId,
+								'usedAt':new Date().getTime()
+							},function(response) {
+								console.log("trans id entry in user wallet", JSON.stringify(response));
+						})
+
+						var newAmount = $scope.userWalletInfo.amount - bookingDetails.walletAmount
+						firebase.database().ref('userWallet/data/' + localStorage.getItem('uid'))
+							.update({'amount':newAmount})
+
+						firebase.database().ref('bookings/'+bookingId)
+							.set(bookingDetails,function(response) {
+								console.log("booking", JSON.stringify(response));
+								if(response == null){
+									firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active').push({
+										'bookingId':bookingId
+									},function(response) {
+										console.log("booking user", JSON.stringify(response));
+									})
+									firebase.database().ref('cityBookings/'+locationInfo.cityId+'/'+window.localStorage.getItem("vendorId"))
+										.push({
+											'bookingId':bookingId
+
+										},function(response) {
+											console.log("booking city", JSON.stringify(response));
+										})
+									firebase.database().ref('vendorBookings/'+window.localStorage.getItem("vendorId")+'/active')
+										.push({
+											'bookingId':bookingId
+
+										},function(response) {
+											console.log("booking vendor", JSON.stringify(response));
+										})
+									alert('Booking confirmed!');
+									$state.go('bill');
+								}
+								else{
+									alert('Try again!');
+								}
+							})
+					}
+                    else{
+						firebase.database().ref('bookings/'+bookingId)
+							.set(bookingDetails,function(response) {
+								console.log("booking", JSON.stringify(response));
+								if(response == null){
+									firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active').push({
+										'bookingId':bookingId
+									},function(response) {
+										console.log("booking user", JSON.stringify(response));
+									})
+									firebase.database().ref('cityBookings/'+locationInfo.cityId+'/'+window.localStorage.getItem("vendorId"))
+										.push({
+											'bookingId':bookingId
+
+										},function(response) {
+											console.log("booking city", JSON.stringify(response));
+										})
+									firebase.database().ref('vendorBookings/'+window.localStorage.getItem("vendorId")+'/active')
+										.push({
+											'bookingId':bookingId
+
+										},function(response) {
+											console.log("booking vendor", JSON.stringify(response));
+										})
+									alert('Booking confirmed!');
+									$state.go('bill');
+								}
+								else{
+									alert('Try again!');
+								}
+							})
+					}
+
 				}
 				else{
 					alert('Availed your previous booking first!')

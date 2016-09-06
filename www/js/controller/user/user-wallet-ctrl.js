@@ -9,6 +9,8 @@ app.controller('UserWalletCtrl',function($scope,$state,$ionicLoading){
 		firebase.database().ref('userWallet/data/' + localStorage.getItem('uid')).once('value', function (response) {
 			$scope.userWalletInfo = response.val();
 
+			console.log("user wallet info",JSON.stringify($scope.userWalletInfo))
+
 			if($scope.userWalletInfo){
 				$ionicLoading.hide();
 			}

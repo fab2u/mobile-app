@@ -13,7 +13,7 @@
             </div>
             
             <div id = "paidFromWallet">            
-              <p>PAID FROM WALLET &nbsp ₹{{walletAmount}}</p>
+              <p>PAID FROM WALLET &nbsp ₹{{paidFromWallet}}</p>
             </div>
             <div id = "amountPayable" align="center">
                 <p ng-hide="isChecked">AMOUNT PAYABLE &nbsp ₹{{customer_price}}</p>
@@ -35,10 +35,15 @@
                 <br>
               </div>
             </div>
-      <ion-checkbox ng-model="isChecked" ng-click = "useWalletAmount()" id="check" >
-          &nbsp; WALLET MONEY &nbsp; ₹{{userWalletInfo.amount}}</ion-checkbox>
-      <div ng-show="isChecked" id = "walletPayableAmount" align="center">
-          You can pay from wallet ₹{{walletAmount}}
+      <!--<ion-checkbox ng-model="isChecked" ng-click = "useWalletAmount()" id="check" >-->
+          <!--&nbsp; WALLET BALANCE &nbsp; ₹{{userWalletInfo.amount}}</ion-checkbox>-->
+      <div id = "walletPayableAmount" align="center">
+         <p>WALLET BALANCE &nbsp; ₹{{amount}}</p>
+         <!--<p>WALLET BALANCE &nbsp; ₹{{userWalletInfo.amount - walletAmount}}</p>-->
+          <ion-checkbox ng-model="isChecked" ng-click = "calculateAmountPayable()"
+                        style="background-color: #3D3D3D;color: white;font-size: 17px;">
+          &nbsp; Pay from wallet &nbsp; ₹{{walletAmount}}</ion-checkbox>
+          <!--You can pay from wallet ₹{{walletAmount}}-->
       </div>
       
   </ion-content>

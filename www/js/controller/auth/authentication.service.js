@@ -15,7 +15,6 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
             window.localStorage.setItem("mobileNumber", snapshot.val().mobile.mobileNum);
             window.localStorage.setItem("email", email);
             window.localStorage.setItem("uid", user.uid);
-            console.log(localStorage.getItem('confirmation'))
             if(localStorage.getItem('confirmation') == 'true'){
                localStorage.setItem('confirmation', '');
                $state.go('confirmation');

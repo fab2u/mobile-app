@@ -11,14 +11,16 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading){
 
 	// booking id for active booking for a particular user
 
-
-	firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active').once('value', function (response) {
+$scope.getActiveBookingId = function () {
+	firebase.database().ref('userBookings/' + localStorage.getItem('uid') + '/active').once('value', function (response) {
 		angular.forEach(response.val(), function (value, key) {
-			console.log(value.bookingId,key)
+			console.log(value.bookingId, key)
 			$scope.activeBookingId = value.bookingId;
 
 		});
 	})
+};
+	$scope.getActiveBookingId();
 
 	// All the booking id for cancelled booking and active booking and their detail
 
@@ -65,6 +67,8 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading){
 						} else {
 							console.log('booking cancellation succeeded');
 							$scope.bookingInfo();
+							$scope.getActiveBookingId();
+
 						}
 					};
 					firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active/'+key).remove(onComplete)

@@ -1,4 +1,4 @@
-app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
+app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
 
 
   $scope.chosenTime = ''; // will store the time selected by the user*/
@@ -6,33 +6,59 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
   $scope.monthName = ['JAN', 'FUB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
 
-  $scope.timeSlots9To12 = [{time:'9:00',selected:false, isDisabled:false, id:0}, {time:'9:15', selected:false,isDisabled:false, id:1},
-  {time:'9:30',selected:false, isDisabled:false, id:2}, {time:'9:45',selected:false,isDisabled:false,id:3},
-  {time:'10:00',selected:false, isDisabled:false, id:4}, {time:'10:15',selected:false,isDisabled:false,id:5},
-  {time:'10:30',selected:false, isDisabled:false, id:6}, {time:'10:45',selected:false, isDisabled:false, id:7}, 
-  {time:'11:00',selected:false, isDisabled:false, id:8},  {time:'11:15',selected:false, isDisabled:false, id:9}, 
-  {time:'11:30',selected:false, isDisabled:false, id:10}, 
-  {time:'11:45',selected:false, isDisabled:false, id:11}, {time:'12:00',selected:false, isDisabled:false, id:12}];
+  $scope.timeSlots9To12 = [
+      {time:'9:00',selected:false, isDisabled:false, id:0,timeActual:'9:00AM'},
+    {time:'9:15', selected:false,isDisabled:false, id:1,timeActual:'9:15AM'},
+  {time:'9:30',selected:false, isDisabled:false, id:2,timeActual:'9:30AM'},
+    {time:'9:45',selected:false,isDisabled:false,id:3,timeActual:'9:45AM'},
+  {time:'10:00',selected:false, isDisabled:false, id:4,timeActual:'10:00AM'},
+    {time:'10:15',selected:false,isDisabled:false,id:5,timeActual:'10:15AM'},
+  {time:'10:30',selected:false, isDisabled:false, id:6,timeActual:'10:30AM'},
+    {time:'10:45',selected:false, isDisabled:false, id:7,timeActual:'10:45AM'},
+  {time:'11:00',selected:false, isDisabled:false, id:8,timeActual:'11:00AM'},
+    {time:'11:15',selected:false, isDisabled:false, id:9,timeActual:'11:15AM'},
+  {time:'11:30',selected:false, isDisabled:false, id:10,timeActual:'11:30AM'},
+  {time:'11:45',selected:false, isDisabled:false, id:11,timeActual:'11:45AM'},
+    {time:'12:00',selected:false, isDisabled:false, id:12,timeActual:'12:00AM'}];
 
-  $scope.timeSlots12To3 = [{time:'12:15',selected:false, isDisabled:false, id:13}, {time:'12:30',selected:false, isDisabled:false, id:14},
-  {time:'12:45',selected:false, isDisabled:false, id:15}, {time:'1:00',selected:false, isDisabled:false, id:16}, 
-  {time:'1:15',selected:false,id:17}, {time:'1:30',selected:false, isDisabled:false,  isDisabled:false, id:18}, {time:'1:45',selected:false, isDisabled:false, id:19}, 
-  {time:'2:00',selected:false, isDisabled:false, id:20}, 
-  {time:'2:15',selected:false, isDisabled:false, id:21}, {time:'2:30',selected:false, isDisabled:false, id:22}, 
-  {time:'2:45',selected:false, isDisabled:false, id:23},
-  {time:'3:00',selected:false, isDisabled:false, id:24}];
+  $scope.timeSlots12To3 = [{time:'12:15',selected:false, isDisabled:false, id:13,timeActual:'12:15PM'},
+    {time:'12:30',selected:false, isDisabled:false, id:14,timeActual:'12:30PM'},
+  {time:'12:45',selected:false, isDisabled:false, id:15,timeActual:'12:45PM'},
+    {time:'1:00',selected:false, isDisabled:false, id:16,timeActual:'1:00PM'},
+  {time:'1:15',selected:false,isDisabled:false,id:17,timeActual:'1:15PM'},
+    {time:'1:30',selected:false, isDisabled:false, id:18,timeActual:'1:30PM'},
+    {time:'1:45',selected:false, isDisabled:false, id:19,timeActual:'1:45PM'},
+  {time:'2:00',selected:false, isDisabled:false, id:20,timeActual:'2:00PM'},
+  {time:'2:15',selected:false, isDisabled:false, id:21,timeActual:'2:15PM'},
+    {time:'2:30',selected:false, isDisabled:false, id:22,timeActual:'2:30PM'},
+  {time:'2:45',selected:false, isDisabled:false, id:23,timeActual:'2:45PM'},
+  {time:'3:00',selected:false, isDisabled:false, id:24,timeActual:'3:00PM'}];
 
-  $scope.timeSlots3To6 = [{time:'3:15',selected:false, isDisabled:false, id:25},
-  {time:'3:30',selected:false, isDisabled:false, id:26}, {time:'3:45',selected:false, isDisabled:false, id:27}, {time:'4:00',selected:false, isDisabled:false, id:28}, 
-  {time:'4:15',selected:false, isDisabled:false, id:29}, {time:'4:30',selected:false, isDisabled:false, id:30},{time:'4:45',selected:false, isDisabled:false, id:31}, 
-  {time:'5:00',selected:false, isDisabled:false, id:32},  {time:'5:15',selected:false, isDisabled:false, id:33}, {time:'5:30',selected:false, isDisabled:false, id:34}, 
-  {time:'5:45',selected:false, isDisabled:false, id:35}, {time:'6:00',selected:false, isDisabled:false, id:36}];
+  $scope.timeSlots3To6 = [{time:'3:15',selected:false, isDisabled:false, id:25,timeActual:'3:15PM'},
+  {time:'3:30',selected:false, isDisabled:false, id:26,timeActual:'3:30PM'},
+    {time:'3:45',selected:false, isDisabled:false, id:27,timeActual:'3:45PM'},
+    {time:'4:00',selected:false, isDisabled:false, id:28,timeActual:'4:00PM'},
+  {time:'4:15',selected:false, isDisabled:false, id:29,timeActual:'4:15PM'},
+    {time:'4:30',selected:false, isDisabled:false, id:30,timeActual:'4:30PM'},
+    {time:'4:45',selected:false, isDisabled:false, id:31,timeActual:'4:45PM'},
+  {time:'5:00',selected:false, isDisabled:false, id:32,timeActual:'5:00PM'},
+    {time:'5:15',selected:false, isDisabled:false, id:33,timeActual:'5:15PM'},
+    {time:'5:30',selected:false, isDisabled:false, id:34,timeActual:'5:30PM'},
+  {time:'5:45',selected:false, isDisabled:false, id:35,timeActual:'5:45PM'},
+    {time:'6:00',selected:false, isDisabled:false, id:36,timeActual:'6:00PM'}];
 
-  $scope.timeSlots6To9 = [{time:'6:15',selected:false, isDisabled:false, id:37},
-  {time:'6:30',selected:false, isDisabled:false, id:38}, {time:'6:45',selected:false, isDisabled:false, id:39}, {time:'7:00',selected:false, isDisabled:false, id:40}, 
-  {time:'7:15',selected:false, isDisabled:false, id:41}, {time:'7:30',selected:false, isDisabled:false, id:42},{time:'7:45',selected:false, isDisabled:false, id:43}, 
-  {time:'8:00',selected:false, isDisabled:false, id:44},  {time:'8:15',selected:false, isDisabled:false, id:45}, {time:'8:30',selected:false, isDisabled:false, id:46}, 
-  {time:'8:45',selected:false, isDisabled:false, id:47}, {time:'9:00',selected:false, isDisabled:false, id:48}];
+  $scope.timeSlots6To9 = [{time:'6:15',selected:false, isDisabled:false, id:37,timeActual:'6:15PM'},
+  {time:'6:30',selected:false, isDisabled:false, id:38,timeActual:'6:30PM'},
+    {time:'6:45',selected:false, isDisabled:false, id:39,timeActual:'6:45PM'},
+    {time:'7:00',selected:false, isDisabled:false, id:40,timeActual:'7:00PM'},
+  {time:'7:15',selected:false, isDisabled:false, id:41,timeActual:'7:15PM'},
+    {time:'7:30',selected:false, isDisabled:false, id:42,timeActual:'7:30PM'},
+    {time:'7:45',selected:false, isDisabled:false, id:43,timeActual:'7:45PM'},
+  {time:'8:00',selected:false, isDisabled:false, id:44,timeActual:'8:00PM'},
+    {time:'8:15',selected:false, isDisabled:false, id:45,timeActual:'8:15PM'},
+    {time:'8:30',selected:false, isDisabled:false, id:46,timeActual:'8:30PM'},
+  {time:'8:45',selected:false, isDisabled:false, id:47,timeActual:'8:45PM'},
+    {time:'9:00',selected:false, isDisabled:false, id:48,timeActual:'9:00PM'}];
 
   var weekday = new Array(7);
   weekday[0]=  "Sunday";
@@ -61,10 +87,50 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
 
   window.localStorage.setItem("chosenTime", '');
 
+  //////    To check current selected date for appointment id equal to today's date  ////////////
+
+  $scope.getTimeFormat = function () {
+     if(new Date().getHours()<12 ){
+       $scope.timeTobe = new Date().getHours()+':'+new Date().getMinutes()+'AM'
+     }
+     else{
+       $scope.timeTobe = (new Date().getHours() - 12)+':'+new Date().getMinutes()+'PM'
+     }
+  };
+
+  var dateForAppointment = JSON.parse(localStorage.getItem('appointmentDate'));
+  if((dateForAppointment.date == $scope.fromDate.getDate())&&
+      (dateForAppointment.month == $scope.monthName[$scope.fromDate.getMonth()])&&
+      (dateForAppointment.year ==$scope.fromDate.getFullYear()) ){
+    $scope.getTimeFormat();
+
+    console.log("if",new Date(), new Date().getHours(), new Date().getMinutes());
+
+  }
+  else{
+    console.log("else")
+  }
+  $rootScope.$on('appointment', function (event, args) {
+    $scope.message = args.message;
+    var dateForAppointment = JSON.parse(localStorage.getItem('appointmentDate'));
+    if((dateForAppointment.date == $scope.fromDate.getDate())&& (dateForAppointment.month == $scope.monthName[$scope.fromDate.getMonth()])&&
+        (dateForAppointment.year ==$scope.fromDate.getFullYear()) ){
+      console.log("if")
+      $scope.getTimeFormat();
+
+    }
+    else{
+      console.log("else")
+    }
+  });
+
+  console.log($scope.timeTobe)
+
+
 
   $scope.timeSelected = function(index, id) {
-    console.log("index",index);
-    console.log("id",id);
+    // console.log("index",index);
+    // console.log("id",id);
     // console.log($scope.timeSlots[index].selected);
     for (var key in $scope.timeSlots9To12) {
       if ($scope.timeSlots9To12[key].id != id) {
@@ -153,6 +219,7 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
     }
     localStorage.setItem('appointmentDate', JSON.stringify(appointmentDate));
 
+    $rootScope.$broadcast('appointment', { message: 'appointment date changed' });
 
     console.log($scope.date, $scope.currentMonth, $scope.year)
 
@@ -187,6 +254,8 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state) {
       'year':$scope.year
     }
     localStorage.setItem('appointmentDate', JSON.stringify(appointmentDate));
+    $rootScope.$broadcast('appointment', { message: 'appointment date changed' });
+
     console.log($scope.date, $scope.currentMonth, $scope.year)
 
   };

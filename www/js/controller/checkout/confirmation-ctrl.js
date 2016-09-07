@@ -1,4 +1,4 @@
-app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state) {
+app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $timeout) {
 
     $scope.paidFromWallet = 0;
     $scope.amountPayable = 0;
@@ -167,6 +167,129 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state) {
             $scope.useWalletAmount = 0;
         }
         console.log('wallet amount is ' + $scope.walletAmount);
+    }
+
+    $scope.addCoupon = function(couponCode) {
+
+        //  get city and check if the coupon code is apllicable to the selected city
+        //  check if the coupon code is applicable to the selected vendor
+        //  check if coupon code id valid
+        //  check user cart amount
+        //  get coupon code amount
+
+        // if coupon code is not undefined && not empty
+        if(couponCode!=undefined && couponCode!='' && couponCode!=' '){
+            console.log(couponCode);
+
+            firebase.database().ref().child('promotions/cart')
+            .orderByChild('promoCode')
+            .startAt(couponCode)
+            .endAt(couponCode)
+            .once('value', function(snapshot) {
+                $timeout(function(){
+                    if(snapshot.val()!=null){
+                        console.log(snapshot.val());
+                        verifyPromoCode(snapshot.val());
+                    }else{
+                        alert("Enter a valid promo code, not found");
+                    }
+                });
+            });
+        }else{
+            alert("Please enter a coupon code!");
+        }
+    }
+
+    function verifyPromoCode(promoData) {
+
+        var promotionCodeInfo = "";
+        var city = locationInfo;
+        var applicableCities = null;
+        var applicableVendors = null;
+
+        var isValidPromo = false;
+
+        console.log('booking details', $scope.bookingDetail);
+        var bookingDetails = $scope.bookingDetail;
+
+        console.log('city', city);
+
+        angular.forEach(promoData, function(promotionValue, key){
+            promotionCodeInfo = promotionValue;
+            applicableCities = promotionCodeInfo.applicableCities;
+            applicableVendors = promotionCodeInfo.applicableVendors;
+        });
+
+        console.log('promotionCodeInfo', promotionCodeInfo);
+
+
+        var today = (new Date).getTime();
+        console.log(today ,promotionCodeInfo.startDate, promotionCodeInfo.endDate);
+
+        // check if the promo code is active
+        // Note +86400000 because the endate entered is 12 AM. the code should continue till the end of the day
+        if(today > promotionCodeInfo.startDate && today < (promotionCodeInfo.endDate+86400000)){
+            console.log("promo code is active");
+            // check if the promo code is appicable to the user selected city
+            console.log('applicableCities',applicableCities);
+            if(applicableCities!= undefined || applicableCities!=null){
+                angular.forEach(applicableCities, function(city, key){
+                    console.log(city, key);
+                    if(city.cityName==locationInfo.cityName){
+                        isValidPromo = true;
+                    }
+                });
+
+                if(!isValidPromo){
+                    alert("Sorry the promo code you entered is not applicable to your current city.");
+                    return;
+                }else{
+                    console.log("valid for city");
+                }
+            } // if applicableCities
+
+            // check if the promo code is appicable to the user selected vendor
+            console.log('applicableVendors', applicableVendors);
+            if(applicableVendors!= undefined || applicableVendors!=null){
+                angular.forEach(applicableVendors, function(vendor, vendorKey){
+                    // compare with key because key is unique
+                    console.log(vendor.vendorId, $scope.bookingDetail.vendorId);
+                    if(vendor.vendorId==$scope.bookingDetail.vendorId){
+                        isValidPromo = true;
+                    }else{
+                        isValidPromo = false;
+                    }
+                });
+
+                if(!isValidPromo){
+                    alert("Sorry the promo code you entered is not applicable to this vendor.");
+                    return;
+                }else{
+                    console.log("valid for vendor");
+                }
+            } // if applicableVendors
+        }else{
+            isValidPromo = false;
+            alert("Not a valid promo code, not active");
+            return;
+        } // is active
+
+
+        // if promo code is valid for city or vendor 
+        if(isValidPromo) {
+            // alert("promo code is valid");
+            // check if min cart value is applicable
+            if(bookingDetails.finalAmount>=promotionCodeInfo.minCartAmount){
+                // continue with booking
+                console.log("promo code is valid, apply promo code");
+            }else{
+                // min cart value does not meet required condition
+                alert("Your cart value is less than min cart value ("+promotionCodeInfo.minCartAmount+")");
+            }
+
+        }else{
+            alert("Not a valid promo code");
+        }// isValidPromo
     }
 
     $scope.confirmedBooking = function(bookingDetails){

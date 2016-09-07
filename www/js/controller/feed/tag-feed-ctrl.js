@@ -61,7 +61,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$ionicLoad
 							// console.log(snap.val());
 							single_blog = snap.val();
 							single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-							db.ref("users/data/"+value.user.user_id+"/photoUrl").once("value", function(snap){
+							db.ref("users/data/"+single_blog.user.user_id+"/photoUrl").once("value", function(snap){
 								// console.log(snap.val());
 								single_blog.profilePic = snap.val();
 							});
@@ -109,7 +109,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$ionicLoad
 							blogData.once("value", function(snap){ //access individual blog
 								single_blog = snap.val();
 								single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-								db.ref("users/data/"+value.user.user_id+"/photoUrl").once("value", function(snap){
+								db.ref("users/data/"+single_blog.user.user_id+"/photoUrl").once("value", function(snap){
 									// console.log(snap.val());
 									single_blog.profilePic = snap.val();
 								});
@@ -152,7 +152,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$ionicLoad
 						console.log(snap.val());
 						single_blog = snap.val();
 						single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-						db.ref("users/data/"+value.user.user_id+"/photoUrl").once("value", function(snap){
+						db.ref("users/data/"+single_blog.user.user_id+"/photoUrl").once("value", function(snap){
 							// console.log(snap.val());
 							single_blog.profilePic = snap.val();
 						});

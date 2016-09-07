@@ -1,4 +1,4 @@
-app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($scope, $timeout, $ionicLoading){
+app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', '$ionicHistory', function($scope, $timeout, $ionicLoading, $ionicHistory){
 
 	$ionicLoading.show();
 
@@ -10,7 +10,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($sco
 	$scope.moreMessagesRefresh = true;
 
 	$scope.goBack = function(){
-		history.back();
+		$ionicHistory.goBack();
 	}
 
 	$timeout(function () {
@@ -20,18 +20,26 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($sco
 	$scope.likeThisFeed = function(feedId){
 		if($("#"+feedId+"-likeFeed").hasClass('clicked')){
 			console.log('inside remove');
+			var result = $.grep($scope.events2, function(e){ return e.blog_id == feedId; });
+			console.log(result);
+			result[0].numLikes -= 1;
 			db.ref("blogs/"+feedId+"/likedBy/"+$scope.uid).remove().then(function(){
 				console.log('removed successfully');
 				$("#"+feedId+"-likeFeed").removeClass("clicked");
+				console.log($scope.events2);
 			});
 		}
 		else {
 			console.log(feedId, $scope.uid);
+			var result = $.grep($scope.events2, function(e){ return e.blog_id == feedId; });
+			console.log(result);
+			result[0].numLikes += 1;
 			var updates = {};
 			updates["blogs/"+feedId+"/likedBy/"+$scope.uid] = true;
 			db.ref().update(updates).then(function(){
 				console.log('success');
 				$("#"+feedId+"-likeFeed").addClass("clicked");
+				console.log($scope.events2);
 			});
 		}
 		db.ref("blogs/"+feedId+"/likedBy").on("value", function(snap){
@@ -62,6 +70,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($sco
 							count = Object.keys(value.likedBy).length;
 							console.log(value.likedBy);
 							console.log(count);
+							value['numLikes'] = count;
 							if($scope.uid in value.likedBy){
 								$timeout(function () {
 									$("#"+key+"-likeFeed").addClass("clicked");
@@ -103,6 +112,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($sco
 								count = Object.keys(value.likedBy).length;
 								console.log(value.likedBy);
 								console.log(count);
+								value['numLikes'] = count;
 								if($scope.uid in value.likedBy){
 									$timeout(function () {
 										$("#"+key+"-likeFeed").addClass("clicked");
@@ -140,6 +150,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($sco
 						count = Object.keys(value.likedBy).length;
 						console.log(value.likedBy);
 						console.log(count);
+						value['numLikes'] = count;
 						if($scope.uid in value.likedBy){
 							$timeout(function () {
 								$("#"+key+"-likeFeed").addClass("clicked");

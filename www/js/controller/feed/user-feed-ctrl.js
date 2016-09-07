@@ -132,6 +132,9 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoa
 	$scope.likeThisFeed = function(feedId){
 		if($("#"+feedId+"-likeFeed").hasClass('clicked')){
 			console.log('inside remove');
+			var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
+			console.log(result);
+			result[0].numLikes -= 1;
 			db.ref("blogs/"+feedId+"/likedBy/"+$scope.uid).remove().then(function(){
 				console.log('removed successfully');
 				$("#"+feedId+"-likeFeed").removeClass("clicked");
@@ -139,6 +142,9 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoa
 		}
 		else {
 			console.log(feedId, $scope.uid);
+			var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
+			console.log(result);
+			result[0].numLikes += 1;
 			var updates = {};
 			updates["blogs/"+feedId+"/likedBy/"+$scope.uid] = true;
 			db.ref().update(updates).then(function(){
@@ -181,6 +187,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoa
 									count = Object.keys(single_blog.likedBy).length;
 									console.log(single_blog.likedBy);
 									console.log(count);
+									single_blog['numLikes'] = count;
 									if($scope.uid in single_blog.likedBy){
 										$timeout(function () {
 											$("#"+i+"-likeFeed").addClass("clicked");
@@ -214,6 +221,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoa
 							count = Object.keys(single_blog.likedBy).length;
 							console.log(single_blog.likedBy);
 							console.log(count);
+							single_blog['numLikes'] = count;
 							if($scope.uid in single_blog.likedBy){
 								$timeout(function () {
 									$("#"+i+"-likeFeed").addClass("clicked");

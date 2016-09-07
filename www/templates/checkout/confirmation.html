@@ -22,13 +22,13 @@
         <br>
         <div id="havePromo">
             <div align="center" ng-click="isOpen=!isOpen" id="haveCode">
-                HAVE PROMO CODE ?
+                <p>HAVE PROMO CODE?</p>
             </div>
-            <div ng-hide="!isOpen" id="applyCode">
-                <div id="applyCodeDiv">
+            <div ng-hide="!isOpen" id="applyCode" class="row">
+                <div id="applyCodeDiv" class="col col-67">
                     <input type="text" ng-model="couponCode" placeholder="Apply Code Here">
                 </div>
-                <div id="applyCodeButton">
+                <div id="applyCodeButton" class="col col-33">
                     <button class="button button-dark" ng-click="addCoupon(couponCode)">APPLY</button>
                 </div>
                 <br>

@@ -84,17 +84,18 @@
 }
 
 .confirmation #walletPayableAmount{
-	width: 80%;
-	margin: 5px auto;
-	background-color: #3d3d3d;
-	height: 8%;
-	padding-bottom: 14px;
-	border-radius: 0.5em;
-	margin: auto;
-	font-weight: 50;
-	text-align: center;
-	padding-top: 10px;
-	color: white;
+    width: 80%;
+    margin: 5px auto;
+    background-color: #3d3d3d;
+    /* height: 8%; */
+    /* padding-bottom: 14px; */
+    border-radius: 0.5em;
+    margin: auto;
+    font-weight: 50;
+    text-align: center;
+    padding-top: 10px;
+    color: white;
+    /* margin-top: 50px; */
 }
 
 .confirmation .Div {
@@ -125,55 +126,14 @@
 	color: white;
 }
 
-
-.confirmation #havePromo {
-	width: 80%; 
-	height: 50px; 
-	margin: 1% auto; 
-	padding-top: 0.04px;
-	font-weight: 50;
-	text-align: center;
-	color: white;
-	border-top-left-radius: 0.5em;
-	border-top-right-radius: 0.5em;
-	background-color: #3D3D3D;	
-}
-
 .confirmation #haveCode {
-	width: 100%; 
-	margin: 15px auto;
-
-}
-
-
-.confirmation #applyCode {
-	width: 100%;
-	height: 130%;
-	margin-top: -7px;
-	margin-bottom: 20%;
-	background-color: #565656;
-	display: block;
-	border-bottom-left-radius: 0.5em;
-	border-bottom-right-radius: 0.5em;
-}
-
-.confirmation #applyCodeDiv {
-	float: left; 
-	height: 100%;
-	padding-left: 5px; 
-	width: 72%;
-	background-color: #565656;
-	border-bottom-left-radius: 0.5em; 
-	margin-bottom: 2%;
-}
-
-.confirmation #applyCodeButton {
-	float: left;
-	margin-top: 8px;
-	margin-left: 3px; 
-	margin-right: 1px; 
-	background-color: #565656;
-	margin-bottom: 2%;
+    background-color: #3d3d3d;
+    width: 80%;
+    margin: 0 auto;
+    color: #fff;
+    padding: 5px;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
 }
 
 .confirmation .custom-footer {

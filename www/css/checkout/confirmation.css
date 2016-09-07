@@ -202,3 +202,11 @@
 	width: 50%;
 	height: auto;
 }
+
+.confirmation #walletCheckBox {
+	background-color: #3D3D3D;
+	color: white;
+	font-size: 17px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+}

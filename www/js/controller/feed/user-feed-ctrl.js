@@ -1,4 +1,4 @@
-app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoading', '$cordovaCamera', function($scope, $timeout, $stateParams, $ionicLoading, $cordovaCamera){
+app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoading', function($scope, $timeout, $stateParams, $ionicLoading){
 
 	$ionicLoading.show();
 

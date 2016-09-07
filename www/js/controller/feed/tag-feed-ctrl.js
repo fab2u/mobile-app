@@ -68,7 +68,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$ionicLoad
 							single_blog = snap.val();
 							single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 							db.ref("users/data/"+single_blog.user.user_id+"/photoUrl").once("value", function(snap){
-								// console.log(snap.val());
+								console.log(snap.val());
 								single_blog.profilePic = snap.val();
 							});
 							// $timeout(function () {

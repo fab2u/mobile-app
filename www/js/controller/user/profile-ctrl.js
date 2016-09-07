@@ -1,5 +1,5 @@
 // Edit By Deepank
-app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', function($scope, $timeout, $ionicLoading){
+app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$cordovaCamera', function($scope, $timeout, $ionicLoading, $cordovaCamera){
    $scope.uid = window.localStorage.uid;
    console.log($scope.uid);
    $scope.email = window.localStorage.email;
@@ -35,7 +35,7 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', function($
             };
 
             $cordovaCamera.getPicture(options).then(function(imageURI) {
-               var image = document.getElementById('myImage');
+               var image = document.getElementById('profile-pic');
                image.src = imageURI;
                $scope.url = imageURI;
 
@@ -57,7 +57,7 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', function($
             };
 
             $cordovaCamera.getPicture(options).then(function(imageURI) {
-               var image = document.getElementById('myImage');
+               var image = document.getElementById('profile-pic');
                image.src = imageURI;
                $scope.url = imageURI;
                alert(JSON.stringify(imageURI)+ 'line number 283, imageURI');

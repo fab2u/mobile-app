@@ -47,10 +47,11 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 					console.log(key, $scope.prevTopKey);
 					if (key != $scope.prevTopKey){
 						value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-						$timeout(function () {
-							console.log(value.blog_id, value.user.user_id);
-							jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
-						}, 0);
+						value.profilePic = 'img/person.jpg';
+						// $timeout(function () {
+						// 	console.log(value.blog_id, value.user.user_id);
+						// 	jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
+						// }, 0);
 						if(value.likedBy){
 							count = Object.keys(value.likedBy).length;
 							console.log(value.likedBy);
@@ -88,9 +89,10 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 					angular.forEach(snap.val(), function(value, key){
 						if(key != $scope.oldBottomKey){
 							value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-							$timeout(function () {
-								jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
-							}, 0);
+							value.profilePic = 'img/person.jpg';
+							// $timeout(function () {
+							// 	jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
+							// }, 0);
 							if(value.likedBy){
 								count = Object.keys(value.likedBy).length;
 								console.log(value.likedBy);
@@ -118,10 +120,11 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 				// console.log($scope.bottomKey, $scope.topKey);
 				angular.forEach(snapshot.val(), function(value, key){
 					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-					$timeout(function () {
-						console.log(value.user.user_id, value.blog_id);
-						jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
-					}, 0);
+					value.profilePic = 'img/person.jpg';
+					// $timeout(function () {
+					// 	console.log(value.user.user_id, value.blog_id);
+					// 	jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
+					// }, 0);
 					if(value.likedBy){
 						count = Object.keys(value.likedBy).length;
 						console.log(value.likedBy);

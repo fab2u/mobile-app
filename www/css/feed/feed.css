@@ -35,6 +35,14 @@
 	padding: 1px 10px;
 }
 
+.fabFeed .follow-btn1{
+	border: 2px solid #FF8386;
+	border-radius: 5px;
+	color: #FF8386;
+	padding: 5px 10px;
+	font-weight: bold;
+}
+
 .new-feed .follow-btn{
 	border: 2px solid #FF8386;
 	border-radius: 5px;

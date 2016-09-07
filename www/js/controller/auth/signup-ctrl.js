@@ -3,25 +3,26 @@ app.controller("SignupCtrl", ['$scope', '$http', '$state','$cordovaDevice','$ion
 
 
         // deviceInformation for Registered user
-        firebase.database().ref('deviceInformation/Registered/'+$cordovaDevice.getDevice().uuid).once('value',function(response){
-            console.log("device_list",JSON.stringify(response.val().registeredUsers));
-            if(response.val().registeredUsers){
-                $scope.user_device_register = true;
-            console.log("if")
-        }
-        else{
-                $scope.user_device_register = false;
-
-                console.log("else")
-        }
-        });
+        // firebase.database().ref('deviceInformation/Registered/'+$cordovaDevice.getDevice().uuid).once('value',function(response){
+        //     console.log("device_list",JSON.stringify(response.val().registeredUsers));
+        //     if(response.val().registeredUsers){
+        //         $scope.user_device_register = true;
+        //     console.log("if")
+        // }
+        // else{
+        //         $scope.user_device_register = false;
+        //
+        //         console.log("else")
+        // }
+        // });
 
    $scope.user = {
       name: '',
       email: '',
       mobile_num: '',
       referral_code: '',
-      gender: ''
+      gender: '',
+      password:''
    };
 
         $scope.loginPage = function(){
@@ -37,7 +38,6 @@ app.controller("SignupCtrl", ['$scope', '$http', '$state','$cordovaDevice','$ion
         var storedOTP = [];
 
         //localStorage.removeItem('previousOtp');
-        console.log(window.localStorage['previousOtp']);
 
         if(checkLocalStorage('previousOtp')){
             console.log('otp exists');
@@ -50,34 +50,46 @@ app.controller("SignupCtrl", ['$scope', '$http', '$state','$cordovaDevice','$ion
 
 
     $scope.signup = function(){
-        if(window.localStorage.getItem('mobile_verify') == 'true'){
-            var userData = {
-             name: $scope.user.name,
-             email: $scope.user.email,
-             mobileNum: $scope.user.mobile_num,
-             referralCode: $scope.user.referral_code,
-             deviceId: $cordovaDevice.getDevice().uuid
-            }
-            $http.post("http://139.162.27.64/api/addUser", userData)
-               .success(function(response){
-                  if(response.StatusCode == 200){
-                     alert(response.Message);
-                  }
-                  else if(response.StatusCode == 400){
-                      alert(response.Message);
-                  }
-                  else{
-                     alert('some thing went wrong!');
-                  }
-               })
-               .error(function(response){
-                  console.log("error");
-                  console.log(response);
-             });
-        }
-     else{
-            $scope.sendVerification();
-        }
+    console.log("signUp function called!")
+        firebase.auth().createUserWithEmailAndPassword($scope.user.email, $scope.user.password).then(function(data){
+            console.log("uid",data.uid);
+        })
+            .catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log("errorCode",errorCode,errorMessage)
+            // ...
+        })
+
+     //    if(window.localStorage.getItem('mobile_verify') == 'true'){
+     //        var userData = {
+     //         name: $scope.user.name,
+     //         email: $scope.user.email,
+     //         mobileNum: $scope.user.mobile_num,
+     //         referralCode: $scope.user.referral_code,
+     //         deviceId: $cordovaDevice.getDevice().uuid
+     //        }
+     //        $http.post("http://139.162.27.64/api/addUser", userData)
+     //           .success(function(response){
+     //              if(response.StatusCode == 200){
+     //                 alert(response.Message);
+     //              }
+     //              else if(response.StatusCode == 400){
+     //                  alert(response.Message);
+     //              }
+     //              else{
+     //                 alert('some thing went wrong!');
+     //              }
+     //           })
+     //           .error(function(response){
+     //              console.log("error");
+     //              console.log(response);
+     //         });
+     //    }
+     // else{
+     //        $scope.sendVerification();
+     //    }
 
     };
 

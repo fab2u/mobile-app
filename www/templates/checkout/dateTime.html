@@ -42,7 +42,8 @@
 		 	<div class = "fix-bar"> <!-- width depend upon number of items -->
 		 		<ion-list>
 		 			<ion-item id = "timeitem" ng-repeat = "time in timeSlots9To12" class = "custom-item" >
-		 				<div id="{{time.id}}" class="time-button" ng-click="timeSelected($index,time.id)" ng-model="time.selected">
+		 				<div id="{{time.id}}" class="time-button button" ng-disabled ="isDisabled"
+							 ng-click="timeSelected($index,time.id)" ng-model="time.selected">
 			 				{{time.time}}
 			 			</div>
 		 			</ion-item>
@@ -50,11 +51,13 @@
 			</div>
 		</ion-scroll>
 
-		<ion-scroll has-bouncing = "false" direction = "y" scrollbar-y="false" ng-style="{height: getItemHeight()}" style = "width: 25%;float:left;">	
+		<ion-scroll has-bouncing = "false" direction = "y" scrollbar-y="false" ng-style="{height: getItemHeight()}"
+					style = "width: 25%;float:left;">
 			<div class = "fix-bar">
 				<ion-list>
 		 			<ion-item ng-repeat = "time in timeSlots12To3" class = "custom-item" >
-		 				<div id="{{time.id}}" class="time-button" ng-click="timeSelected($index,time.id)" ng-model="time.selected">
+		 				<div id="{{time.id}}" ng-disabled ="isDisabled" class="time-button button"
+							 ng-click="timeSelected($index,time.id)" ng-model="time.selected">
 			 				{{time.time}}
 			 			</div>
 		 			</ion-item>
@@ -66,7 +69,8 @@
 		    <div class = "fix-bar">
 	 			<ion-list>
 		 			<ion-item ng-repeat = "time in timeSlots3To6" class = "custom-item" >
-		 				<div id="{{time.id}}" class="time-button" ng-click="timeSelected($index, time.id)" ng-model="time.selected">
+		 				<div id="{{time.id}}" class="time-button button" ng-disabled ="isDisabled"
+							 ng-click="timeSelected($index, time.id)" ng-model="time.selected">
 			 				{{time.time}}
 			 			</div>
 		 			</ion-item>
@@ -78,7 +82,8 @@
 		    <div class = "fix-bar">
 				<ion-list>
 		 			<ion-item ng-repeat = "time in timeSlots6To9" class = "custom-item" >
-		 				<div id="{{time.id}}" class="time-button" ng-click="timeSelected($index,time.id)">
+		 				<div id="{{time.id}}" class="time-button button" ng-disabled ="isDisabled"
+							 ng-click="timeSelected($index,time.id)">
 			 				{{time.time}}
 			 			</div>
 		 			</ion-item>

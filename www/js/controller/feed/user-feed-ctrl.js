@@ -23,7 +23,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoa
 		console.log(snapshot.val());
 		$scope.userDetails = snapshot.val();
 		$scope.email = snapshot.val().email.userEmail;
-		$scope.userPhoto = snapshot.val().userPhoto;
+		$scope.userPhoto = snapshot.val().photoUrl;
 	});
 
 	$scope.likeThisFeed = function(feedId){

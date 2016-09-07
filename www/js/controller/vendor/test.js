@@ -3,6 +3,11 @@ app
         '$timeout','$stateParams','$rootScope','$state','$ionicLoading',
         function($scope, $ionicSlideBoxDelegate, $ionicScrollDelegate, $timeout,$stateParams,$rootScope,$state,$ionicLoading) {
 
+            $scope.total_fabtu=0;
+            $scope.total_original=0;
+            $scope.total_customer = 0;
+
+
             $scope.show = function() {
                 $ionicLoading.show({
                     template: 'Loading...'
@@ -62,11 +67,29 @@ app
                         $scope.catName.push("TATTOO");
                         $scope.menu.push(value)
                     }
+                    console.log("menu",JSON.stringify($scope.menu,null,2))
                 });
                 $timeout( function() {
                     $ionicSlideBoxDelegate.update();
                 },200);
             });
+
+                    ///To calculate cart price //////
+
+            $scope.calPrice = function (item_list) {
+                $scope.total_fabtu=0;
+                $scope.total_original=0;
+                $scope.total_customer = 0;
+                angular.forEach(item_list, function(value, key) {
+                    $scope.total_fabtu += value.fab2uPrice;
+                    $scope.total_original += value.vendorPrice;
+                    $scope.total_customer += value.customerPrice;
+                })
+            };
+            if(localStorage.getItem('BegItems') != null){
+                $scope.cartItems = JSON.parse(localStorage.getItem('BegItems'));
+                $scope.calPrice($scope.cartItems);
+            }
 
 
             $scope.selectedServices = {}; // Stores selected services
@@ -77,7 +100,7 @@ app
             // Get selected services if previously stored in localstorage
             if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
                 $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
-                $scope.begItems = JSON.parse(localStorage.getItem('BegItems'))
+                $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
 
                 $scope.cart_item = _.size($scope.selectedServices);
             }
@@ -87,6 +110,7 @@ app
                 $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
                 $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
                 $scope.cart_item = _.size($scope.selectedServices);
+                $scope.calPrice($scope.begItems);
             });
 
             // Notify slide change
@@ -157,21 +181,14 @@ app
 
             $scope.selectItem = function(index, serviceName,selectObj) {
                 var data = selectObj;
-                // var data = {
-                //     'name':serviceName,
-                //     'fab_price':f_price,
-                //     'ven_price':v_price,
-                //     'serv_id':id,
-                //     'cus_price':customerPrice
-                // }
                 if(($scope.begItems[data.menuItemName]) && ($scope.selectedServices[serviceName])){
                     delete $scope.begItems[data.menuItemName];
                     delete $scope.selectedServices[serviceName];
-
-                }else {
+                }
+                else {
                     $scope.begItems[data.menuItemName] = data;
                     $scope.selectedServices[serviceName] = true;
-                }
+                 }
                 localStorage.setItem('BegItems', JSON.stringify($scope.begItems));
                 localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
                 $rootScope.$broadcast('cart', { message: 'cart length changed' });

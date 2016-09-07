@@ -27,6 +27,10 @@
                 </div> <!-- .col -->
             </div> <!-- .cart-details -->
         </div> <!-- .header -->
+        <div ng-hide="menuInfo">
+           <p class="text-center">Sorry, no menu for this vendor!</p>
+        </div>
+        <div ng-show="menuInfo">
         <div id="scroll-tabs" class="row">
             <ion-scroll id="scrollTabs" direction="x" delegate-handle="myhandel">
                 <div id="container">
@@ -69,6 +73,7 @@
                     </div> <!-- .col -->
                 </ion-slide>
                 </ion-slide-box>
+        </div>
         </div>
     </ion-content>
 

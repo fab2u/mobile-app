@@ -67,6 +67,11 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
   $scope.slotValues();
 
 
+  $scope.back = function(){
+    $state.go('cart',{'ven_id':window.localStorage.getItem("vendorId")})
+  };
+
+
 
 
   var weekday = new Array(7);

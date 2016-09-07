@@ -1,15 +1,22 @@
 app
     .controller('VendorServicesListCtrl',['$scope', '$ionicSlideBoxDelegate', '$ionicScrollDelegate',
-        '$timeout','$stateParams','$rootScope','$state',
-        function($scope, $ionicSlideBoxDelegate, $ionicScrollDelegate, $timeout,$stateParams,$rootScope,$state) {
+        '$timeout','$stateParams','$rootScope','$state','$ionicLoading',
+        function($scope, $ionicSlideBoxDelegate, $ionicScrollDelegate, $timeout,$stateParams,$rootScope,$state,$ionicLoading) {
 
-
+            $scope.show = function() {
+                $ionicLoading.show({
+                    template: 'Loading...'
+                })
+            };
+            $scope.show();
             $scope.menu = [];
             $scope.catName = [];
             $scope.cart_item = 0;
             $scope.cart_price = {};
 
             firebase.database().ref('menu/'+$stateParams.vendor_id+'/services').once('value',function(response){
+                  $scope.menuInfo = response.val();
+                $ionicLoading.hide();
                 angular.forEach(response.val(), function(value, key) {
                     if(key == 'cat-01'){
                         $scope.catName.push("HAIR");
@@ -198,7 +205,13 @@ app
 
             // handel on click proceed button
             $scope.proceedButton = function() {
-                $state.go('cart',{'ven_id':$stateParams.vendor_id});
+                if(_.size($scope.selectedServices)>0){
+                    $state.go('cart',{'ven_id':$stateParams.vendor_id});
+
+                }
+                else{
+                    alert('Please, select some services!')
+                }
             };
 
             $scope.services = {

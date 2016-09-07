@@ -1,5 +1,5 @@
 app
-.controller('HomeCtrl', ['$scope','$state', function($scope,$state) {
+.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading) {
 
 	$scope.fabSelected = false;
 
@@ -32,4 +32,4 @@ app
 			$state.go('vendorList');
 		}
 	};
-}]);
+});

@@ -63,8 +63,12 @@ app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$state){
     };
 
 $scope.select_time = function(){
-    $state.go('dateTime');
+    if(_.size($scope.selectedServices)>0){
+        $state.go('dateTime');
+    }
+    else{
+        alert('Please, select som e service!')
+    }
 };
-
 
 });

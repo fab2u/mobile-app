@@ -2,8 +2,8 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
 
     $scope.selectedServices = {}; // Stores selected services
 
-    if (localStorage.getItem("slectedItem") != null) {
-        $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+    if (localStorage.getItem("slectedItems") != null) {
+        $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItems'));
     }
 
     $scope.backButton = function(){
@@ -103,6 +103,6 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
         }else{
             $scope.selectedServices[serviceName] = true;
         }
-        localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
+        localStorage.setItem('slectedItems', JSON.stringify($scope.selectedServices));
     };
 });

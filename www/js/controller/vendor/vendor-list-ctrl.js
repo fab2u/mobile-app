@@ -21,7 +21,7 @@ app.controller('VendorListCtrl',
 
 
     $scope.backButton = function () {
-        $state.go($ionicHistory.backView().stateName);
+        $state.go('app.home');
     };
 
     // $scope.rating = 3;

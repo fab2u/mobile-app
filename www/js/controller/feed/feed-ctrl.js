@@ -1,4 +1,6 @@
-app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
+app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($scope, $timeout, $ionicLoading){
+
+	$ionicLoading.show();
 
 	console.log('test');
 	$scope.uid = window.localStorage.getItem("uid");
@@ -10,6 +12,10 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 	$scope.goBack = function(){
 		history.back();
 	}
+
+	$timeout(function () {
+		$ionicLoading.hide();
+	}, 10000);
 
 	$scope.likeThisFeed = function(feedId){
 		if($("#"+feedId+"-likeFeed").hasClass('clicked')){
@@ -112,6 +118,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 		}
 		else if($scope.events2.length == 0){
 			db.ref().child("blogs").limitToLast(5).once("value", function(snapshot){
+				$ionicLoading.hide();
 				console.log(snapshot.val());
 				// console.log(Object.keys(snapshot.val())[0]);
 				$scope.bottomKey = Object.keys(snapshot.val())[0];
@@ -120,7 +127,11 @@ app.controller('FeedCtrl', ['$scope', '$timeout', function($scope, $timeout){
 				// console.log($scope.bottomKey, $scope.topKey);
 				angular.forEach(snapshot.val(), function(value, key){
 					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-					value.profilePic = 'img/person.jpg';
+					// console.log(value.user.user_id);
+					db.ref("users/data/"+value.user.user_id+"/photoUrl").once("value", function(snap){
+						// console.log(snap.val());
+						value.profilePic = snap.val();
+					});
 					// $timeout(function () {
 					// 	console.log(value.user.user_id, value.blog_id);
 					// 	jdenticon.update("#"+value.blog_id, md5(value.user.user_id));

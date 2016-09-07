@@ -1,5 +1,6 @@
-app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($scope, $stateParams, $timeout){
+app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$ionicLoading', function($scope, $stateParams, $timeout, $ionicLoading){
 
+	$ionicLoading.show();
 	$scope.uid = window.localStorage.getItem("uid");
 	console.log($scope.uid);
 
@@ -12,6 +13,10 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 	$scope.goBack = function(){
 		history.back();
 	}
+
+	$timeout(function () {
+		$ionicLoading.hide();
+	}, 10000);
 
 	$scope.likeThisFeed = function(feedId){
 		if($("#"+feedId+"-likeFeed").hasClass('clicked')){
@@ -56,9 +61,13 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 							// console.log(snap.val());
 							single_blog = snap.val();
 							single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-							$timeout(function () {
-								jdenticon.update("#"+snap.val().blog_id, md5(snap.val().user.user_id));
-							}, 0);
+							db.ref("users/data/"+value.user.user_id+"/photoUrl").once("value", function(snap){
+								// console.log(snap.val());
+								single_blog.profilePic = snap.val();
+							});
+							// $timeout(function () {
+							// 	jdenticon.update("#"+snap.val().blog_id, md5(snap.val().user.user_id));
+							// }, 0);
 							if(single_blog.likedBy){
 								count = Object.keys(single_blog.likedBy).length;
 								console.log(single_blog.likedBy);
@@ -100,9 +109,13 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 							blogData.once("value", function(snap){ //access individual blog
 								single_blog = snap.val();
 								single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-								$timeout(function () {
-									jdenticon.update("#"+snap.val().blog_id, md5(snap.val().user.user_id));
-								}, 0);
+								db.ref("users/data/"+value.user.user_id+"/photoUrl").once("value", function(snap){
+									// console.log(snap.val());
+									single_blog.profilePic = snap.val();
+								});
+								// $timeout(function () {
+								// 	jdenticon.update("#"+snap.val().blog_id, md5(snap.val().user.user_id));
+								// }, 0);
 								if(single_blog.likedBy){
 									count = Object.keys(single_blog.likedBy).length;
 									console.log(single_blog.likedBy);
@@ -124,6 +137,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 		else if(Object.keys($scope.blogIdList).length == 0){
 			console.log("length = 0");
 			db.ref('tags').child($scope.tagName).child("blogs").limitToLast(5).once('value', function(snapshot){
+				$ionicLoading.hide();
 				$scope.blogIdList = snapshot.val();
 				console.log($scope.blogIdList);
 				$scope.bottomKey = Object.keys($scope.blogIdList)[0];
@@ -138,9 +152,13 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', function($s
 						console.log(snap.val());
 						single_blog = snap.val();
 						single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-						$timeout(function () {
-							jdenticon.update("#"+snap.val().blog_id, md5(snap.val().user.user_id));
-						}, 0);
+						db.ref("users/data/"+value.user.user_id+"/photoUrl").once("value", function(snap){
+							// console.log(snap.val());
+							single_blog.profilePic = snap.val();
+						});
+						// $timeout(function () {
+						// 	jdenticon.update("#"+snap.val().blog_id, md5(snap.val().user.user_id));
+						// }, 0);
 						if(single_blog.likedBy){
 							count = Object.keys(single_blog.likedBy).length;
 							console.log(single_blog.likedBy);

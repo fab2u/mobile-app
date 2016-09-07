@@ -128,6 +128,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
     }
 
     $scope.getWalletAmount = function() {
+
         if ($scope.userWalletInfo.amount > 0) {
             if ($scope.customer_price > $scope.userWalletInfo.amount) {
                 var amount1 = parseInt($scope.customer_price/ 2);
@@ -146,7 +147,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
                 }
                 // $scope.walletAmount = $scope.userWalletInfo.amount;
             } else {
-                var amount1 = parseInt($scope.userWalletInfo.amount / 2);
+                var amount1 = parseInt($scope.customer_price / 2);
                 console.log(amount1);
                 var amount2 = $scope.userWalletInfo.amount;
                 var balance = 0;

@@ -1,4 +1,4 @@
-app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', '$ionicHistory', function($scope, $timeout, $ionicLoading, $ionicHistory){
+app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($scope, $timeout, $ionicLoading){
 
 	$ionicLoading.show();
 
@@ -10,7 +10,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', '$ionicHistor
 	$scope.moreMessagesRefresh = true;
 
 	$scope.goBack = function(){
-		$ionicHistory.goBack();
+		history.back();
 	}
 
 	$timeout(function () {

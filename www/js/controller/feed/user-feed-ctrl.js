@@ -10,123 +10,20 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoa
 		$ionicLoading.hide();
 	}, 10000);
 
-	$scope.uid = $stateParams.user_id;
-	$scope.email = window.localStorage.email;
-	$scope.userPhoto = window.localStorage.userPhoto;
-	// $scope.img_hash = md5($scope.uid);
+	// $scope.email = window.localStorage.email;
+	// $scope.userPhoto = window.localStorage.userPhoto;
+	// $scope.img_hash = md5(uid);
 	// jdenticon.update("#identicon", $scope.img_hash);
-	var uid = window.localStorage.uid;
+	// var uid = window.localStorage.uid;
+	var uid = $stateParams.user_id;
 	$scope.blogIdList = {};
 	$scope.moreMessagesScroll = true;
 
-
-	firebase.auth().onAuthStateChanged(function(user) {
-		if (user) {
-			// User is signed in.
-			console.log(user);
-
-			db.ref("users/data/"+uid).on("value", function(snapshot){
-				console.log(snapshot.val());
-				$scope.userDetails = snapshot.val();
-			});
-
-			$scope.galleryUpload = function() {
-
-				var options = {
-					destinationType : Camera.DestinationType.FILE_URI,
-					sourceType :	Camera.PictureSourceType.PHOTOLIBRARY, //, Camera.PictureSourceType.CAMERA,
-					allowEdit : false,
-					encodingType: Camera.EncodingType.JPEG,
-					popoverOptions: CameraPopoverOptions,
-				};
-
-				$cordovaCamera.getPicture(options).then(function(imageURI) {
-					var image = document.getElementById('myImage');
-					image.src = imageURI;
-					$scope.url = imageURI;
-
-					resizeImage(imageURI);
-
-				}, function(err) {
-					console.log(err);
-				});
-			};
-
-			$scope.cameraUpload = function() {
-
-				var options = {
-					destinationType : Camera.DestinationType.FILE_URI,
-					sourceType :	Camera.PictureSourceType.CAMERA,
-					allowEdit : false,
-					encodingType: Camera.EncodingType.JPEG,
-					popoverOptions: CameraPopoverOptions,
-				};
-
-				$cordovaCamera.getPicture(options).then(function(imageURI) {
-					var image = document.getElementById('myImage');
-					image.src = imageURI;
-					$scope.url = imageURI;
-					alert(JSON.stringify(imageURI)+ 'line number 283, imageURI');
-
-					resizeImage(imageURI);
-
-				}, function(err) {
-					console.log(err);
-				});
-			};
-
-			function resizeImage(source){
-				alert('resizeImage called')
-				var canvas = document.createElement("canvas");
-				var ctx = canvas.getContext("2d");
-
-				img = new Image();
-				alert('img '+ img);
-				img.onload = function () {
-					// alert("onload called javascript");
-					canvas.height = canvas.width * (img.height / img.width);
-					/// step 1
-					var oc = document.createElement('canvas');
-					var octx = oc.getContext('2d');
-					oc.width = img.width * 0.5;
-					oc.height = img.height * 0.5;
-					octx.drawImage(img, 0, 0, oc.width, oc.height);
-					/// step 2
-					octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
-					ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5, 0, 0, canvas.width, canvas.height);
-					// alert(canvas.width+" "+canvas.height+" "+img.width+" "+img.height);
-					var dataURL = canvas.toDataURL("image/jpeg");
-					alert('dataURL ' + dataURL);
-
-					$http.post("http://139.162.3.205/api/testupload", {path: dataURL})
-					.success(function(response){
-						alert("success "+JSON.stringify(response));
-
-						var updates1 = {};
-						alert($scope.uid + " " + response.Message);
-						updates1["users/data/"+$scope.uid+"/photoUrl"] = response.Message;
-						window.localStorage.setItem("userPhoto", response.Message);
-						db.ref().update(updates1).then(function(){
-							user.updateProfile({
-								photoURL: response.Message
-							}).then(function(){
-								alert("photo updated in firebase object");
-							});
-						});
-
-					})
-					.error(function(response){
-						alert(JSON.stringify(response));
-					});
-				}
-				alert('source '+ source);
-				img.src = source;
-			}
-		}
-		else{
-			$ionicLoading.hide();
-			$location.path("#/login");
-		}
+	db.ref("users/data/"+uid).on("value", function(snapshot){
+		console.log(snapshot.val());
+		$scope.userDetails = snapshot.val();
+		$scope.email = snapshot.val().email.userEmail;
+		$scope.userPhoto = snapshot.val().userPhoto;
 	});
 
 	$scope.likeThisFeed = function(feedId){
@@ -135,18 +32,18 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoa
 			var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
 			console.log(result);
 			result[0].numLikes -= 1;
-			db.ref("blogs/"+feedId+"/likedBy/"+$scope.uid).remove().then(function(){
+			db.ref("blogs/"+feedId+"/likedBy/"+uid).remove().then(function(){
 				console.log('removed successfully');
 				$("#"+feedId+"-likeFeed").removeClass("clicked");
 			});
 		}
 		else {
-			console.log(feedId, $scope.uid);
+			console.log(feedId, uid);
 			var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
 			console.log(result);
 			result[0].numLikes += 1;
 			var updates = {};
-			updates["blogs/"+feedId+"/likedBy/"+$scope.uid] = true;
+			updates["blogs/"+feedId+"/likedBy/"+uid] = true;
 			db.ref().update(updates).then(function(){
 				console.log('success');
 				$("#"+feedId+"-likeFeed").addClass("clicked");
@@ -188,7 +85,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoa
 									console.log(single_blog.likedBy);
 									console.log(count);
 									single_blog['numLikes'] = count;
-									if($scope.uid in single_blog.likedBy){
+									if(uid in single_blog.likedBy){
 										$timeout(function () {
 											$("#"+i+"-likeFeed").addClass("clicked");
 										}, 0);
@@ -222,7 +119,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoa
 							console.log(single_blog.likedBy);
 							console.log(count);
 							single_blog['numLikes'] = count;
-							if($scope.uid in single_blog.likedBy){
+							if(uid in single_blog.likedBy){
 								$timeout(function () {
 									$("#"+i+"-likeFeed").addClass("clicked");
 								}, 0);

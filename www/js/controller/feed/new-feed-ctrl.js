@@ -37,7 +37,7 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
    var blogData;
 
    $scope.goBack = function(){
-		$ionicHistory.goBack();
+		history.back();
 	}
 
    $scope.feed = {};

@@ -107,7 +107,10 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoa
 		else if(Object.keys($scope.blogIdList).length == 0){
 			db.ref("users/data/"+uid +"/blogs").limitToLast(5).once("value", function(snapshot){
 				$scope.blogIdList = snapshot.val();
-				$scope.bottomKey = Object.keys($scope.blogIdList)[0];
+				console.log($scope.blogIdList);
+				if($scope.blogIdList !== null){
+					$scope.bottomKey = Object.keys($scope.blogIdList)[0];
+				}
 				$scope.blogArr = [];
 				for(var i in snapshot.val()){
 					var blogData = db.ref("blogs/" + i);

@@ -1,5 +1,5 @@
 // Edit By Deepank
-app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$cordovaCamera', function($scope, $timeout, $ionicLoading, $cordovaCamera){
+app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '$cordovaCamera', function($scope, $timeout, $ionicLoading, $http, $cordovaCamera){
    $scope.uid = window.localStorage.uid;
    console.log($scope.uid);
    $scope.email = window.localStorage.email;
@@ -22,7 +22,6 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$cordovaC
             console.log(snapshot.val());
             $scope.userDetails = snapshot.val();
          });
-
 
          $scope.galleryUpload = function() {
 
@@ -97,10 +96,11 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$cordovaC
                   alert("success "+JSON.stringify(response));
 
                   var updates1 = {};
-                  alert(uid + " " + response.Message);
-                  updates1["users/data/"+uid+"/photoUrl"] = response.Message;
+                  alert($scope.uid + " " + response.Message);
+                  updates1["/users/data/"+$scope.uid+"/photoUrl"] = response.Message;
                   window.localStorage.setItem("userPhoto", response.Message);
                   db.ref().update(updates1).then(function(){
+                     alert("updated in users obj")
                      user.updateProfile({
                         photoURL: response.Message
                      }).then(function(){

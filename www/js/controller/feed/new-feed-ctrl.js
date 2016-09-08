@@ -174,6 +174,8 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
             alert(JSON.stringify(response.Message));
             $scope.image_url = response.Message;
             alert($scope.image_url);
+            $(".upload").css("display", 'none');
+
          })
          .error(function(response){
             alert('error');
@@ -182,5 +184,6 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
       }
       alert('source '+ source);
       img.src = source;
+      $(".upload").css("display", 'none');
    }
 }]);

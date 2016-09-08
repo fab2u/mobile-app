@@ -14,6 +14,9 @@
             <label>Upload a photo<br> from gallery or camera.</label>
          </div>
       </section>
+      <div class="upload1">
+         <img id="myImage" style="width:50%; height:auto;" ng-click="showUploadOptions = !showUploadOptions">
+      </div>
       <div class="profile-details">
          <div class="row" ng-show="showUploadOptions">
             <div class="col">
@@ -31,7 +34,6 @@
          <label class="item item-input feed-comment">
             <textarea rows="5" expanding-textarea placeholder="Comment" ng-model="feed.introduction"></textarea>
          </label>
-         <img id="myImage" style="width:50%; height:auto;">
          <div class="padding">
             <button class="button button-block activated pink-bg" type="submit" ng-click="submitFeed()">Create</button>
          </div>

@@ -143,6 +143,11 @@
 	background:#fff;
 	text-align: center;
 }
+
+.new-feed .upload1{
+	text-align: center;
+}
+
 .new-feed .upload img{
 	padding-bottom:20px;
 	width:50px;

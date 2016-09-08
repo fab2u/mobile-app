@@ -32,7 +32,10 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($sco
 		else {
 			console.log(feedId, $scope.uid);
 			var result = $.grep($scope.events2, function(e){ return e.blog_id == feedId; });
-			console.log(result);
+			console.log(result[0].numLikes);
+			if(result[0].numLikes == undefined){
+				result[0].numLikes = 0;
+			}
 			result[0].numLikes += 1;
 			var updates = {};
 			updates["blogs/"+feedId+"/likedBy/"+$scope.uid] = true;

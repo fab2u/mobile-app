@@ -33,6 +33,9 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$ionicLoad
 			console.log(feedId, $scope.uid);
 			var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
 			console.log(result);
+			if(result[0].numLikes == undefined){
+				result[0].numLikes = 0;
+			}
 			result[0].numLikes += 1;
 			var updates = {};
 			updates["blogs/"+feedId+"/likedBy/"+$scope.uid] = true;

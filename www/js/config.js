@@ -39,7 +39,7 @@ app
 				}
 			}
 		})
-		
+
 		.state('termsnConditions', {
 			url: '/termsnConditions',
 			templateUrl: 'templates/legal/termsnConditions.html'
@@ -202,6 +202,7 @@ app
 
 	$stateProvider
 		.state('feed', {
+         cache: false,
 			url: '/feed',
 			templateUrl: 'templates/feed/feed.html',
 			controller: 'FeedCtrl',
@@ -212,6 +213,7 @@ app
 			}
 		})
 		.state('tagFeed', {
+         cache: false,
 			url: '/tag/:tag',
 			templateUrl: 'templates/feed/tag-feed.html',
 			controller: 'tagFeedCtrl',
@@ -222,6 +224,7 @@ app
 			}
 		})
 		.state('userFeed', {
+         cache: false,
 			url: '/user/:user_id',
 			templateUrl: 'templates/feed/user-feed.html',
 			controller: 'userFeedCtrl',

@@ -91,7 +91,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoa
 									if(uid in single_blog.likedBy){
 										$timeout(function () {
 											$("#"+i+"-likeFeed").addClass("clicked");
-										}, 0);
+										}, 1000);
 									}
 								}
 								console.log($scope.blogArr);
@@ -125,7 +125,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoa
 							if(uid in single_blog.likedBy){
 								$timeout(function () {
 									$("#"+i+"-likeFeed").addClass("clicked");
-								}, 0);
+								}, 1000);
 							}
 						}
 						$scope.blogArr.push(single_blog);

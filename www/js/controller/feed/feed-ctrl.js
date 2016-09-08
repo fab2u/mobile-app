@@ -77,7 +77,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($sco
 							if($scope.uid in value.likedBy){
 								$timeout(function () {
 									$("#"+key+"-likeFeed").addClass("clicked");
-								}, 0);
+								}, 1000);
 							}
 						}
 						$scope.events2.unshift(value);
@@ -119,7 +119,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($sco
 								if($scope.uid in value.likedBy){
 									$timeout(function () {
 										$("#"+key+"-likeFeed").addClass("clicked");
-									}, 0);
+									}, 1000);
 								}
 							}
 							$scope.events2.push(value);
@@ -157,7 +157,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($sco
 						if($scope.uid in value.likedBy){
 							$timeout(function () {
 								$("#"+key+"-likeFeed").addClass("clicked");
-							}, 0);
+							}, 1000);
 						}
 					}
 					$scope.events2.push(value);

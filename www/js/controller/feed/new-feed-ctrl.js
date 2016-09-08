@@ -53,7 +53,6 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
             user_id: localStorage.getItem("uid"),
             user_email: localStorage.getItem("email")
          },
-         likes: 0,
          active: true,
          created_time: new Date().getTime(),
       };

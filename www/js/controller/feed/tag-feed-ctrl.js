@@ -85,7 +85,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$ionicLoad
 								if($scope.uid in single_blog.likedBy){
 									$timeout(function () {
 										$("#"+i+"-likeFeed").addClass("clicked");
-									}, 0);
+									}, 1000);
 								}
 							}
 							$scope.blogArr.push(single_blog);
@@ -134,7 +134,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$ionicLoad
 									if($scope.uid in single_blog.likedBy){
 										$timeout(function () {
 											$("#"+i+"-likeFeed").addClass("clicked");
-										}, 0);
+										}, 1000);
 									}
 								}
 								$scope.blogArr.push(single_blog);
@@ -176,9 +176,11 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$ionicLoad
 							console.log(count);
 							single_blog['numLikes'] = count;
 							if($scope.uid in single_blog.likedBy){
+								console.log('inside if for clicked class', i);
+								$("#"+i+"-likeFeed").addClass("clicked");
 								$timeout(function () {
 									$("#"+i+"-likeFeed").addClass("clicked");
-								}, 0);
+								}, 1000);
 							}
 						}
 						$scope.blogArr.push(single_blog);

@@ -12,11 +12,23 @@
 	<ion-content class="has-header">
       <div class="user-info">
          <div class="center">
-          <img ng-src="{{userDetails.photoUrl || 'img/person.jpg'}}" width="100" height="100" class="profile-pic"/>
+            <img ng-src="{{userDetails.photoUrl || 'img/person.jpg'}}" width="130" height="130" class="profile-pic"/>
             <!-- <canvas id="identicon" width="100" height="100" class="profile-pic"></canvas> -->
          </div>
          <div class="center user-name">
             {{userDetails.name}}
+         </div>
+         <div class="row">
+            <div class="col">
+            </div>
+            <div class="col">
+               <div class="center user-details">
+                  {{numFeeds}}<br>
+                  <span>Posts</span>
+               </div>
+            </div>
+            <div class="col">
+            </div>
          </div>
       </div>
       <hr>

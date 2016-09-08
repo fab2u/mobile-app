@@ -102,7 +102,7 @@
 	border-radius: 7px;	
 }
 
-.confirmation #paidFromWallet {
+.confirmation #walletMoney {
 	width: 70%; 
 	margin: 5px auto; 
 	background-color: #3d3d3d;
@@ -114,9 +114,9 @@
 	color: white;
 }
 
-.confirmation #amountPayable {
+.confirmation #amountToPay {
 	width: 70%; 
-	margin: 20px auto; 
+	margin: 10px auto; 
 	background-color: #0DD1D1;
 	height: 12%;
 	border-radius: 0.5em;
@@ -126,14 +126,34 @@
 	color: white;
 }
 
+.confirmation #havePromo {
+	margin-bottom:5px;
+}
+
 .confirmation #haveCode {
     background-color: #3d3d3d;
     width: 80%;
     margin: 0 auto;
     color: #fff;
     padding: 5px;
-    border-top-left-radius: 0.5em;
-    border-top-right-radius: 0.5em;
+    border-radius: 0.5em;
+}
+
+.confirmation #applyCode {
+	background-color: #565656;
+    width: 80%;
+    margin: -5px auto 0;
+    padding: 0px;
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+}
+
+.confirmation #applyCodeDiv {
+	padding-left: 5px;
+}
+
+.confirmation #applyCodeButton {
+	margin-top: 5px;
 }
 
 .confirmation .custom-footer {
@@ -159,7 +179,7 @@
 	width: 100%;
 }
 .confirmation #image img {
-	width: 50%;
+	width: 40%;
 	height: auto;
 }
 

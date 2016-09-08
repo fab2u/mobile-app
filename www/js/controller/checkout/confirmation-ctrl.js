@@ -1,406 +1,416 @@
-app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $timeout) {
+app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $timeout,$ionicPopup) {
+	$ionicLoading.show();
+	var loggedIn = checkLocalStorage('uid');
+	$scope.goBack = function(){
+		$state.go('dateTime');
+	}
+	if(!loggedIn){
+		console.log('logged out');
+		localStorage.setItem('confirmation', true);
+		$ionicLoading.hide();
+		$state.go('login');
+	} else {
+		console.log('logged in');
+		var hasCartItems = checkLocalStorage('BegItems');
+		var vendorId = window.localStorage.getItem("vendorId");
+		var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+		var userId = localStorage.getItem('uid');
+		var timeOfAppointment = window.localStorage.getItem("chosenTime");
+		var appointmentDate = JSON.parse(localStorage.getItem('appointmentDate'));
+		var appointmentDateInfo = appointmentDate.date + '/' + appointmentDate.month + '/' + appointmentDate.year;
+		var couponForBooking;
+		// console.log(vendorId, locationInfo);
 
-    $scope.paidFromWallet = 0;
-    $scope.amountPayable = 0;
-    $scope.walletAmount = 0;
-    $scope.total_fabtu = 0;
-    $scope.walletBalance = 0;
-    $scope.total_original = 0;
-    $scope.customer_price = 0;
-    $scope.discountedPrice = 0;
-    $scope.subtotal = 0;
-    $scope.isChecked = false;
-    $scope.amount = 0;
-    $scope.userWalletInfo = {};
+		// console.log(hasCartItems);
+		var newCart = [];
+		var cartItems;
+		$scope.total_fabtu = 0;
+        $scope.total_original = 0;
+        $scope.customer_price = 0;
+        $scope.version = 0;
+        $scope.paidFromWallet = 0;
+        $scope.walletAmount = 0;
+        $scope.hasWalletBalance = false;
+        $scope.discountAmount = 0;
+        $scope.amountPayable = 0;
+        $scope.promoCodeApplied = false;
+        $scope.amount;
 
-    var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+	    $scope.getWalletAmount = function() {
+	        if ($scope.amount > 0) {
+	            if ($scope.customer_price > $scope.amount) {
+	                var amount1 = parseInt($scope.customer_price/ 2);
+	                console.log(amount1);
+	                var amount2 = $scope.amount;
+	                var balance = 0;
+	                if (amount1 < amount2) {
+	                    balance = amount1;
+	                } else {
+	                    balance = amount2;
+	                }
+	                if (balance > 200) {
+	                    $scope.walletAmount = 200;
+	                } else {
+	                    $scope.walletAmount = balance;
+	                }
+	            } else {
+	                var amount1 = parseInt($scope.customer_price / 2);
+	                console.log(amount1);
+	                var amount2 = $scope.amount;
+	                var balance = 0;
+	                if (amount1 < amount2) {
+	                    balance = amount1;
+	                } else {
+	                    balance = amount2;
+	                }
+	                if (balance > 200) {
+	                    $scope.walletAmount = 200;
+	                } else {
+	                    $scope.walletAmount = balance;
+	                }
+	            }
+	            $scope.useWalletAmount = true;
+	        } else {
+	            $scope.useWalletAmount = false;
+	        }
+	        $ionicLoading.hide();
+	    }
 
-    var appointmentDate = JSON.parse(localStorage.getItem('appointmentDate'));
+	    $scope.getWalletInfo = function() {
+	        $ionicLoading.show({
+	            template: 'Loading...'
+	        })
+	        firebase.database().ref('userWallet/data/' + userId).once('value', function(response) {
+	        	console.log(response.val()+'wallet info');
+	        	var debitAmount = 0;
+	        	var creditAmount = 0;
+	        	if(response.val()){
+	        		if(response.val().debit){
+	        			angular.forEach(response.val().debit, function(value, key){
+	        				debitAmount = debitAmount+ value.amount;
+	        			})
+	        		}
+	        		if(response.val().credit){
+	        			angular.forEach(response.val().credit, function(value, key){
+	        				creditAmount = creditAmount+ value.amount;
+	        			})
+	        		}
+	        		$scope.amount = creditAmount - debitAmount;
+	        		if($scope.amount > 0){
+	        			$scope.hasWalletBalance = true;
+	        			$scope.getWalletAmount();
+	        		} else {
+	        			$ionicLoading.hide();
+	        		}
+	        	} else {
+	        		$ionicLoading.hide();
+	        	}
+	            // $scope.userWalletInfo = response.val();
+	            // console.log($scope.userWalletInfo);
+	            // $scope.amount = $scope.amount;
+	            // if($scope.amount > 0){
+	            // 	$scope.hasWalletBalance = true;
+	            // 	$scope.getWalletAmount();
+	            // } else {
+	            // 	$ionicLoading.hide();
+	            // }
+	        })
+	    };
 
-    var timeOfAppointment = window.localStorage.getItem("chosenTime");
+	    $scope.getWalletInfo();
 
-    var cartItems = JSON.parse(localStorage.getItem('BegItems'));
+        $scope.bookingInfo = function(){
+        	firebase.database().ref('protectedVendorsVersions/' + locationInfo.cityId + '/' + vendorId + '/live/version').once('value', function(snapshot){
+        		console.log(snapshot.val());
+        		$scope.version = snapshot.val();
+        	})
+        	// console.log('working');
+        }
 
-    var newCart = [];
+		$scope.getPrice = function(cart){
+	        var count = 0;
+	        angular.forEach(cartItems, function(value, key) {
+	            count++;
+	            $scope.total_fabtu += value.fab2uPrice;
+	            $scope.total_original += value.vendorPrice;
+	            $scope.customer_price += value.customerPrice;
+	            if (count == _.size(cart)) {
+	            	$scope.amountPayable = $scope.customer_price;
+	                $scope.bookingInfo();
+	            }
+	        });
+		}
 
-    if (cartItems) {
-        angular.forEach(cartItems, function(value, key) {
-            newCart.push(value)
-        });
-    }
+		if(hasCartItems){
+			cartItems = JSON.parse(localStorage.getItem('BegItems'));
+			var count = 0;
+			console.log(_.size(cartItems));
+			angular.forEach(cartItems, function(value, key) {
+				newCart.push(value);
+				console.log(newCart);
+				count++;
+				if(count == _.size(cartItems)){
+					$scope.getPrice(newCart);
+				}
+			});
+		}
 
-    var appointmentDateInfo = appointmentDate.date + '/' + appointmentDate.month + '/' + appointmentDate.year;
+		$scope.toggleCheckbox = function(){
+			$scope.isChecked = !$scope.isChecked;
+			$scope.calculateAmountPayable();
+		}
 
-    // To get the amount information for an user
+		$scope.addCoupon = function(couponCode) {
+			console.log('called');
+			$ionicLoading.show();
+			//  get city and check if the coupon code is apllicable to the selected city
+			//  check if the coupon code is applicable to the selected vendor
+			//  check if coupon code id valid
+			//  check user cart amount
+			//  get coupon code amount
 
-    $scope.getWalletInfo = function() {
-        $ionicLoading.show({
-            template: 'Loading...'
-        })
-        firebase.database().ref('userWallet/data/' + localStorage.getItem('uid')).once('value', function(response) {
-            $scope.userWalletInfo = response.val();
-            console.log($scope.userWalletInfo);
-            $scope.amount = $scope.userWalletInfo.amount;
+			// if coupon code is not undefined && not empty
+			couponForBooking = couponCode
+			if(couponCode!=undefined && couponCode!='' && couponCode!=' '){
+				console.log(couponCode);
+				firebase.database().ref().child('promotions/cart')
+					.orderByChild('promoCode')
+					.startAt(couponCode)
+					.endAt(couponCode)
+					.once('value', function(snapshot) {
+						console.log('called');
+						$timeout(function(){
+							if(snapshot.val()!=null){
+								console.log(snapshot.val());
+								verifyPromoCode(snapshot.val(), couponCode);
+							}else{
+								$ionicLoading.hide();
+								alert("Enter a valid promo code, not found");
+							}
+						});
+					});
+			}else{
+				alert("Please enter a coupon code!");
+			}
+		}
 
-            if ($scope.userWalletInfo) {
-                $scope.getWalletAmount();
-                $ionicLoading.hide();
-            } else {
-                $ionicLoading.hide();
-            }
-        })
-    };
-    $scope.getWalletInfo();
+		function verifyPromoCode(promoData , coupon) {
+			console.log('called');
+	        var promotionCodeInfo = "";
+	        var city = locationInfo;
+	        var applicableCities = null;
+	        var applicableVendors = null;
+	        var isValidPromo = false;
+
+	        angular.forEach(promoData, function(promotionValue, key){
+	            promotionCodeInfo = promotionValue;
+	            applicableCities = promotionCodeInfo.applicableCities;
+	            applicableVendors = promotionCodeInfo.applicableVendors;
+	        });
+
+	        var today = (new Date).getTime();
+	        // check if the promo code is active
+	        // Note +86400000 because the endate entered is 12 AM. the code should continue till the end of the day
+	        if(today > promotionCodeInfo.startDate && today < (promotionCodeInfo.endDate+86400000)){
+	            // check if the promo code is appicable to the user selected city
+	            if(applicableCities!= undefined || applicableCities!=null){
+	                angular.forEach(applicableCities, function(city, key){
+	                    console.log(city, key);
+	                    if(city.cityName==locationInfo.cityName){
+	                        isValidPromo = true;
+	                    }
+	                });
+	                if(!isValidPromo){
+	                	$ionicLoading.hide();
+	                    alert("Sorry the promo code you entered is not applicable to your current city.");
+	                    return;
+	                }else{
+	                    console.log("valid for city");
+	                }
+	            } // if applicableCities
+
+	            // check if the promo code is appicable to the user selected vendor
+	            if(applicableVendors!= undefined || applicableVendors!=null){
+	                angular.forEach(applicableVendors, function(vendor, vendorKey){
+	                    // compare with key because key is unique
+	                    console.log(vendor.vendorId , vendorId);
+	                    if(vendor.vendorId == vendorId){
+	                        isValidPromo = true;
+	                    }else{
+	                        isValidPromo = false;
+	                    }
+	                });
+
+	                if(!isValidPromo){
+	                	$ionicLoading.hide();
+	                    alert("Sorry the promo code you entered is not applicable to this vendor.");
+	                    return;
+	                }else{
+	                    console.log("valid for vendor");
+	                }
+	            } // if applicableVendors
+	        }else{
+	            isValidPromo = false;
+	            $ionicLoading.hide();
+	            alert("Not a valid promo code, not active");
+	            return;
+	        } // is active
 
 
-    $scope.bookingInfo = function() {
-        firebase.database().ref('protectedVendorsVersions/' + locationInfo.cityId + '/' + window.localStorage.getItem("vendorId") + '/live/version').once('value', function(response) {
-            var version = response.val();
-            $scope.bookingDetail = {
-                'userId': localStorage.getItem('uid'),
+	        // if promo code is valid for city or vendor 
+	        if(isValidPromo) {
+	            // alert("promo code is valid");
+	            // check if min cart value is applicable
+	            if($scope.customer_price>=promotionCodeInfo.minCartAmount){
+	                // continue with booking
+	                console.log(promotionCodeInfo.amount);
+	                $scope.discountAmount = promotionCodeInfo.amount;
+	                $scope.promoCodeApplied = true;
+	                $scope.calculateAmountPayable();
+	                $ionicLoading.hide();
+	                $ionicPopup.alert({
+	                	title: 'Promo Code Applied',
+	                	template: 'Successfully applied '+coupon
+	                })
+	                console.log("promo code is valid, apply promo code");
+	            }else{
+	                // min cart value does not meet required condition
+	                $ionicLoading.hide();
+	                alert("Your cart value is less than min cart value ("+promotionCodeInfo.minCartAmount+")");
+	            }
+
+	        }else{
+	        	$ionicLoading.hide();
+	            alert("Not a valid promo code");
+	        }// isValidPromo
+	    }
+
+	    $scope.calculateAmountPayable = function() {
+	        $scope.getWalletAmount();
+	        if ($scope.isChecked == true) {
+	            $scope.paidFromWallet = $scope.walletAmount;
+	            $scope.amount = $scope.amount- $scope.walletAmount;
+	            $scope.amountPayable = $scope.customer_price - $scope.walletAmount -$scope.discountAmount;
+	            if ($scope.amountPayable < 0) {
+	                $scope.amountPayable = 0;
+	            }
+	        } else {
+	        	console.log($scope.amountPayable, $scope.walletAmount, $scope.discountAmount);
+	        	$scope.amount = $scope.amount;
+	            $scope.paidFromWallet = 0;
+	            $scope.amountPayable = $scope.customer_price -$scope.discountAmount;
+	            console.log($scope.amountPayable);
+	            if ($scope.amountPayable < 0) {
+	                $scope.amountPayable = 0;
+	            }
+	        }
+	    }
+
+		String.prototype.shuffle = function () {
+		    var a = this.split(""),
+		        n = a.length;
+		    for(var i = n - 1; i > 0; i--) {
+		        var j = Math.floor(Math.random() * (i + 1));
+		        var tmp = a[i];
+		        a[i] = a[j];
+		        a[j] = tmp;
+		    }
+		    return a.join("");
+		}
+
+		function generateBookingId(length, chars) {
+		    var result = '';
+		    for (var i = length-1; i > 0; --i){
+				result += chars[Math.round(Math.random() * (chars.length - 1))];
+			}
+		    return (result+Math.floor(Math.random() * 10)).shuffle();
+		}
+		var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+	    $scope.confirmedBooking = function(){
+	    	$ionicLoading.show();
+	    	bookingId = generateBookingId(8, chars);
+	    	console.log(bookingId);
+            var bookingDetails = {
+            	'bookingId': bookingId,
+                'userId': userId,
                 'userName': localStorage.getItem('name'),
                 'userMobile': localStorage.getItem('mobileNumber'),
                 'cityId': locationInfo.cityId,
-                'vendorId': window.localStorage.getItem("vendorId"),
-                'totalAmount': $scope.total_original,
+                'vendorId': vendorId,
+                'vendorAmount': $scope.total_original,
                 'serviceInfo': newCart,
                 'createdDate': new Date().getTime(),
                 'appointmentDate': appointmentDateInfo,
                 'appointmentTime': timeOfAppointment,
-                'versionNumber': version,
+                'versionNumber': $scope.version,
                 'status': 'upComing',
-                'walletAmount' : 0,
-                // 'walletAmount': $scope.paidFromWallet,
-                'discountPrice': '0',
-                'finalAmount': $scope.customer_price,
-                // 'amountPayable': $scope.amountPayable,
-                'amountPayable': 0,
+                'walletAmount' : $scope.paidFromWallet,
+                'discountAmount': $scope.discountAmount,
+                'customerAmount': $scope.customer_price,
+                'amountPayable': $scope.amountPayable,
                 'walletTransId': '0',
                 'discountTransId': '0',
                 'specialRequest': 'updated soon!'
             };
-        });
-    };
+            console.log(bookingDetails);
+            firebase.database().ref('userBookings/'+userId+'/active').once('value', function(response){
+            	console.log(response.val());
+            	if(response.val()){
+            		$ionicLoading.hide();
+            		$ionicPopup.alert({
+            			title: 'Already have one booking',
+            			template: 'Please avail or cancel your previous booking first'
+            		})
+            		console.log('haha');
+            	} else {
+            		console.log('hihi');
+            		$scope.insertBooking(bookingDetails);
+            	}
+            })
+		}
 
-    // To calculate total amount for pay from cart
-
-    $scope.calPrice = function(services) {
-        $scope.total_fabtu = 0;
-        $scope.total_original = 0;
-        $scope.customer_price = 0;
-        $scope.count = 0;
-        angular.forEach(cartItems, function(value, key) {
-            $scope.count++;
-            $scope.total_fabtu += value.fab2uPrice;
-            $scope.total_original += value.vendorPrice;
-            $scope.customer_price += value.customerPrice;
-            if ($scope.count == _.size(cartItems)) {
-                // $scope.bookingInfo($scope.total_fabtu,$scope.total_original,$scope.customer_price);
-                $scope.bookingInfo();
-            }
-        });
-    };
-    $scope.calPrice(cartItems);
-
-
-    $scope.toggleCheckbox = function() {
-        $scope.isChecked = !$scope.isChecked;
-        console.log($scope.isChecked);
-        $scope.calculateAmountPayable();
-    }
-
-    // To calculate total payable amount after using wallet
-
-    $scope.calculateAmountPayable = function() {
-        $scope.getWalletAmount();
-        if ($scope.isChecked == true) {
-            $scope.paidFromWallet = $scope.walletAmount;
-            $scope.amount = $scope.userWalletInfo.amount- $scope.walletAmount;
-            $scope.amountPayable = Math.abs($scope.customer_price - $scope.walletAmount);
-            if ($scope.amountPayable < 0) {
-                $scope.amountPayable = 0;
-            }
-        } else {
-        	$scope.amount = $scope.userWalletInfo.amount;
-            $scope.paidFromWallet = 0
-            $scope.amountPayable = Math.abs($scope.customer_price);
-        }
-    }
-
-    $scope.getWalletAmount = function() {
-
-        if ($scope.userWalletInfo.amount > 0) {
-            if ($scope.customer_price > $scope.userWalletInfo.amount) {
-                var amount1 = parseInt($scope.customer_price/ 2);
-                console.log(amount1);
-                var amount2 = $scope.userWalletInfo.amount;
-                var balance = 0;
-                if (amount1 < amount2) {
-                    balance = amount1;
-                } else {
-                    balance = amount2;
-                }
-                if (balance > 200) {
-                    $scope.walletAmount = 200;
-                } else {
-                    $scope.walletAmount = balance;
-                }
-                // $scope.walletAmount = $scope.userWalletInfo.amount;
-            } else {
-                var amount1 = parseInt($scope.customer_price / 2);
-                console.log(amount1);
-                var amount2 = $scope.userWalletInfo.amount;
-                var balance = 0;
-                if (amount1 < amount2) {
-                    balance = amount1;
-                } else {
-                    balance = amount2;
-                }
-                if (balance > 200) {
-                    $scope.walletAmount = 200;
-                } else {
-                    $scope.walletAmount = balance;
-                }
-                // $scope.walletAmount = ($scope.finalCart.subtotal-$scope.discountAmount);
-            }
-            $scope.useWalletAmount = true;
-        } else {
-            $scope.useWalletAmount = 0;
-        }
-        console.log('wallet amount is ' + $scope.walletAmount);
-    }
-
-    $scope.addCoupon = function(couponCode) {
-
-        //  get city and check if the coupon code is apllicable to the selected city
-        //  check if the coupon code is applicable to the selected vendor
-        //  check if coupon code id valid
-        //  check user cart amount
-        //  get coupon code amount
-
-        // if coupon code is not undefined && not empty
-        if(couponCode!=undefined && couponCode!='' && couponCode!=' '){
-            console.log(couponCode);
-
-            firebase.database().ref().child('promotions/cart')
-            .orderByChild('promoCode')
-            .startAt(couponCode)
-            .endAt(couponCode)
-            .once('value', function(snapshot) {
-                $timeout(function(){
-                    if(snapshot.val()!=null){
-                        console.log(snapshot.val());
-                        verifyPromoCode(snapshot.val());
-                    }else{
-                        alert("Enter a valid promo code, not found");
-                    }
-                });
-            });
-        }else{
-            alert("Please enter a coupon code!");
-        }
-    }
-
-    function verifyPromoCode(promoData) {
-
-        var promotionCodeInfo = "";
-        var city = locationInfo;
-        var applicableCities = null;
-        var applicableVendors = null;
-
-        var isValidPromo = false;
-
-        console.log('booking details', $scope.bookingDetail);
-        var bookingDetails = $scope.bookingDetail;
-
-        console.log('city', city);
-
-        angular.forEach(promoData, function(promotionValue, key){
-            promotionCodeInfo = promotionValue;
-            applicableCities = promotionCodeInfo.applicableCities;
-            applicableVendors = promotionCodeInfo.applicableVendors;
-        });
-
-        console.log('promotionCodeInfo', promotionCodeInfo);
-
-
-        var today = (new Date).getTime();
-        console.log(today ,promotionCodeInfo.startDate, promotionCodeInfo.endDate);
-
-        // check if the promo code is active
-        // Note +86400000 because the endate entered is 12 AM. the code should continue till the end of the day
-        if(today > promotionCodeInfo.startDate && today < (promotionCodeInfo.endDate+86400000)){
-            console.log("promo code is active");
-            // check if the promo code is appicable to the user selected city
-            console.log('applicableCities',applicableCities);
-            if(applicableCities!= undefined || applicableCities!=null){
-                angular.forEach(applicableCities, function(city, key){
-                    console.log(city, key);
-                    if(city.cityName==locationInfo.cityName){
-                        isValidPromo = true;
-                    }
-                });
-
-                if(!isValidPromo){
-                    alert("Sorry the promo code you entered is not applicable to your current city.");
-                    return;
-                }else{
-                    console.log("valid for city");
-                }
-            } // if applicableCities
-
-            // check if the promo code is appicable to the user selected vendor
-            console.log('applicableVendors', applicableVendors);
-            if(applicableVendors!= undefined || applicableVendors!=null){
-                angular.forEach(applicableVendors, function(vendor, vendorKey){
-                    // compare with key because key is unique
-                    console.log(vendor.vendorId, $scope.bookingDetail.vendorId);
-                    if(vendor.vendorId==$scope.bookingDetail.vendorId){
-                        isValidPromo = true;
-                    }else{
-                        isValidPromo = false;
-                    }
-                });
-
-                if(!isValidPromo){
-                    alert("Sorry the promo code you entered is not applicable to this vendor.");
-                    return;
-                }else{
-                    console.log("valid for vendor");
-                }
-            } // if applicableVendors
-        }else{
-            isValidPromo = false;
-            alert("Not a valid promo code, not active");
-            return;
-        } // is active
-
-
-        // if promo code is valid for city or vendor 
-        if(isValidPromo) {
-            // alert("promo code is valid");
-            // check if min cart value is applicable
-            if(bookingDetails.finalAmount>=promotionCodeInfo.minCartAmount){
-                // continue with booking
-                console.log("promo code is valid, apply promo code");
-            }else{
-                // min cart value does not meet required condition
-                alert("Your cart value is less than min cart value ("+promotionCodeInfo.minCartAmount+")");
-            }
-
-        }else{
-            alert("Not a valid promo code");
-        }// isValidPromo
-    }
-
-    $scope.confirmedBooking = function(bookingDetails){
-    	console.log($scope.bookingDetail, $scope.paidFromWallet, $scope.amountPayable, $scope.customer_price);
-    	$scope.bookingDetail.amountPayable = $scope.amountPayable;
-    	$scope.bookingDetail.walletAmount = $scope.paidFromWallet;
-    	console.log($scope.bookingDetail);
-    	var loggedIn = checkLocalStorage('uid');
-    	console.log(loggedIn);
-    	// check user is logged in or not
-    	if((!loggedIn)){
-    		localStorage.setItem('confirmation', true);
-    		$state.go('login');
-    	}
-    	else{
-			// check the upcoming booking regarding to an user  ///
-			firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active').once	('value',function(response){
-				if(!response.val()){
-					var bookingId = firebase.database().ref('bookings').push().key;
-					bookingDetails['bookingId']=bookingId;
-
-					// if wallet amount used for booking by user
-
-					if(bookingDetails.walletAmount != 0){
-						var transId = firebase.database().ref('userWallet/data/' + localStorage.getItem('uid')+'/Trans/').push().key;
-						bookingDetails.walletTransId = transId;
-						firebase.database().ref('userWallet/data/' + localStorage.getItem('uid')+'/Trans/'+transId)
-							.set({
-								'type':'debit',
-								'amount':bookingDetails.walletAmount,
-								'TransId':transId,
-								'BookingId':bookingId,
-								'usedAt':new Date().getTime()
-							},function(response) {
-								console.log("trans id entry in user wallet", JSON.stringify(response));
-						})
-
-						var newAmount = $scope.userWalletInfo.amount - bookingDetails.walletAmount
-						firebase.database().ref('userWallet/data/' + localStorage.getItem('uid'))
-							.update({'amount':newAmount})
-
-						firebase.database().ref('bookings/'+bookingId)
-							.set(bookingDetails,function(response) {
-								console.log("booking", JSON.stringify(response));
-								if(response == null){
-									firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active').push({
-										'bookingId':bookingId
-									},function(response) {
-										console.log("booking user", JSON.stringify(response));
-									})
-									firebase.database().ref('cityBookings/'+locationInfo.cityId+'/'+window.localStorage.getItem("vendorId"))
-										.push({
-											'bookingId':bookingId
-
-										},function(response) {
-											console.log("booking city", JSON.stringify(response));
-										})
-									firebase.database().ref('vendorBookings/'+window.localStorage.getItem("vendorId")+'/active')
-										.push({
-											'bookingId':bookingId
-
-										},function(response) {
-											console.log("booking vendor", JSON.stringify(response));
-										})
-									alert('Booking confirmed!');
-									$state.go('bill');
-								}
-								else{
-									alert('Try again!');
-								}
-							})
-					}
-                    else{
-						firebase.database().ref('bookings/'+bookingId)
-							.set(bookingDetails,function(response) {
-								console.log("booking", JSON.stringify(response));
-								if(response == null){
-									firebase.database().ref('userBookings/'+localStorage.getItem('uid')+'/active').push({
-										'bookingId':bookingId
-									},function(response) {
-										console.log("booking user", JSON.stringify(response));
-									})
-									firebase.database().ref('cityBookings/'+locationInfo.cityId+'/'+window.localStorage.getItem("vendorId"))
-										.push({
-											'bookingId':bookingId
-
-										},function(response) {
-											console.log("booking city", JSON.stringify(response));
-										})
-									firebase.database().ref('vendorBookings/'+window.localStorage.getItem("vendorId")+'/active')
-										.push({
-											'bookingId':bookingId
-
-										},function(response) {
-											console.log("booking vendor", JSON.stringify(response));
-										})
-									alert('Booking confirmed!');
-									$state.go('bill');
-								}
-								else{
-									alert('Try again!');
-								}
-							})
-					}
-
+		$scope.insertBooking = function(bookingDetails){
+			console.log(bookingDetails);
+			var updates = {};
+			if(bookingDetails.walletAmount > 0){
+				console.log('yes');
+				var walletTransactionId = db.ref('userWallet/data/' + userId+'/debit').push().key;
+				bookingDetails.walletTransId = walletTransactionId;
+				console.log(walletTransactionId);
+				var transactionDetail = {
+					'amount': bookingDetails.walletAmount,
+					'transactionId': walletTransactionId,
+					'bookingId': bookingDetails.bookingId,
+					'usedAt': bookingDetails.createdDate
 				}
-				else{
-					alert('Availed your previous booking first!')
+				updates['userWallet/data/' + userId+'/debit/'+walletTransactionId] = transactionDetail;
+			}
+			if(bookingDetails.discountAmount > 0){
+				console.log(bookingDetails.discountAmount);
+				var walletTransactionId1 = db.ref('userWallet/data/' + userId+'/discountCoupons').push().key;
+				bookingDetails.discountTransId = walletTransactionId1;
+				bookingDetails.couponUsed = couponForBooking;
+				var transactionDetail1 = {
+					'amount': bookingDetails.discountAmount,
+					'transactionId': walletTransactionId1,
+					'bookingId': bookingDetails.bookingId,
+					'usedAt': bookingDetails.createdDate,
+					'couponCode': couponForBooking
 				}
+				updates['userWallet/data/' + userId+'/discountCoupons/'+walletTransactionId1] = transactionDetail1;
+			}
+			updates['bookings/'+bookingDetails.bookingId] = bookingDetails;
+			updates['userBookings/'+userId+'/active/'+bookingDetails.bookingId] = true;
+			updates['cityBookings/'+locationInfo.cityId+'/'+vendorId+'/'+bookingDetails.bookingId] = true;
+			updates['vendorBookings/'+vendorId+'/active/'+bookingDetails.bookingId] = true;
+			console.log(updates);
+			db.ref().update(updates).then(function(){
+				$ionicLoading.hide();
+				window.localStorage['currentBooking'] = JSON.stringify(bookingDetails);
+				$state.go('bill');
+				console.log('booking successful');
 			});
-    	}
-    };
+		}
+	}
 });

@@ -137,7 +137,6 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
     $scope.timeTobe = (new Date().getHours()+1)+':'+new Date().getMinutes();
 
     $scope.currentHour = new Date().getHours()+1;
-
     $scope.thisBookingTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
     $scope.checkSlots($scope.currentHour);
   };

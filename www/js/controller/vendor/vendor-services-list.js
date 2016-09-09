@@ -1,7 +1,6 @@
 app
-.controller('VendorServicesListCtrl',['$scope', '$ionicSlideBoxDelegate', '$ionicScrollDelegate', '$timeout','$stateParams',
-    function($scope, $ionicSlideBoxDelegate, $ionicScrollDelegate, $timeout,$stateParams) {
-
+.controller('VendorServicesListCtrl', function($scope, $ionicSlideBoxDelegate, $ionicScrollDelegate,
+                                               $timeout,$stateParams,$ionicHistory) {
 
 
         firebase.database().ref('menu/'+$stateParams.vendor_id + '/services/').once('value',function(response){
@@ -29,10 +28,6 @@ app
                 }
 
             });
-
-           console.log("scroller data", $scope.topCat);
-            console.log("cat detailll",JSON.stringify($scope.serviceList,null, 2));
-
             // var str = JSON.stringify(response.val().menu, null, 2);
         });
 
@@ -483,4 +478,4 @@ app
    //     }
    //
    // ];
-}])
+})

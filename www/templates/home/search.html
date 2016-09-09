@@ -10,12 +10,18 @@
       </label>
    </div>
    <ion-content>
-      <ion-list class="servicelist">
-         <ion-item ng-repeat="service in suggestedServices" class="vendorservicelist">
+      <ion-list class="servicelist" ng-show="suggestedServices">
+         <ion-item ng-repeat="service in suggestedServices" class="vendorservicelist"
+                   ng-click="vendorList(service.value.service_id)">
             {{service.value.service_name}}
             <div class="vendororservice" >
                {{service.type}}
             </div>
+         </ion-item>
+      </ion-list>
+      <ion-list class="servicelist" ng-hide="suggestedServices.length>0">
+         <ion-item class="vendorservicelist">
+            So, no services are founded regarding to your search!
          </ion-item>
       </ion-list>
    </ion-content>

@@ -161,7 +161,7 @@ app
 
 	//State for vendorList
 	$stateProvider.state('vendorList', {
-		url: '/vendorList',
+		url: '/vendorList/:serviceId',
 		cache:false,
 		templateUrl: 'templates/vendor/vendorList.html',
 		controller: 'VendorListCtrl'

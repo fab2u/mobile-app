@@ -1,22 +1,46 @@
 app.controller('VendorListCtrl',
-    function($scope,$ionicHistory,$state,$stateParams,$ionicLoading){
+    function($scope,$ionicHistory,$state,$stateParams,$ionicLoading,$http){
 
-    $scope.show = function() {
-        $ionicLoading.show({
+    var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+
+        $scope.service_id = $stateParams.serviceId;
+
+        if(localStorage.getItem('uid') == ''||localStorage.getItem('uid') ==null||localStorage.getItem('uid')==undefined){
+            $scope.uid = '1';
+        }
+        else{
+            $scope.uid = localStorage.getItem('uid');
+        }
+
+        $scope.vendorList = function(){
+                $http.post("http://139.162.31.204/search_services?services="+$stateParams.serviceId+
+                    "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender=''&user_lat=''&user_lon=''")
+                    .then(function (response) {
+                        $scope.vendorList = response.data.results;
+                        $ionicLoading.hide();
+                        console.log(JSON.stringify(response.data.results)) ;
+
+                    });
+
+        };
+        $scope.vendorList();
+
+        $scope.show = function() {
+           $ionicLoading.show({
             template: 'Loading...'
-        })
-    };
-    $scope.show();
+           })
+        };
+        $scope.show();
 
-    firebase.database().ref('vendors/'+JSON.parse(window.localStorage['selectedLocation']).cityId).once('value',function(response){
-        $scope.vendor_list = response.val();
-        if($scope.vendor_list){
-            $ionicLoading.hide();
-        }
-        else if(!$scope.vendor_list){
-            $ionicLoading.hide();
-        }
-    });
+    // firebase.database().ref('vendors/'+JSON.parse(window.localStorage['selectedLocation']).cityId).once('value',function(response){
+    //     $scope.vendor_list = response.val();
+    //     if($scope.vendor_list){
+    //         $ionicLoading.hide();
+    //     }
+    //     else if(!$scope.vendor_list){
+    //         $ionicLoading.hide();
+    //     }
+    // });
 
 
 
@@ -47,7 +71,7 @@ app.controller('VendorListCtrl',
       return new Array(rating);   //ng-repeat will run as many times as size of array
    };
 
-   $scope.vendor_detail = function(id){
+   $scope.vendor_menu = function(id){
        $state.go('vendorMenu',{vendor_id:id});
-   }
+   };
 })

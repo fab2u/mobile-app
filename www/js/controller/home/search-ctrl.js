@@ -4,12 +4,15 @@ app.controller('SearchCtrl', function($state, $scope,$http) {
 
     $scope.searchServices = function(){
         console.log($scope.searchQuery)
-        $http.post("http://139.162.31.204/suggest?search_query="+$scope.searchQuery+"&typing_word="+$scope.searchQuery)
-            .then(function (response) {
-               console.log(JSON.stringify(response.data.suggestions)) ;
+        if($scope.searchQuery != ''){
+            $http.post("http://139.162.31.204/suggest?search_query="+$scope.searchQuery+"&typing_word="+$scope.searchQuery)
+                .then(function (response) {
+                    console.log(JSON.stringify(response)) ;
 
-                $scope.suggestedServices = response.data.suggestions;
-            });
+                    $scope.suggestedServices = response.data.suggestions;
+                });
+        }
+
     };
 
 
@@ -28,4 +31,9 @@ app.controller('SearchCtrl', function($state, $scope,$http) {
     $scope.home = function(){
         $state.go('app.home');
     };
+
+    $scope.vendorList = function(serviceId){
+        console.log(serviceId);
+        $state.go('vendorList',{'serviceId':serviceId})
+    }
 });

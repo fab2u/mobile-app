@@ -1,9 +1,13 @@
 app
-    .controller('VendorServicesListCtrl',['$scope', '$ionicSlideBoxDelegate', '$ionicScrollDelegate',
-        '$timeout','$stateParams','$rootScope','$state','$ionicLoading',
-        function($scope, $ionicSlideBoxDelegate, $ionicScrollDelegate, $timeout,$stateParams,$rootScope,$state,$ionicLoading) {
+    .controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate, $ionicScrollDelegate,
+                                                  $timeout,$stateParams,$rootScope,$state,$ionicLoading,$ionicHistory) {
 
-            $scope.total_fabtu=0;
+        console.log($ionicHistory.backView())
+        console.log($ionicHistory.backView().stateName)
+        console.log($ionicHistory.backView().stateParams.serviceId)
+
+
+        $scope.total_fabtu=0;
             $scope.total_original=0;
             $scope.total_customer = 0;
 
@@ -209,7 +213,7 @@ app
 
             // handel back button
             $scope.backButton = function() {
-              $state.go('vendorList');
+              $state.go('vendorList',{'serviceId':$ionicHistory.backView().stateParams.serviceId});
                 // TODO
             };
 
@@ -438,4 +442,4 @@ app
                 }
             };
 
-        }])
+  })

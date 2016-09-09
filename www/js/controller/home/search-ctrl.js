@@ -1,6 +1,16 @@
 app.controller('SearchCtrl', function($state, $scope,$http) {
 
     $scope.searchQuery = '';
+    $scope.serviceIds = [];
+
+    // window.localStorage.setItem("serviceId",'');
+    //
+    // localStorage.setItem('slectedItems','');
+    // localStorage.setItem('catItems', '');
+
+    delete window.localStorage.slectedItems;
+    delete window.localStorage.catItems;
+    delete window.localStorage.serviceId;
 
     $scope.searchServices = function(){
         console.log($scope.searchQuery)
@@ -34,6 +44,9 @@ app.controller('SearchCtrl', function($state, $scope,$http) {
 
     $scope.vendorList = function(serviceId){
         console.log(serviceId);
-        $state.go('vendorList',{'serviceId':serviceId})
+        $scope.serviceIds.push(serviceId);
+        window.localStorage.setItem("serviceId",$scope.serviceIds );
+
+        $state.go('vendorList')
     }
 });

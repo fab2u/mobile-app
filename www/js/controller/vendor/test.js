@@ -2,14 +2,9 @@ app
     .controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate, $ionicScrollDelegate,
                                                   $timeout,$stateParams,$rootScope,$state,$ionicLoading,$ionicHistory) {
 
-        console.log($ionicHistory.backView())
-        console.log($ionicHistory.backView().stateName)
-        console.log($ionicHistory.backView().stateParams.serviceId)
-
-
         $scope.total_fabtu=0;
-            $scope.total_original=0;
-            $scope.total_customer = 0;
+        $scope.total_original=0;
+        $scope.total_customer = 0;
 
 
             $scope.show = function() {
@@ -213,7 +208,7 @@ app
 
             // handel back button
             $scope.backButton = function() {
-              $state.go('vendorList',{'serviceId':$ionicHistory.backView().stateParams.serviceId});
+              $state.go('vendorList');
                 // TODO
             };
 
@@ -256,37 +251,37 @@ app
                     "serviceName": "Hair Cut",
                     "serviceid": "1005"
                 },
-                "1007":{
+                "1006":{
                     "serviceName": "Hair Extension",
+                    "serviceid": "1006"
+                },
+                "1007":{
+                    "serviceName": "Head Massage",
                     "serviceid": "1007"
                 },
                 "1008":{
-                    "serviceName": "Head Massage",
+                    "serviceName": "Hair Spa",
                     "serviceid": "1008"
                 },
                 "1009":{
-                    "serviceName": "Hair Spa",
+                    "serviceName": "Hair Transplant",
                     "serviceid": "1009"
                 },
                 "1010":{
-                    "serviceName": "Hair Transplant",
+                    "serviceName": "Hair Wash",
                     "serviceid": "1010"
                 },
                 "1011":{
-                    "serviceName": "Hair Wash",
+                    "serviceName": "Other Hair Treatments",
                     "serviceid": "1011"
                 },
                 "1012":{
-                    "serviceName": "Other Hair Treatments",
+                    "serviceName": "Straightening/ Perming",
                     "serviceid": "1012"
                 },
                 "1013":{
-                    "serviceName": "Straightening/ Perming",
-                    "serviceid": "1013"
-                },
-                "1014":{
                     "serviceName": "Anti HairFall Treatment",
-                    "serviceid": "1014"
+                    "serviceid": "1013"
                 },
                 "2001":{
                     "serviceName": "Face Bleach",
@@ -381,7 +376,7 @@ app
                     "serviceid": "4004"
                 },
                 "4005":{
-                    "serviceName": "Boby Wrap",
+                    "serviceName": "Body Wrap",
                     "serviceid": "4005"
                 },
                 "4006":{

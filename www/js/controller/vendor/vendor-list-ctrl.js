@@ -1,10 +1,10 @@
 app.controller('VendorListCtrl',
     function($scope,$ionicHistory,$state,$stateParams,$ionicLoading,$http){
 
-    var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
-
+        var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+        $scope.serviceIds = []
+        var serviceId = window.localStorage.getItem("serviceId")
         $scope.service_id = $stateParams.serviceId;
-
         if(localStorage.getItem('uid') == ''||localStorage.getItem('uid') ==null||localStorage.getItem('uid')==undefined){
             $scope.uid = '1';
         }
@@ -12,15 +12,38 @@ app.controller('VendorListCtrl',
             $scope.uid = localStorage.getItem('uid');
         }
 
+        if(localStorage.getItem('catItems')){
+            angular.forEach(JSON.parse(localStorage.getItem('catItems')), function(value, key) {
+                $scope.serviceIds.push(value.id);
+            })
+        }
+
+
+        console.log($scope.serviceIds)
+
+
         $scope.vendorList = function(){
-                $http.post("http://139.162.31.204/search_services?services="+$stateParams.serviceId+
+            if($scope.serviceIds.length>0){
+                var serviceIdList = $scope.serviceIds.join();
+                $http.post("http://139.162.31.204/search_services?services="+$scope.serviceIds+
                     "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender=''&user_lat=''&user_lon=''")
                     .then(function (response) {
                         $scope.vendorList = response.data.results;
                         $ionicLoading.hide();
-                        console.log(JSON.stringify(response.data.results)) ;
+                        console.log(JSON.stringify(response)) ;
 
                     });
+            }
+            else{
+                $http.post("http://139.162.31.204/search_services?services="+serviceId+
+                    "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender=''&user_lat=''&user_lon=''")
+                    .then(function (response) {
+                        $scope.vendorList = response.data.results;
+                        $ionicLoading.hide();
+                        console.log(JSON.stringify(response)) ;
+
+                    });
+            }
 
         };
         $scope.vendorList();
@@ -71,7 +94,7 @@ app.controller('VendorListCtrl',
       return new Array(rating);   //ng-repeat will run as many times as size of array
    };
 
-   $scope.vendor_menu = function(id){
+   $scope.vendor_detail = function(id){
        $state.go('vendorMenu',{vendor_id:id});
-   };
+   }
 })

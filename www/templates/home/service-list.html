@@ -34,9 +34,9 @@
                 <ion-slide  ng-repeat="service in services">
                     <ion-list>
                         <ion-item ng-repeat="serviceItem in service.name"
-                                  class="item-thumbnail-right list_view" ng-click="selectItem($index,serviceItem)">
-                          {{serviceItem}}
-                                <img src="img/home/new-slider/square-blue.png" class="img_icon" ng-show="selectedServices[serviceItem]">
+                                  class="item-thumbnail-right list_view" ng-click="selectItem($index,serviceItem.name,serviceItem.id)">
+                          {{serviceItem.name}}
+                                <img src="img/home/new-slider/square-blue.png" class="img_icon" ng-show="selectedServices[serviceItem.name]">
                         </ion-item>
                     </ion-list>
                 </ion-slide>

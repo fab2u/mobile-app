@@ -1,5 +1,5 @@
-app.controller("SignupCtrl", ['$scope', '$http', '$state','$cordovaDevice','$ionicLoading','$ionicPopup','$timeout','$rootScope',
-    function($scope, $http,$state, $cordovaDevice,$ionicLoading,$ionicPopup,$timeout,$rootScope){
+app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ionicLoading,$ionicPopup,
+                                      $timeout,$rootScope){
 
 
         // deviceInformation for Registered user
@@ -207,4 +207,4 @@ app.controller("SignupCtrl", ['$scope', '$http', '$state','$cordovaDevice','$ion
             }
         }, 1000);
     }
-}]);
+});

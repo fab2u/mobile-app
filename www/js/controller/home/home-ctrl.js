@@ -2,7 +2,11 @@ app
 .controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading) {
 
 	$scope.fabSelected = false;
-
+	// window.localStorage.setItem("serviceId",'');
+	delete window.localStorage.slectedItems;
+	delete window.localStorage.catItems;
+	delete window.localStorage.serviceId;
+	
 	$scope.selectMain = function(val){
 		if(val == 1){
 			$scope.fabSelected = false;
@@ -29,16 +33,24 @@ app
 			$state.go('salonServices');
 		}
 		else if(cat == 'Spa') {
-			$state.go('vendorList',{'serviceId':'8001'});
+			window.localStorage.setItem("serviceId",'8001');
+
+			$state.go('vendorList');
 		}
 		else if(cat == 'Fitness') {
-			$state.go('vendorList',{'serviceId':'9001'});
+			window.localStorage.setItem("serviceId",'9001');
+
+			$state.go('vendorList');
 		}
 		else if(cat == 'Wedding & Party') {
-			$state.go('vendorList',{'serviceId':'1101'});
+			window.localStorage.setItem("serviceId",'1101');
+
+			$state.go('vendorList');
 		}
 		else if(cat == 'Tattoo') {
-			$state.go('vendorList',{'serviceId':'1201'});
+			window.localStorage.setItem("serviceId",'1201');
+
+			$state.go('vendorList');
 		}
 	};
 });

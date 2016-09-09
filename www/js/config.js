@@ -105,6 +105,7 @@ app
 	//State for service list
 	$stateProvider.state('salonServices', {
 		url: '/salonServices',
+		cache:false,
 		templateUrl: 'templates/home/service-list.html',
 		controller: 'ServiceListCtrl'
 	});
@@ -161,7 +162,7 @@ app
 
 	//State for vendorList
 	$stateProvider.state('vendorList', {
-		url: '/vendorList/:serviceId',
+		url: '/vendorList',
 		cache:false,
 		templateUrl: 'templates/vendor/vendorList.html',
 		controller: 'VendorListCtrl'

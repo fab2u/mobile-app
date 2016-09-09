@@ -14,8 +14,8 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading){
 $scope.getActiveBookingId = function () {
 	firebase.database().ref('userBookings/' + localStorage.getItem('uid') + '/active').once('value', function (response) {
 		angular.forEach(response.val(), function (value, key) {
-			console.log(value.bookingId, key)
-			$scope.activeBookingId = value.bookingId;
+			console.log(value, key)
+			$scope.activeBookingId = key;
 
 		});
 	})
@@ -29,25 +29,26 @@ $scope.getActiveBookingId = function () {
 		firebase.database().ref('userBookings/'+localStorage.getItem('uid')).once('value', function (response) {
 			angular.forEach(response.val(), function (value, key) {
 				angular.forEach(value, function (value, key) {
-					$scope.bookingIds.push(value.bookingId)
+					$scope.bookingIds.push(key)
 				});
 			});
 			for (var i = 0; i < $scope.bookingIds.length; i++) {
 				firebase.database().ref('bookings/' + $scope.bookingIds[i]).once('value', function (response) {
 					if (response.val()) {
 						$scope.allBookings.push(response.val())
+						$ionicLoading.hide();
+						firebase.database().ref('vendors/' + locationInfo.cityId + '/' +response.val().vendorId).once
+						('value', function (response) {
+							$scope.bookingAddress = response.val().address
+							$ionicLoading.hide();
+						});
+
 					}
 				});
 			}
-			firebase.database().ref('vendors/' + locationInfo.cityId + '/' + window.localStorage.getItem("vendorId")).once
-			('value', function (response) {
-				$scope.bookingAddress = response.val().address
-				$ionicLoading.hide();
-			});
+
 		})
-	};
-
-
+	}
 	$scope.bookingInfo();
 
 	$scope.go_home = function () {

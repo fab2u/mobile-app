@@ -53,6 +53,16 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
     console.log("signUp function called!")
         firebase.auth().createUserWithEmailAndPassword($scope.user.email, $scope.user.password).then(function(data){
             console.log("uid",data.uid);
+            if(data.uid){
+                firebase.database().ref('users/data/'+data.uid)
+                    .push($scope.user,function(response) {
+                        console.log("user pushed", JSON.stringify(response));
+
+                        if(response == null){
+                            $scope.sendVerification();
+                        }
+                    })
+            }
         })
             .catch(function(error) {
             // Handle Errors here.

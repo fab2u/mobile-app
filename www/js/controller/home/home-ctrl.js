@@ -6,7 +6,7 @@ app
 	delete window.localStorage.slectedItems;
 	delete window.localStorage.catItems;
 	delete window.localStorage.serviceId;
-	
+
 	$scope.selectMain = function(val){
 		if(val == 1){
 			$scope.fabSelected = false;

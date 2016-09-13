@@ -32,10 +32,10 @@
     				</div>
     			</div>
     			<ion-scroll  direction="y"  has-bouncing="false" style="height:160px;">
-                	<div class="row allTransactions" ng-repeat="transaction in userWalletInfo.Trans">
+                	<div class="row allTransactions" ng-repeat="transaction in userWalletInfo.discountCoupons">
                     	<div class="col col-60 detail">
         					<!--<p>{{transaction.name}}({{transaction.BookingId}})<p>-->
-        					<p>{{transaction.BookingId}}<p>
+        					<p>{{transaction.bookingId}}<p>
         					<!--<p><span style="color:#0DD1D1">Ref: </span>|-->
 							{{transaction.usedAt| date:"h:mma"}}</p>
         				</div>

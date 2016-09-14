@@ -51,26 +51,26 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
 
 
     $scope.signup = function(){
-    console.log("signUp function called!")
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
         firebase.auth().createUserWithEmailAndPassword($scope.user.email, $scope.user.password).then(function(data){
             console.log("uid",data.uid);
-            if(data.uid){
-                firebase.database().ref('users/data/'+data.uid)
-                    .push($scope.user,function(response) {
-                        console.log("user pushed", JSON.stringify(response));
+            $scope.uid = data.uid;
+            if($scope.uid){
+                $scope.sendVerification();
+                $ionicLoading.hide();
 
-                        if(response == null){
-
-                            $scope.sendVerification();
-                        }
-                    })
             }
         })
             .catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-            console.log("errorCode",errorCode,errorMessage)
+                alert(errorMessage)
+                $ionicLoading.hide();
+
+                console.log("errorCode",errorCode,errorMessage)
             // ...
         })
 
@@ -117,39 +117,46 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
         $ionicLoading.show({
             template: 'Loading...'
         });
-
         $http({
             url: 'http://BULKSMS.FLYFOTSERVICES.COM/unified.php?usr=28221&pwd=password1&ph=' + $scope.user.mobile_num + '&sndr=IAMFAB&text=Greetings.' + $scope.generatedCode + ' is your FAB2U verification code&type=json ',
             method: 'POST',
             "async": true,
-            "crossDomain": true,
-            "headers": {"Access-Control-Allow-Origin": "*"}
+            "crossDomain": true
             // params: {
             //     mobno: $scope.user.mobile_num
             // }
-        },function (error) {
-            console.log("error",error);
+        })
+        $ionicLoading.hide();
+        $scope.otp = $scope.generatedCode;
+        storedOTP.push($scope.otp);
+        window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
+        $ionicPopup.alert({
+            title: 'Verification Code Sent',
+            template: 'We have sent a verification code to your registered mobile number'
+        }).then(function(){
+            $scope.showOTPfield = true;
+            $scope.showPopup();
         })
         // }).success(function(response){
         //     $ionicLoading.hide();
         //     console.log(response);
-            // if(response.StatusCode == 200){
-            //     $scope.otp = response.OTP;
-            //     storedOTP.push($scope.otp);
-            //     window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
-            //     $ionicPopup.alert({
-            //         title: 'Verification Code Sent',
-            //         template: 'We have sent a verification code to your registered mobile number'
-            //     }).then(function(){
-            //         $scope.showOTPfield = true;
-            //         $scope.showPopup();
-            //     })
-            // } else {
-            //     $ionicPopup.alert({
-            //         title: 'Verification Code not sent',
-            //         template: 'An error occurred. Please try again later.'
-            //     });
-            // }
+        //     if(response.StatusCode == 200){
+        //         $scope.otp = response.OTP;
+        //         storedOTP.push($scope.otp);
+        //         window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
+        //         $ionicPopup.alert({
+        //             title: 'Verification Code Sent',
+        //             template: 'We have sent a verification code to your registered mobile number'
+        //         }).then(function(){
+        //             $scope.showOTPfield = true;
+        //             $scope.showPopup();
+        //         })
+        //     } else {
+        //         $ionicPopup.alert({
+        //             title: 'Verification Code not sent',
+        //             template: 'An error occurred. Please try again later.'
+        //         });
+        //     }
         // })
     };
     $scope.showPopup = function() {
@@ -200,24 +207,43 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                             email: $scope.user.email,
                             mobileNum: $scope.user.mobile_num,
                             referralCode: $scope.user.referral_code,
-                            deviceId: $cordovaDevice.getDevice().uuid
+                            gender: $scope.user.gender,
+                            mobileNumFlag:'true'
+                            // deviceId: $cordovaDevice.getDevice().uuid
                         }
-                        $http.post("http://139.162.27.64/api/addUser", userData)
-                           .success(function(response){
-                              if(response.StatusCode == 200){
-                                 alert(response.Message);
-                              }
-                              else if(response.StatusCode == 400){
-                                  alert(response.Message);
-                              }
-                              else{
-                                 alert('some thing went wrong!');
-                              }
-                           })
-                           .error(function(response){
-                              console.log("error");
-                              console.log(response);
-                         });
+                        firebase.database().ref('users/data/'+$scope.uid)
+                            .set(userData,function(response) {
+                                console.log("user pushed", JSON.stringify(response));
+                                if(response == null){
+                                    window.localStorage.setItem("name", $scope.user.name);
+                                    window.localStorage.setItem("mobileNumber", $scope.user.mobile_num);
+                                    window.localStorage.setItem("email", $scope.user.email);
+                                    window.localStorage.setItem("uid", $scope.uid);
+                                  alert('Registration successfully completed!')
+                                }
+                                else{
+                                    alert('Try again!');
+                                }
+                            })
+
+
+
+                        // $http.post("http://139.162.27.64/api/addUser", userData)
+                        //    .success(function(response){
+                        //       if(response.StatusCode == 200){
+                        //          alert(response.Message);
+                        //       }
+                        //       else if(response.StatusCode == 400){
+                        //           alert(response.Message);
+                        //       }
+                        //       else{
+                        //          alert('some thing went wrong!');
+                        //       }
+                        //    })
+                        //    .error(function(response){
+                        //       console.log("error");
+                        //       console.log(response);
+                        //  });
                     })
 
             }
@@ -230,6 +256,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                     $scope.newOtp = {
                         code: ''
                     }
+                    $scope.showPopup();
                 })
             }
         }, 1000);

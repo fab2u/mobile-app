@@ -2,6 +2,23 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                                       $timeout,$rootScope){
     $scope.generatedCode = '';
 
+    console.log(ionic.Platform.isAndroid(),ionic.Platform.isIPad(),ionic.Platform.isIOS())
+
+    if((ionic.Platform.isIOS() == true)|| (ionic.Platform.isIPad() == true)||(ionic.Platform.isAndroid() ==true)){
+        console.log("if")
+        firebase.database().ref('deviceInformation/Registered/'+$cordovaDevice.getDevice().uuid).once('value',function(response){
+            console.log("device_list",JSON.stringify(response.val().registeredUsers));
+            if(response.val().registeredUsers){
+                $scope.user_device_register = true;
+            }
+            else{
+                $scope.user_device_register = false;
+            }
+        });
+    }
+    else{
+        console.log("else")
+    }
 
     // deviceInformation for Registered user
         // firebase.database().ref('deviceInformation/Registered/'+$cordovaDevice.getDevice().uuid).once('value',function(response){
@@ -208,8 +225,8 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                             mobileNum: $scope.user.mobile_num,
                             referralCode: $scope.user.referral_code,
                             gender: $scope.user.gender,
-                            mobileNumFlag:'true'
-                            // deviceId: $cordovaDevice.getDevice().uuid
+                            mobileNumFlag:'true',
+                            deviceId: $cordovaDevice.getDevice().uuid
                         }
                         firebase.database().ref('users/data/'+$scope.uid)
                             .set(userData,function(response) {

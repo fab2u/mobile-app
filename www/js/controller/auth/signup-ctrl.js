@@ -2,10 +2,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                                       $timeout,$rootScope){
     $scope.generatedCode = '';
 
-    console.log(ionic.Platform.isAndroid(),ionic.Platform.isIPad(),ionic.Platform.isIOS())
-
     if((ionic.Platform.isIOS() == true)|| (ionic.Platform.isIPad() == true)||(ionic.Platform.isAndroid() ==true)){
-        console.log("if")
         firebase.database().ref('deviceInformation/Registered/'+$cordovaDevice.getDevice().uuid).once('value',function(response){
             console.log("device_list",JSON.stringify(response.val().registeredUsers));
             if(response.val().registeredUsers){

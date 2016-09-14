@@ -53,11 +53,13 @@
 }
 
 .vendorList .p-fix.card {
-    background-image: url('../../img/vendorImage.jpeg');
+    /*background-image: url('../../img/vendorImage.jpeg');*/
     position: relative;
     border: 1px darkgrey;
     margin: 7px;
     border-radius: 5px;
+    background-repeat: no-repeat;
+    background-size:100% 100%;
 }
 
 .vendorList .p-fix.card .row .c-col-40 {

@@ -89,9 +89,14 @@
 }
 
 #home-page .categories {
+    /*width:96%;*/
+    /*margin:2%;*/
+    /*height:12em;*/
     width:96%;
     margin:2%;
     height:12em;
+    background-repeat: no-repeat;
+    background-size:100% 100%;
 }
 
 #home-page .categories .catDescription {

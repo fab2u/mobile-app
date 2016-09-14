@@ -1,23 +1,24 @@
 <ion-view class="vendorDetails">
 	<ion-content>
 		<div class="vendorImg">
-			<img src ="img/vendorImage.jpeg">
+			<!--<img src ="img/vendorImage.jpeg">-->
+			<img ng-src ="{{vendor_detail.images.main.url}}">
 			<div class="ratingNcategory">
 				<div class="rating">
-					<span ng-repeat="counter in starrating(3) track by $index" class="trueRating">&#9733</span>
-				    <span ng-repeat="counter in starrating(5-3) track by $index" class="remRating">&#9733</span>
+					<span ng-repeat="counter in starrating(vendor_detail.rating) track by $index" class="trueRating">&#9733</span>
+				    <span ng-repeat="counter in starrating(5-vendor_detail.rating) track by $index" class="remRating">&#9733</span>
 			    </div>
 			    <div class="category">
-			    	Platinum
+			    	{{vendor_detail.type}}
 			    </div>
 			</div>
 			<div class="vendorContact">
-				<i class="icon ion-android-call"></i>
+				<i class="icon ion-android-call"><a ng-href="tel:  {{vendor_detail.contactDetails.phone}}"></a></i>
 			</div>
-			<div class="backButton icon ion-chevron-left"></div>
+			<div class="backButton icon ion-chevron-left" ng-click="vendorMenu()"></div>
 			<div class="nameNlandmark">
-				<h4>SAUNDRYA SHREE BEAUTY PARLOUR</h4>
-				<p>In front of Global School</p>
+				<h4>{{vendor_detail.vendorName}}</h4>
+				<p>{{vendor_detail.address.landmark}}</p>
 			</div>
 			<div class="likeOption" ng-click="likeVendor()">
 				<i class="icon ion-ios-heart" ng-class="liked?'likedHeart': 'normalHeart'"></i>
@@ -43,53 +44,59 @@
 			    	<img src ="img/mapImage.jpg">
 			    	<div class="row addressNmap">
 			    		<div class="col col-90 address">
-			    			<p>1-Ch-8, Vigyan Nagar, Harmeet Medical, Kota</p>
+			    			<p>{{vendor_detail.address.address1}},{{vendor_detail.address.address2}}</p>
 			    		</div>
 			    		<div class="col col-10 map">
-			    			<div class="icon ion-ios-location mapButton">
+			    			<div class="icon ion-ios-location mapButton"
+								 ng-click="open_map(vendor_detail.address.latitude,vendor_detail.address.longitude,vendor_detail.address.address1,vendor_detail.address.address2,vendor_detail.vendorName)">
 			    			</div>
 			    		</div>
 			    	</div>
 			    </div>
 			    <div class="row amenities">
-			    	<div class="col col-15" ng-class="isPresent(1)?'available':'notAvailable'">
+			    	<div class="col col-15" ng-class="vendor_detail.amenities.card?'available':'notAvailable'">
 			    		<i class="icon ion-card"></i>
 			    		<p>Card</p>
 			    	</div>
-			    	<div class="col col-15" ng-class="isPresent(2)?'available':'notAvailable'">
+			    	<div class="col col-15" ng-class="vendor_detail.amenities.ac?'available':'notAvailable'">
 			    		<i class="icon ion-laptop"></i>
 			    		<p>AC</p>
 			    	</div>
-			    	<div class="col col-15" ng-class="isPresent(3)?'available':'notAvailable'">
+			    	<div class="col col-15" ng-class="vendor_detail.amenities.parking?'available':'notAvailable'">
 			    		<i class="icon ion-android-car"></i>
 			    		<p>Parking</p>
 			    	</div>
-			    	<div class="col col-15" ng-class="isPresent(4)?'available':'notAvailable'">
+			    	<div class="col col-15" ng-class="vendor_detail.amenities.wifi?'available':'notAvailable'">
 			    		<i class="icon ion-wifi"></i>
 			    		<p>Wifi</p>
 			    	</div>
-			    	<div class="col col-15" ng-class="isPresent(5)?'available':'notAvailable'">
+			    	<div class="col col-15"
+						 ng-class="get_distance('28.4595','77.0266',vendor_detail.address.latitude,vendor_detail.address.longitude,'km')?'available':'notAvailable'">
 			    		<i class="icon ion-ios-location-outline"></i>
-			    		<p>2.5km</p>
+			    		<p>{{dist}}km</p>
 			    	</div>
 			    </div>
-			    <div class="timings" ng-click="showVendorTiming()">
+			    <div class="timings" ng-click="showVendorTiming(vendor_detail.workingHours)">
 			    	<div class="showTimings row">
 			    		<div class="col col-20 clockIcon">
 			    			<i class="icon ion-clock"></i>
 			    		</div>
 			    		<div class="col col-60 workTime">
 			    			WORKING HOURS
-			    			<p>Today open till 8:00 PM</p>
+			    			<p ng-show="today_end_time">Today open till {{today_end_time | date:"h:mma"}}</p>
 			    		</div>
 			    		<div class="col col-20 toggleIcon">
 			    			<i ng-class="!more? 'ion-android-add':'ion-android-remove'"></i>
 			    		</div>
 			    	</div>
 			    	<ion-list ng-show="more">
-			    		<ion-item ng-repeat="item in days" class="timingDetail">
+			    		<ion-item ng-repeat="item in days" class="timingDetail capitalize">
 			    			{{item.name}}
-			    			<span ng-class="time" >{{item.startTime}} - {{item.endTime}}</span>
+			    			<span ng-class="time" ng-repeat="slots in item.Times">
+								<p>
+									{{slots.start | date:"h:mma"}} - {{slots.end | date:"h:mma"}}
+								</p>
+							</span>
 			    		</ion-item>
 			    	</ion-list>
 			    </div>
@@ -114,7 +121,7 @@
 			    	<div class="card ratingCard" ng-repeat="review in reviews">
 			    		<div class="row">
 				    		<div class="col col-20 imgNname">
-				    			<img src="{{review.image}}" class="profilePic">
+				    			<img ng-src="{{review.image}}" class="profilePic">
 				    			<p class="profileName">{{review.name}}</p>
 				    		</div>
 				    		<div class="col col-80 reviewNRating">
@@ -128,7 +135,6 @@
 				    		</div>
 			    		</div>
 			    	</div>
-			 
 			    </div>
 			</ion-slide>
 		</ion-slide-box>
@@ -141,8 +147,8 @@
 			<p>Rate Now</p>
 		</div>
 	  	<div class="row newFooter">
-			<div class="col col-33" id="menu">MENU</div>
-			<div class="col col-66" id="proceed">PROCEED</div>
+			<div class="col col-33" id="menu" ng-click="vendorMenu()">MENU</div>
+			<div class="col col-66" id="proceed" ng-click="cart()">PROCEED</div>
 		</div>
 	</ion-footer-bar>
 </ion-view>

@@ -20,6 +20,7 @@ var app = angular.module('Fab2u', ['ionic', 'ngCordova'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+
   });
 });
 

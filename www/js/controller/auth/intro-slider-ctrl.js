@@ -1,4 +1,5 @@
-app.controller('IntroSliderCtrl', ['$scope', '$ionicSlideBoxDelegate', '$state', '$ionicLoading', '$interval', function($scope, $ionicSlideBoxDelegate, $state, $ionicLoading, $interval) {
+app.controller('IntroSliderCtrl', ['$scope', '$ionicSlideBoxDelegate', '$state', '$ionicLoading', '$interval','$timeout',
+    function($scope, $ionicSlideBoxDelegate, $state, $ionicLoading, $interval,$timeout) {
 
     $scope.pager = true;
     var count = 0;
@@ -79,21 +80,38 @@ app.controller('IntroSliderCtrl', ['$scope', '$ionicSlideBoxDelegate', '$state',
     }
 
     $scope.skipSlide = function() {
-        $ionicSlideBoxDelegate.slide(5);
-    }
+        // $ionicSlideBoxDelegate.slide(5);
+        // $scope.pager = false;
+        // $ionicSlideBoxDelegate.update();
+        // $ionicLoading.show();
+        // stop = $interval(function() {
+        //     window.localStorage.setItem('SkipIntro','true');
+        //     $ionicLoading.hide();
+        //     $interval.cancel(stop);
+        //     $state.go('app.home');
+        //     // }
+        // }, 200);
+        $scope.pager = false;
+        $ionicLoading.show();
+        window.localStorage.setItem('SkipIntro','true');
+        $timeout( function() {
+            $ionicLoading.hide();
+            $state.go('app.home');
+        },500);
+    };
 
     $scope.nextSlide = function() {
-        
             $ionicSlideBoxDelegate.next();
-        
-    }
+    };
 
     $scope.slideChanged = function() {
-        if ($ionicSlideBoxDelegate.currentIndex() == 4){
+        if ($ionicSlideBoxDelegate.currentIndex() == 3){
             $scope.pager = false;
             $ionicSlideBoxDelegate.update();
             $ionicLoading.show();
             stop = $interval(function() {
+                window.localStorage.setItem('SkipIntro','true');
+
                 // if (count == 5) {
                     $ionicLoading.hide();
                     $interval.cancel(stop);

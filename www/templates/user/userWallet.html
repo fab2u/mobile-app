@@ -1,6 +1,6 @@
 <ion-view class="userWallet">
 	<ion-header-bar class="walletHeader"  align-title="center">
-        <i class="button icon-left ion-chevron-left"></i>
+        <i class="button icon-left ion-chevron-left" ng-click="go_home()"></i>
         <h1 class="title">MY WALLET</h1>
     </ion-header-bar>
     <ion-content>
@@ -16,7 +16,7 @@
     				<p>WALLET BALANCE: </p>
     			</div>
     			<div class="col col-30">
-    				&#x20B9; 10000
+    				&#x20B9; {{userWalletInfo.amount}}
     			</div>
     		</div>
     		<div class="walletDescription">
@@ -32,10 +32,12 @@
     				</div>
     			</div>
     			<ion-scroll  direction="y"  has-bouncing="false" style="height:160px;">
-                	<div class="row allTransactions" ng-repeat="transaction in transactions">
+                	<div class="row allTransactions" ng-repeat="transaction in userWalletInfo.discountCoupons">
                     	<div class="col col-60 detail">
-        					<p>{{transaction.name}}({{transaction.id}})<p>
-        					<p><span style="color:#0DD1D1">Ref: </span>| {{transaction.date}}</p>
+        					<!--<p>{{transaction.name}}({{transaction.BookingId}})<p>-->
+        					<p>{{transaction.bookingId}}<p>
+        					<!--<p><span style="color:#0DD1D1">Ref: </span>|-->
+							{{transaction.usedAt| date:"h:mma"}}</p>
         				</div>
         				<div class="col col-40 amount">
         					&#x20B9; {{transaction.amount}}

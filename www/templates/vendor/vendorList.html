@@ -10,7 +10,7 @@
         </a>
     </div>
     <ion-header-bar class="m-navColor">
-    <a href="" class="button icon-left ion-chevron-left button-clear"></a>
+    <a href="" class="button icon-left ion-chevron-left button-clear" ng-click="backButton()"></a>
     <h1 class="title">Select Vendors</h1>
     <div id="toggleButton">
         <label class="toggle">
@@ -22,14 +22,19 @@
     </div>
     </ion-header-bar>
     <ion-content>
-    <!--<div class="p-fix card" ng-repeat="vendor in vendor_list">-->
-    <div ng-repeat="vendors in vendor_list">
-
-        <div class="p-fix card" ng-repeat="vendor in vendors">
+        <div ng-hide="vendorList.length>0">
+        <p class="text-center" style="margin-top: 60px;">
+            No,vendor found for this location.Please select another location!
+        </p>
+        </div>
+        <div class="p-fix card" ng-repeat="vendor in vendorList"
+             ng-click="vendor_menu(vendor.vendor_id)" ng-show="vendorList"
+        style="background-image: url({{vendor.image_url || '../../img/vendorImage.jpeg'}})">
+            <!--profile_img || 'img/dummy.png'-->
         <div class="row">
             <div class="col c-col-40">
-                <h6 class="c-title">Saundarya Shree Beauty Parlour</h6>
-                <p class="c-subtitle">in front of global school</p>
+                <h6 class="c-title">{{vendor.vendor_name}}</h6>
+                <p class="c-subtitle">{{vendor.address.landmark}}</p>
             </div>
             <div class="location-icon-container">
                 <div>
@@ -40,34 +45,35 @@
             </div>
             <div id="section2" class="col c-col-60">
                 <div id="rating">
-                    <i class="icon ion-star active" ng-repeat="counter in starRating(rating) track by $index"></i>
-                    <i class="icon ion-star" ng-repeat="counter in starRating(5-rating) track by $index"></i>
-                    <p>PLATINUM</p>
+                    <i class="icon ion-star active" ng-repeat="counter in starRating(vendor.vendor_rating) track by $index"></i>
+                    <i class="icon ion-star" ng-repeat="counter in starRating(5-vendor.vendor_rating) track by $index"></i>
+                    <p>{{vendor.vendor_type}}</p>
                 </div>
             </div>
             <div id="price-tag" class="col">
-                <div class="row original-price">
-                    <div id="line-through"></div>
+                <div class="row original-price" ng-repeat="(key, value)  in vendor.menu_union" ng-if="key == service_id">
+                    <!--<div id="line-through"></div>-->
+                    <div id="line-through-fb"></div>
                     <span id="one" class="left-price badge">
                         <i>&#x20B9;</i>
-                        30
+                       {{value.min_price}}
                     </span>
                     <span id="two" class="badge">
                         <i>&#x20B9;</i>
-                        30000
+                       {{value.max_price}}
                     </span>
                 </div>
-                <div class="row discounted-price">
-                    <div id="line-through-fb"></div>
-                    <span class="left-price badge">
-                        <i>&#x20B9;</i>
-                        10
-                    </span>
-                    <span class="badge">
-                        <i>&#x20B9;</i>
-                        10000
-                    </span>
-                </div>
+                <!--<div class="row discounted-price">-->
+                    <!--<div id="line-through-fb"></div>-->
+                    <!--<span class="left-price badge">-->
+                        <!--<i>&#x20B9;</i>-->
+                        <!--10-->
+                    <!--</span>-->
+                    <!--<span class="badge">-->
+                        <!--<i>&#x20B9;</i>-->
+                        <!--10000-->
+                    <!--</span>-->
+                <!--</div>-->
             </div>
         </div>
         </div>

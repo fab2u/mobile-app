@@ -1,45 +1,74 @@
-app.controller("CartCtrl",function($scope){
+app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$state){
   $scope.total_original=0;
   $scope.total_fabtu=0;
-    $scope.datas= [
-    {
-      "Name":"Beard Styling",
-      "Original_Price":"6000",
-      "Fabtu_Price":"600"
-    }, 
-    {
-      "Name":"Blow Dry",
-      "Original_Price":"6000",
-      "Fabtu_Price":"600"
-    },
-    {
-      "Name":"Hair Coloring",
-      "Original_Price":"6000",
-      "Fabtu_Price":"600"
-    },
-     {
-      "Name":"Hair Consulting ",
-      "Original_Price":"6000",
-      "Fabtu_Price":"600"
-    }, 
-    {
-      "Name":"Hair Cut",
-      "Original_Price":"6000",
-      "Fabtu_Price":"600"
-    },
-    {
-      "Name":"Hair Spa",
-      "Original_Price":"6000",
-      "Fabtu_Price":"600"
-    },
-     {
-      "Name":"Firebase Spa",
-      "Original_Price":"6000",
-      "Fabtu_Price":"600"
+    $scope.total_customer = 0;
+
+    window.localStorage.setItem("vendorId", $stateParams.ven_id);
+
+
+    console.log(JSON.parse(localStorage.getItem('BegItems')))
+
+
+
+    $scope.cartItems = {};
+    $scope.cart_item = 0;
+
+    $scope.calPrice = function (item_list) {
+        $scope.total_fabtu=0;
+        $scope.total_original=0;
+        $scope.total_customer = 0;
+        angular.forEach(item_list, function(value, key) {
+            $scope.total_fabtu += value.fab2uPrice;
+            $scope.total_original += value.vendorPrice;
+            $scope.total_customer += value.customerPrice;
+        })
+    };
+    if(localStorage.getItem('BegItems') != null){
+        $scope.cartItems = JSON.parse(localStorage.getItem('BegItems'));
+        $scope.calPrice($scope.cartItems);
     }
-    
-   
-];
+    $scope.selectedServices = {};
 
+    // Get selected services if previously stored in localstorage
+    if (localStorage.getItem("slectedItem") != null) {
+        $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+        $scope.cart_item = _.size($scope.selectedServices);
+    }
 
-})
+    $rootScope.$on('cart', function (event, args) {
+        $scope.message = args.message;
+        $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+        $scope.cart_item = _.size($scope.selectedServices);
+    });
+
+    $scope.list_changed = function (serv_id,serviceName) {
+        if(($scope.cartItems[serviceName]) && ($scope.selectedServices[serviceName])){
+            delete $scope.cartItems[serviceName];
+            delete $scope.selectedServices[serviceName];
+        }
+        localStorage.setItem('BegItems', JSON.stringify($scope.cartItems));
+        localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
+        $scope.calPrice(JSON.parse(localStorage.getItem('BegItems')));
+        $rootScope.$broadcast('cart', { message: 'cart length changed' });
+    };
+
+    $scope.edit_cart = function(){
+        $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id});
+    };
+
+    $scope.backButton = function () {
+        //later on back trake history will be here////////
+        $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id});
+
+    };
+
+$scope.select_time = function(){
+    if(_.size($scope.selectedServices)>0){
+        $state.go('dateTime');
+    }
+    else{
+        alert('Please, select som e service!')
+    }
+};
+
+});

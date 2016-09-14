@@ -10,7 +10,7 @@
       <ion-nav-title class="location" ng-click="location_option()">
 
       <span class="loc"><i class="icon ion-location"></i> Your location</span>
-      <span class="break">Sohna Road</span>
+      <span class="break">{{location_info.cityName}}</span>
       </ion-nav-title>
       <ion-nav-buttons side="right">
         <button class="button button-icon button-clear ion-ios-heart" ng-class="liked? 'pink':'normal'" ng-click="favorate_list()">
@@ -28,26 +28,26 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close href="#/login">
+        <ion-item menu-close href="#/login" ng-show="(uid =='' || uid == undefined || uid ==null)">
           <i class="icon ion-log-in"></i>
           Login
         </ion-item>
-        <ion-item menu-close href="#/profile">
+        <ion-item menu-close href="#/profile" ng-hide="(uid =='' || uid == undefined || uid ==null)">
           My Profile
         </ion-item>
-        <ion-item menu-close href="#/feed">
+        <ion-item menu-close href="#/feed" ng-hide="(uid =='' || uid == undefined || uid ==null)">
           Fab Feed
         </ion-item>
-        <ion-item menu-close href="#/new-feed">
+        <ion-item menu-close href="#/new-feed" ng-hide="(uid =='' || uid == undefined || uid ==null)">
           New Feed
         </ion-item>
-        <ion-item menu-close href="#/bookings">
+        <ion-item menu-close href="#/bookings" ng-hide="(uid =='' || uid == undefined || uid ==null)">
           My Bookings
         </ion-item>
-        <ion-item menu-close href="#/userWallet">
+        <ion-item menu-close href="#/userWallet" ng-hide="(uid =='' || uid == undefined || uid ==null)">
           My Wallet
         </ion-item>
-        <ion-item menu-close href="#/refer">
+        <ion-item menu-close href="#/refer" ng-hide="(uid =='' || uid == undefined || uid ==null)">
           Refer And Earn
         </ion-item>
         <ion-item menu-close href="#/privacyPolicy">
@@ -60,7 +60,7 @@
         Contact Us
         </ion-item>
         <!-- Deepank Start -->
-        <ion-item menu-close href="#/login">
+        <ion-item menu-close ng-hide="(uid =='' || uid == undefined || uid ==null)" ng-click="logOut()">
           Logout
         </ion-item>
         <!-- Deepank End -->

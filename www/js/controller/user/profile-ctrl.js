@@ -21,6 +21,12 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '
             $ionicLoading.hide();
             console.log(snapshot.val());
             $scope.userDetails = snapshot.val();
+            if(snapshot.val().mobile.mobileFlag == false){
+               $scope.showMobileVerify = true;
+            } else {
+               $scope.showMobileVerify = false;
+               $scope.showOTPfield = false;
+            }
          });
 
          $scope.galleryUpload = function() {

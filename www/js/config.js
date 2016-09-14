@@ -1,6 +1,8 @@
 app
-.config(function($stateProvider, $urlRouterProvider) {
-
+.config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+	if (!ionic.Platform.isIOS()) {
+		$ionicConfigProvider.scrolling.jsScrolling(false);
+	}
     // App starting controller
 
     $stateProvider.state('app-start', {
@@ -32,6 +34,7 @@ app
 		})
 		.state('app.home', {
 			url: '/home',
+			cache:false,
 			views: {
 				'menuContent': {
 					templateUrl: 'templates/home/home.html',
@@ -51,7 +54,7 @@ app
 
 	//State for vendor details
 	$stateProvider.state('vendorDetails', {
-		url: '/vendorDetails',
+		url: '/vendorDetails/:ven_id',
 		templateUrl: 'templates/vendor/vendorDetails.html',
 		controller: 'VendorDetailsCtrl'
 	});
@@ -87,6 +90,7 @@ app
 	//State for search
 	$stateProvider.state('search', {
 		url: '/search',
+		cache:false,
 		templateUrl: 'templates/home/search.html',
 		controller: 'SearchCtrl'
 	});
@@ -94,8 +98,17 @@ app
 	//State for location
 	$stateProvider.state('location', {
 		url: '/location',
+		cache:false,
 		templateUrl: 'templates/home/location.html',
 		controller: 'LocationCtrl'
+	});
+
+	//State for service list
+	$stateProvider.state('salonServices', {
+		url: '/salonServices',
+		cache:false,
+		templateUrl: 'templates/home/service-list.html',
+		controller: 'ServiceListCtrl'
 	});
 
 	$stateProvider.state('contact', {
@@ -114,7 +127,8 @@ app
 
 	//State for cart
 	$stateProvider.state('cart', {
-		url: '/cart',
+		url: '/cart/:ven_id',
+		cache:false,
 		templateUrl: 'templates/checkout/cart.html',
 		controller: 'CartCtrl'
 	});
@@ -150,8 +164,16 @@ app
 	//State for vendorList
 	$stateProvider.state('vendorList', {
 		url: '/vendorList',
+		cache:false,
 		templateUrl: 'templates/vendor/vendorList.html',
 		controller: 'VendorListCtrl'
+	});
+
+	$stateProvider.state('vendorMenu', {
+		url: '/vendorMenu/:vendor_id',
+		cache:false,
+		templateUrl: 'templates/vendor/vendor-menu.html',
+		controller: 'VendorServicesListCtrl'
 	});
 
 	//State for confirmation
@@ -168,12 +190,18 @@ app
 		controller: 'BillCtrl'
 	});
 
-
-	$stateProvider.state('new-slider', {
-		url: '/new-slider',
-		templateUrl: 'templates/home/new-slider.html',
-		controller: 'NewSliderCtrl'
+	$stateProvider.state('map', {
+		url: '/map/:lat/:lng/:add1/:add2/:name',
+		templateUrl: 'templates/vendor/map.html',
+		controller: 'mapCtrl'
 	});
+
+
+	// $stateProvider.state('new-slider', {
+	// 	url: '/new-slider',
+	// 	templateUrl: 'templates/home/new-slider.html',
+	// 	controller: 'NewSliderCtrl'
+	// });
 
 	//State for user wallet
 	$stateProvider.state('userWallet', {
@@ -184,7 +212,7 @@ app
 
 	//State for user wallet
 	$stateProvider.state('vendor-services-list', {
-		url: '/vendor-services-list',
+		url: '/vendor-services-list/:vendor_id',
 		templateUrl: 'templates/vendor/vendor-services-list.html',
 		controller: 'VendorServicesListCtrl'
 	});
@@ -245,5 +273,14 @@ app
 			}
 		});
 
-	$urlRouterProvider.otherwise('/app-start');
+	// $urlRouterProvider.otherwise('/app-start');
+
+
+	if(window.localStorage.getItem('SkipIntro')== "true"){
+		$urlRouterProvider.otherwise("/app/home");
+	}else{
+		$urlRouterProvider.otherwise("/app-start");
+	}
 });
+
+

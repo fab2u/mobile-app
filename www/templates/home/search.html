@@ -3,19 +3,25 @@
       <i style="color:white; padding-left: 5px; padding-right: 5px;"  class="icon ion-chevron-left pull-left back_arrow" ng-click="home()"></i>
       <label class="item item-input search-input ">
          <i  class="input-icons icon ion-search placeholder-icon"></i>
-         <input  type="text" placeholder="Search Salons or Services" />
+         <input  type="text" placeholder="Search Salons or Services" ng-model="searchQuery" ng-change="searchServices()"/>
          <button class="button button-clear button-dark input-icons">
          X
          </button>
       </label>
    </div>
    <ion-content>
-      <ion-list class="servicelist">
-         <ion-item ng-repeat="item in searchresults" class="vendorservicelist">
-            {{item.name}}
+      <ion-list class="servicelist" ng-show="suggestedServices">
+         <ion-item ng-repeat="service in suggestedServices" class="vendorservicelist"
+                   ng-click="vendorList(service.value.service_id)">
+            {{service.value.service_name}}
             <div class="vendororservice" >
-               {{item.type}}
+               {{service.type}}
             </div>
+         </ion-item>
+      </ion-list>
+      <ion-list class="servicelist" ng-hide="suggestedServices.length>0">
+         <ion-item class="vendorservicelist">
+            So, no services are founded regarding to your search!
          </ion-item>
       </ion-list>
    </ion-content>

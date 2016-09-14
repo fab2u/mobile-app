@@ -3,7 +3,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     $ionicHistory.clearHistory();
     $ionicHistory.clearCache();
     $ionicLoading.show();
- //   localStorage.clear();
+   localStorage.clear();
 
     var appInfo = {};
     var location = {};
@@ -96,9 +96,10 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                 appInfo.model = deviceInformation.model;
                 appInfo.manufacture = deviceInformation.manufacturer;
                 appInfo.device = "cordova";
-                firebase.database().ref('deviceInformation/' + appInfo.uuid).update(appInfo).then(function() {});
+                firebase.database().ref('deviceInformation/Registered/' + appInfo.uuid).update(appInfo).then(function() {});
 
             } catch (e) {
+                console.log("error",e.message);
                 appInfo.error = e.message;
                 appInfo.device = "notCordova";
                 var newPostKey = firebase.database().ref().child('deviceInformation').push().key;

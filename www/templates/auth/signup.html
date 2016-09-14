@@ -1,8 +1,11 @@
 <ion-view id="signupform" scroll="false">
-   <form name="signupForm" novalidate>
+   <form name="signupForm">
       <!-- TODO: form validations -->
       <ion-content >
-         <button class = "button button-dark button-small icon ion-chevron-left" id = "backbutton"></button>
+         <button class = "button button-dark button-small icon ion-chevron-left" id = "backbutton"
+                 ng-click="loginPage()"></button>
+         <!--<form name="signUpForm">-->
+
          <div id="detailsform">
             <center>
                <img src="img/fab2u.png" width=50%; height=50%>
@@ -19,20 +22,20 @@
             </div>
             <div class="card c1" >
                <div class="item item-text-wrap c1">
-                  <div class="list " >
+                  <div class="list">
                      <label class="item item-input c1" >
-                        <input type="text" placeholder="Enter Your Name" ng-model="user.name">
+                        <input type="text" placeholder="Enter Your Name" ng-model="user.name" required>
                      </label>
                      <label class="item item-input c1">
-                        <input type="email" placeholder="Email like abc@gmail.com" ng-model="user.email">
+                        <input type="email" placeholder="Email like abc@gmail.com" ng-model="user.email" required>
                      </label>
                      <label class="item item-input c1">
-                        <input type="text" placeholder="Mobile number" ng-model="user.mobile_num">
+                        <input type="text" placeholder="Mobile number" ng-model="user.mobile_num" required>
                      </label>
                      <label class="item item-input c1">
-                        <input type="password" placeholder="Password" ng-model="user.password">
+                        <input type="password" placeholder="Password" ng-model="user.password" required>
                      </label>
-                     <label class="item item-input c1">
+                     <label class="item item-input c1" ng-hide="user_device_register == true">
                         <input type="text" placeholder="Referral Code (Optional)" ng-model="user.referral_code">
                      </label>
                   </div>
@@ -41,12 +44,16 @@
          </div>
          <center >
             <!-- TODO: style the radio buttons -->
-            <input type="radio" name="gender" value="male" ng-model="user.gender"> Male
-           <input type="radio" name="gender" value="female" ng-model="user.gender"> Female
+            <input type="radio" name="gender" value="male" ng-model="user.gender" required> Male
+           <input type="radio" name="gender" value="female" ng-model="user.gender" required> Female
          </center>
+         <button class="button button-block button-balanced" ng-click="signup()" ng-disabled="signupForm.$invalid">
+            SIGN UP
+         </button>
+   </form>
       </ion-content>
-      <ion-footer-bar class="bar " id="customfooter" align-title="center">
-         <h1 class="title "  id="customfootertext" ng-click="signup()">SIGN UP</h1>
-      </ion-footer-bar>
+      <!--<ion-footer-bar class="bar " id="customfooter" align-title="center" ng-disabled="signupForm.$invalid">-->
+         <!--<h1 class="title "  id="customfootertext" ng-click="signup()">SIGN UP</h1>-->
+      <!--</ion-footer-bar>-->
    </form>
 </ion-view>

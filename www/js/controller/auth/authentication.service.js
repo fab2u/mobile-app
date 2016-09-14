@@ -1,4 +1,4 @@
-app.factory("AuthenticationService", function($http, $location, $timeout){
+app.factory("AuthenticationService", function($http, $location,$rootScope,$state, $timeout){
    var service = {};
    service.LoginEmail = LoginEmail;
    service.LoginGmail = LoginGmail;
@@ -7,29 +7,29 @@ app.factory("AuthenticationService", function($http, $location, $timeout){
 
    return service;
 
-   function LoginEmail(email, password, callback){
-      firebase.auth().signInWithEmailAndPassword(email, password).then(function(user){
-         console.log(user);
-         console.log('uid',user.uid);
-         console.log("success login");
-         db.ref().child("users").child("data").child(user.uid).on("value", function(snapshot){
-            console.log(snapshot.val().name);
+   function LoginEmail(email,password,callback) {
+      firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
+         db.ref().child("users").child("data").child(user.uid).on("value", function (snapshot) {
+            console.log(snapshot.val());
             window.localStorage.setItem("name", snapshot.val().name);
+            window.localStorage.setItem("mobileNumber", snapshot.val().mobile.mobileNum);
+            window.localStorage.setItem("email", email);
+            window.localStorage.setItem("uid", user.uid);
+            if(localStorage.getItem('confirmation') == 'true'){
+               localStorage.setItem('confirmation', '');
+               $state.go('confirmation');
+            }
+            else{
+               $state.go('app.home');
+            }
          });
-         // TODO: set path to redirect to after login
-         $timeout(function(){
-            $location.path('/app/home');
-         }, 0);
-
-         //TODO: error handling if gmail account is accessed through normal login.
-
-         window.localStorage.setItem("email", email);
-         window.localStorage.setItem("uid", user.uid);
       }).catch(function(error) {
-         var errorCode = error.code;
-         var errorMessage = error.message;
-      });
+               var errorCode = error.code;
+               var errorMessage = error.message;
+            });
+
    }
+
 
    function LoginGmail(){
       var provider = new firebase.auth.GoogleAuthProvider();
@@ -102,5 +102,5 @@ app.factory("AuthenticationService", function($http, $location, $timeout){
             $location.path("/login");
          }
       });
-   }
+   };
 });

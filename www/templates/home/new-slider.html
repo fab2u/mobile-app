@@ -1,50 +1,52 @@
  <ion-view id="servicelistslider">
-    <ion-content delegate-handle="mainScroll" direction="y">
+    <ion-content delegate-handle="mainScroll">
         <div
-            id="img-container"
-            class="row"
-            on-swipe-left="nextSlide()"
-            on-swipe-right="prevSlide()"
-        >
-            <img src="img/home/S01.jpg">
+            id="img-container" class="row" on-swipe-left="nextSlide()" on-swipe-right="prevSlide()">
+            <img  ng-if="currSlide === 0" ng-src="{{services.Face.image}}">
+            <img  ng-if="currSlide === 1" ng-src="{{services.Hair.image}}">
+            <img  ng-if="currSlide === 2" ng-src="{{services.HairRemoval.image}}">
+            <img  ng-if="currSlide === 3" ng-src="{{services.Body.image}}">
+            <img  ng-if="currSlide === 4" ng-src="{{services.HandsNfeets.image}}">
+            <img  ng-if="currSlide === 5" ng-src="{{services.Nails.image}}">
+            <img  ng-if="currSlide === 6" ng-src="{{services.Packages.image}}">
+
             <div class="backButton icon ion-chevron-left" ng-click="backButton()">
-            </div> <!-- .backButton -->
+            </div>
             <div class="searchButton" ng-click="searchButton()">
             	<i class="icon ion-ios-search-strong"></i>
             </div> <!-- .searchButton -->
-            <div id="title">
-            	<h3>TOP SALONS</h3>
-            	<p>MAKE YOURSELF BEAUTIFUL</p>
-            </div> <!-- #title -->
+            <!--<div id="title">-->
+            	<!--<h3>TOP SALONS</h3>-->
+            	<!--<p>MAKE YOURSELF BEAUTIFUL</p>-->
+            <!--</div> &lt;!&ndash; #title &ndash;&gt;-->
         </div> <!--#img-container -->
 
+        <!--<ion-scroll id="scrollTabs" direction="x" delegate-handle="myhandel">-->
         <ion-scroll id="scrollTabs" direction="x" delegate-handle="myhandel">
             <div id="container">
-                <div
-                    class="tab"
+                <div style="width:1800px;">
+                  <div class="tab"
                     ng-class="$index == 0 ? 'active':''"
-                    ng-repeat="item in ['FACE', 'HAIR', 'NAILS', 'WAXING', 'HANDS & FEET']"
-                    ng-click="tabHasChanged($index)"
-                >
+                    ng-repeat="item in ['FACE', 'HAIR','HAIR REMOVAL', 'BODY', 'HANDS & FEET','NAILS','PACKAGES']"
+                       ng-click="tabHasChanged($index)">
                     <i class="icon ion-social-reddit-outline"></i>
                     <p>{{item}}</p>
-                </div> <!--.tabs -->
+                  </div> <!--.tabs -->
+                </div>
             </div> <!--#container -->
         </ion-scroll>
 		<div class="moreButton icon ion-chevron-right" ng-click="scrollToRight($event)"></div>
 
         <div class="row padding" id="slideBox">
-            <ion-slide-box style="width:100%!important;" class="slideBox" on-slide-changed="slideHasChanged($index)" show-pager="false" delegate-handle="my-handle">
+            <ion-slide-box style="width:100%!important;" class="slideBox" on-slide-changed="slideHasChanged($index)"
+                           show-pager="false" delegate-handle="my-handle">
 
                 <ion-slide>
-                    <div class="slide" ng-if="currSlide === 0"
-                    ng-repeat="serv in ['Lorem','Ipsum','Dancing', 'Queen', 'Omg']">
-                        <div
-                        ng-click="selectItem($index, serv)"
-                        class="item">
+                    <div class="slide" ng-if="currSlide === 0" ng-repeat="serv in services.Face.name">
+                        <div ng-click="selectItem($index, serv)" class="item">
                         {{serv}}
                             <div class="diagonal" ng-show="selectedServices[serv]">
-                                <span>    
+                                <span>
                                     <i class="icon ion-ios-checkmark-empty"></i>
                                 </span>
                             </div> <!-- .diagonal -->
@@ -53,70 +55,85 @@
                 </ion-slide>
 
                 <ion-slide>
-                    <div class="slide" ng-if="currSlide === 1" ng-repeat="serv in ['Lorem','Muspi','Rolod','Tima', 'Lidammrt', 'Opsoa', 'Dancing', 'Queen', 'Omg']">
-                        <div
-                        ng-click="selectItem($index, serv)"
-                        class="item">
+                    <div class="slide" ng-if="currSlide === 1" ng-repeat="serv in services.Hair.name">
+                        <div ng-click="selectItem($index, serv)" class="item">
                         {{serv}}
                             <div class="diagonal" ng-show="selectedServices[serv]">
-                                <span>    
+                                <span>
                                     <i class="icon ion-ios-checkmark-empty"></i>
                                 </span>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </ion-slide>
 
                 <ion-slide>
-                    <div class="slide" ng-if="currSlide === 2" ng-repeat="serv in ['Lorem','Ipsum','Amit','Merol','Muspi','Rolod','Tima', 'Lidammrt', 'Opsoa', 'Dancing', 'Queen', 'Omg']">
-                        <div
-                        ng-click="selectItem($index, serv)"
-                        class="item">
+                    <div class="slide" ng-if="currSlide === 2" ng-repeat="serv in services.HairRemoval.name">
+                        <div ng-click="selectItem($index, serv)" class="item">
                         {{serv}}
                             <div class="diagonal" ng-show="selectedServices[serv]">
-                                <span>    
+                                <span>
                                     <i class="icon ion-ios-checkmark-empty"></i>
                                 </span>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </ion-slide>
 
                 <ion-slide>
-                    <div class="slide" ng-if="currSlide === 3" ng-repeat="serv in ['Lorem','Ipsum','Amit']">
-                        <div
-                        ng-click="selectItem($index, serv)"
-                        class="item">
+                    <div class="slide" ng-if="currSlide === 3" ng-repeat="serv in services.Body.name">
+                        <div ng-click="selectItem($index, serv)" class="item">
                         {{serv}}
                             <div class="diagonal" ng-show="selectedServices[serv]">
-                                <span>    
+                                <span>
                                     <i class="icon ion-ios-checkmark-empty"></i>
                                 </span>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </ion-slide>
 
                 <ion-slide>
-                    <div class="slide" ng-if="currSlide === 4" ng-repeat="serv in ['Lorem','Ipsum','Amit','Merol','Muspi','Rolod','Tima', 'Lidammrt', 'Opsoa', 'Dancing', 'Queen', 'Omg']">
-                        <div
-                        class="item"
-                        ng-click="selectItem($index, serv)">
+                    <div class="slide" ng-if="currSlide === 4" ng-repeat="serv in services.HandsNfeets.name">
+                        <div class="item" ng-click="selectItem($index, serv)">
                         {{serv}}
                             <div class="diagonal" ng-show="selectedServices[serv]">
-                                <span>    
+                                <span>
                                     <i class="icon ion-ios-checkmark-empty"></i>
                                 </span>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </ion-slide>
 
+                <ion-slide>
+                    <div class="slide" ng-if="currSlide === 5" ng-repeat="serv in services.Nails.name">
+                        <div class="item" ng-click="selectItem($index, serv)">
+                            {{serv}}
+                            <div class="diagonal" ng-show="selectedServices[serv]">
+                                <span>
+                                    <i class="icon ion-ios-checkmark-empty"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </ion-slide>
+                <ion-slide>
+                    <div class="slide" ng-if="currSlide === 6" ng-repeat="serv in services.Packages.name">
+                        <div class="item" ng-click="selectItem($index, serv)">
+                            {{serv}}
+                            <div class="diagonal" ng-show="selectedServices[serv]">
+                                <span>
+                                    <i class="icon ion-ios-checkmark-empty"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </ion-slide>
             </ion-slide-box>
         </div> <!-- #slideBox -->
     </ion-content>
-    <div    class="moreDownButton icon ion-chevron-down"
-            ng-click="scrollToBottom($event)">
+    <div class="moreDownButton icon ion-chevron-down" ng-click="scrollToBottom($event)">
     </div> <!--.moreDownButton -->
 	<ion-footer-bar id="footer-bar" align-title="center" ng-click="findVendors()">
 	  <h1 class="title">FIND VENDORS</h1>

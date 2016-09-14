@@ -9,16 +9,18 @@
             <ion-slide-box class="offers">
                 <ion-slide ng-repeat="offer in offers" class="offer-slide">
                     <div class="offer-img">
-                        <img src="{{offer.imgsrc}}"/>
+                        <img ng-src="{{offer.image}}"/>
                         <!-- <div class="description"></div> -->
                     </div>
                 </ion-slide>
             </ion-slide-box>
         </div>
       <div class="category-list">
-          <div class="categories" ng-click="vendor_list()" ng-repeat="category in categories" ng-style="{'background-image':'url({{category.catImg}}'}">
+          <div class="categories" ng-click="services(category.catHeading)" ng-repeat="category in categories"
+               ng-style="{'background-image':'url({{category.catImg}})'}">
                 <!-- <img src="{{category.catImg}}"> -->
                 <div class="catDescription">
+
                     <h3>{{category.catHeading}}</h3>
                     <h5>{{category.catSubheading}}</h5>
                 </div>

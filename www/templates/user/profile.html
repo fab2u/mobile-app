@@ -18,10 +18,55 @@
             <!-- <canvas id="identicon" width="100" height="100" class="profile-pic"></canvas> -->
          </div>
          <div class="center user-name">
-            {{userDetails.name}}
+            <!-- {{userDetails.name}}
             <br>
-            {{email}}
+            {{email}} -->
+            <div class="row profile-row">
+               <div class="col col-key">
+                  Name
+               </div>
+               <div class="col col-value">
+                  {{userDetails.name}}
+               </div>
+            </div>
+            <div class="row">
+               <div class="col col-key">
+                  Email
+               </div>
+               <div class="col col-value">
+                  {{userDetails.email.userEmail}}
+               </div>
+            </div>
+            <div class="row">
+               <div class="col col-key">
+                  Phone No.
+               </div>
+               <div class="col col-value">
+                  {{userDetails.mobile.mobileNum}}
+               </div>
+            </div>
+            <div class="row">
+               <div class="col col-key">
+                  Referral Code
+               </div>
+               <div class="col col-value">
+                  {{userDetails.myReferralCode}}
+               </div>
+            </div>
+         </div>
+         <div class="otp row" ng-show="showOTPfield">
+            <div class="col col-75">
+               <label class="item item-input item-stacked-label">
+                  <input type="number" ng-model="newOtp.code" placeholder="Enter verification code">
+               </label>
+            </div>
+            <div class="col col-25 otpButton" ng-click="verifyOTP()">
+               <span>Verify</span>
+            </div>
          </div>
       </div>
    </ion-content>
+   <ion-footer-bar class="bar bar-calm" align-title="center" ng-show="showMobileVerify" ng-click="sendVerification()">
+      <h1 class="title">Verify Mobile Number</h1>
+   </ion-footer-bar>
 </ion-view>

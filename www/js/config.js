@@ -90,6 +90,7 @@ app
 	//State for search
 	$stateProvider.state('search', {
 		url: '/search',
+		cache:false,
 		templateUrl: 'templates/home/search.html',
 		controller: 'SearchCtrl'
 	});

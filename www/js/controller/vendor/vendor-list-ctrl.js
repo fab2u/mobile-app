@@ -30,11 +30,11 @@ app.controller('VendorListCtrl',
                     .then(function (response) {
                         $scope.vendorList = response.data.results;
                         $ionicLoading.hide();
-                        console.log(JSON.stringify(response)) ;
-
+                        console.log(JSON.stringify(response));
                     });
             }
             else{
+                console.log("serviceId",serviceId)
                 $http.post("http://139.162.31.204/search_services?services="+serviceId+
                     "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender=''&user_lat=''&user_lon=''")
                     .then(function (response) {

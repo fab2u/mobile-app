@@ -1,8 +1,9 @@
 app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ionicLoading,$ionicPopup,
                                       $timeout,$rootScope){
+    $scope.generatedCode = '';
 
 
-        // deviceInformation for Registered user
+    // deviceInformation for Registered user
         // firebase.database().ref('deviceInformation/Registered/'+$cordovaDevice.getDevice().uuid).once('value',function(response){
         //     console.log("device_list",JSON.stringify(response.val().registeredUsers));
         //     if(response.val().registeredUsers){
@@ -59,6 +60,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                         console.log("user pushed", JSON.stringify(response));
 
                         if(response == null){
+
                             $scope.sendVerification();
                         }
                     })
@@ -103,37 +105,52 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
 
     };
 
+    $scope.generateVerificationCode = function(){
+        var a = Math.floor(100000 + Math.random() * 900000)
+        $scope.generatedCode= a.toString().substring(0, 4);
+
+        console.log("number",$scope.generatedCode)  ;
+    }
+
     $scope.sendVerification = function(){
+        $scope.generateVerificationCode();
         $ionicLoading.show({
             template: 'Loading...'
         });
+
         $http({
-            url:'http://139.162.3.205/api/sendOtp',
+            url: 'http://BULKSMS.FLYFOTSERVICES.COM/unified.php?usr=28221&pwd=password1&ph=' + $scope.user.mobile_num + '&sndr=IAMFAB&text=Greetings.' + $scope.generatedCode + ' is your FAB2U verification code&type=json ',
             method: 'POST',
-            params: {
-                mobno: $scope.user.mobile_num
-            }
-        }).success(function(response){
-            $ionicLoading.hide();
-            console.log(response);
-            if(response.StatusCode == 200){
-                $scope.otp = response.OTP;
-                storedOTP.push($scope.otp);
-                window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
-                $ionicPopup.alert({
-                    title: 'Verification Code Sent',
-                    template: 'We have sent a verification code to your registered mobile number'
-                }).then(function(){
-                    $scope.showOTPfield = true;
-                    $scope.showPopup();
-                })
-            } else {
-                $ionicPopup.alert({
-                    title: 'Verification Code not sent',
-                    template: 'An error occurred. Please try again later.'
-                });
-            }
+            "async": true,
+            "crossDomain": true,
+            "headers": {"Access-Control-Allow-Origin": "*"}
+            // params: {
+            //     mobno: $scope.user.mobile_num
+            // }
+        },function (error) {
+            console.log("error",error);
         })
+        // }).success(function(response){
+        //     $ionicLoading.hide();
+        //     console.log(response);
+            // if(response.StatusCode == 200){
+            //     $scope.otp = response.OTP;
+            //     storedOTP.push($scope.otp);
+            //     window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
+            //     $ionicPopup.alert({
+            //         title: 'Verification Code Sent',
+            //         template: 'We have sent a verification code to your registered mobile number'
+            //     }).then(function(){
+            //         $scope.showOTPfield = true;
+            //         $scope.showPopup();
+            //     })
+            // } else {
+            //     $ionicPopup.alert({
+            //         title: 'Verification Code not sent',
+            //         template: 'An error occurred. Please try again later.'
+            //     });
+            // }
+        // })
     };
     $scope.showPopup = function() {
             $scope.data = {};

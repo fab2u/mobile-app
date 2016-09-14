@@ -19,7 +19,7 @@
 }
 
 .bill #thankYou {
-	width: 70%;
+	width: 74%;
 	margin: auto;
 	/*position: absolute;*/
 	margin-top: 6%;
@@ -37,13 +37,13 @@
 }
 
 .bill #myBill {
-	width: 70%;
-	height: auto;
-	margin: 1.5% auto;
-	color: white;
-	opacity: 0.7;
-	border-style: hidden;
-    filter: alpha(opacity=40);
+    width: 74%;
+    height: auto;
+    font-size: 0.9em;
+    margin: 1.5% auto;
+    color: white;
+    opacity: 0.7;
+    border-style: hidden;
 }
 
 .bill #container {
@@ -62,14 +62,14 @@
 }
 
 .bill .custom-border {
-	text-align: center;
-	border-left-width: 0px;
-	border-right-width: 0px;
-	border-top-width: 0px;
-	border-style: solid;
-	border-bottom-width: 0.1px;
-	border-color: white;
-	font-color: white;
+  text-align: center;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  border-top-width: 0px;
+  border-style: solid;
+  border-bottom-width: 0.1px;
+  border-color: white;
+  padding: 8px;
 }
 
 .bill .container {

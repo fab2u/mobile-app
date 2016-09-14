@@ -1,47 +1,44 @@
-<ion-view class="confirmation">
+<ion-view class="confirmation" cache-view="false">
     <ion-content>
-        <button class="button button-dark button-small icon ion-chevron-left" id="backbutton"></button>
+        <button class="button button-dark button-small icon ion-chevron-left" id="backbutton" ng-click="goBack()"></button>
         <div class="card myCard">
             <br>
-            <div id="image"> <img src="../../img/confirmation.png"></div>
+            <div id="image"> <img src="img/confirmation.png"></div>
             <div id="totalAmount">
-                <!--discount price later-->
                 TOTAL AMOUNT &nbsp; ₹{{customer_price}}
                 <span style="color:red;text-decoration:line-through" ng-if="customer_price != total_original">
                     <span style='color:white'>₹({{total_original}})</span>
                 </span>
             </div>
-            <div id="paidFromWallet">
+            <div id="walletMoney" ng-show="paidFromWallet">
                 <p>PAID FROM WALLET &nbsp ₹{{paidFromWallet}}</p>
             </div>
-            <div id="amountPayable" align="center">
-                <p ng-hide="isChecked">AMOUNT PAYABLE &nbsp ₹{{customer_price}}</p>
-                <p ng-show="isChecked">AMOUNT PAYABLE &nbsp ₹{{amountPayable}}</p>
+            <div id="walletMoney" ng-show="discountAmount">
+                <p>DISCOUNT &nbsp ₹{{discountAmount}}</p>
+            </div>
+            <div id="amountToPay" align="center">
+                <p>AMOUNT PAYABLE &nbsp ₹{{amountPayable}}</p>
             </div>
         </div>
         <br>
-        <div id="havePromo">
+        <div id="havePromo" ng-hide="promoCodeApplied">
             <div align="center" ng-click="isOpen=!isOpen" id="haveCode">
-                HAVE PROMO CODE ?
+                <p>HAVE PROMO CODE?</p>
             </div>
-            <div ng-hide="!isOpen" id="applyCode">
-                <div id="applyCodeDiv">
+            <div ng-hide="!isOpen" id="applyCode" class="row">
+                <div id="applyCodeDiv" class="col col-67">
                     <input type="text" ng-model="couponCode" placeholder="Apply Code Here">
                 </div>
-                <div id="applyCodeButton">
-                    <button class="button button-dark" ng-click="addCoupon()">APPLY</button>
+                <div id="applyCodeButton" class="col col-33">
+                    <button class="button button-dark" ng-click="addCoupon(couponCode)">APPLY</button>
                 </div>
                 <br>
             </div>
         </div>
-        <!--<ion-checkbox ng-model="isChecked" ng-click = "useWalletAmount()" id="check" >-->
-        <!--&nbsp; WALLET BALANCE &nbsp; ₹{{userWalletInfo.amount}}</ion-checkbox>-->
-        <div id="walletPayableAmount" align="center">
+        <div id="walletPayableAmount" align="center" ng-show="hasWalletBalance">
             <p>WALLET BALANCE &nbsp; ₹{{amount}}</p>
-            <!--<p>WALLET BALANCE &nbsp; ₹{{userWalletInfo.amount - walletAmount}}</p>-->
-            <ion-checkbox ng-model="isChecked" ng-click="toggleCheckbox()" id = "walletCheckBox">
+            <ion-checkbox ng-model="isChecked" ng-click="toggleCheckbox()" id="walletCheckBox">
                 &nbsp; Pay from wallet &nbsp; ₹{{walletAmount}}</ion-checkbox>
-            <!--You can pay from wallet ₹{{walletAmount}}-->
         </div>
     </ion-content>
     <div style="text-align: center;">

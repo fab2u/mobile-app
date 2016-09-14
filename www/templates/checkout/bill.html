@@ -9,8 +9,8 @@
           
       <div>
         <div  id = "myBill" class = "container">
-          <div class = "custom-border padding class"><b>Venue: </b>{{bookingAddress.address1}}</div>
-          <div class = "custom-border padding class"><b>Address: </b>{{bookingAddress.address2}}</div>
+          <div class = "custom-border padding class"><b>Venue: </b>{{bookingInformation.venue}}</div>
+          <div class = "custom-border padding class"><b>Address: </b>{{bookingInformation.address1}} {{bookingInformation.address2}}</div>
           <div class="padding class custom-border">
             <b>Services </b>
             <div ng-repeat = "service in bookingInformation.serviceInfo">{{service.menuItemName}}</div>

@@ -92,7 +92,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($sco
 
 		if($scope.events2.length > 0){
 			console.log($scope.bottomKey);
-			db.ref("blogs").orderByKey().limitToFirst(5).endAt($scope.bottomKey).once("value", function(snap){
+			db.ref("blogs").orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){
 				console.log(snap.numChildren(), $scope.moreMessagesScroll);
 				if(snap.numChildren() == 1){
 					$scope.moreMessagesScroll = false;
@@ -130,7 +130,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($sco
 			});
 		}
 		else if($scope.events2.length == 0){
-			db.ref().child("blogs").limitToLast(5).once("value", function(snapshot){
+			db.ref().child("blogs").limitToLast(25).once("value", function(snapshot){
 				$ionicLoading.hide();
 				console.log(snapshot.val());
 				// console.log(Object.keys(snapshot.val())[0]);

@@ -62,6 +62,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state){
 
     $scope.isActiveCancel();
 
+
     $scope.home = function(){
         $state.go('app.home');
     };
@@ -71,24 +72,19 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state){
     };
 
     $scope.notAvailed = function(){
-        var bookingStatus = {
-            status:'notAvailed'
-        }
-        db.ref('bookings/'+$scope.bookingInformation.bookingId).update(bookingStatus, function(response) {
-            console.log("1",response.val())
+        $ionicLoading.show();
+        var updates = {};
+        updates['bookings/'+$scope.bookingInformation.bookingId+'/'+'status'] = 'notAvailed';
+        updates['userBookings/'+localStorage.getItem('uid')+'/notAvailed/'+$scope.bookingInformation.bookingId] = true;
+        updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/notAvailed/'+$scope.bookingInformation.bookingId] = true;
+        console.log(updates);
+        db.ref().update(updates).then(function(){
+        db.ref('userBookings/'+localStorage.getItem('uid')+'/active').remove().then(function() {
+            db.ref('vendorBookings/'+$scope.bookingInformation.vendorId+'/active').remove()
         })
-        db.ref('userBookings/'+localStorage.getItem('uid')+'/active').remove(function(response) {
-            console.log("remove",response.val())
-        })
-        db.ref('userBookings/'+localStorage.getItem('uid')+'/notAvailed/'+$scope.bookingInformation.bookingId).set('true', function(response) {
-            console.log("not availed node",response.val())
-        })
-        db.ref('vendorBookings/'+$scope.bookingInformation.vendorId+'/active').remove(function(response) {
-            console.log("remove vem",response.val())
-        })
-        db.ref('vendorBookings/'+$scope.bookingInformation.vendorId+'/notAvailed/'+$scope.bookingInformation.bookingId).set('true', function(response) {
-            console.log("not availed node in vend",response.val())
-        })
+            $ionicLoading.hide();
+            alert('Thank you for updating your booking status!')
+        });
     };
 
 

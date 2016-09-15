@@ -1,5 +1,7 @@
 app.controller('VendorListCtrl',
     function($scope,$ionicHistory,$state,$stateParams,$ionicLoading,$http){
+        $scope.gender = '';
+
 
         var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
         $scope.serviceIds = []
@@ -81,12 +83,61 @@ app.controller('VendorListCtrl',
       var female = document.getElementById('female');
       var male = document.getElementById('male');
       if(male.classList.contains('is-active')) {
+
         male.classList.remove('is-active');
         female.classList.add('is-active');
+          $scope.gender = 'male';
+
+          if($scope.serviceIds.length>0){
+              var serviceIdList = $scope.serviceIds.join();
+              $http.post("http://139.162.31.204/search_services?services="+$scope.serviceIds+
+                  "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender='1'&user_lat=''&user_lon=''")
+                  .then(function (response) {
+                      $scope.vendorList = response.data.results;
+                      $ionicLoading.hide();
+                      console.log(JSON.stringify(response));
+                  });
+          }
+          else{
+              console.log("serviceId",serviceId)
+              $http.post("http://139.162.31.204/search_services?services="+serviceId+
+                  "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender='1'&user_lat=''&user_lon=''")
+                  .then(function (response) {
+                      $scope.vendorList = response.data.results;
+                      $ionicLoading.hide();
+                      console.log(JSON.stringify(response)) ;
+
+                  });
+          }
+
       }
       else {
-        male.classList.add('is-active');
-        female.classList.remove('is-active');
+          console.log("else")
+          male.classList.add('is-active');
+          female.classList.remove('is-active');
+          $scope.gender = 'female';
+          if($scope.serviceIds.length>0){
+              var serviceIdList = $scope.serviceIds.join();
+              $http.post("http://139.162.31.204/search_services?services="+$scope.serviceIds+
+                  "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender='2'&user_lat=''&user_lon=''")
+                  .then(function (response) {
+                      $scope.vendorList = response.data.results;
+                      $ionicLoading.hide();
+                      console.log(JSON.stringify(response));
+                  });
+          }
+          else{
+              console.log("serviceId",serviceId)
+              $http.post("http://139.162.31.204/search_services?services="+serviceId+
+                  "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender='2'&user_lat=''&user_lon=''")
+                  .then(function (response) {
+                      $scope.vendorList = response.data.results;
+                      $ionicLoading.hide();
+                      console.log(JSON.stringify(response)) ;
+
+                  });
+          }
+
       }
     };
 
@@ -94,7 +145,8 @@ app.controller('VendorListCtrl',
       return new Array(rating);   //ng-repeat will run as many times as size of array
    };
 
-   $scope.vendor_detail = function(id){
+   $scope.vendor_menu = function(id){
+       console.log(id)
        $state.go('vendorMenu',{vendor_id:id});
    }
 })

@@ -15,7 +15,7 @@
     <div id="toggleButton">
         <label class="toggle">
         <div class="track row">
-            <button class="col col-50 fa fa-female" id="female" ng-click="toggleColor()"></button>
+            <button class="col col-50 fa fa-female" id="female" ng-model="gender" ng-click="toggleColor()"></button>
             <button class="col col-50 fa fa-male" id="male" ng-click="toggleColor()"></button>
         </div>
         </label>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div id="price-tag" class="col">
-                <div class="row original-price" ng-repeat="(key, value)  in vendor.menu_union" ng-if="key == service_id">
+                <div class="row original-price" ng-repeat="(key, value) in vendor.menu_union" ng-if="(key == service_id)">
                     <!--<div id="line-through"></div>-->
                     <div id="line-through-fb"></div>
                     <span id="one" class="left-price badge">

@@ -20,7 +20,21 @@
           <div class = "custom-border  padding class" ng-show="bookingInformation.walletAmount"><b>Paid From Wallet</b>: ₹{{bookingInformation.walletAmount}}</div>
           <div class = "custom-border padding class"><b>Time</b>: {{bookingInformation.appointmentTime}}</div>
           <div class = "custom-border padding class"><b>Date</b>: {{bookingInformation.appointmentDate}}</div>
-          <p align = "center"> <button class = "button button-assertive button-small custom-button" ng-click="home()">TAKE ME HOME</button></p>
+          <p align = "center" ng-show="cancelButton">
+              <button class = "button button-assertive button-small custom-button" ng-click="home()">CANCEL</button>
+          </p>
+            <p ng-hide="cancelButton">
+              <div class="row">
+            <div class="col-50 pull-left">
+                <button class = "button button-assertive button-small custom-button" ng-click="availed()">
+                    AVAILED</button>
+            </div>
+            <div class="col-50 pull-right">
+                <button class = "button button-assertive button-small custom-button" ng-click="notAvailed()">
+                    NOT AVAILED</button>
+            </div>
+             </div>
+            </p>
         </div>
       </div>
       <div align = "center" id = "smile"><img src = "../../img/happy.png" height="14%" width="14%">

@@ -136,22 +136,18 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
             updates['reviews/'+$scope.bookingInformation.cityId+'/'+$scope.bookingInformation.vendorId+'/Reviews/'+reviewData.ReviewId] = reviewData;
             updates['userReviews/'+localStorage.getItem('uid')+'/'+reviewData.ReviewId] = userReviewData;
             updates['bookings/' + $scope.bookingInformation.bookingId + '/' + 'reviewId'] = reviewId;
-
             db.ref().update(updates).then(function () {
-                alert('Your review has been submitted successfully!');
+                $scope.review();
             });
         }
     };
 
     $scope.review = function() {
         var updates = {};
-        updates['bookings/' + $scope.bookingInformation.bookingId + '/' + 'status'] = 'Availed';
-        updates['userBookings/' + localStorage.getItem('uid') + '/Availed/' + $scope.bookingInformation.bookingId] = true;
-        updates['vendorBookings/' + $scope.bookingInformation.vendorId + '/Availed/' + $scope.bookingInformation.bookingId] = true;
+        updates['bookings/' + $scope.bookingInformation.bookingId + '/' + 'userStatus'] = 'Availed';
+        updates['userBookings/' + localStorage.getItem('uid') + '/' + $scope.bookingInformation.bookingId] = 'Availed';
+        updates['vendorBookings/' + $scope.bookingInformation.vendorId + '/' + $scope.bookingInformation.bookingId] = 'Availed';
         db.ref().update(updates).then(function () {
-            db.ref('userBookings/' + localStorage.getItem('uid') + '/active').remove().then(function () {
-                db.ref('vendorBookings/' + $scope.bookingInformation.vendorId + '/active').remove()
-            })
             $ionicLoading.hide();
             alert('Your review has been submitted successfully!');
         });
@@ -160,13 +156,10 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
     $scope.notAvailed = function(){
         $ionicLoading.show();
         var updates = {};
-        updates['bookings/'+$scope.bookingInformation.bookingId+'/'+'status'] = 'notAvailed';
-        updates['userBookings/'+localStorage.getItem('uid')+'/notAvailed/'+$scope.bookingInformation.bookingId] = true;
-        updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/notAvailed/'+$scope.bookingInformation.bookingId] = true;
+        updates['bookings/'+$scope.bookingInformation.bookingId+'/'+'userStatus'] = 'notAvailed';
+        updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'notAvailed';
+        updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'notAvailed';
         db.ref().update(updates).then(function(){
-        db.ref('userBookings/'+localStorage.getItem('uid')+'/active').remove().then(function() {
-            db.ref('vendorBookings/'+$scope.bookingInformation.vendorId+'/active').remove()
-        })
             $ionicLoading.hide();
             alert('Thank you for updating your booking status!')
         });

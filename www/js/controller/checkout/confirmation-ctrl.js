@@ -344,7 +344,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
                 'appointmentDate': appointmentDateInfo,
                 'appointmentTime': timeOfAppointment,
                 'versionNumber': $scope.version,
-                'status': 'upComing',
+				'userStatus': 'upComing',
                 'walletAmount' : $scope.paidFromWallet,
                 'discountAmount': $scope.discountAmount,
                 'customerAmount': $scope.customer_price,
@@ -354,21 +354,23 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
                 'specialRequest': 'updated soon!'
             };
             console.log(bookingDetails);
-            firebase.database().ref('userBookings/'+userId+'/active').once('value', function(response){
-            	console.log(response.val());
-            	if(response.val()){
-            		$ionicLoading.hide();
-            		$ionicPopup.alert({
-            			title: 'Already have one booking',
-            			template: 'Please avail or cancel your previous booking first'
-            		})
-            		console.log('haha');
-            	} else {
-            		console.log('hihi');
-            		$scope.insertBooking(bookingDetails);
-            	}
-            })
-		}
+			$scope.insertBooking(bookingDetails);
+
+			// firebase.database().ref('userBookings/'+userId+'/active').once('value', function(response){
+            // 	console.log(response.val());
+            // 	if(response.val()){
+            // 		$ionicLoading.hide();
+            // 		$ionicPopup.alert({
+            // 			title: 'Already have one booking',
+            // 			template: 'Please avail or cancel your previous booking first'
+            // 		})
+            // 		console.log('haha');
+            // 	} else {
+            // 		console.log('hihi');
+            // 		$scope.insertBooking(bookingDetails);
+            // 	}
+            // })
+		};
 
 		$scope.insertBooking = function(bookingDetails){
 			console.log(bookingDetails);
@@ -401,9 +403,9 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 				updates['userWallet/data/' + userId+'/discountCoupons/'+walletTransactionId1] = transactionDetail1;
 			}
 			updates['bookings/'+bookingDetails.bookingId] = bookingDetails;
-			updates['userBookings/'+userId+'/active/'+bookingDetails.bookingId] = true;
+			updates['userBookings/'+userId+'/'+bookingDetails.bookingId] = 'active';
 			updates['cityBookings/'+locationInfo.cityId+'/'+vendorId+'/'+bookingDetails.bookingId] = true;
-			updates['vendorBookings/'+vendorId+'/active/'+bookingDetails.bookingId] = true;
+			updates['vendorBookings/'+vendorId+'/'+bookingDetails.bookingId] = 'active';
 			console.log(updates);
 			db.ref().update(updates).then(function(){
 				$ionicLoading.hide();

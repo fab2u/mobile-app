@@ -1,6 +1,8 @@
-app.controller('BillCtrl', function($scope,$ionicLoading,$state){
+app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
     $ionicLoading.show();
     $scope.cancelButton = false;
+    var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+
 
 
     function toTimestamp(strDate) {
@@ -66,9 +68,93 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state){
     $scope.home = function(){
         $state.go('app.home');
     };
+    $scope.ratingsCallback = function(rating) {
+        $scope.custReview.rating = rating;
+    };
+    $scope.ratingsObject = {
+        iconOn: 'ion-ios-star',
+        iconOff: 'ion-ios-star-outline',
+        iconOnColor: '#ffd11a',
+        iconOffColor: '#b38f00',
+        rating: 0,
+        minRating: 0,
+        readOnly:false,
+        callback: function(rating) {
+            $scope.ratingsCallback(rating);
+        }
+    };
+
+
+
+    $scope.custReview ={
+        review:'',
+        rating: 0
+    };
+    $ionicModal.fromTemplateUrl('templates/checkout/review.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.rate_vendor = modal;
+    });
+
+    $scope.rateVendor = function() {
+        $scope.custReview ={
+            review:'',
+            rating: 0
+        }
+        $scope.rate_vendor.show();
+    };
 
     $scope.availed = function(){
-        
+        $scope.rate_vendor.show();
+    };
+
+    $scope.storeReview = function(){
+        console.log("review detail",JSON.stringify($scope.custReview));
+        if($scope.custReview.rating == 0){
+            alert('Please, select ratings!')
+        }
+        else{
+            var updates = {};
+            var reviewId = firebase.database().ref('reviews/'+$scope.bookingInformation.cityId+'/'+$scope.bookingInformation.vendorId+'/Reviews').push().key;
+            console.log("reviewId",reviewId)
+            var reviewData = {
+                'ReviewId':reviewId,
+                'BookingId':$scope.bookingInformation.bookingId,
+                'userId':localStorage.getItem('uid'),
+                'ReviewText':$scope.custReview.review,
+                'ReviewRating':$scope.custReview.rating,
+                'VendorId':$scope.bookingInformation.vendorId,
+                'cityName':locationInfo.cityName
+            };
+            var userReviewData = {
+                'VendorId':$scope.bookingInformation.vendorId,
+                'cityId':$scope.bookingInformation.cityId,
+                'cityName':locationInfo.cityName
+
+            }
+            updates['reviews/'+$scope.bookingInformation.cityId+'/'+$scope.bookingInformation.vendorId+'/Reviews/'+reviewData.ReviewId] = reviewData;
+            updates['userReviews/'+localStorage.getItem('uid')+'/'+reviewData.ReviewId] = userReviewData;
+            updates['bookings/' + $scope.bookingInformation.bookingId + '/' + 'reviewId'] = reviewId;
+
+            db.ref().update(updates).then(function () {
+                alert('Your review has been submitted successfully!');
+            });
+        }
+    };
+
+    $scope.review = function() {
+        var updates = {};
+        updates['bookings/' + $scope.bookingInformation.bookingId + '/' + 'status'] = 'Availed';
+        updates['userBookings/' + localStorage.getItem('uid') + '/Availed/' + $scope.bookingInformation.bookingId] = true;
+        updates['vendorBookings/' + $scope.bookingInformation.vendorId + '/Availed/' + $scope.bookingInformation.bookingId] = true;
+        db.ref().update(updates).then(function () {
+            db.ref('userBookings/' + localStorage.getItem('uid') + '/active').remove().then(function () {
+                db.ref('vendorBookings/' + $scope.bookingInformation.vendorId + '/active').remove()
+            })
+            $ionicLoading.hide();
+            alert('Your review has been submitted successfully!');
+        });
     };
 
     $scope.notAvailed = function(){
@@ -77,7 +163,6 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state){
         updates['bookings/'+$scope.bookingInformation.bookingId+'/'+'status'] = 'notAvailed';
         updates['userBookings/'+localStorage.getItem('uid')+'/notAvailed/'+$scope.bookingInformation.bookingId] = true;
         updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/notAvailed/'+$scope.bookingInformation.bookingId] = true;
-        console.log(updates);
         db.ref().update(updates).then(function(){
         db.ref('userBookings/'+localStorage.getItem('uid')+'/active').remove().then(function() {
             db.ref('vendorBookings/'+$scope.bookingInformation.vendorId+'/active').remove()

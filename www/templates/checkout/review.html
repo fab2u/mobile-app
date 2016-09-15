@@ -1,0 +1,20 @@
+<ion-modal-view class="modal-view">
+    <ion-header-bar>
+        <h1 class="title modal-title">Rate Now</h1>
+        <a class="button button-balanced" ng-click="rate_vendor.hide()"><span class="icon ion-ios-close"></span></a>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="card padding" id="rateNow">
+            <div class="padding">
+                <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+            </div>
+            <h4>Write your review</h4>
+            <label class="item item-input">
+                <textarea rows="4" cols="50" name="customerReview" ng-model="custReview.review"></textarea>
+            </label>
+            <button class="button button-block button-dark" ng-click="storeReview();rate_vendor.hide();">
+                SUBMIT
+            </button>
+        </div>
+    </ion-content>
+</ion-modal-view>

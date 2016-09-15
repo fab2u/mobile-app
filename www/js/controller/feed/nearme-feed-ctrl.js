@@ -1,17 +1,17 @@
 app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoading', function($scope, $timeout, $stateParams, $ionicLoading){
 
-   $scope.cityName = $stateParams.cityName;
-	console.log($scope.cityName);
-
    $ionicLoading.show();
 	var uid = window.localStorage.getItem("uid");
-	console.log(uid);
-   $scope.events2 = [];
+   console.log(uid);
 
 	$scope.moreMessagesScroll = true;
 	$scope.moreMessagesRefresh = true;
 
-	$scope.goBack = function(){
+   $scope.cityId = $stateParams.cityId;
+   console.log($scope.cityId);
+   $scope.blogIdList = {};
+
+   $scope.goBack = function(){
 		history.back();
 	}
 
@@ -22,7 +22,7 @@ app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicL
 	$scope.likeThisFeed = function(feedId){
 		if($("#"+feedId+"-likeFeed").hasClass('clicked')){
 			console.log('inside remove');
-			var result = $.grep($scope.events2, function(e){ return e.blog_id == feedId; });
+			var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
 			console.log(result);
 			result[0].numLikes -= 1;
 			db.ref("blogs/"+feedId+"/likedBy/"+$scope.uid).remove().then(function(){
@@ -32,7 +32,7 @@ app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicL
 		}
 		else {
 			console.log(feedId, $scope.uid);
-			var result = $.grep($scope.events2, function(e){ return e.blog_id == feedId; });
+			var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
 			console.log(result);
 			if(result[0].numLikes == undefined){
 				result[0].numLikes = 0;
@@ -50,85 +50,149 @@ app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicL
 		});
 	}
 
-   $scope.loadMore = function(){
+   $scope.doRefresh = function(){
+		console.log('pull to refresh');
+		db.ref("cityBlogs/"+$scope.cityId+"/blogs").orderByKey().startAt($scope.topKey).once("value", function(snapshot){
+			console.log(snapshot.val());
+			if(snapshot.numChildren() == 1){
+				console.log('one child');
+				$scope.moreMessagesRefresh = false;
+			}
+			else{
+				console.log(snapshot.val());
+				$scope.prevTopKey = $scope.topKey;
+				$scope.topKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1];
+				var single_blog = {};
+				for(var i in snapshot.val()){
+					// console.log(i); // i is the key of blogs object or the id of each blog
+					if (i != $scope.prevTopKey){
+						var blogData = db.ref().child("blogs").child(i);
+						blogData.once("value", function(snap){ //access individual blog
+							// console.log(snap.val());
+							single_blog = snap.val();
+							single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+							db.ref("users/data/"+single_blog.user.user_id+"/photoUrl").once("value", function(snap){
+								console.log(snap.val());
+								single_blog.profilePic = snap.val();
+							});
+							// $timeout(function () {
+							// 	jdenticon.update("#"+snap.val().blog_id, md5(snap.val().user.user_id));
+							// }, 0);
+							if(single_blog.likedBy){
+								count = Object.keys(single_blog.likedBy).length;
+								console.log(single_blog.likedBy);
+								console.log(count);
+								single_blog['numLikes'] = count;
+								if($scope.uid in single_blog.likedBy){
+									$timeout(function () {
+										$("#"+i+"-likeFeed").addClass("clicked");
+									}, 1000);
+								}
+							}
+							$scope.blogArr.push(single_blog);
+							// console.log($scope.blogArr);
+						});
+					}
+				}
+			}
+			$scope.$broadcast('scroll.refreshComplete');
+		})
+	}
 
-		if($scope.events2.length > 0){
-			console.log($scope.bottomKey);
-			db.ref("blogs").orderByChild('city_name').equalTo('Gurgaon').limitToFirst(5).endAt($scope.bottomKey).once("value", function(snap){
-				console.log(snap.numChildren(), $scope.moreMessagesScroll);
+	$scope.loadMore = function(){
+		console.log(Object.keys($scope.blogIdList).length);
+		if(Object.keys($scope.blogIdList).length > 0){
+			db.ref("cityBlogs/"+$scope.cityId).orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){
+				console.log(snap.val());
 				if(snap.numChildren() == 1){
 					$scope.moreMessagesScroll = false;
 					$scope.$broadcast('scroll.infiniteScrollComplete');
 				}
 				else{
-					console.log(snap.val());
 					console.log($scope.bottomKey);
 					$scope.oldBottomKey = $scope.bottomKey;
-					console.log(Object.keys(snap.val())[0]);
 					$scope.bottomKey = Object.keys(snap.val())[0];
-					angular.forEach(snap.val(), function(value, key){
-						if(key != $scope.oldBottomKey){
-							value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-							value.profilePic = 'img/person.jpg';
-							// $timeout(function () {
-							// 	jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
-							// }, 0);
-							if(value.likedBy){
-								count = Object.keys(value.likedBy).length;
-								console.log(value.likedBy);
-								console.log(count);
-								value['numLikes'] = count;
-								if($scope.uid in value.likedBy){
-									$timeout(function () {
-										$("#"+key+"-likeFeed").addClass("clicked");
-									}, 1000);
+					console.log($scope.bottomKey);
+					for(var i in snap.val()){
+						// console.log(i); // i is the key of blogs object or the id of each blog
+						if (i != $scope.oldBottomKey){
+							var blogData = db.ref().child("blogs").child(i);
+							blogData.once("value", function(snap){ //access individual blog
+								single_blog = snap.val();
+								single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+								db.ref("users/data/"+single_blog.user.user_id+"/photoUrl").once("value", function(snap){
+									// console.log(snap.val());
+									single_blog.profilePic = snap.val();
+								});
+								// $timeout(function () {
+								// 	jdenticon.update("#"+snap.val().blog_id, md5(snap.val().user.user_id));
+								// }, 0);
+								if(single_blog.likedBy){
+									count = Object.keys(single_blog.likedBy).length;
+									console.log(single_blog.likedBy);
+									console.log(count);
+									single_blog['numLikes'] = count;
+									if($scope.uid in single_blog.likedBy){
+										$timeout(function () {
+											$("#"+i+"-likeFeed").addClass("clicked");
+										}, 1000);
+									}
 								}
-							}
-							$scope.events2.push(value);
+								$scope.blogArr.push(single_blog);
+							});
 						}
-					});
+					}
 					$scope.$broadcast('scroll.infiniteScrollComplete');
 				}
 			});
 		}
-		else if($scope.events2.length == 0){
-			db.ref("blogs").orderByChild('city_name').equalTo('Gurgaon').limitToLast(5).once("value", function(snapshot){
+		else if(Object.keys($scope.blogIdList).length == 0){
+			console.log("length = 0");
+         console.log($scope.cityId);
+			db.ref("cityBlogs/"+$scope.cityId).limitToLast(25).once('value', function(snapshot){
 				$ionicLoading.hide();
-				console.log(snapshot.val());
-				// console.log(Object.keys(snapshot.val())[0]);
-				$scope.bottomKey = Object.keys(snapshot.val())[0];
-				// console.log(Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1]);
-				$scope.topKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1];
-				// console.log($scope.bottomKey, $scope.topKey);
-				angular.forEach(snapshot.val(), function(value, key){
-					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-					// console.log(value.user.user_id);
-					db.ref("users/data/"+value.user.user_id+"/photoUrl").once("value", function(snap){
-						// console.log(snap.val());
-						value.profilePic = snap.val();
-					});
-					// $timeout(function () {
-					// 	console.log(value.user.user_id, value.blog_id);
-					// 	jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
-					// }, 0);
-					if(value.likedBy){
-						count = Object.keys(value.likedBy).length;
-						console.log(value.likedBy);
-						console.log(count);
-						value['numLikes'] = count;
-						if($scope.uid in value.likedBy){
-							$timeout(function () {
-								$("#"+key+"-likeFeed").addClass("clicked");
-							}, 1000);
+            console.log(snapshot.val());
+				$scope.blogIdList = snapshot.val();
+				console.log($scope.blogIdList);
+				$scope.bottomKey = Object.keys($scope.blogIdList)[0];
+				console.log(Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1]);
+				$scope.topKey = Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1];
+				console.log($scope.bottomKey);
+				$scope.blogArr = [];
+				for(var i in $scope.blogIdList){
+					console.log(i); // i is the key of blogs object or the id of each blog
+					var blogData = db.ref().child("blogs").child(i);
+					blogData.once("value", function(snap){ //access individual blog
+						console.log(snap.val());
+						single_blog = snap.val();
+						single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+						db.ref("users/data/"+single_blog.user.user_id+"/photoUrl").once("value", function(snap){
+							// console.log(snap.val());
+							single_blog.profilePic = snap.val();
+						});
+						// $timeout(function () {
+						// 	jdenticon.update("#"+snap.val().blog_id, md5(snap.val().user.user_id));
+						// }, 0);
+						if(single_blog.likedBy){
+							count = Object.keys(single_blog.likedBy).length;
+							console.log(single_blog.likedBy);
+							console.log(count);
+							single_blog['numLikes'] = count;
+							if($scope.uid in single_blog.likedBy){
+								console.log('inside if for clicked class', i);
+								$("#"+i+"-likeFeed").addClass("clicked");
+								$timeout(function () {
+									$("#"+i+"-likeFeed").addClass("clicked");
+								}, 1000);
+							}
 						}
-					}
-					$scope.events2.push(value);
-				});
+						$scope.blogArr.push(single_blog);
+						// console.log($scope.blogArr);
+					});
+				}
 				$timeout(function () {
 				}, 0);
-			}, function(errorObject){
-				console.log(errorObject);
-			});
+			})
 		}
 	}
 	$scope.$on('$stateChangeSuccess', function() {

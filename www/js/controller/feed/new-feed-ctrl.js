@@ -36,6 +36,8 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
    console.log(uname);
    var blogData;
 
+   var locDetails = JSON.parse(localStorage.getItem('selectedLocation'));
+
    $scope.goBack = function(){
 		history.back();
 	}
@@ -55,7 +57,8 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
          },
          active: true,
          created_time: new Date().getTime(),
-         city_name: JSON.parse(localStorage.getItem('selectedLocation')).cityName
+         city_id: locDetails.cityId,
+         city_name: locDetails.cityName
       };
       alert($scope.image_url)
       // blogData['photoUrl'] = $scope.image_url;
@@ -74,6 +77,7 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
       // blog object update without tags, functional
       var updateBlog = {};
       updateBlog['/blogs/' + newBlogKey] = blogData;
+      updateBlog['/cityBlogs/'+blogData.city_id+"/blogs/"+newBlogKey] = true;
       console.log(updateBlog);
       db.ref().update(updateBlog);
       alert('2');

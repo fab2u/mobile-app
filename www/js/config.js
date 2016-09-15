@@ -273,7 +273,7 @@ app
 			}
 		})
 		.state('nearmeFeed', {
-			url: '/nearme-feed/:cityName',
+			url: '/nearme/:cityId',
 			templateUrl: 'templates/feed/nearme-feed.html',
 			controller: 'nearmeFeedCtrl',
 			resolve: {

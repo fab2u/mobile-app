@@ -271,6 +271,16 @@ app
 					return AuthenticationService.checkAuthentication();
 				}
 			}
+		})
+		.state('nearmeFeed', {
+			url: '/nearme-feed/:cityName',
+			templateUrl: 'templates/feed/nearme-feed.html',
+			controller: 'nearmeFeedCtrl',
+			resolve: {
+				currentAuth: function(AuthenticationService){
+					return AuthenticationService.checkAuthentication();
+				}
+			}
 		});
 
 	// $urlRouterProvider.otherwise('/app-start');
@@ -282,5 +292,3 @@ app
 		$urlRouterProvider.otherwise("/app-start");
 	}
 });
-
-

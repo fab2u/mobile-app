@@ -55,6 +55,7 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
          },
          active: true,
          created_time: new Date().getTime(),
+         city_name: JSON.parse(localStorage.getItem('selectedLocation')).cityName
       };
       alert($scope.image_url)
       // blogData['photoUrl'] = $scope.image_url;

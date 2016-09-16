@@ -386,7 +386,8 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 					'amount': bookingDetails.walletAmount,
 					'transactionId': walletTransactionId,
 					'bookingId': bookingDetails.bookingId,
-					'usedAt': bookingDetails.createdDate
+					'usedAt': bookingDetails.createdDate,
+					'type':''
 				}
 				updates['userWallet/data/' + userId+'/debit/'+walletTransactionId] = transactionDetail;
 			}

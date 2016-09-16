@@ -9,7 +9,9 @@
 
         <div ng-repeat ="booking in allBookings">
           <div class="main-cont">
-            <div class="first-cont"></div>
+            <div class="first-cont">
+            <b>Status: {{booking.userStatus}}</b>
+            </div>
             <div class="second-cont">
                  <div id = "salon">{{booking.salonName}} </div>
                 <div id ="landmark" >{{bookingAddress.landmark}}</div>
@@ -21,8 +23,8 @@
           </div>
           <div class = "button-bar myButtonsDiv">
               <!-- <button class = "button button-positive">CANCEL</button> -->
-              <button class = "button" id="cancel" ng-click="bookingCancel(booking.bookingId)"
-                      ng-if="activeBookingId == booking.bookingId">CANCEL</button>
+              <!--<button class = "button" id="cancel" ng-click="bookingCancel(booking.bookingId)"-->
+                      <!--ng-if="activeBookingId == booking.bookingId">CANCEL</button>-->
               <button class = "button" id="details" >VIEW DETAILS</button>
           </div>
         </div>

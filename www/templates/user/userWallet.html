@@ -16,7 +16,7 @@
     				<p>WALLET BALANCE: </p>
     			</div>
     			<div class="col col-30">
-    				&#x20B9; {{userWalletInfo.amount}}
+    				&#x20B9; {{amount}}
     			</div>
     		</div>
     		<div class="walletDescription">
@@ -32,7 +32,7 @@
     				</div>
     			</div>
     			<ion-scroll  direction="y"  has-bouncing="false" style="height:160px;">
-                	<div class="row allTransactions" ng-repeat="transaction in userWalletInfo.discountCoupons">
+                	<div class="row allTransactions" ng-repeat="transaction in walletHistory">
                     	<div class="col col-60 detail">
         					<!--<p>{{transaction.name}}({{transaction.BookingId}})<p>-->
         					<p>{{transaction.bookingId}}<p>

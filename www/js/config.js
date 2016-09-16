@@ -252,8 +252,12 @@ app
 
 	// $urlRouterProvider.otherwise('/app-start');
 
-
-	if(window.localStorage.getItem('SkipIntro')== "true"){
+	var hasCurrentBooking = checkLocalStorage('currentBooking');
+	console.log("hasCurrentBooking",hasCurrentBooking);
+	if(hasCurrentBooking == true){
+		$urlRouterProvider.otherwise("/bill");
+	}
+	else if(window.localStorage.getItem('SkipIntro')== "true"){
 		$urlRouterProvider.otherwise("/app/home");
 	}else{
 		$urlRouterProvider.otherwise("/app-start");

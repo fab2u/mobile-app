@@ -40,14 +40,16 @@ app.controller('LoginCtrl', ['$scope', 'AuthenticationService', '$ionicPopup','$
                 else{
                     $state.go('app.home');
                 }
-                $ionicLoading.show();
+                $ionicLoading.hide();
             }
         })
             .catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-            alert(errorMessage);
+                $ionicLoading.hide();
+
+                alert(errorMessage);
 
                 // ...
         });

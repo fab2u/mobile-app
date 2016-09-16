@@ -156,6 +156,8 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         updates['userBookings/' + localStorage.getItem('uid') + '/' + $scope.bookingInformation.bookingId] = 'Availed';
         updates['vendorBookings/' + $scope.bookingInformation.vendorId + '/' + $scope.bookingInformation.bookingId] = 'Availed';
         db.ref().update(updates).then(function () {
+            window.localStorage['currentBooking'] = '';
+            $state.go('app.home');
             $ionicLoading.hide();
             alert('Your review has been submitted successfully!');
         });
@@ -168,6 +170,8 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'notAvailed';
         updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'notAvailed';
         db.ref().update(updates).then(function(){
+            window.localStorage['currentBooking'] = '';
+            $state.go('app.home');
             $ionicLoading.hide();
             alert('Thank you for updating your booking status!')
         });
@@ -204,12 +208,25 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         var updates = {};
         if(($scope.thisCancelTime == $scope.thisBookingTime) || ($scope.thisCancelTime < $scope.thisBookingTime)){
             console.log("refund wallet money if used");
+            if($scope.bookingInformation.walletAmount > 0){
+                var walletTransactionId = db.ref('userWallet/data/' + localStorage.getItem('uid')+'/credit').push().key;
+                var transactionDetail = {
+                    'amount': $scope.bookingInformation.walletAmount,
+                    'transactionId': walletTransactionId,
+                    'bookingId': $scope.bookingInformation.bookingId,
+                    'creditDate': new Date().getTime(),
+                    'type':'userCancelled'
+                };
+                updates['userWallet/data/' + localStorage.getItem('uid')+'/credit/'+walletTransactionId] = transactionDetail;
+            }
             updates['bookings/'+$scope.bookingInformation.bookingId+'/'+'userStatus'] = 'cancel';
             updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancel';
             updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancel';
             db.ref().update(updates).then(function(){
+                window.localStorage['currentBooking'] = '';
+                $state.go('app.home');
                 $ionicLoading.hide();
-                alert('Thank you for canceling your booking!')
+                alert('Thank you, your appointment has been cancelled!')
             });
         }
         else{
@@ -217,6 +234,8 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
             updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancel';
             updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancel';
             db.ref().update(updates).then(function(){
+                window.localStorage['currentBooking'] = '';
+                $state.go('app.home');
                 $ionicLoading.hide();
                 alert('Thank you for canceling your booking!')
             });

@@ -1,6 +1,62 @@
 app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ionicLoading,$ionicPopup,
                                       $timeout,$rootScope){
     $scope.generatedCode = '';
+    $scope.myReferral = '';
+
+
+    //// To generate my referral code    //////////////////
+
+    function getReferralCode(fname, lname) {
+        var refchar;
+        var refnum;
+        if(lname == undefined || lname == null){
+            lname = '';
+        }
+        // console.log(fname);
+        fname = replaceSpaces(fname);
+        var fnameLength = fname.length;
+        // console.log(fname);
+        if (fnameLength > 4) {
+            refchar = fname.substring(0, 4);
+            refnum = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+            $scope.myReferral = refchar + refnum;
+        } else {
+            if(fnameLength < 4){
+                refchar = fname.substring(0, fnameLength) + lname.substring(0, (4 - fnameLength));
+                var x = 8 - refchar.length;
+                console.log("x",x)
+                for(x, y = "", i = 0; i < x; ++i, y += Math.floor(Math.random()*9));
+                refnum = parseInt(y);
+                $scope.myReferral = refchar + refnum;
+            }
+            else{
+                refchar = fname.substring(0, fnameLength) + lname.substring(0, (4 - fnameLength));
+                refnum = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+                $scope.myReferral = refchar + refnum;
+            }
+        }
+
+    }
+    function replaceSpaces(str){
+        var mystring = str;
+        var newchar = ' '
+        mystring = mystring.split('.').join(newchar);
+        mystring = mystring.replace(/ /g,'')
+        return mystring;
+    }
+
+    $scope.generateMyReferralCode = function(name){
+        var res = name.split(" ");
+        var firstName = res[0];
+        var lastName = res[1];
+        console.log(res,firstName,lastName);
+        getReferralCode(firstName,lastName);
+    };
+
+
+
+
+    //////////////// end my referral code generation function /////////////
 
     if((ionic.Platform.isIOS() == true)|| (ionic.Platform.isIPad() == true)||(ionic.Platform.isAndroid() ==true)){
         firebase.database().ref('deviceInformation/Registered/'+$cordovaDevice.getDevice().uuid).once('value',function(response){
@@ -16,20 +72,6 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
     else{
         console.log("else")
     }
-
-    // deviceInformation for Registered user
-        // firebase.database().ref('deviceInformation/Registered/'+$cordovaDevice.getDevice().uuid).once('value',function(response){
-        //     console.log("device_list",JSON.stringify(response.val().registeredUsers));
-        //     if(response.val().registeredUsers){
-        //         $scope.user_device_register = true;
-        //     console.log("if")
-        // }
-        // else{
-        //         $scope.user_device_register = false;
-        //
-        //         console.log("else")
-        // }
-        // });
 
    $scope.user = {
       name: '',
@@ -73,6 +115,8 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
             $scope.uid = data.uid;
             if($scope.uid){
                 $scope.sendVerification();
+                $scope.generateMyReferralCode($scope.user.name);
+
                 $ionicLoading.hide();
 
             }
@@ -151,27 +195,6 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
             $scope.showOTPfield = true;
             $scope.showPopup();
         })
-        // }).success(function(response){
-        //     $ionicLoading.hide();
-        //     console.log(response);
-        //     if(response.StatusCode == 200){
-        //         $scope.otp = response.OTP;
-        //         storedOTP.push($scope.otp);
-        //         window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
-        //         $ionicPopup.alert({
-        //             title: 'Verification Code Sent',
-        //             template: 'We have sent a verification code to your registered mobile number'
-        //         }).then(function(){
-        //             $scope.showOTPfield = true;
-        //             $scope.showPopup();
-        //         })
-        //     } else {
-        //         $ionicPopup.alert({
-        //             title: 'Verification Code not sent',
-        //             template: 'An error occurred. Please try again later.'
-        //         });
-        //     }
-        // })
     };
     $scope.showPopup = function() {
             $scope.data = {};
@@ -210,6 +233,11 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
         var verified = false;
         for(var i = 0; i < storedOTP.length; i++){
             console.log($scope.newOtp.code, parseInt(storedOTP[i]));
+            console.log("myReferral",$scope.myReferral);
+            if($scope.myReferral.length != 8){
+                $scope.generateMyReferralCode();
+            }
+
             if($scope.newOtp.code == parseInt(storedOTP[i])){
                     verified = true;
                     $ionicPopup.alert({
@@ -217,13 +245,23 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                     }).then(function(){
                         window.localStorage.setItem('mobile_verify','true');
                         var userData = {
+                            activeFlag:true,
+                            createdTime:new Date().getTime(),
+                            deviceId: $cordovaDevice.getDevice().uuid,
+                            email:{
+                                userEmail:$scope.user.email,
+                                verifiedTime:'',
+                                emailFlag:false
+                            },
+                            mobile:{
+                                mobileNum: $scope.user.mobile_num,
+                                mobileFlag:true
+                            },
+                            myReferralCode:$scope.myReferral,
                             name: $scope.user.name,
-                            email: $scope.user.email,
-                            mobileNum: $scope.user.mobile_num,
                             referralCode: $scope.user.referral_code,
+                            userId:$scope.uid,
                             gender: $scope.user.gender,
-                            mobileNumFlag:'true',
-                            deviceId: $cordovaDevice.getDevice().uuid
                         }
                         firebase.database().ref('users/data/'+$scope.uid)
                             .set(userData,function(response) {
@@ -239,25 +277,6 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                                     alert('Try again!');
                                 }
                             })
-
-
-
-                        // $http.post("http://139.162.27.64/api/addUser", userData)
-                        //    .success(function(response){
-                        //       if(response.StatusCode == 200){
-                        //          alert(response.Message);
-                        //       }
-                        //       else if(response.StatusCode == 400){
-                        //           alert(response.Message);
-                        //       }
-                        //       else{
-                        //          alert('some thing went wrong!');
-                        //       }
-                        //    })
-                        //    .error(function(response){
-                        //       console.log("error");
-                        //       console.log(response);
-                        //  });
                     })
 
             }

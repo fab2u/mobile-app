@@ -21,7 +21,9 @@
           <div class = "custom-border padding class"><b>Time</b>: {{bookingInformation.appointmentTime}}</div>
           <div class = "custom-border padding class"><b>Date</b>: {{bookingInformation.appointmentDate}}</div>
           <p align = "center" ng-show="cancelButton">
-              <button class = "button button-assertive button-small custom-button" ng-click="home()">CANCEL</button>
+              <button class = "button button-assertive button-small custom-button" ng-click="cancel()">CANCEL</button>
+              <br>
+              <b> * wallet amount only refundable, if booking is cancelled before 2 hour of appointment time.</b>
           </p>
             <p align = "center" ng-hide="cancelButton">
               <div class="row">

@@ -32,10 +32,18 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         } else {
             var res = $scope.bookingInformation.appointmentTime.split(":");
             var hh = res[0];
-            hh = parseInt(hh)+12;
-            time= hh+':'+res[1];
-            time = time.substring(0, time.length-2);
-            console.log("time in case of pm",time);
+            console.log("hh",hh);
+            if(hh == 12){
+                time= hh+':'+res[1];
+                time = time.substring(0, time.length-2);
+                console.log("time in case of pm with 12",time);
+            }
+            else{
+                hh = parseInt(hh)+12;
+                time= hh+':'+res[1];
+                time = time.substring(0, time.length-2);
+                console.log("time in case of pm",time);
+            }
         }
         $scope.thisBookingTime = toTimestamp(date + ' ' + time);
         console.log("time stamp",$scope.thisBookingTime);
@@ -101,7 +109,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         $scope.custReview ={
             review:'',
             rating: 0
-        }
+        };
         $scope.rate_vendor.show();
     };
 
@@ -163,6 +171,58 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
             $ionicLoading.hide();
             alert('Thank you for updating your booking status!')
         });
+    };
+
+    //////    To check time of cancellation of booking is less than two hour of appointment time ////////////
+    $scope.fromDate = new Date();
+    $scope.monthName = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+    $scope.getTimeFormat = function () {
+
+        var bookDateForAppointment = $scope.fromDate.getDate()+'-'+$scope.monthName[$scope.fromDate.getMonth()]+'-'+$scope.fromDate.getFullYear();
+
+        /// add '1' for difference of 1 hour from right now time ////////
+        $scope.timeTobe = (new Date().getHours()+2)+':'+new Date().getMinutes();
+
+        $scope.thisCancelTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
+
+        console.log("thisCancelTime", $scope.thisCancelTime)
+    };
+
+    //  To calculate the time stamp for selected date and and current time  ////
+
+
+    function toTimestamp(thisBookingTime) {
+        var datum = Date.parse(thisBookingTime);
+        return datum;
+    }
+
+    $scope.getTimeFormat();
+
+    $scope.cancel = function(){
+        $ionicLoading.show();
+        var updates = {};
+        if(($scope.thisCancelTime == $scope.thisBookingTime) || ($scope.thisCancelTime < $scope.thisBookingTime)){
+            console.log("refund wallet money if used");
+            updates['bookings/'+$scope.bookingInformation.bookingId+'/'+'userStatus'] = 'cancel';
+            updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancel';
+            updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancel';
+            db.ref().update(updates).then(function(){
+                $ionicLoading.hide();
+                alert('Thank you for canceling your booking!')
+            });
+        }
+        else{
+            updates['bookings/'+$scope.bookingInformation.bookingId+'/'+'userStatus'] = 'cancel';
+            updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancel';
+            updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancel';
+            db.ref().update(updates).then(function(){
+                $ionicLoading.hide();
+                alert('Thank you for canceling your booking!')
+            });
+            console.log('no refund for wallet money if used')
+        }
+
     };
 
 

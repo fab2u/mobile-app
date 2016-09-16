@@ -81,7 +81,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	            template: 'Loading...'
 	        })
 	        firebase.database().ref('userWallet/data/' + userId).once('value', function(response) {
-	        	console.log(response.val()+'wallet info');
+	        	console.log(JSON.stringify(response.val().credit)+'wallet info');
 	        	var debitAmount = 0;
 	        	var creditAmount = 0;
 	        	if(response.val()){
@@ -92,6 +92,8 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	        		}
 	        		if(response.val().credit){
 	        			angular.forEach(response.val().credit, function(value, key){
+	        				console.log("value",value);
+	        				console.log("key",key);
 	        				creditAmount = creditAmount+ value.amount;
 	        			})
 	        		}

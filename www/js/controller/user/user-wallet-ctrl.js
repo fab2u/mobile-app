@@ -6,23 +6,8 @@ app.controller('UserWalletCtrl',function($scope,$state,$ionicLoading){
 
 	$scope.getWalletInfo = function () {
 		$ionicLoading.show();
-		// firebase.database().ref('userWallet/data/' + localStorage.getItem('uid')).once('value', function (response) {
-		// 	$scope.userWalletInfo = response.val();
-        //
-		// 	console.log("user wallet info",JSON.stringify($scope.userWalletInfo))
-        //
-		// 	if($scope.userWalletInfo){
-		// 		$ionicLoading.hide();
-		// 	}
-		// 	else{
-		// 		$ionicLoading.hide();
-		// 	}
-		// })
-
 		firebase.database().ref('userWallet/data/' + localStorage.getItem('uid')).once('value', function(response) {
 			$scope.userWalletInfo = response.val().debit;
-
-			console.log(JSON.stringify(response.val()));
 			var debitAmount = 0;
 			var creditAmount = 0;
 			if(response.val()){
@@ -52,8 +37,6 @@ app.controller('UserWalletCtrl',function($scope,$state,$ionicLoading){
 		})
 	};
 	$scope.getWalletInfo();
-
-	console.log('user wallet',$scope.walletHistory);
 
 	$scope.transactions = [
 		{name: 'Arpit Mittal', id: 'AB23CD', date: '14th Jan 2016', amount: '200'},

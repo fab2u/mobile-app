@@ -1,5 +1,5 @@
-app.controller('LoginCtrl', ['$scope', 'AuthenticationService', '$ionicPopup','$ionicHistory','$state','$ionicLoading',
-    function($scope, AuthenticationService, $ionicPopup,$ionicHistory,$state,$ionicLoading){
+app.controller('LoginCtrl',
+    function($scope, AuthenticationService, $ionicPopup,$ionicHistory,$state,$ionicLoading,$rootScope){
 
 	AuthenticationService.Logout();
 
@@ -9,35 +9,20 @@ app.controller('LoginCtrl', ['$scope', 'AuthenticationService', '$ionicPopup','$
     };
 
 	$scope.loginEmail = function(){
-        $ionicLoading.show({
-            template: 'Loading...'
-        });
-		// console.log($scope.user.user_email, $scope.user.user_password);
-      // AuthenticationService.LoginEmail($scope.user.user_email, $scope.user.user_password, function(result){
-      //    console.log(result);
-      //    if(result === true){
-      //        alert('logged in successfully!')
-      //       console.log(result);
-      //    }
-      //    else{
-      //       console.log("result = false, error in login");
-            // $mdToast.show(
-            //    $mdToast.simple()
-            //      .textContent("Successfully Logged Out!")
-            //      .hideDelay(3000)
-            // );
-      //    }
-      // });
-
+        $ionicLoading.show();
         firebase.auth().signInWithEmailAndPassword($scope.user.user_email, $scope.user.user_password).then(function(response){
             window.localStorage.setItem("email", response.email);
             window.localStorage.setItem("uid", response.uid);
             if(response.uid){
                 if(localStorage.getItem('confirmation') == 'true'){
                     localStorage.setItem('confirmation', '');
+                    alert("Logged in successfully!");
+                    $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
                     $state.go('confirmation');
                 }
                 else{
+                    alert("Logged in successfully!");
+                    $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
                     $state.go('app.home');
                 }
                 $ionicLoading.hide();
@@ -102,4 +87,4 @@ app.controller('LoginCtrl', ['$scope', 'AuthenticationService', '$ionicPopup','$
      });
    };
 
-}]);
+});

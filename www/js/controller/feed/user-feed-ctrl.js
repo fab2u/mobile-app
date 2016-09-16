@@ -1,9 +1,13 @@
-app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$ionicLoading', function($scope, $timeout, $stateParams, $ionicLoading){
+app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location', '$ionicLoading', function($scope, $timeout, $stateParams, $location, $ionicLoading){
 
 	$ionicLoading.show();
 
 	$scope.goBack = function(){
 		history.back();
+	}
+
+	$scope.createNew = function(){
+		$location.path("/new-feed");
 	}
 
 	$timeout(function () {

@@ -9,6 +9,7 @@
       <a class="button icon ion-chevron-left button-clear" ng-click="goBack()"></a>
       <h1 class="title">{{tagName}}</h1>
    </ion-header-bar>
+   <ion-floating-button click="createNew()" has-footer="false" button-color="#FF8386" icon="ion-plus" icon-color="#fff"></ion-floating-button>
 	<ion-content class="has-header">
 		<ion-refresher pulling-text="Loading New Feed" on-refresh="doRefresh()"></ion-refresher>
 		<div class="feeds" ng-repeat="feed in blogArr | orderBy:'-created_time'">

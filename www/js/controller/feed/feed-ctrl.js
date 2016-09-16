@@ -1,4 +1,4 @@
-app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($scope, $timeout, $ionicLoading){
+app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', function($scope, $timeout, $location, $ionicLoading){
 
 	$ionicLoading.show();
 
@@ -11,6 +11,10 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$ionicLoading', function($sco
 
 	$scope.goBack = function(){
 		history.back();
+	}
+
+	$scope.createNew = function(){
+		$location.path("/new-feed");
 	}
 
 	$timeout(function () {

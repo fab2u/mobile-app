@@ -1,4 +1,4 @@
-app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$ionicLoading', function($scope, $stateParams, $timeout, $ionicLoading){
+app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location', '$ionicLoading', function($scope, $stateParams, $timeout, $location, $ionicLoading){
 
 	$ionicLoading.show();
 	$scope.uid = window.localStorage.getItem("uid");
@@ -12,6 +12,10 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$ionicLoad
 
 	$scope.goBack = function(){
 		history.back();
+	}
+
+	$scope.createNew = function(){
+		$location.path("/new-feed");
 	}
 
 	$timeout(function () {

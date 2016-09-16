@@ -1,9 +1,10 @@
-app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $timeout,$ionicPopup) {
+app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $timeout,$ionicPopup,$rootScope) {
 	$ionicLoading.show();
 	var loggedIn = checkLocalStorage('uid');
 	$scope.goBack = function(){
+		console.log("ddd")
 		$state.go('dateTime');
-	}
+	};
 	if(!loggedIn){
 		console.log('logged out');
 		localStorage.setItem('confirmation', true);
@@ -410,10 +411,15 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 			updates['cityBookings/'+locationInfo.cityId+'/'+vendorId+'/'+bookingDetails.bookingId] = true;
 			updates['vendorBookings/'+vendorId+'/'+bookingDetails.bookingId] = 'active';
 			console.log(updates);
+
 			db.ref().update(updates).then(function(){
 				$ionicLoading.hide();
 				window.localStorage['currentBooking'] = JSON.stringify(bookingDetails);
+				// localStorage.setItem('BegItems', '');
+				// localStorage.setItem('slectedItem', '');
+				// $rootScope.$broadcast('cart', { message: 'cart length changed' });
 				$state.go('bill');
+				alert('Booking confirmed!')
 				console.log('booking successful');
 			});
 		}

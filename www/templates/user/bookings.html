@@ -7,7 +7,11 @@
       
       <ion-content>
 
-        <div ng-repeat ="booking in allBookings">
+          <div ng-hide="allBookings">
+              Sorry, no bookings found!
+          </div>
+
+        <div ng-show="allBookings" ng-repeat ="booking in allBookings">
           <div class="main-cont">
             <div class="first-cont">
             <b>Status: {{booking.userStatus}}</b>

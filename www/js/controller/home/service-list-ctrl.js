@@ -13,14 +13,12 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
         $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItems'));
         $scope.categoryItems = JSON.parse(localStorage.getItem('catItems'));
 
-        // $scope.cart_item = _.size($scope.selectedServices);
     }
 
     $rootScope.$on('category', function (event, args) {
         $scope.message = args.message;
         $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItems'));
         $scope.categoryItems = JSON.parse(localStorage.getItem('catItems'));
-        // $scope.cart_item = _.size($scope.selectedServices);
     });
 
     $scope.backButton = function(){
@@ -296,8 +294,17 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
     };
 
     $scope.findVendors = function() {
-        $state.go('vendorList');
+        var itemLength = _.size($scope.selectedServices);
+        if(itemLength == 0){
+            console.log("items");
+            alert('Please, select some services!')
+        }
+        else{
+          $state.go('vendorList');
+        }
     };
+
+
 
     $scope.tabWithSlideChanged = function (indexNum) {
         $scope.tabActive = true;
@@ -320,8 +327,6 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
         localStorage.setItem('slectedItems', JSON.stringify($scope.selectedServices));
         localStorage.setItem('catItems', JSON.stringify($scope.categoryItems));
         $rootScope.$broadcast('category', { message: 'category length changed' });
-
-
     };
 
 });

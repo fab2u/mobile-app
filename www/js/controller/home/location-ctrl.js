@@ -1,9 +1,7 @@
 app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ionicLoading) {
 
 	$scope.show = function() {
-		$ionicLoading.show({
-			template: 'Loading...'
-		})
+		$ionicLoading.show();
 	};
 	$scope.show();
 

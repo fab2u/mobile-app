@@ -67,7 +67,7 @@ $scope.select_time = function(){
         $state.go('dateTime');
     }
     else{
-        alert('Please, select som e service!')
+        alert('Please, select some service!')
     }
 };
 

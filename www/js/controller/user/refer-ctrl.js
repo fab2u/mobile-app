@@ -13,8 +13,9 @@ app.controller('ReferCtrl', ['$scope', '$state','$cordovaSocialSharing', functio
 	// Referral code sharing over whatsApp//
 
 	$scope.WhatsApp = function () {
+		alert('whatsApp')
 		$cordovaSocialSharing
-			.shareViaWhatsApp(message, image, link)
+			.shareViaWhatsApp('Download the shopping app and use my referral code'+$scope.myReferralCode, '', '')
 			.then(function (result) {
 				// Success!
 			}, function (err) {
@@ -25,8 +26,9 @@ app.controller('ReferCtrl', ['$scope', '$state','$cordovaSocialSharing', functio
 	// Referral code sharing over Facebook//
 
 	$scope.Facebook = function () {
+		alert('fb')
 		$cordovaSocialSharing
-			.shareViaFacebook(message, image, link)
+			.shareViaFacebook('Download the shopping app and use my referral code'+$scope.myReferralCode, '', '')
 			.then(function (result) {
 				// Success!
 			}, function (err) {

@@ -4,10 +4,9 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading){
 	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
 
 	$scope.bookingIds = [];
-
 	$scope.allBookings = [];
 	$scope.activeBookingId = '';
-	
+
 	// All the booking id for cancelled booking and active booking and their detail
 
 	$scope.bookingInfo = function() {

@@ -60,27 +60,27 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
          city_id: locDetails.cityId,
          city_name: locDetails.cityName
       };
-      alert($scope.image_url)
+      // alert($scope.image_url)
       // blogData['photoUrl'] = $scope.image_url;
       if ($scope.image_url != undefined){
-         alert('inside if');
+         // alert('inside if');
          blogData['photoUrl'] = $scope.image_url;
       }
-      alert(blogData.photoUrl)
+      // alert(blogData.photoUrl)
 
       var re = /#(\w+)(?!\w)/g, hashTag, tagsValue = [];
       while (hashTag = re.exec($scope.feed.introduction)) {
          tagsValue.push(hashTag[1]);
       }
       console.log(tagsValue);
-      alert('1');
+      // alert('1');
       // blog object update without tags, functional
       var updateBlog = {};
       updateBlog['/blogs/' + newBlogKey] = blogData;
       updateBlog['/cityBlogs/'+blogData.city_id+"/blogs/"+newBlogKey] = true;
       console.log(updateBlog);
       db.ref().update(updateBlog);
-      alert('2');
+      // alert('2');
       for(var i=0; i<tagsValue.length; i++){
          //tags object update, functional
          var tagsData = db.ref().child("tags").child(tagsValue[i]);
@@ -96,12 +96,12 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
          console.log(updates);
          db.ref().update(updates);
       }
-      alert('3');
+      // alert('3');
       // user object update, functional
       var authUpdate = {};
       authUpdate['/users/data/'+ blogData.user.user_id+ '/blogs/' + newBlogKey] = true;
       console.log(authUpdate);
-      alert('4');
+      // alert('4');
       db.ref().update(authUpdate).then(function(){
          $timeout(function () {
             $location.path("/feed");
@@ -141,7 +141,7 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
          var image = document.getElementById('myImage');
          image.src = imageURI;
          $scope.url = imageURI;
-         alert(JSON.stringify(imageURI)+ 'line number 283, imageURI');
+         // alert(JSON.stringify(imageURI)+ 'line number 283, imageURI');
          resizeImage(imageURI);
       }, function(err) {
          console.log(err);
@@ -149,14 +149,14 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
    };
 
    function resizeImage(source){
-      alert('resizeImage called')
+      // alert('resizeImage called')
       var canvas = document.createElement("canvas");
       var ctx = canvas.getContext("2d");
 
       img = new Image();
-      alert('img '+ img);
+      // alert('img '+ img);
       img.onload = function () {
-         // alert("onload called javascript");
+         alert("onload called javascript");
          canvas.height = canvas.width * (img.height / img.width);
          /// step 1
          var oc = document.createElement('canvas');
@@ -167,27 +167,28 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
          /// step 2
          octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
          ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5, 0, 0, canvas.width, canvas.height);
-         // alert(canvas.width+" "+canvas.height+" "+img.width+" "+img.height);
+         alert(canvas.width+" "+canvas.height+" "+img.width+" "+img.height);
          var dataURL = canvas.toDataURL("image/jpeg");
-         alert('before api 1');
-         alert('dataURL ' + dataURL);
-         alert('before api 2');
+         // alert('before api 1');
+         // alert('dataURL ' + dataURL);
+         // alert('before api 2');
          // change api for fab2u
          $http.post("http://139.162.3.205/api/testupload", {path: dataURL})
          .success(function(response){
-            alert('success');
-            alert(JSON.stringify(response.Message));
+            alert('success: ' + response);
+            // alert('success');
+            // alert(JSON.stringify(response.Message));
             $scope.image_url = response.Message;
-            alert($scope.image_url);
+            // alert($scope.image_url);
             $(".upload").css("display", 'none');
 
          })
          .error(function(response){
-            alert('error');
-            alert(response);
+            alert("error: " + response);
+            // alert('error');
          });
       }
-      alert('source '+ source);
+      // alert('source '+ source);
       img.src = source;
       $(".upload").css("display", 'none');
    }

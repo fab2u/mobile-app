@@ -54,7 +54,7 @@ app.controller('UserWalletCtrl',function($scope,$state,$ionicLoading){
 	};
 
 	$scope.myReferral = function () {
-		$state.go('refer')
+		$state.go('refer');
 	};
 
 });

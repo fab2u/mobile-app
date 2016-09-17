@@ -1,16 +1,20 @@
-app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionicModal','$stateParams',
-    '$state','$cordovaGeolocation',
-    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,$cordovaGeolocation){
+app.controller('VendorDetailsCtrl',
+    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,$cordovaGeolocation,$ionicLoading){
 
       $scope.images =[];
+       $scope.reviewerName = '';
 
-    firebase.database().ref('vendors/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id).once('value',function(response){
-        $scope.vendor_detail = response.val();
-        angular.forEach(response.val().images.gallery, function(value, key) {
-            $scope.images.push({id : key, src:value.url})
+    $scope.vendorDetail = function() {
+        $ionicLoading.show();
+        firebase.database().ref('vendors/' + JSON.parse(window.localStorage['selectedLocation']).cityId + '/' + $stateParams.ven_id).once('value', function (response) {
+            $scope.vendor_detail = response.val();
+            $ionicLoading.hide();
+            angular.forEach(response.val().images.gallery, function (value, key) {
+                $scope.images.push({id: key, src: value.url})
+            });
         });
-    });
-
+    }
+     $scope.vendorDetail();
   $scope.currentValue = 0;
   $scope.liked = false;
 
@@ -32,6 +36,27 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
    //  	$scope.slideIndex = index;
    //    console.log(index);
   	// };
+
+/// To get review for a particular vendor ///////
+        $scope.reviewList = function(){
+            $ionicLoading.show();
+            firebase.database().ref('reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id+'/Reviews').once('value',function(response){
+                $scope.reviews = response.val();
+                if(response.val()){
+                    angular.forEach(response.val(), function(value, key) {
+                        firebase.database().ref('users/data/'+value.userId).once('value',function(response) {
+                            $scope.reviewerName =response.val().name;
+                            $ionicLoading.hide();
+                        })
+                     });
+                }
+                else{
+                    $ionicLoading.hide();
+                }
+                console.log("reviews",JSON.stringify($scope.reviews))
+            });
+        };
+        $scope.reviewList();
 
     $scope.slideHasChanged = function(value){
       console.log(value);
@@ -90,7 +115,6 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
 
 
 
-
         $scope.get_distance = function(latitude1,longitude1,latitude2,longitude2,units) {
             var p = 0.017453292519943295;    //This is  Math.PI / 180
             var c = Math.cos;
@@ -108,16 +132,15 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
 
         };
 
-    $scope.reviews = [
-      {name: 'Anu',rating: 3,review: 'This example demonstrates how to display the entire text when hover over the element.',image: 'http://theflaticons.com/wp-content/uploads/2015/09/girl.png'},
-      {name: 'Aadhu',rating: 5,review: 'Headers are fixed regions at the top of a screen that can contain a title labe',image: 'http://icons.iconarchive.com/icons/dapino/people/512/orange-boy-icon.png'},
-      {name: 'Aastha',rating: 4,review: 'A secondary header bar can be placed below the original header bar',image: 'http://theflaticons.com/wp-content/uploads/2015/09/girl.png'},
-      {name: 'Anu',rating: 3,review: 'This example demonstrates how to display the entire text when hover over the element.',image: 'http://theflaticons.com/wp-content/uploads/2015/09/girl.png'},
-      {name: 'Aadhu',rating: 5,review: 'Headers are fixed regions at the top of a screen that can contain a title labe',image: 'http://icons.iconarchive.com/icons/dapino/people/512/orange-boy-icon.png'},
-      {name: 'Aastha',rating: 4,review: 'A secondary header bar can be placed below the original header bar',image: 'http://theflaticons.com/wp-content/uploads/2015/09/girl.png'}
-    ];
+    // $scope.reviews = [
+    //   {name: 'Anu',rating: 3,review: 'This example demonstrates how to display the entire text when hover over the element.',image: 'http://theflaticons.com/wp-content/uploads/2015/09/girl.png'},
+    //   {name: 'Aadhu',rating: 5,review: 'Headers are fixed regions at the top of a screen that can contain a title labe',image: 'http://icons.iconarchive.com/icons/dapino/people/512/orange-boy-icon.png'},
+    //   {name: 'Aastha',rating: 4,review: 'A secondary header bar can be placed below the original header bar',image: 'http://theflaticons.com/wp-content/uploads/2015/09/girl.png'},
+    //   {name: 'Anu',rating: 3,review: 'This example demonstrates how to display the entire text when hover over the element.',image: 'http://theflaticons.com/wp-content/uploads/2015/09/girl.png'},
+    //   {name: 'Aadhu',rating: 5,review: 'Headers are fixed regions at the top of a screen that can contain a title labe',image: 'http://icons.iconarchive.com/icons/dapino/people/512/orange-boy-icon.png'},
+    //   {name: 'Aastha',rating: 4,review: 'A secondary header bar can be placed below the original header bar',image: 'http://theflaticons.com/wp-content/uploads/2015/09/girl.png'}
+    // ];
 
-   
     $scope.aImages = [{
         'src' : 'http://ionicframework.com/img/ionic-logo-blog.png', 
         'msg' : 'Swipe me to the left. Tap/click to close'
@@ -158,4 +181,4 @@ app.controller('VendorDetailsCtrl', ['$scope', '$ionicSlideBoxDelegate', '$ionic
         $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id})
     }
 
-}]);
+});

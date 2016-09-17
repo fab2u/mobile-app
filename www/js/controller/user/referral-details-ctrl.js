@@ -17,6 +17,6 @@ app.controller('ReferralDetailsCtrl', ['$scope', '$state' , function($scope, $st
 
 	$scope.goToRefer = function(){
 		$state.go('refer');
-	}
+	};
 
 }])

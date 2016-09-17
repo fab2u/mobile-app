@@ -1,4 +1,4 @@
-app.controller('SearchCtrl', function($state, $scope,$http) {
+app.controller('SearchCtrl', function($state, $scope,$http,$ionicLoading) {
 
     $scope.searchQuery = '';
     $scope.serviceIds = [];
@@ -10,17 +10,21 @@ app.controller('SearchCtrl', function($state, $scope,$http) {
 
 
     $scope.searchServices = function(){
-        console.log($scope.searchQuery)
+        $ionicLoading.show();
+
         if($scope.searchQuery != ''){
             $http.post("http://139.162.31.204/suggest?search_query="+$scope.searchQuery+"&typing_word="+$scope.searchQuery)
                 .then(function (response) {
                     console.log(JSON.stringify(response)) ;
-
-                    $scope.suggestedServices = response.data.suggestions;
+                    if(response){
+                        $scope.suggestedServices = response.data.suggestions;
+                        $ionicLoading.hide();
+                    }
                 });
         }
 
     };
+
 
     $scope.home = function(){
         $state.go('app.home');

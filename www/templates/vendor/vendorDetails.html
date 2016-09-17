@@ -118,23 +118,26 @@
 			</ion-slide>
 			<ion-slide>
 			    <div class="Reviews">
-			    	<div class="card ratingCard" ng-repeat="review in reviews">
+			    	<div class="card ratingCard" ng-repeat="review in reviews" ng-show="reviews">
 			    		<div class="row">
 				    		<div class="col col-20 imgNname">
 				    			<img ng-src="{{review.image}}" class="profilePic">
-				    			<p class="profileName">{{review.name}}</p>
+				    			<p class="profileName">{{reviewerName}}</p>
 				    		</div>
 				    		<div class="col col-80 reviewNRating">
 				    			<div class="rating1">
-									<div ng-repeat="counter in starrating(review.rating) track by $index" style="float:left;"><span class="trueRatingBox">&#9733</span></div>
-								    <div ng-repeat="counter in starrating(5-review.rating) track by $index" style="float:left;"><span class="remRatingBox">&#9733</span></div>
+									<div ng-repeat="counter in starrating(review.ReviewRating) track by $index" style="float:left;"><span class="trueRatingBox">&#9733</span></div>
+								    <div ng-repeat="counter in starrating(5-review.ReviewRating) track by $index" style="float:left;"><span class="remRatingBox">&#9733</span></div>
 								</div>
 								<div class="review">
-									<p>{{review.review}}</p>
+									<p>{{review.ReviewText}}</p>
 								</div>
 				    		</div>
 			    		</div>
 			    	</div>
+					<div class="card ratingCard" ng-hide="reviews">
+						No, review for this vendor!
+					</div>
 			    </div>
 			</ion-slide>
 		</ion-slide-box>

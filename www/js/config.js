@@ -42,7 +42,7 @@ app
 				}
 			}
 		})
-		
+
 		.state('termsnConditions', {
 			url: '/termsnConditions',
 			templateUrl: 'templates/legal/termsnConditions.html'
@@ -241,22 +241,52 @@ app
 		.state('feed', {
 			url: '/feed',
 			templateUrl: 'templates/feed/feed.html',
-			controller: 'FeedCtrl'
+			controller: 'FeedCtrl',
+			resolve: {
+				currentAuth: function(AuthenticationService){
+					return AuthenticationService.checkAuthentication();
+				}
+			}
 		})
 		.state('tagFeed', {
 			url: '/tag/:tag',
 			templateUrl: 'templates/feed/tag-feed.html',
-			controller: 'tagFeedCtrl'
+			controller: 'tagFeedCtrl',
+			resolve: {
+				currentAuth: function(AuthenticationService){
+					return AuthenticationService.checkAuthentication();
+				}
+			}
 		})
 		.state('userFeed', {
 			url: '/user/:user_id',
 			templateUrl: 'templates/feed/user-feed.html',
-			controller: 'userFeedCtrl'
+			controller: 'userFeedCtrl',
+			resolve: {
+				currentAuth: function(AuthenticationService){
+					return AuthenticationService.checkAuthentication();
+				}
+			}
 		})
 		.state('newFeed', {
 			url: '/new-feed',
 			templateUrl: 'templates/feed/new-feed.html',
-			controller: 'newFeedCtrl'
+			controller: 'newFeedCtrl',
+			resolve: {
+				currentAuth: function(AuthenticationService){
+					return AuthenticationService.checkAuthentication();
+				}
+			}
+		})
+		.state('nearmeFeed', {
+			url: '/nearme/:cityId',
+			templateUrl: 'templates/feed/nearme-feed.html',
+			controller: 'nearmeFeedCtrl',
+			resolve: {
+				currentAuth: function(AuthenticationService){
+					return AuthenticationService.checkAuthentication();
+				}
+			}
 		});
 
 	// $urlRouterProvider.otherwise('/app-start');
@@ -272,5 +302,3 @@ app
 		$urlRouterProvider.otherwise("/app-start");
 	}
 });
-
-

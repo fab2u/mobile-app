@@ -1,12 +1,81 @@
-.fabFeed .feeds{
-	padding:10px;
-	background-color:#d9d9d9;
+.fabFeed .upper-row{
+	padding: 10px 10px 0px 10px;
+}
+.fabFeed .upper-row1{
+	padding: 0px 10px;
 }
 
-.fabFeed .feed-name {
-	font-size:1.2em;
-	font-weight:500;
+.fabFeed .center{
+	text-align: center;
 }
+
+.fabFeed .profile-pic{
+	border: 4px solid #FF8386;
+	border-radius: 50%;
+}
+
+.fabFeed .user-info{
+	margin-top: 10px;
+}
+
+.fabFeed .user-name{
+	margin-top: 5px;
+	font-size: 1.5em;
+	text-transform: uppercase;
+}
+.fabFeed .user-details{
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	margin-top: 20px;
+	font-size: 1.5em;
+}
+.fabFeed .user-details span{
+	font-size: 0.8em;
+}
+
+.fabFeed a{
+	text-decoration: none;
+}
+
+.fabFeed .follow-btn{
+	border: 1px solid #FF8386;
+	border-radius: 5px;
+	color: #FF8386;
+	padding: 1px 10px;
+}
+
+.fabFeed .follow-btn1{
+	border: 2px solid #FF8386;
+	border-radius: 5px;
+	color: #FF8386;
+	padding: 5px 10px;
+	font-weight: bold;
+}
+
+.new-feed .follow-btn{
+	border: 2px solid #FF8386;
+	border-radius: 5px;
+	color: #FF8386;
+	padding: 5px 10px;
+	font-weight: bold;
+}
+
+.new-feed .profile-details{
+	text-align: center;
+}
+
+.fabFeed .feed-name a{
+	font-weight:500;
+	color: #000;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.fabFeed .feed-name{
+	/*font-size: 1em;*/
+	margin: 0px;
+}
+
 .fabFeed .feed-title {
 	font-size:1.1em;
 	font-weight:400;
@@ -15,14 +84,11 @@
 .fabFeed .feed-img {
 	width:100%;
 	height:auto;
-	border:1px solid #000;
-	border-radius:5px;
 }
 
 .fabFeed .feed-introduction {
 	font-size:1em;
 	font-weight:400;
-	margin: 10px;
 }
 .fabFeed .likeFeed {
 	margin:10px;
@@ -34,10 +100,86 @@
 	margin:10px;
 }
 
-.fabFeed .liked-heart{
-	color: #FF8386;
+.fabFeed i.like-btn.ion-heart {
+  font-size: 25px;
+  /*color: #FF8386;*/
 }
 
-.fabFeed .normal-heart{
-	color: #e6e6e6;
+.fabFeed .likenum{
+	color: #FF8386;
+	/*line-height: 41px;*/
+}
+
+.fabFeed .feedend{
+	color: #FF8386;
+	text-align: center;
+}
+
+.fabFeed .user_icon {
+	margin: 0 auto;
+	display: block;
+	border-radius: 50%;
+	border: 3px solid #FF8285;
+	float:left;
+	margin-right:10px;
+}
+
+.new-feed, .new-feed form{
+	background: url("../../img/new-feed-bg.jpg") no-repeat center center;
+}
+
+.new-feed .des{
+	padding: 20px 0px;
+	text-align: center;
+}
+.new-feed .des1{
+	padding: 10px 0px;
+	text-align: center;
+}
+.new-feed .des label, .new-feed .des1 label{
+	font-size: 1.2em;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.new-feed .upload{
+	width:200px;
+	height:180px;
+	border:1px solid #cccccc;
+	margin:0 auto;
+	padding:30px 10px;
+	border-radius:5px;
+	background:#fff;
+	text-align: center;
+}
+
+.new-feed .upload1{
+	text-align: center;
+}
+
+.new-feed .upload img{
+	padding-bottom:20px;
+	width:50px;
+	margin:0 auto;
+}
+.new-feed .upload label{
+	color:#666666;
+	font-weight:normal;
+	font-size:13px;
+	margin:0 auto;
+}
+
+.new-feed .profile-details{
+	padding: 10px 10px 0px 10px;
+}
+
+.new-feed .feed-comment{
+	margin: 10px;
+}
+
+.new-feed button.pink-bg{
+	background-color: #FF8386;
+	border: none;
+	color: #fff;
+	font-weight: bold;
 }

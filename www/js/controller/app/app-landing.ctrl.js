@@ -118,7 +118,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     function initialiseLocation() {
         try {
             location = {
-                cityId:"-KOe8n_TOSKc29trcGJh",
+                cityId:"-KQJsLMldL5R6ReFbKr2",
                 cityName: "Gurgaon",
                 country: "India",
                 latitude: 28.4595,

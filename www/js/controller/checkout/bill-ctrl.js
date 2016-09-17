@@ -19,7 +19,6 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
 
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
     var hasCurrentBooking = checkLocalStorage('currentBooking');
-    console.log("bookings",hasCurrentBooking);
     if(hasCurrentBooking){
         $scope.bookingInformation = JSON.parse(window.localStorage['currentBooking']);
         var date = setFormat($scope.bookingInformation.appointmentDate);
@@ -52,11 +51,16 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         // $ionicLoading.hide();
         db.ref('vendors/'+locationInfo.cityId+'/'+$scope.vendorId).once('value', function(response){
             console.log(response.val());
-            // $scope.bookingInformation.venue = response.val().vendorName;
-            // $scope.bookingInformation.address1 = response.val().address.address1;
-            // $scope.bookingInformation.address2 = response.val().address.address2;
-            console.log($scope.bookingInformation);
-            $ionicLoading.hide();
+            if(response.val()){
+                $scope.bookingInformation.venue = response.val().vendorName;
+                $scope.bookingInformation.address1 = response.val().address.address1;
+                $scope.bookingInformation.address2 = response.val().address.address2;
+                console.log($scope.bookingInformation);
+                $ionicLoading.hide();
+            }
+            else{
+                $ionicLoading.hide();
+            }
         })
     }
 
@@ -125,7 +129,6 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         else{
             var updates = {};
             var reviewId = firebase.database().ref('reviews/'+$scope.bookingInformation.cityId+'/'+$scope.bookingInformation.vendorId+'/Reviews').push().key;
-            console.log("reviewId",reviewId)
             var reviewData = {
                 'ReviewId':reviewId,
                 'BookingId':$scope.bookingInformation.bookingId,
@@ -156,7 +159,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         updates['userBookings/' + localStorage.getItem('uid') + '/' + $scope.bookingInformation.bookingId] = 'Availed';
         updates['vendorBookings/' + $scope.bookingInformation.vendorId + '/' + $scope.bookingInformation.bookingId] = 'Availed';
         db.ref().update(updates).then(function () {
-            window.localStorage['currentBooking'] = '';
+            delete window.localStorage.currentBooking;
             $state.go('app.home');
             $ionicLoading.hide();
             alert('Your review has been submitted successfully!');
@@ -170,7 +173,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'notAvailed';
         updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'notAvailed';
         db.ref().update(updates).then(function(){
-            window.localStorage['currentBooking'] = '';
+            delete window.localStorage.currentBooking;
             $state.go('app.home');
             $ionicLoading.hide();
             alert('Thank you for updating your booking status!')
@@ -223,7 +226,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
             updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancel';
             updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancel';
             db.ref().update(updates).then(function(){
-                window.localStorage['currentBooking'] = '';
+                delete window.localStorage.currentBooking;
                 $state.go('app.home');
                 $ionicLoading.hide();
                 alert('Thank you, your appointment has been cancelled!')
@@ -234,7 +237,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
             updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancel';
             updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancel';
             db.ref().update(updates).then(function(){
-                window.localStorage['currentBooking'] = '';
+                delete window.localStorage.currentBooking;
                 $state.go('app.home');
                 $ionicLoading.hide();
                 alert('Thank you for canceling your booking!')

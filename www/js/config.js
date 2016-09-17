@@ -293,7 +293,6 @@ app
 	// $urlRouterProvider.otherwise('/app-start');
 
 	var hasCurrentBooking = checkLocalStorage('currentBooking');
-	console.log("hasCurrentBooking",hasCurrentBooking);
 	if(hasCurrentBooking == true){
 		$urlRouterProvider.otherwise("/bill");
 	}

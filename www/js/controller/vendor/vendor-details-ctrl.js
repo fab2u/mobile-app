@@ -1,8 +1,9 @@
 app.controller('VendorDetailsCtrl',
     function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,$cordovaGeolocation,$ionicLoading,$rootScope){
 
-      $scope.images =[];
-      $scope.reviewerName = '';
+        $scope.images =[];
+        $scope.reviewerName = '';
+        $scope.reviewerImage = '';
         $scope.cart_item = '';
         $scope.selectedServices = {};
         $scope.begItems = {};
@@ -63,6 +64,7 @@ app.controller('VendorDetailsCtrl',
                     angular.forEach(response.val(), function(value, key) {
                         firebase.database().ref('users/data/'+value.userId).once('value',function(response) {
                             $scope.reviewerName =response.val().name;
+                            $scope.reviewerImage =response.val().photoUrl;
                             $ionicLoading.hide();
                         })
                      });

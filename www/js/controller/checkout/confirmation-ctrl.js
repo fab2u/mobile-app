@@ -414,9 +414,6 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 			db.ref().update(updates).then(function(){
 				$ionicLoading.hide();
 				window.localStorage['currentBooking'] = JSON.stringify(bookingDetails);
-				// localStorage.setItem('BegItems', '');
-				// localStorage.setItem('slectedItem', '');
-				// $rootScope.$broadcast('cart', { message: 'cart length changed' });
 				$state.go('bill');
 				alert('Booking confirmed!')
 				console.log('booking successful');

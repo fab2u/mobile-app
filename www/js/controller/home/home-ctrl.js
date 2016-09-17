@@ -1,5 +1,5 @@
 app
-.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading) {
+.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$location) {
 
 	$scope.fabSelected = false;
 	// window.localStorage.setItem("serviceId",'');
@@ -12,6 +12,7 @@ app
 			$scope.fabSelected = false;
 		} else {
 			$scope.fabSelected = true;
+			$location.path("/feed");
 		}
 	};
 

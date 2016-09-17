@@ -1,8 +1,25 @@
 app.controller('VendorDetailsCtrl',
-    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,$cordovaGeolocation,$ionicLoading){
+    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,$cordovaGeolocation,$ionicLoading,$rootScope){
 
       $scope.images =[];
-       $scope.reviewerName = '';
+      $scope.reviewerName = '';
+        $scope.cart_item = '';
+        $scope.selectedServices = {};
+        $scope.begItems = {};
+
+        // Get selected services if previously stored in localstorage
+        if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
+            $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+            $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
+            $scope.cart_item = _.size($scope.selectedServices);
+        }
+
+        $rootScope.$on('cart', function (event, args) {
+            $scope.message = args.message;
+            $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+            $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
+            $scope.cart_item = _.size($scope.selectedServices);
+        });
 
     $scope.vendorDetail = function() {
         $ionicLoading.show();
@@ -174,7 +191,12 @@ app.controller('VendorDetailsCtrl',
     };
 
     $scope.cart = function(){
-        $state.go('cart',{'ven_id':$stateParams.ven_id});
+        if(_.size($scope.selectedServices)>0){
+            $state.go('cart',{'ven_id':$stateParams.ven_id});
+        }
+        else{
+            alert('Please, select some services!')
+        }
     }
 
     $scope.vendorMenu = function(){

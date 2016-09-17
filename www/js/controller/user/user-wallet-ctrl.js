@@ -7,7 +7,6 @@ app.controller('UserWalletCtrl',function($scope,$state,$ionicLoading){
 	$scope.getWalletInfo = function () {
 		$ionicLoading.show();
 		firebase.database().ref('userWallet/data/' + localStorage.getItem('uid')).once('value', function(response) {
-			$scope.userWalletInfo = response.val().debit;
 			var debitAmount = 0;
 			var creditAmount = 0;
 			if(response.val()){

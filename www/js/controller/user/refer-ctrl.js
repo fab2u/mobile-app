@@ -1,10 +1,14 @@
-app.controller('ReferCtrl', ['$scope', '$state','$cordovaSocialSharing', function($scope, $state,$cordovaSocialSharing){
+app.controller('ReferCtrl',function($scope, $state,$cordovaSocialSharing,$ionicLoading){
 
-	firebase.database().ref('/users/data/'+window.localStorage.getItem('uid')).once('value',function(response){
-		console.log("response for referal code",response.val().myReferralCode);
-		$scope.myReferralCode = response.val().myReferralCode;
-	});
-
+	$scope.myReferral = function() {
+		$ionicLoading.show();
+		firebase.database().ref('/users/data/' + window.localStorage.getItem('uid')).once('value', function (response) {
+			console.log("response for referal code", response.val().myReferralCode);
+			$scope.myReferralCode = response.val().myReferralCode;
+			$ionicLoading.hide();
+		});
+	};
+	$scope.myReferral();
 
 	$scope.showReferDetails = function(){
 		$state.go('referralDetails');
@@ -13,7 +17,6 @@ app.controller('ReferCtrl', ['$scope', '$state','$cordovaSocialSharing', functio
 	// Referral code sharing over whatsApp//
 
 	$scope.WhatsApp = function () {
-		alert('whatsApp')
 		$cordovaSocialSharing
 			.shareViaWhatsApp('Download the shopping app and use my referral code'+$scope.myReferralCode, '', '')
 			.then(function (result) {
@@ -26,7 +29,6 @@ app.controller('ReferCtrl', ['$scope', '$state','$cordovaSocialSharing', functio
 	// Referral code sharing over Facebook//
 
 	$scope.Facebook = function () {
-		alert('fb')
 		$cordovaSocialSharing
 			.shareViaFacebook('Download the shopping app and use my referral code'+$scope.myReferralCode, '', '')
 			.then(function (result) {
@@ -41,4 +43,4 @@ app.controller('ReferCtrl', ['$scope', '$state','$cordovaSocialSharing', functio
 	};
 
 
-}]);
+});

@@ -8,9 +8,7 @@ app
 
 
             $scope.show = function() {
-                $ionicLoading.show({
-                    template: 'Loading...'
-                })
+                $ionicLoading.show();
             };
             $scope.show();
             $scope.menu = [];

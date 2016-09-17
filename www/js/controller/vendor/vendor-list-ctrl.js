@@ -4,8 +4,8 @@ app.controller('VendorListCtrl',
 
 
         var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
-        $scope.serviceIds = []
-        var serviceId = window.localStorage.getItem("serviceId")
+        $scope.serviceIds = [];
+        var serviceId = window.localStorage.getItem("serviceId");
         $scope.service_id = $stateParams.serviceId;
         if(localStorage.getItem('uid') == ''||localStorage.getItem('uid') ==null||localStorage.getItem('uid')==undefined){
             $scope.uid = '1';
@@ -20,10 +20,6 @@ app.controller('VendorListCtrl',
             })
         }
 
-
-        console.log($scope.serviceIds)
-
-
         $scope.vendorList = function(){
             if($scope.serviceIds.length>0){
                 var serviceIdList = $scope.serviceIds.join();
@@ -36,14 +32,12 @@ app.controller('VendorListCtrl',
                     });
             }
             else{
-                console.log("serviceId",serviceId)
                 $http.post("http://139.162.31.204/search_services?services="+serviceId+
                     "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender=''&user_lat=''&user_lon=''")
                     .then(function (response) {
                         $scope.vendorList = response.data.results;
                         $ionicLoading.hide();
                         console.log(JSON.stringify(response)) ;
-
                     });
             }
 
@@ -127,17 +121,14 @@ app.controller('VendorListCtrl',
                   });
           }
           else{
-              console.log("serviceId",serviceId)
               $http.post("http://139.162.31.204/search_services?services="+serviceId+
                   "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender='2'&user_lat=''&user_lon=''")
                   .then(function (response) {
                       $scope.vendorList = response.data.results;
                       $ionicLoading.hide();
                       console.log(JSON.stringify(response)) ;
-
                   });
           }
-
       }
     };
 
@@ -146,7 +137,9 @@ app.controller('VendorListCtrl',
    };
 
    $scope.vendor_menu = function(id){
-       console.log(id)
+       delete window.localStorage.slectedItems;
+       // delete window.localStorage.catItems;
+       delete window.localStorage.BegItems;
        $state.go('vendorMenu',{vendor_id:id});
-   }
+   };
 })

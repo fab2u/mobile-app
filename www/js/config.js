@@ -63,6 +63,7 @@ app
 	//State for refer a friend
 	$stateProvider.state('refer', {
 		url: '/refer',
+		cache:false,
 		templateUrl: 'templates/user/refer.html',
 		controller: 'ReferCtrl'
 	});

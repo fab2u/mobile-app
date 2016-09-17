@@ -22,7 +22,7 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading){
 						$ionicLoading.hide();
 						firebase.database().ref('vendors/' + locationInfo.cityId + '/' +response.val().vendorId).once
 						('value', function (response) {
-							$scope.bookingAddress = response.val().address
+							$scope.bookingAddress = response.val().address;
 							$ionicLoading.hide();
 						});
 
@@ -35,6 +35,10 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading){
 	$scope.bookingInfo();
 
 	$scope.go_home = function () {
-		$state.go('app.home')
+		$state.go('app.home');
+	};
+
+	$scope.bookingDetail = function (id) {
+		$state.go('bookingDetail',{bookingId:id});
 	};
 });

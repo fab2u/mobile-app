@@ -1,0 +1,36 @@
+<ion-view class = "bill">
+    <ion-header-bar class="bar-dark">
+        <button class = "button button-clear icon ion-chevron-left" ng-click="back()"></button>
+        <h1 class="title">BOOKING DETAIL</h1>
+        <!--<button class = "button button-clear icon ion-ios-list-outline"></button>-->
+    </ion-header-bar>
+    <ion-content>
+        <div id="bg"><img src="img/background.jpg" alt=""></div>
+        <div id = "container">
+            <div id = "thankYou">
+                <h4 style = "color: #D24248">THANK YOU</h4>
+                <h5 style = "color: #0DD1D1">Your Booking ID is {{bookingInformation.bookingId}}</h5>
+            </div>
+
+            <div>
+                <div  id = "myBill" class = "container">
+                    <div class = "custom-border padding class"><b>Venue: </b>{{bookingAddress.address.landmark}}</div>
+                    <div class = "custom-border padding class"><b>Address: </b>{{bookingAddress.address.address1}} {{bookingAddress.address.address2}}</div>
+                    <div class="padding class custom-border">
+                        <b>Services </b>
+                        <div ng-repeat = "service in bookingInformation.serviceInfo">{{service.menuItemName}}</div>
+                    </div>
+
+                    <div class = "custom-border  padding class"><b>Amount Payable</b>: ₹{{bookingInformation.amountPayable}}</div>
+                    <div class = "custom-border  padding class" ng-show="bookingInformation.walletAmount"><b>Paid From Wallet</b>: ₹{{bookingInformation.walletAmount}}</div>
+                    <div class = "custom-border padding class"><b>Time</b>: {{bookingInformation.appointmentTime}}</div>
+                    <div class = "custom-border padding class"><b>Date</b>: {{bookingInformation.appointmentDate}}</div>
+                    <div class = "custom-border padding class"><b>Status</b>: {{bookingInformation.userStatus}}</div>
+                </div>
+            </div>
+            <div align = "center" id = "smile"><img src = "../../img/happy.png" height="14%" width="14%">
+                <p style = "color: #FF8386">ENJOY YOUR SERVICES</p>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

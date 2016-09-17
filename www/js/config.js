@@ -83,8 +83,16 @@ app
 	//State for bookings
 	$stateProvider.state('bookings', {
 		url: '/bookings',
+		cache:false,
 		templateUrl: 'templates/user/bookings.html',
 		controller: 'BookingsCtrl'
+	});
+	//State for booking detail
+	$stateProvider.state('bookingDetail', {
+		url: '/bookingDetail/:bookingId',
+		cache:false,
+		templateUrl: 'templates/user/bookingDetail.html',
+		controller: 'BookingDetailCtrl'
 	});
 
 	//State for search

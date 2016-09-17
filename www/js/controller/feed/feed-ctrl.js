@@ -4,6 +4,9 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 
 	console.log('test');
 	$scope.uid = window.localStorage.getItem("uid");
+	console.log(JSON.parse(window.localStorage.getItem('selectedLocation')));
+	$scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
+	console.log($scope.cityId);
 	console.log($scope.uid);
 	$scope.events2 = [];
 	$scope.moreMessagesScroll = true;
@@ -11,6 +14,10 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 
 	$scope.goBack = function(){
 		history.back();
+	}
+
+	$scope.goToNearme = function(){
+		$location.path("/nearme/"+$scope.cityId);
 	}
 
 	$scope.createNew = function(){

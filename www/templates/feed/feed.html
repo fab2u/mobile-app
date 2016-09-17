@@ -8,6 +8,10 @@
 	<ion-header-bar class="bar-stable" title="Profile">
       <a class="button icon ion-chevron-left button-clear" ng-click="goBack()"></a>
       <h1 class="title">Fab Book</h1>
+      <div class="buttons">
+    <button class="button" ng-click="goToNearme()">Nearme</button>
+    <!-- <a href="/nearme/{{cityId}}">Nearme</a> -->
+  </div>
    </ion-header-bar>
    <ion-floating-button click="createNew()" has-footer="false" button-color="#FF8386" icon="ion-plus" icon-color="#fff"></ion-floating-button>
 	<ion-content class="has-header">

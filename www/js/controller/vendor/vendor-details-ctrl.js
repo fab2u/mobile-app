@@ -27,19 +27,41 @@ app.controller('VendorDetailsCtrl',
         $ionicLoading.show();
         firebase.database().ref('vendors/' + JSON.parse(window.localStorage['selectedLocation']).cityId + '/' + $stateParams.ven_id).once('value', function (response) {
             $scope.vendor_detail = response.val();
+            console.log(JSON.stringify($scope.vendor_detail,null,2))
             $ionicLoading.hide();
             angular.forEach(response.val().images.gallery, function (value, key) {
                 $scope.images.push({id: key, src: value.url})
             });
         });
-    }
+    };
      $scope.vendorDetail();
   $scope.currentValue = 0;
   $scope.liked = false;
 
   $scope.likeVendor = function(){
     console.log('clicked');
+      var key = db.ref('favourites/'+localStorage.getItem('uid')).push().key;
+
+      var favouriteData = {
+          vendorId:$stateParams.ven_id,
+          cityId:$scope.vendor_detail.address.cityId,
+          vendorName:$scope.vendor_detail.vendorName,
+          vendorLandmark:$scope.vendor_detail.address.landmark,
+          vendorImg:$scope.vendor_detail.images.main.url
+      };
     $scope.liked  = !$scope.liked ;
+      if(localStorage.getItem('uid') && key){
+          firebase.database().ref('favourites/'+localStorage.getItem('uid')+'/'+key)
+              .set(favouriteData,function(response) {
+                  if(response ==null){
+                      alert('Added to your favourites list!')
+                  }
+              })
+      }
+      else{
+          alert('Login first!')
+      }
+
   };
 
 	$scope.next = function() {

@@ -128,11 +128,12 @@ app
 
 	});
 
-	//State for favorates vendor
-	$stateProvider.state('favorate', {
-		url: '/favorate',
-		templateUrl: 'templates/home/favorate.html',
-		controller: 'FavorateCtrl'
+	//State for favourites vendor
+	$stateProvider.state('favourite', {
+		url: '/favourite',
+		cache:false,
+		templateUrl: 'templates/home/favourite.html',
+		controller: 'FavouriteCtrl'
 	});
 
 	//State for cart

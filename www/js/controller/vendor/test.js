@@ -16,8 +16,18 @@ app
             $scope.cart_item = 0;
             $scope.cart_price = {};
 
+        $scope.vendorDetail = function() {
+            $ionicLoading.show();
+            firebase.database().ref('vendors/' + JSON.parse(window.localStorage['selectedLocation']).cityId + '/' + $stateParams.vendor_id).once('value', function (response) {
+                $scope.vendor_detail = response.val();
+                $ionicLoading.hide();
+               console.log("vendor detail",JSON.stringify($scope.vendor_detail,null,2))
+            });
+        };
+
             firebase.database().ref('menu/'+$stateParams.vendor_id+'/services').once('value',function(response){
-                  $scope.menuInfo = response.val();
+                $scope.menuInfo = response.val();
+                $scope.vendorDetail();
                 $ionicLoading.hide();
                 angular.forEach(response.val(), function(value, key) {
                     if(key == 'cat-01'){
@@ -206,7 +216,13 @@ app
 
             // handel back button
             $scope.backButton = function() {
-              $state.go('vendorList');
+                if(localStorage.getItem('favourite') == 'true') {
+                    localStorage.setItem('favourite', '');
+                    $state.go('favourite');
+                }
+                else{
+                    $state.go('vendorList');
+                }
                 // TODO
             };
 

@@ -1,12 +1,13 @@
 <ion-view id="vendor-services">
     <ion-content delegate-handle="mainScroll">
+        <!--<div class="header" ng-style="{'background-image':'url({{vendor_detail.images.main.url}})'}">-->
         <div class="header">
             <div class="title row">
                 <div class="col-20">
                     <div class="backButton icon ion-chevron-left" ng-click="backButton()"></div>
                 </div>
                 <div class="col-80">
-                    <h1>SAUNDARYA BEAUTY PARLOUR</h1><br>
+                    <h1 class="text-center">{{vendor_detail.vendorName}}</h1><br>
                 </div>
             </div> <!-- .title -->
             <div class="cart-details row">

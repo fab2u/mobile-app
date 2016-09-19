@@ -29,7 +29,7 @@ app
 		$state.go('location');
 	};
 	$scope.favorate_list = function(){
-		$state.go('favorate');
+		$state.go('favourite');
 	};
 
 	$scope.logOut = function(){

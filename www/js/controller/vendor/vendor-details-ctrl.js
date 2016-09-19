@@ -1,5 +1,6 @@
 app.controller('VendorDetailsCtrl',
-    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,$cordovaGeolocation,$ionicLoading,$rootScope){
+    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,$cordovaGeolocation,
+             $ionicPopup,$ionicLoading,$rootScope,$cordovaDevice,$cordovaInAppBrowser){
 
         $scope.images =[];
         $scope.reviewerName = '';
@@ -199,10 +200,33 @@ app.controller('VendorDetailsCtrl',
         else{
             alert('Please, select some services!')
         }
-    }
+    };
 
     $scope.vendorMenu = function(){
         $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id})
-    }
+    };
+
+
+    ////////// Rate us on play store   ////////////////////
+
+
+        $scope.rateUs = function(){
+            console.log("clicked")
+            var options = {
+                location: 'yes',
+                clearcache: 'yes',
+                toolbar: 'no'
+            };
+            if($cordovaDevice.getDevice().manufacturer != 'Apple') {
+                console.log("inside if")
+                $cordovaInAppBrowser.open('https://play.google.com/store/apps/details?id=com.ionicframework.fab2u641617', '_system', options);
+            } else {
+                var alertPopup = $ionicPopup.alert({
+                    title:'Currently not available',
+                    template: 'You will be able to rate us soon'
+                });
+            }
+
+        }
 
 });

@@ -52,7 +52,8 @@
                 </div>
             </div>
             <div id="price-tag" class="col" ng-click="vendor_menu(vendor.vendor_id)">
-                <div class="row original-price" ng-repeat="(key, value) in vendor.menu_union" ng-if="(key == service_id)">
+                <!--<div class="row original-price" ng-repeat="(key, value) in vendor.menu_union" ng-if="(key == service_id)">-->
+                <div class="row original-price" ng-repeat="(key, value) in vendor.menu_union">
                     <!--<div id="line-through"></div>-->
                     <div id="line-through-fb"></div>
                     <span id="one" class="left-price badge">

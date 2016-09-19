@@ -12,9 +12,14 @@
 			    	{{vendor_detail.type}}
 			    </div>
 			</div>
-			<div class="vendorContact">
-				<i class="icon ion-android-call"><a ng-href="tel:  {{vendor_detail.contactDetails.phone}}"></a></i>
-			</div>
+			<!--<div class="vendorContact">-->
+				<!--<i class="icon ion-android-call vendorContact">-->
+					<a class="icon ion-android-call vendorContact" ng-href="tel:  {{vendor_detail.contactDetails.phone}}"></a>
+			<!--</i>-->
+			<!--<a href="tel:+1-1800-555-5555" class="button button-positive">Call me</a>-->
+
+			<!--</div>-->
+
 			<div class="backButton icon ion-chevron-left" ng-click="vendorMenu()"></div>
 			<div class="nameNlandmark">
 				<h4>{{vendor_detail.vendorName}}</h4>
@@ -145,7 +150,7 @@
 
 	</ion-content>
 	<ion-footer-bar class="footer">
-	    <div class="rateNow" ng-show="currentValue==2">
+	    <div class="rateNow" ng-show="currentValue==2" ng-click="rateUs()">
 	    	<i class="icon ion-android-star"></i>
 			<p>Rate Now</p>
 		</div>

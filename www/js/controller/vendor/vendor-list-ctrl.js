@@ -28,7 +28,7 @@ app.controller('VendorListCtrl',
                     .then(function (response) {
                         $scope.vendorList = response.data.results;
                         $ionicLoading.hide();
-                        // console.log(JSON.stringify(response));
+                        console.log(JSON.stringify($scope.vendorList,null,2));
                     });
             }
             else{
@@ -43,6 +43,19 @@ app.controller('VendorListCtrl',
 
         };
         $scope.vendorList();
+
+        ////////      Map for a particular vendor   //////////////////
+
+
+        $scope.open_map = function(latitude,longitude,line1,line2,vendorName){
+            $state.go('map',{
+                'lat': latitude,
+                'lng': longitude,
+                'add1': line1,
+                'add2': line2,
+                'name': vendorName
+            });
+        };
 
         $scope.show = function() {
            $ionicLoading.show({

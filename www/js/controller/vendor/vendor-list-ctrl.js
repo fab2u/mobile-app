@@ -28,7 +28,7 @@ app.controller('VendorListCtrl',
                     .then(function (response) {
                         $scope.vendorList = response.data.results;
                         $ionicLoading.hide();
-                        console.log(JSON.stringify(response));
+                        // console.log(JSON.stringify(response));
                     });
             }
             else{

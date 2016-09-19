@@ -2,6 +2,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
     $ionicLoading.show();
     $scope.cancelButton = false;
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+    $scope.vendorAddress = '';
 
 
 
@@ -47,22 +48,35 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         $scope.thisBookingTime = toTimestamp(date + ' ' + time);
         console.log("time stamp",$scope.thisBookingTime);
         $scope.vendorId = $scope.bookingInformation.vendorId;
-        console.log($scope.vendorId);
         // $ionicLoading.hide();
         db.ref('vendors/'+locationInfo.cityId+'/'+$scope.vendorId).once('value', function(response){
-            console.log(response.val());
             if(response.val()){
                 $scope.bookingInformation.venue = response.val().vendorName;
                 $scope.bookingInformation.address1 = response.val().address.address1;
                 $scope.bookingInformation.address2 = response.val().address.address2;
+                $scope.bookingInformation.vendorLat = response.val().address.latitude;
+                $scope.bookingInformation.vendorLong = response.val().address.longitude;
+                $scope.bookingInformation.vendorName = response.val().contactDetails.name;
                 console.log($scope.bookingInformation);
+                $scope.vendorAddress = response.val();
                 $ionicLoading.hide();
             }
             else{
                 $ionicLoading.hide();
             }
         })
-    }
+    };
+
+//////////////Map for vendor location  ////////////////////////////////
+    $scope.open_map = function(latitude,longitude,line1,line2,vendorName){
+        $state.go('map',{
+            'lat': latitude,
+            'lng': longitude,
+            'add1': line1,
+            'add2': line2,
+            'name': vendorName
+        });
+    };
 
     //// To check we, can cancel a booking or not! ///////
     $scope.isActiveCancel = function(){

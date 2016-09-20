@@ -67,11 +67,11 @@
 }
 
 .vendorList .c-title {
-    color: #F5F5F5;
+    color: black;
 }
 
 .vendorList .c-subtitle {
-    color: #F5F5F5;
+    color: black;
 }
 
 .vendorList span.badge {
@@ -88,7 +88,7 @@
 }
 
 .vendorList .c-location-distance {
-    color: #F5F5F5;
+    color: green;
 }
 
 .vendorList .fab-button {

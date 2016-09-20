@@ -140,3 +140,10 @@ border:5px #FF8385;
   background-color: #464646;
   color:white;
 }
+#cartview #customfooter #striketextcolor.button_title{
+    font-size: 19px;
+    line-height: 44px;
+    padding-left: 35px;
+    padding-right: 35px;
+
+}

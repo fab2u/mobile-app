@@ -12,13 +12,13 @@
 				<ion-scroll  direction="y"  has-bouncing="false">
                 	<div class="row all-referrals" ng-repeat="referral in referralDetails">
                     	<div class="col col-45 name">
-        					{{referral.name}}
+        					{{referral.userName}}
         				</div>
         				<div class="col col-25 code">
-        				{{referral.code}}
+        				{{referral.userReferralCode}}
         				</div>
         				<div class="col col-30 date">
-        					{{referral.date}}
+        					{{referral.joinDate| date:'dd-MM-yyyy'}}
         				</div>
                 	</div>
                 </ion-scroll>
@@ -27,13 +27,13 @@
 				</div>
 				<div class="referred-from-detail row">
 					<div class="col col-45 name">
-						{{referredDetails.name}}
+						{{referredByDetail.name}}
 					</div>
 					<div class="col col-25 code">
-						{{referredDetails.code}}
+						{{referredByDetail.myReferralCode}}
 					</div>
 					<div class="col col-30 date">
-						{{referredDetails.date}}
+						{{referredDate| date:'dd-MM-yyyy'}}
 					</div>
 				</div>
 			</div>

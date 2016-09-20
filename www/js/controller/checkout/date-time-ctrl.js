@@ -181,6 +181,7 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
   });
 
   $scope.timeSelected = function(index, id) {
+    // alert('Booking can only done after half an hour of current time!')
     // console.log("index",index);
     // console.log("id",id);
     // console.log($scope.timeSlots[index].selected);

@@ -71,6 +71,7 @@ app
 	//State for referral details
 	$stateProvider.state('referralDetails', {
 		url: '/referralDetails',
+		cache:false,
 		templateUrl: 'templates/user/referralDetails.html',
 		controller: 'ReferralDetailsCtrl'
 	});

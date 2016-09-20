@@ -2,6 +2,60 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                                       $timeout,$rootScope){
     $scope.generatedCode = '';
     $scope.myReferral = '';
+    $scope.validReferralcode = [];
+    $scope.walletMoney = 0;
+    $scope.updates = {};
+
+    ///////////////////// to get all the valid referral code   /////////////
+    $scope.checkReferralCode = function () {
+        firebase.database().ref('referralCode/')
+            .once('value', function (response) {
+                console.log("response for all valid codes", JSON.stringify(response.val()))
+                angular.forEach(response.val(), function (value, key) {
+                    $scope.validReferralcode.push(key);
+                    $scope.walletMoney = value.amountReferred;
+                })
+                console.log("money to br in joined user wallet",$scope.walletMoney)
+            })
+
+    };
+
+    $scope.checkReferralCode();
+
+    ///////////////////   To check user entered referral code validation //////////
+
+    $scope.checkValidCode = function(referralCode){
+        for(var i =0;i< $scope.validReferralcode.length;i++){
+            if($scope.validReferralcode[i] == referralCode){
+                console.log("if matched");
+                var walletTransactionId = db.ref('userWallet/data/' + $scope.uid+'/credit').push().key;
+                var transactionDetail = {
+                    'amount': $scope.walletMoney,
+                    'transactionId': walletTransactionId,
+                    'bookingId': '',
+                    'creditDate': new Date().getTime(),
+                    'type':'userJoined'
+                };
+                firebase.database().ref('referralCode/'+referralCode)
+                    .once('value', function (response) {
+                        var referredByUid = response.val().uid;
+                        $scope.updates['referralCode/'+$scope.myReferral+'/referredBy'] = referredByUid;
+                            firebase.database().ref('referralCode/'+referralCode+'/referredUsers/')
+                                .push({
+                                    userUid:$scope.uid,
+                                    userName:$scope.user.name,
+                                    userReferralCode:$scope.myReferral,
+                                    joinDate:new Date().getTime()
+                                }, function (response) {
+                                    console.log("uid pushed for used code :")
+                                })
+
+                    })
+                $scope.updates['userWallet/data/' + $scope.uid+'/credit/'+walletTransactionId] = transactionDetail;
+
+            }
+        }
+    };
 
 
     //// To generate my referral code    //////////////////
@@ -116,6 +170,9 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
             if($scope.uid){
                 $scope.sendVerification();
                 $scope.generateMyReferralCode($scope.user.name);
+                if($scope.user.referral_code){
+                    $scope.checkValidCode($scope.user.referral_code);
+                }
 
                 $ionicLoading.hide();
 
@@ -247,7 +304,8 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                         var userData = {
                             activeFlag:true,
                             createdTime:new Date().getTime(),
-                            deviceId: $cordovaDevice.getDevice().uuid,
+                            // deviceId: $cordovaDevice.getDevice().uuid,
+                            deviceId: '13sedf',
                             email:{
                                 userEmail:$scope.user.email,
                                 verifiedTime:'',
@@ -262,11 +320,28 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                             referralCode: $scope.user.referral_code,
                             userId:$scope.uid,
                             gender: $scope.user.gender,
-                        }
+                        };
+                        var referralData = {
+                            uid:$scope.uid,
+                            amount:50,
+                            amountReferred:100,
+                            referredUsers:{},
+                            referredBy:'',
+                            referredDate:new Date().getTime()
+                        };
+
                         firebase.database().ref('users/data/'+$scope.uid)
                             .set(userData,function(response) {
-                                console.log("user pushed", JSON.stringify(response));
                                 if(response == null){
+                                    firebase.database().ref('referralCode/'+$scope.myReferral)
+                                        .set(referralData,function(response){
+                                            if(response == null){
+                                                console.log("update json",JSON.stringify($scope.updates))
+                                                db.ref().update($scope.updates).then(function(){
+                                                    console.log("success")
+                                                });
+                                            }
+                                        })
                                     window.localStorage.setItem("name", $scope.user.name);
                                     window.localStorage.setItem("mobileNumber", $scope.user.mobile_num);
                                     window.localStorage.setItem("email", $scope.user.email);

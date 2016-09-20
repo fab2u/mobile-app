@@ -1,6 +1,7 @@
 app.controller('VendorListCtrl',
     function($scope,$ionicHistory,$state,$stateParams,$ionicLoading,$http){
         $scope.gender = '';
+        $scope.vendorList = '';
 
         var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
         $scope.serviceIds = [];
@@ -26,7 +27,6 @@ app.controller('VendorListCtrl',
                     "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender=''&user_lat=''&user_lon=''")
                     .then(function (response) {
                         $scope.vendorList = response.data.results;
-                        console.log("value",JSON.stringify($scope.vendorList,null,2));
                         $ionicLoading.hide();
                     });
             }

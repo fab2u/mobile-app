@@ -187,7 +187,6 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
     // console.log($scope.timeSlots[index].selected);
     for (var key in $scope.timeSlots9To12) {
       if ($scope.timeSlots9To12[key].id != id) {
-  
   /** using jquery to remove the class */
         $('#'+$scope.timeSlots9To12[key].id).removeClass('selected-time');
       } else {
@@ -199,6 +198,10 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
           window.localStorage.setItem("chosenTime", $scope.chosenTime);
 
           console.log($scope.chosenTime);
+        }
+        else{
+          alert('Booking can only be done after half an hour of current time!')
+
         }
       }
     }
@@ -213,6 +216,9 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
 
           console.log($scope.chosenTime);
         }
+        else{
+          alert('Booking can only be done after half an hour of current time!')
+        }
       }
     }
     for (var key in $scope.timeSlots3To6) {
@@ -226,6 +232,9 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
 
           console.log($scope.chosenTime);
         }
+        else{
+          alert('Booking can only be done after half an hour of current time!')
+        }
       }
     }
     for (var key in $scope.timeSlots6To9) {
@@ -238,6 +247,9 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
           window.localStorage.setItem("chosenTime", $scope.chosenTime);
 
           console.log($scope.chosenTime);
+        }
+        else{
+          alert('Booking can only be done after half an hour of current time!')
         }
       }
     }

@@ -36,6 +36,11 @@
 	 color:#FF8385;
 	 border-bottom: solid 2px black;
 }
+#loginform #formdetails #formborder1 .spaceGap1
+{
+	padding: 0 10px;
+}
+
 #loginform #formdetails #formborder2
 {
 	 border:none;
@@ -43,13 +48,20 @@
 	 border-bottom: solid 1px black;
 }
 
+#loginform #formdetails #formborder2 .spaceGap2
+{
+	padding: 0 10px;
+
+}
+
+
 #loginform #formdetails #forgotpassword
 {
 	text-align:center;
 }
 
 #loginform .otherLoginOpts {
-	margin-top: 15px;
+	margin-top: 5px;
 }
 
 
@@ -72,7 +84,7 @@
 	font-size: 2em;
 	position: absolute;
     left: 50%;
-    margin-top: -50px;
+    margin-top: -30px;
     transform: translate(-50%, -50%);
 }
 

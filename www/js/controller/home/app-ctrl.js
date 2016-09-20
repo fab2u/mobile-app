@@ -1,6 +1,7 @@
 app
 .controller('AppCtrl', ['$scope','$state','$rootScope', function($scope,$state,$rootScope) {
 
+
 	$scope.liked = false;
 
 	// $scope.likePage = function(){

@@ -304,8 +304,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                         var userData = {
                             activeFlag:true,
                             createdTime:new Date().getTime(),
-                            // deviceId: $cordovaDevice.getDevice().uuid,
-                            deviceId: '13sedf',
+                            deviceId: $cordovaDevice.getDevice().uuid,
                             email:{
                                 userEmail:$scope.user.email,
                                 verifiedTime:'',
@@ -328,6 +327,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                             referredUsers:{},
                             referredBy:'',
                             referredDate:new Date().getTime()
+
                         };
 
                         firebase.database().ref('users/data/'+$scope.uid)

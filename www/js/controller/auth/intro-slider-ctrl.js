@@ -6,23 +6,54 @@ app.controller('IntroSliderCtrl', ['$scope', '$ionicSlideBoxDelegate', '$state',
     var location = {};
 
     var hasLocation = checkLocalStorage('selectedLocation');
-    if (hasLocation) {
-        location = JSON.parse(window.localStorage['selectedLocation']);
-    } else {
-        location = {
-            cityId:"-KOe8n_TOSKc29trcGJh",
-            cityName: "Gurgaon",
-            country: "India",
-            latitude: 28.4595,
-            locationId: "-KOe9LJSgmcLJx5GzaRJ",
-            locationName: "Sohna Road",
-            longitude: 77.0266,
-            state: "Haryana",
-            zoneId: "-KOe9DIxKASx33GdHx1P",
-            zoneName: "Sohna Road"
-        }
-        window.localStorage['selectedLocation'] = JSON.stringify(location);
-    }
+
+        var geocodingAPI = "https://maps.googleapis.com/maps/api/geocode/json?latlng=28.4595,77.0266&key=AIzaSyDZl-Y8k4IYZFGdP77PhLix8kdaMpUzM7k";
+
+        $.getJSON(geocodingAPI, function (json) {
+            if (json.status == "OK") {
+                //Check result 0
+                var result = json.results[0];
+                //look for locality tag and administrative_area_level_1
+                var city = "";
+                var state = "";
+                for (var i = 0, len = result.address_components.length; i < len; i++) {
+                    var ac = result.address_components[i];
+                    if (ac.types.indexOf("administrative_area_level_1") >= 0) state = ac.short_name;
+                    if (ac.types.indexOf("administrative_area_level_2") >= 0) city = ac.short_name;
+                }
+                if (state != '' && city != '') {
+                    firebase.database().ref('city').once('value',function(response){
+                        $scope.location_list = response.val();
+                        console.log("losss",JSON.stringify($scope.location_list,null,2));
+                        angular.forEach($scope.location_list,function (value,key) {
+                            if(value.cityName == city){
+                                console.log("iddd")
+                                console.log("value",value)
+                                if (hasLocation) {
+                                    location = JSON.parse(window.localStorage['selectedLocation']);
+                                } else {
+                                    location = {
+                                        cityId:value.cityId,
+                                        cityName: city,
+                                        country: value.country,
+                                        latitude: 28.4595,
+                                        locationId: "-KOe9LJSgmcLJx5GzaRJ",
+                                        locationName: "Sohna Road",
+                                        longitude: 77.0266,
+                                        state: state,
+                                        zoneId: "",
+                                        zoneName: ""
+                                    }
+                                    window.localStorage['selectedLocation'] = JSON.stringify(location);
+                                }
+                            }
+                        })
+                    });
+                    console.log("Hello to you out there in " + city + ", " + state + "!");
+                }
+            }
+
+        });
 
     updateLocalData();
 

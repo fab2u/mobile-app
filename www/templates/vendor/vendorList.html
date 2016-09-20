@@ -23,11 +23,6 @@
             </div>
         </ion-header-bar>
         <ion-content>
-            <div ng-hide="vendorList.length>0">
-                <p class="text-center" style="margin-top: 60px;">
-                    No,vendor found for this location.Please select another location!
-                </p>
-            </div>
             <div class="p-fix card" ng-repeat="vendor in vendorList"
                  ng-show="vendorList"
                  style="background-image: url({{vendor.image_url || '../../img/vendorImage.jpeg'}})">

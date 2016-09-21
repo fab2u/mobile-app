@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a90707b-bb48-47ba-9167-7f50f00e366c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/vendor/vendor-services-list.css" afterPath="$PROJECT_DIR$/www/css/vendor/vendor-services-list.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/vendor/vendor-menu.html" afterPath="$PROJECT_DIR$/www/templates/vendor/vendor-menu.html" />
     </list>
     <ignored path="mobile-app.iws" />
@@ -38,11 +36,14 @@
       <file leaf-file-name="vendor-menu.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/templates/vendor/vendor-menu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="87" column="65" selection-start-line="87" selection-start-column="65" selection-end-line="87" selection-end-column="65" />
+            <state relative-caret-position="317">
+              <caret line="80" column="138" selection-start-line="80" selection-start-column="138" selection-end-line="80" selection-end-column="138" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#ion-header-bar#0;n#ion-view#0;n#!!top" expanded="true" />
-                <marker date="1474438523835" expanded="false" signature="1296:1314" ph="..." />
+                <element signature="n#style#0;n#div#2;n#div#1;n#div#0;n#ion-slide#0;n#ion-slide-box#0;n#div#1;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#div#1;n#div#0;n#ion-slide#0;n#ion-slide-box#0;n#div#1;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+                <marker date="1474438922363" expanded="false" signature="1296:1314" ph="..." />
               </folding>
             </state>
           </provider>
@@ -611,12 +612,12 @@
       <workItem from="1474263349321" duration="27157000" />
       <workItem from="1474347617464" duration="19711000" />
       <workItem from="1474374373001" duration="4651000" />
-      <workItem from="1474436235266" duration="1988000" />
+      <workItem from="1474436235266" duration="2387000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="502197000" />
+    <option name="totallyTimeSpent" value="502596000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
@@ -1101,11 +1102,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/vendor/vendor-menu.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="87" column="65" selection-start-line="87" selection-start-column="65" selection-end-line="87" selection-end-column="65" />
+        <state relative-caret-position="317">
+          <caret line="80" column="138" selection-start-line="80" selection-start-column="138" selection-end-line="80" selection-end-column="138" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#ion-header-bar#0;n#ion-view#0;n#!!top" expanded="true" />
-            <marker date="1474438523835" expanded="false" signature="1296:1314" ph="..." />
+            <element signature="n#style#0;n#div#2;n#div#1;n#div#0;n#ion-slide#0;n#ion-slide-box#0;n#div#1;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#1;n#div#0;n#ion-slide#0;n#ion-slide-box#0;n#div#1;n#div#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <marker date="1474438922363" expanded="false" signature="1296:1314" ph="..." />
           </folding>
         </state>
       </provider>

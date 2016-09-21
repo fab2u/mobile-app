@@ -49,13 +49,17 @@
                                 ng-class="$index == 0 ? 'active':''"
                                 ng-repeat="item in catName"
                                 ng-click="tabHasChanged($index)">
-                            <i class="icon ion-social-reddit-outline"></i>
+                            <img ng-if="item == 'FACE'" src="img/Face.png" style="height: 35px;">
+                            <img ng-if="item == 'BODY'" src="img/Body-Care.png" style="height: 35px;">
+                            <img ng-if="item == 'HAIR'" src="img/Hair.png" style="height: 35px;">
+                            <img ng-if="item == 'HANDS & FEETS'" src="img/Hands-feet.png" style="height: 35px;">
+                            <img ng-if="item == 'HAIR REMOVAL'" src="img/Waxing.png" style="height: 35px;">
                             <p>{{item}}</p>
                         </div> <!-- .tab -->
                     </div>
                 </div><!-- #container -->
             </ion-scroll>
-            <div class="moreButton icon ion-chevron-right" ng-click="scrollToRight($event)"></div>
+            <div class="moreButton icon ion-chevron-right" ng-if="catName.length>3" ng-click="scrollToRight($event)"></div>
         </div> <!-- #scroll-tabs -->
         <div class="row padding" id="slideBox">
             <ion-slide-box style="width:100%!important; background-color: #FFF;" class="slideBox" on-slide-changed="slideHasChanged($index)" show-pager="false" delegate-handle="my-handle">

@@ -1,32 +1,43 @@
 <ion-view id="vendor-services">
+    <ion-header-bar class="m-navColor">
+        <a href="" class="button icon-left ion-chevron-left button-clear" ng-click="backButton()"></a>
+        <h1 class="title">{{vendor_detail.vendorName}}</h1>
+        <div class="col">
+            <div class="row cart-price" style="margin-top: -5px;">
+                <div class="col currency">&#x20B9;</div>
+                <div class="col price">{{total_customer}}</div>
+            </div> <!-- .cart-price -->
+        </div>
+    </ion-header-bar>
     <ion-content delegate-handle="mainScroll">
         <!--<div class="header" ng-style="{'background-image':'url({{vendor_detail.images.main.url}})'}">-->
-        <div class="header">
-            <div class="title row">
-                <div class="col-20">
-                    <div class="backButton icon ion-chevron-left" ng-click="backButton()"></div>
-                </div>
-                <div class="col-80">
-                    <h1 class="text-center">{{vendor_detail.vendorName}}</h1><br>
-                </div>
-            </div> <!-- .title -->
-            <div class="cart-details row">
-                <div class="col">
+        <!--<div class="header">-->
+            <!--<div class="title row">-->
+                <!--<div class="col-20">-->
+                    <!--<div class="backButton icon ion-chevron-left" ng-click="backButton()"></div>-->
+                <!--</div>-->
+                <!--<div class="col-80">-->
+                    <!--<h1 class="text-center">{{vendor_detail.vendorName}}</h1><br>-->
+                <!--</div>-->
+            <!--</div> -->
+            <!--<div class="cart-details row">-->
+                <!--<div class="col">-->
 
-                </div> <!-- .col -->
-                <div class="col" style="text-align:center;">
-                    <div class="cart" ng-click="proceedButton()">
-                        <span class="total-cart">{{cart_item}}</span>
-                        <i class="icon ion-ios-cart"></i>
-                    </div> <!-- .cart -->
-                </div> <!-- .col -->
-                <div class="col">
-                    <div class="row cart-price">
-                        <div class="col currency">&#x20B9;</div>
-                        <div class="col price">{{total_customer}}</div>
-                    </div> <!-- .cart-price -->
-                </div> <!-- .col -->
-            </div> <!-- .cart-details -->
+                <!--</div> -->
+                <!--<div class="col" style="text-align:center;">-->
+                    <!--<div class="cart" ng-click="proceedButton()">-->
+                        <!--<span class="total-cart">{{cart_item}}</span>-->
+                        <!--<i class="icon ion-ios-cart"></i>-->
+                    <!--</div> -->
+                <!--</div> -->
+                <!--<div class="col">-->
+                    <!--<div class="row cart-price">-->
+                        <!--<div class="col currency">&#x20B9;</div>-->
+                        <!--<div class="col price">{{total_customer}}</div>-->
+                    <!--</div> -->
+                <!--</div> -->
+            <!--</div>-->
+            <!-- .cart-details -->
         </div> <!-- .header -->
         <div ng-show="menuInfo">
         <div id="scroll-tabs" class="row">
@@ -55,7 +66,7 @@
                              ng-click="selectItem($index, y.menuItemName,y)">
                             <div ng-show="selectedServices[y.menuItemName]" style="background-color:#0dd1d1; width:20px;">
                             </div>
-                            <div class="col col-50 item-text-wrap p-15">
+                            <div class="col col-67 item-text-wrap p-15">
                                 <span style="font-size: 0.9em;">{{y.menuItemName}}</span>
                             </div>
                             <div class="col col-33 p-15" style="text-align:right;font-color:black;">
@@ -73,7 +84,16 @@
                 </ion-slide-box>
         </div>
         </div>
+<div class="cart-details row">
+    <div class="col" style="text-align:center;    margin-top: -40px;margin-left: 90px;">
+    <div class="cart" ng-click="proceedButton()">
+        <span class="total-cart">{{cart_item}}</span>
+        <i class="icon ion-ios-cart"></i>
+    </div>
+</div></div>
+
     </ion-content>
+
 
     <ion-footer-bar class="footer">
         <div class="row newFooter">

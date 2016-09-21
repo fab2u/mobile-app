@@ -2,6 +2,17 @@
 	width: 100%;
 	height: 100%;
 }
+#vendor-services .m-navColor {
+	background-color: #424242;
+}
+#vendor-services .m-navColor .title {
+	text-decoration: #EEEEEE;
+	color: #EEEEEE;
+}
+#vendor-services .m-navColor a.button {
+	text-decoration: #EEEEEE;
+	color: #EEEEEE;
+}
 #vendor-services .backButton {
 	background-color:#fff;
 	position:absolute;
@@ -67,7 +78,8 @@
 	width: 70px;
 	height: 70px;
 	border-radius: 50%;
-	background-color: #000000;
+	/*background-color: #000000;*/
+	background-color: #FE8480;
 	padding-top: 10px;
 	margin: 0 auto;
 	position: relative;
@@ -144,8 +156,8 @@
 	border-top-left-radius:1em;
 	position:relative;
 	top:-2px;	
-	margin-right:60%;
-	height: 40px;
+	margin-right:50%;
+	height: 55px;
 	min-height: 40px;
 	padding: 10px;
 	

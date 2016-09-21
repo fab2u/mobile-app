@@ -9,6 +9,13 @@
 	text-align: center;
 }
 
+.fabFeed .tab-row{
+	padding: 0px;
+}
+.fabFeed .active-tab{
+	border-bottom: 4px solid #FF8386;
+}
+
 .fabFeed .profile-pic{
 	border: 4px solid #FF8386;
 	border-radius: 50%;

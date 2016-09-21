@@ -16,10 +16,6 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 		history.back();
 	}
 
-	$scope.goToNearme = function(){
-		$location.path("/nearme/"+$scope.cityId);
-	}
-
 	$scope.createNew = function(){
 		$location.path("/new-feed");
 	}

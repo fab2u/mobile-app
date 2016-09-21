@@ -232,32 +232,17 @@ app
 		.state('feed', {
 			url: '/feed',
 			templateUrl: 'templates/feed/feed.html',
-			controller: 'FeedCtrl',
-			resolve: {
-				currentAuth: function(AuthenticationService){
-					return AuthenticationService.checkAuthentication();
-				}
-			}
+			controller: 'FeedCtrl'
 		})
 		.state('tagFeed', {
 			url: '/tag/:tag',
 			templateUrl: 'templates/feed/tag-feed.html',
-			controller: 'tagFeedCtrl',
-			resolve: {
-				currentAuth: function(AuthenticationService){
-					return AuthenticationService.checkAuthentication();
-				}
-			}
+			controller: 'tagFeedCtrl'
 		})
 		.state('userFeed', {
 			url: '/user/:user_id',
 			templateUrl: 'templates/feed/user-feed.html',
-			controller: 'userFeedCtrl',
-			resolve: {
-				currentAuth: function(AuthenticationService){
-					return AuthenticationService.checkAuthentication();
-				}
-			}
+			controller: 'userFeedCtrl'
 		})
 		.state('newFeed', {
 			url: '/new-feed',
@@ -272,12 +257,7 @@ app
 		.state('nearmeFeed', {
 			url: '/nearme/:cityId',
 			templateUrl: 'templates/feed/nearme-feed.html',
-			controller: 'nearmeFeedCtrl',
-			resolve: {
-				currentAuth: function(AuthenticationService){
-					return AuthenticationService.checkAuthentication();
-				}
-			}
+			controller: 'nearmeFeedCtrl'
 		});
 
 	// $urlRouterProvider.otherwise('/app-start');

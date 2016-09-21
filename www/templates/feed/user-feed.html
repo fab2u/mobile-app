@@ -11,6 +11,11 @@
    </ion-header-bar>
    <ion-floating-button click="createNew()" has-footer="false" button-color="#FF8386" icon="ion-plus" icon-color="#fff"></ion-floating-button>
 	<ion-content class="has-header">
+      <div class="row tab-row">
+         <a href="#/user/{{uid}}" class="col active-tab text-center"><img ng-src="img/user.png"/></a>
+         <a href="#/feed" class="col text-center"><img ng-src="img/diary.png"/></a>
+         <a href="#/nearme/{{cityId}}" class="col text-center"><img ng-src="img/loc.png"/></a>
+      </div>
       <div class="user-info">
          <div class="center">
             <img ng-src="{{userDetails.photoUrl || 'img/person.jpg'}}" width="130" height="130" class="profile-pic"/>

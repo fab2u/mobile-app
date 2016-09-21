@@ -2,6 +2,8 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 
 	$ionicLoading.show();
 
+	$scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
+
 	$scope.goBack = function(){
 		history.back();
 	}
@@ -20,6 +22,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 	// jdenticon.update("#identicon", $scope.img_hash);
 	// var uid = window.localStorage.uid;
 	var uid = $stateParams.user_id;
+	$scope.uid = $stateParams.user_id;
 	$scope.blogIdList = {};
 	$scope.moreMessagesScroll = true;
 

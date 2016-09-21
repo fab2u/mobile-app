@@ -304,9 +304,8 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
         }
     };
 
-
-
     $scope.tabWithSlideChanged = function (indexNum) {
+        console.log("indexNum",indexNum);
         $scope.tabActive = true;
         $ionicSlideBoxDelegate.slide(indexNum);
     };

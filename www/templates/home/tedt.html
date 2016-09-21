@@ -38,15 +38,15 @@
                     <ion-list>
                         <ion-item ng-repeat="serviceItem in service.name"
                                   class="item-thumbnail-right list_view" ng-click="selectItem($index,serviceItem.name,serviceItem.id)">
-                          {{serviceItem.name}}
-                                <img src="img/home/new-slider/square-blue.png" class="img_icon" ng-show="selectedServices[serviceItem.name]">
+                            {{serviceItem.name}}
+                            <img src="img/home/new-slider/square-blue.png" class="img_icon" ng-show="selectedServices[serviceItem.name]">
                         </ion-item>
                     </ion-list>
                 </ion-slide>
             </ion-slide-box>
         </div>
     </ion-content>
-    <!--<div class="moreDownButton icon ion-chevron-down" ng-click="scrollToBottom($event)">-->
+    <div class="moreDownButton icon ion-chevron-down" ng-click="scrollToBottom($event)">
     </div>
     <ion-footer-bar id="footer-bar" align-title="center" ng-click="findVendors()">
         <h1 class="title">FIND VENDORS</h1>

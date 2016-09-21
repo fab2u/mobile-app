@@ -22,8 +22,11 @@
                          ng-class="$index == 0 ? 'active':''"
                          ng-repeat="item in ['FACE', 'HAIR','HAIR REMOVAL', 'BODY', 'HANDS & FEET','NAILS','PACKAGES']"
                          ng-click="tabWithSlideChanged($index)">
-                        <i class="icon ion-social-reddit-outline"></i>
-                        <p>{{item}}</p>
+                        <img ng-if="item == 'FACE'" src="img/Face.png" style="height: 35px;">
+                        <img ng-if="item == 'BODY'" src="img/Body-Care.png" style="height: 35px;">
+                        <img ng-if="item == 'HAIR'" src="img/Hair.png" style="height: 35px;">
+                        <img ng-if="item == 'HANDS & FEETS'" src="img/Hands-feet.png" style="height: 35px;">
+                        <img ng-if="item == 'HAIR REMOVAL'" src="img/Waxing.png" style="height: 35px;">                        <p>{{item}}</p>
                     </div>
                 </div>
             </div>

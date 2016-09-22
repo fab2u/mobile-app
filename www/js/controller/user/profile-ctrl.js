@@ -6,6 +6,8 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '
    // $scope.img_hash = md5($scope.uid);
    // jdenticon.update("#identicon", $scope.img_hash);
 
+
+
    $scope.goBack = function(){
       history.back();
    }
@@ -44,7 +46,9 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '
                image.src = imageURI;
                $scope.url = imageURI;
 
-               resizeImage(imageURI);
+               cropImage(imageURI);
+
+               // resizeImage(imageURI);
 
             }, function(err) {
                console.log(err);
@@ -67,12 +71,34 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '
                $scope.url = imageURI;
                alert(JSON.stringify(imageURI)+ 'line number 283, imageURI');
 
-               resizeImage(imageURI);
+               cropImage(imageURI);
+
+               // resizeImage(imageURI);
 
             }, function(err) {
                console.log(err);
             });
          };
+
+         function cropImage(source){
+            var basic = $('.demo').croppie({
+               viewport: {
+                  width: 200,
+                  height: 200
+               }
+            });
+            basic.croppie('bind', {
+      			url: source
+      		});
+            $(".basic-result").on('click', function(){
+               basic.croppie('result', {
+      				type: 'canvas',
+                  circle: true
+      			}).then(function (resp) {
+      				alert(resp);
+      			});
+            });
+         }
 
          function resizeImage(source){
             alert('resizeImage called')

@@ -71,11 +71,10 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 					console.log(key, $scope.prevTopKey);
 					if (key != $scope.prevTopKey){
 						value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-						value.profilePic = 'img/person.jpg';
-						// $timeout(function () {
-						// 	console.log(value.blog_id, value.user.user_id);
-						// 	jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
-						// }, 0);
+						db.ref("users/data/"+value.user.user_id+"/photoUrl").once("value", function(snap){
+							// console.log(snap.val());
+							value.profilePic = snap.val();
+						});
 						if(value.likedBy){
 							count = Object.keys(value.likedBy).length;
 							console.log(value.likedBy);
@@ -114,10 +113,10 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 					angular.forEach(snap.val(), function(value, key){
 						if(key != $scope.oldBottomKey){
 							value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-							value.profilePic = 'img/person.jpg';
-							// $timeout(function () {
-							// 	jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
-							// }, 0);
+							db.ref("users/data/"+value.user.user_id+"/photoUrl").once("value", function(snap){
+								// console.log(snap.val());
+								value.profilePic = snap.val();
+							});
 							if(value.likedBy){
 								count = Object.keys(value.likedBy).length;
 								console.log(value.likedBy);
@@ -152,10 +151,6 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 						// console.log(snap.val());
 						value.profilePic = snap.val();
 					});
-					// $timeout(function () {
-					// 	console.log(value.user.user_id, value.blog_id);
-					// 	jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
-					// }, 0);
 					if(value.likedBy){
 						count = Object.keys(value.likedBy).length;
 						console.log(value.likedBy);

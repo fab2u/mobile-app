@@ -132,12 +132,11 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 			single_blog = snap.val();
 			single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 			db.ref("users/data/"+single_blog.user.user_id+"/photoUrl").once("value", function(snap){
-				console.log(snap.val());
-				single_blog.profilePic = snap.val();
+				if(snap.val() !== null){
+					console.log(snap.val());
+					single_blog.profilePic = snap.val();
+				}
 			});
-			// $timeout(function () {
-			// 	jdenticon.update("#"+snap.val().blog_id, md5(snap.val().user.user_id));
-			// }, 0);
 			if(single_blog.likedBy){
 				count = Object.keys(single_blog.likedBy).length;
 				console.log(single_blog.likedBy);

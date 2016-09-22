@@ -23,6 +23,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 	// var uid = window.localStorage.uid;
 	var uid = $stateParams.user_id;
 	$scope.uid = $stateParams.user_id;
+	console.log(uid, $scope.uid);
 	$scope.blogIdList = {};
 	$scope.moreMessagesScroll = true;
 

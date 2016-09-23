@@ -131,16 +131,20 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 			// console.log(snap.val());
 			single_blog = snap.val();
 			single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+			console.log(single_blog.blog_id);
 			db.ref("users/data/"+single_blog.user.user_id+"/photoUrl").once("value", function(snap){
 				if(snap.val() !== null){
+					// console.log('not null');
 					console.log(snap.val());
+					console.log(single_blog.blog_id);
 					single_blog.profilePic = snap.val();
+					// console.log(single_blog.profilePic);
 				}
 			});
 			if(single_blog.likedBy){
 				count = Object.keys(single_blog.likedBy).length;
-				console.log(single_blog.likedBy);
-				console.log(count);
+				// console.log(single_blog.likedBy);
+				// console.log(count);
 				single_blog['numLikes'] = count;
 				if($scope.uid in single_blog.likedBy){
 					$timeout(function () {
@@ -148,6 +152,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 					}, 1000);
 				}
 			}
+			// console.log(single_blog);
 			$scope.blogArr.push(single_blog);
 			// console.log($scope.blogArr);
 		});

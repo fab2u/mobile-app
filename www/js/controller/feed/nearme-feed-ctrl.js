@@ -6,7 +6,6 @@ app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$locati
 
 	$scope.moreMessagesScroll = true;
 	$scope.moreMessagesRefresh = true;
-
    $scope.cityId = $stateParams.cityId;
    console.log($scope.cityId);
    $scope.blogIdList = {};
@@ -104,13 +103,8 @@ app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$locati
 		}
 		else if(Object.keys($scope.blogIdList).length == 0){
 			console.log("length = 0");
-         console.log($scope.cityId);
-         // db.ref("cityBlogs").child($scope.cityId).on('value', function(snap1){
-         //    console.log(snap1.val());
-         // });
 			db.ref("cityBlogs/"+$scope.cityId).limitToLast(25).once('value', function(snapshot){
 				$ionicLoading.hide();
-            console.log(snapshot.val());
 				$scope.blogIdList = snapshot.val();
 				console.log($scope.blogIdList);
 				$scope.bottomKey = Object.keys($scope.blogIdList)[0];

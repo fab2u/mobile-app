@@ -26,12 +26,20 @@ app.controller('VendorDetailsCtrl',
     $scope.vendorDetail = function() {
         $ionicLoading.show();
         firebase.database().ref('vendors/' + JSON.parse(window.localStorage['selectedLocation']).cityId + '/' + $stateParams.ven_id).once('value', function (response) {
-            $scope.vendor_detail = response.val();
-            console.log(JSON.stringify($scope.vendor_detail,null,2))
-            $ionicLoading.hide();
-            angular.forEach(response.val().images.gallery, function (value, key) {
-                $scope.images.push({id: key, src: value.url})
-            });
+           if(response.val()){
+               $scope.vendor_detail = response.val();
+               console.log(JSON.stringify($scope.vendor_detail,null,2))
+               $ionicLoading.hide();
+               angular.forEach(response.val().images.gallery, function (value, key) {
+                   $scope.images.push({id: key, src: value.url})
+               });
+           }
+           else{
+               $scope.msg1 = 'No,menu found for this vendor!'
+               $ionicLoading.hide();
+
+           }
+
         });
     };
      $scope.vendorDetail();
@@ -92,7 +100,8 @@ app.controller('VendorDetailsCtrl',
                         })
                      });
                 }
-                else{
+                else if(response.val() == null){
+                    $scope.msg = 'No,reviews found!'
                     $ionicLoading.hide();
                 }
                 console.log("reviews",JSON.stringify($scope.reviews))

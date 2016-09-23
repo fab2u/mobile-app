@@ -143,7 +143,7 @@ border:5px #FF8385;
 #cartview #customfooter #striketextcolor.button_title{
     font-size: 19px;
     line-height: 44px;
-    padding-left: 35px;
-    padding-right: 35px;
+    text-align: center;
+    margin-left: 100px;
 
 }

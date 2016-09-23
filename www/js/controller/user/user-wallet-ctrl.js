@@ -31,6 +31,7 @@ app.controller('UserWalletCtrl',function($scope,$state,$ionicLoading){
 					$ionicLoading.hide();
 				}
 			} else {
+				$scope.msg = 'No history found';
 				$ionicLoading.hide();
 			}
 		})

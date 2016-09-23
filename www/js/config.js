@@ -218,6 +218,7 @@ app
 	//State for user wallet
 	$stateProvider.state('userWallet', {
 		url: '/userWallet',
+		cache:false,
 		templateUrl: 'templates/user/userWallet.html',
 		controller: 'UserWalletCtrl'
 	});

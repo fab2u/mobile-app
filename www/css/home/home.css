@@ -29,6 +29,7 @@
     margin-top:4px;
     background: #f2f2f2;
     float:left;
+    text-align: center;
 }
 
 
@@ -62,6 +63,7 @@
     position: absolute;
     right: 0px;
     margin-top: 9px;
+    text-align: center;
 }
 
 #home-page .offerList {
@@ -79,7 +81,6 @@
 }
 
 #home-page .offer-img img {
-    height:12em;
     width:100%;
 }
 
@@ -96,7 +97,8 @@
     margin:2%;
     height:12em;
     background-repeat: no-repeat;
-    background-size:100% 100%;
+    /*background-size:100% 100%;*/
+    background-size:cover;
 }
 
 #home-page .categories .catDescription {

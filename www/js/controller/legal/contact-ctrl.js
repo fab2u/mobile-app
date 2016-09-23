@@ -16,7 +16,6 @@ app.controller('ContactCtrl', function($state, $scope) {
            alert('Your query submitted !');
             }
         });
-        console.log("dsdsdsd",JSON.stringify($scope.user))
     };
 
 

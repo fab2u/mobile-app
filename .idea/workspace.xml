@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a90707b-bb48-47ba-9167-7f50f00e366c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/checkout/cart.css" afterPath="$PROJECT_DIR$/www/css/checkout/cart.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/home/home.css" afterPath="$PROJECT_DIR$/www/css/home/home.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/home/app-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/home/app-ctrl.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/checkout/cart.html" afterPath="$PROJECT_DIR$/www/templates/checkout/cart.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/vendor/vendorDetails.html" afterPath="$PROJECT_DIR$/www/templates/vendor/vendorDetails.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/home/menu.html" afterPath="$PROJECT_DIR$/www/templates/home/menu.html" />
     </list>
     <ignored path="mobile-app.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,21 +25,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="cart.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/templates/checkout/cart.html">
+      <file leaf-file-name="menu.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/templates/home/menu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="60" column="56" selection-start-line="60" selection-start-column="44" selection-end-line="60" selection-end-column="56" />
+            <state relative-caret-position="476">
+              <caret line="52" column="110" selection-start-line="52" selection-start-column="110" selection-end-line="52" selection-end-column="110" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cart.css" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/www/css/checkout/cart.css">
+      <file leaf-file-name="app-ctrl.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/www/js/controller/home/app-ctrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="479">
-              <caret line="146" column="19" selection-start-line="146" selection-start-column="19" selection-end-line="146" selection-end-column="19" />
+            <state relative-caret-position="15">
+              <caret line="1" column="104" selection-start-line="1" selection-start-column="104" selection-end-line="1" selection-end-column="104" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vendor-details-ctrl.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="64" selection-start-line="2" selection-start-column="50" selection-end-line="2" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -69,7 +77,6 @@
         <option value="$PROJECT_DIR$/www/css/vendor/vendorList.css" />
         <option value="$PROJECT_DIR$/www/js/controller/user/referral-details-ctrl.js" />
         <option value="$PROJECT_DIR$/www/templates/user/referralDetails.html" />
-        <option value="$PROJECT_DIR$/www/js/controller/home/app-ctrl.js" />
         <option value="$PROJECT_DIR$/www/js/controller/checkout/date-time-ctrl.js" />
         <option value="$PROJECT_DIR$/www/templates/home/tedt.html" />
         <option value="$PROJECT_DIR$/www/css/home/service-list.css" />
@@ -90,7 +97,6 @@
         <option value="$PROJECT_DIR$/www/templates/legal/termsnConditions.html" />
         <option value="$PROJECT_DIR$/www/templates/legal/contact.html" />
         <option value="$PROJECT_DIR$/www/js/controller/legal/contact-ctrl.js" />
-        <option value="$PROJECT_DIR$/www/templates/home/menu.html" />
         <option value="$PROJECT_DIR$/www/templates/checkout/bill.html" />
         <option value="$PROJECT_DIR$/www/js/controller/user/user-wallet-ctrl.js" />
         <option value="$PROJECT_DIR$/www/templates/user/userWallet.html" />
@@ -110,11 +116,13 @@
         <option value="$PROJECT_DIR$/www/templates/vendor/vendor-menu.html" />
         <option value="$PROJECT_DIR$/www/js/controller/vendor/test.js" />
         <option value="$PROJECT_DIR$/www/css/vendor/vendorDetails.css" />
-        <option value="$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js" />
         <option value="$PROJECT_DIR$/www/templates/vendor/vendorDetails.html" />
         <option value="$PROJECT_DIR$/www/css/home/home.css" />
         <option value="$PROJECT_DIR$/www/templates/checkout/cart.html" />
         <option value="$PROJECT_DIR$/www/css/checkout/cart.css" />
+        <option value="$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js" />
+        <option value="$PROJECT_DIR$/www/templates/home/menu.html" />
+        <option value="$PROJECT_DIR$/www/js/controller/home/app-ctrl.js" />
       </list>
     </option>
   </component>
@@ -419,64 +427,6 @@
               <option name="myItemId" value="controller" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mobile-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mobile-app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mobile-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mobile-app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vendor" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mobile-app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mobile-app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="home" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
@@ -496,11 +446,11 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
+              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="checkout" />
+              <option name="myItemId" value="controller" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -619,12 +569,12 @@
       <workItem from="1474347617464" duration="19711000" />
       <workItem from="1474374373001" duration="4651000" />
       <workItem from="1474436235266" duration="17992000" />
-      <workItem from="1474611156631" duration="23671000" />
+      <workItem from="1474611156631" duration="24016000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="541872000" />
+    <option name="totallyTimeSpent" value="542217000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
@@ -763,14 +713,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/www/css/auth/login.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="195" column="17" selection-start-line="195" selection-start-column="17" selection-end-line="195" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controller/app/app-start.ctrl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1089,14 +1031,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/home/menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="16" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/vendor/vendor-menu.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -1120,14 +1054,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="37" column="26" selection-start-line="37" selection-start-column="22" selection-end-line="37" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -1161,7 +1087,7 @@
         <state relative-caret-position="15">
           <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
           <folding>
-            <element signature="n#style#0;n#p#0;n#span#0;n#ion-item#0;n#ion-list#0;n#div#2;n#ion-slide#0;n#ion-slide-box#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#span#0;n#ion-item#0;n#ion-list#0;n#div#2;n#ion-slide#0;n#ion-slide-box#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1176,8 +1102,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/css/checkout/cart.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="146" column="19" selection-start-line="146" selection-start-column="19" selection-end-line="146" selection-end-column="19" />
+        <state relative-caret-position="254">
+          <caret line="131" column="1" selection-start-line="131" selection-start-column="1" selection-end-line="131" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/home/menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="52" column="110" selection-start-line="52" selection-start-column="110" selection-end-line="52" selection-end-column="110" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="64" selection-start-line="2" selection-start-column="50" selection-end-line="2" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/home/app-ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="104" selection-start-line="1" selection-start-column="104" selection-end-line="1" selection-end-column="104" />
           <folding />
         </state>
       </provider>

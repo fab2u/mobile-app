@@ -1,5 +1,5 @@
 app
-.controller('AppCtrl', ['$scope','$state','$rootScope', function($scope,$state,$rootScope) {
+.controller('AppCtrl', function($scope,$state,$rootScope,$ionicPopup,$cordovaInAppBrowser,$cordovaDevice) {
 
 
 	$scope.liked = false;
@@ -59,5 +59,26 @@ app
 		window.localStorage.setItem("uid", '');
 		window.localStorage.setItem("email", '');
 	});
+////////// Rate us on play store   ////////////////////
 
-}]);
+
+	$scope.rateUs = function(){
+		console.log("clicked")
+		var options = {
+			location: 'yes',
+			clearcache: 'yes',
+			toolbar: 'no'
+		};
+		if($cordovaDevice.getDevice().manufacturer != 'Apple') {
+			console.log("inside if")
+			$cordovaInAppBrowser.open('https://play.google.com/store/apps/details?id=com.ionicframework.fab2u641617', '_system', options);
+		} else {
+			var alertPopup = $ionicPopup.alert({
+				title:'Currently not available',
+				template: 'You will be able to rate us soon'
+			});
+		}
+
+	}
+
+});

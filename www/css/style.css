@@ -107,3 +107,11 @@ blockquote p:before{
   height: 100%;
   /*object-fit: cover;*/
 }
+.fixedButton1 {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #1a66ff;
+    color:white;
+    border-radius:50%;
+}

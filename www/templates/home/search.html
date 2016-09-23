@@ -12,8 +12,8 @@
    <ion-content>
       <ion-list class="servicelist" ng-show="suggestedServices">
          <ion-item ng-repeat="service in suggestedServices" class="vendorservicelist"
-                   ng-click="vendorList(service.value.service_id)">
-            {{service.value.service_name}}
+                   ng-click="vendorList(service)">
+            {{service.value.service_name || service.value.vendor_name}}
             <div class="vendororservice" >
                {{service.type}}
             </div>

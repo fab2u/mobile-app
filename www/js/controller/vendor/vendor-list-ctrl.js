@@ -18,7 +18,6 @@ app.controller('VendorListCtrl',
         var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
         $scope.serviceIds = [];
         var serviceId = window.localStorage.getItem("serviceId");
-        $scope.service_id = $stateParams.serviceId;
         if(localStorage.getItem('uid') == ''||localStorage.getItem('uid') ==null||localStorage.getItem('uid')==undefined){
             $scope.uid = '1';
         }
@@ -39,6 +38,7 @@ app.controller('VendorListCtrl',
                     "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender=''&user_lat=''&user_lon=''")
                     .then(function (response) {
                         $scope.vendorList = response.data.results;
+                        console.log("list",JSON.stringify($scope.vendorList,null,2))
                         $ionicLoading.hide();
                     });
             }
@@ -49,6 +49,7 @@ app.controller('VendorListCtrl',
                         $scope.vendorList = response.data.results;
                         $ionicLoading.hide();
                     });
+
             }
 
         };
@@ -73,18 +74,6 @@ app.controller('VendorListCtrl',
            })
         };
         $scope.show();
-
-    // firebase.database().ref('vendors/'+JSON.parse(window.localStorage['selectedLocation']).cityId).once('value',function(response){
-    //     $scope.vendor_list = response.val();
-    //     if($scope.vendor_list){
-    //         $ionicLoading.hide();
-    //     }
-    //     else if(!$scope.vendor_list){
-    //         $ionicLoading.hide();
-    //     }
-    // });
-
-
 
     $scope.backButton = function () {
         $state.go('app.home');
@@ -165,4 +154,7 @@ app.controller('VendorListCtrl',
        delete window.localStorage.BegItems;
        $state.go('vendorMenu',{vendor_id:id});
    };
-})
+   $scope.multipleAddressMapView = function(){
+     $state.go('mapMultiple')
+   };
+});

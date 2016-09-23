@@ -30,11 +30,19 @@ app.controller('SearchCtrl', function($state, $scope,$http,$ionicLoading) {
         $state.go('app.home');
     };
 
-    $scope.vendorList = function(serviceId){
-        console.log(serviceId);
-        $scope.serviceIds.push(serviceId);
-        window.localStorage.setItem("serviceId",$scope.serviceIds );
+    $scope.vendorList = function(service){
+        if(service.type=='service'){
+            $scope.serviceIds.push(service.value.service_id);
+            window.localStorage.setItem("serviceId",$scope.serviceIds);
+            $state.go('vendorList');
+        }
+        else if(service.type == 'vendor'){
+            delete window.localStorage.slectedItems;
+            delete window.localStorage.BegItems;
+            window.localStorage.setItem("service_type",'vendor');
+            $state.go('vendorMenu',{vendor_id:service.value.vendor_id});
+            console.log("else");
+        }
 
-        $state.go('vendorList');
     }
 });

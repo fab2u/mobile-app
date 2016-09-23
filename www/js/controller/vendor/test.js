@@ -220,6 +220,12 @@ app
                     localStorage.setItem('favourite', '');
                     $state.go('favourite');
                 }
+                else if(localStorage.getItem("service_type")=='vendor'){
+                    localStorage.setItem('service_type', '');
+                    console.log("else")
+                    $state.go('app.home');
+                }
+
                 else{
                     $state.go('vendorList');
                 }

@@ -207,7 +207,11 @@ app
 		templateUrl: 'templates/vendor/map.html',
 		controller: 'mapCtrl'
 	});
-
+	$stateProvider.state('mapMultiple', {
+		url: '/mapMultiple',
+		templateUrl: 'templates/vendor/mapMultiple.html',
+		controller: 'multipleMapCtrl'
+	});
 
 	// $stateProvider.state('new-slider', {
 	// 	url: '/new-slider',

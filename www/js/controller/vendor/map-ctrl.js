@@ -54,5 +54,4 @@ app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $io
     });
 
 
-
 });

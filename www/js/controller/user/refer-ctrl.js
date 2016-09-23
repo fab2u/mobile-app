@@ -3,7 +3,6 @@ app.controller('ReferCtrl',function($scope, $state,$cordovaSocialSharing,$ionicL
 	$scope.myReferral = function() {
 		$ionicLoading.show();
 		firebase.database().ref('/users/data/' + window.localStorage.getItem('uid')).once('value', function (response) {
-			console.log("response for referal code", response.val().myReferralCode);
 			$scope.myReferralCode = response.val().myReferralCode;
 			$ionicLoading.hide();
 		});
@@ -18,7 +17,7 @@ app.controller('ReferCtrl',function($scope, $state,$cordovaSocialSharing,$ionicL
 
 	$scope.WhatsApp = function () {
 		$cordovaSocialSharing
-			.shareViaWhatsApp('Download the shopping app and use my referral code'+$scope.myReferralCode, '', '')
+			.shareViaWhatsApp('Download the Fab2u app and use my referral code'+$scope.myReferralCode +'and get RS. 25 in wallet', '', '')
 			.then(function (result) {
 				// Success!
 			}, function (err) {
@@ -30,7 +29,7 @@ app.controller('ReferCtrl',function($scope, $state,$cordovaSocialSharing,$ionicL
 
 	$scope.Facebook = function () {
 		$cordovaSocialSharing
-			.shareViaFacebook('Download the shopping app and use my referral code'+$scope.myReferralCode, '', '')
+			.shareViaFacebook('Download the Fab2u app and use my referral code'+$scope.myReferralCode +'and get RS. 25 in wallet', '', '')
 			.then(function (result) {
 				// Success!
 			}, function (err) {

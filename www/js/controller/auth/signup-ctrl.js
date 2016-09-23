@@ -322,8 +322,8 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                         };
                         var referralData = {
                             uid:$scope.uid,
-                            amount:50,
-                            amountReferred:100,
+                            amount:25,
+                            amountReferred:25,
                             referredUsers:{},
                             referredBy:'',
                             referredDate:new Date().getTime()

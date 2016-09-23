@@ -236,9 +236,9 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
                 };
                 updates['userWallet/' + localStorage.getItem('uid')+'/credit/'+walletTransactionId] = transactionDetail;
             }
-            updates['bookings/'+$scope.bookingInformation.bookingId+'/'+'userStatus'] = 'cancel';
-            updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancel';
-            updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancel';
+            updates['bookings/'+$scope.bookingInformation.bookingId+'/'+'userStatus'] = 'cancelled';
+            updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancelled';
+            updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancelled';
             db.ref().update(updates).then(function(){
                 delete window.localStorage.currentBooking;
                 $state.go('app.home');
@@ -247,9 +247,9 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
             });
         }
         else{
-            updates['bookings/'+$scope.bookingInformation.bookingId+'/'+'userStatus'] = 'cancel';
-            updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancel';
-            updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancel';
+            updates['bookings/'+$scope.bookingInformation.bookingId+'/'+'userStatus'] = 'cancelled';
+            updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancelled';
+            updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancelled';
             db.ref().update(updates).then(function(){
                 delete window.localStorage.currentBooking;
                 $state.go('app.home');

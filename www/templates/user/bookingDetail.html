@@ -28,9 +28,14 @@
                     <div class = "custom-border padding class"><b>Status</b>: {{bookingInformation.userStatus}}</div>
                 </div>
             </div>
-            <div align = "center" id = "smile"><img src = "../../img/happy.png" height="14%" width="14%">
+            <div align = "center" id = "smile"><img src = "img/happy.png" height="14%" width="14%">
                 <p style = "color: #FF8386">ENJOY YOUR SERVICES</p>
             </div>
+            <div class="buttons" align = "center">
+                <button class="button button-positive icon ion-ios-location" id="location"
+                        ng-click="open_map(bookingAddress.address.latitude,bookingAddress.address.longitude,bookingAddress.address.address1,bookingAddress.address.address2,bookingAddress.vendorName)"></button>
+            </div>
+        </div>
         </div>
     </ion-content>
 </ion-view>

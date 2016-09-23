@@ -4,42 +4,14 @@
         <h1 class="title">{{vendor_detail.vendorName}}</h1>
         <div class="col">
             <div class="row cart-price" style="margin-top: -5px;">
+                <!--<i class="icon ion-ios-heart" ng-click="likeVendor()"-->
+                   <!--style="margin-right: 30px; font-size: 30px; color: white" ng-class="liked?'likedHeart': 'normalHeart'"></i>-->
                 <div class="col currency">&#x20B9;</div>
                 <div class="col price">{{total_customer}}</div>
             </div> <!-- .cart-price -->
         </div>
     </ion-header-bar>
     <ion-content delegate-handle="mainScroll">
-        <!--<div class="header" ng-style="{'background-image':'url({{vendor_detail.images.main.url}})'}">-->
-        <!--<div class="header">-->
-            <!--<div class="title row">-->
-                <!--<div class="col-20">-->
-                    <!--<div class="backButton icon ion-chevron-left" ng-click="backButton()"></div>-->
-                <!--</div>-->
-                <!--<div class="col-80">-->
-                    <!--<h1 class="text-center">{{vendor_detail.vendorName}}</h1><br>-->
-                <!--</div>-->
-            <!--</div> -->
-            <!--<div class="cart-details row">-->
-                <!--<div class="col">-->
-
-                <!--</div> -->
-                <!--<div class="col" style="text-align:center;">-->
-                    <!--<div class="cart" ng-click="proceedButton()">-->
-                        <!--<span class="total-cart">{{cart_item}}</span>-->
-                        <!--<i class="icon ion-ios-cart"></i>-->
-                    <!--</div> -->
-                <!--</div> -->
-                <!--<div class="col">-->
-                    <!--<div class="row cart-price">-->
-                        <!--<div class="col currency">&#x20B9;</div>-->
-                        <!--<div class="col price">{{total_customer}}</div>-->
-                    <!--</div> -->
-                <!--</div> -->
-            <!--</div>-->
-            <!-- .cart-details -->
-        <!--</div>-->
-        <!-- .header -->
         <div ng-show="menuInfo">
         <div id="scroll-tabs" class="row">
             <ion-scroll id="scrollTabs" direction="x" delegate-handle="myhandel">
@@ -55,7 +27,7 @@
                             <img ng-if="item == 'HAIR'" src="img/Hair.png" style="height: 35px;">
                             <img ng-if="item == 'HANDS & FEETS'" src="img/Hands-feet.png" style="height: 35px;">
                             <img ng-if="item == 'HAIR REMOVAL'" src="img/Waxing.png" style="height: 35px;">
-*                            <img ng-if="item == 'NAILS'" src="img/nail.png" style="height: 35px;">
+                           <img ng-if="item == 'NAILS'" src="img/nail.png" style="height: 35px;">
                             <img ng-if="item == 'PACKAGES'" src="img/Hair.png" style="height: 35px;">
                             <p>{{item}}</p>
                         </div> <!-- .tab -->

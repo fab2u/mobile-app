@@ -49,11 +49,11 @@ app.controller('VendorDetailsCtrl',
           vendorLandmark:$scope.vendor_detail.address.landmark,
           vendorImg:$scope.vendor_detail.images.main.url
       };
-    $scope.liked  = !$scope.liked ;
       if(localStorage.getItem('uid') && key){
           firebase.database().ref('favourites/'+localStorage.getItem('uid')+'/'+key)
               .set(favouriteData,function(response) {
                   if(response ==null){
+                      $scope.liked  = !$scope.liked ;
                       alert('Added to your favourites list!')
                   }
               })

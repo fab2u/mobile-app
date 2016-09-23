@@ -28,7 +28,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
         for(var i =0;i< $scope.validReferralcode.length;i++){
             if($scope.validReferralcode[i] == referralCode){
                 console.log("if matched");
-                var walletTransactionId = db.ref('userWallet/data/' + $scope.uid+'/credit').push().key;
+                var walletTransactionId = db.ref('userWallet/' + $scope.uid+'/credit').push().key;
                 var transactionDetail = {
                     'amount': $scope.walletMoney,
                     'transactionId': walletTransactionId,
@@ -51,7 +51,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                                 })
 
                     })
-                $scope.updates['userWallet/data/' + $scope.uid+'/credit/'+walletTransactionId] = transactionDetail;
+                $scope.updates['userWallet/' + $scope.uid+'/credit/'+walletTransactionId] = transactionDetail;
 
             }
         }

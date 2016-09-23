@@ -132,10 +132,13 @@ app.controller('VendorDetailsCtrl',
         });
         $scope.more = !$scope.more;
 
-        console.log("sonam tets",JSON.stringify($scope.days))
+        console.log("working Days",JSON.stringify($scope.days))
     };
 
-    $scope.open_map = function(latitude,longitude,line1,line2,vendorName){
+
+
+
+        $scope.open_map = function(latitude,longitude,line1,line2,vendorName){
        $state.go('map',{
                 'lat': latitude,
                 'lng': longitude,

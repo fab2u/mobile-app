@@ -38,7 +38,8 @@
                 <!--</div> -->
             <!--</div>-->
             <!-- .cart-details -->
-        </div> <!-- .header -->
+        <!--</div>-->
+        <!-- .header -->
         <div ng-show="menuInfo">
         <div id="scroll-tabs" class="row">
             <ion-scroll id="scrollTabs" direction="x" delegate-handle="myhandel">
@@ -54,6 +55,8 @@
                             <img ng-if="item == 'HAIR'" src="img/Hair.png" style="height: 35px;">
                             <img ng-if="item == 'HANDS & FEETS'" src="img/Hands-feet.png" style="height: 35px;">
                             <img ng-if="item == 'HAIR REMOVAL'" src="img/Waxing.png" style="height: 35px;">
+*                            <img ng-if="item == 'NAILS'" src="img/nail.png" style="height: 35px;">
+                            <img ng-if="item == 'PACKAGES'" src="img/Hair.png" style="height: 35px;">
                             <p>{{item}}</p>
                         </div> <!-- .tab -->
                     </div>
@@ -70,7 +73,7 @@
                              ng-click="selectItem($index, y.menuItemName,y)">
                             <div ng-show="selectedServices[y.menuItemName]" style="background-color:#0dd1d1; width:20px;">
                             </div>
-                            <div class="col col-67 item-text-wrap p-15">
+                            <div class="col col-50 item-text-wrap p-15">
                                 <span style="font-size: 0.9em;">{{y.menuItemName}}</span>
                             </div>
                             <div class="col col-33 p-15" style="text-align:right;font-color:black;" ng-if="y.vendorPrice != y.fab2uPrice">
@@ -84,9 +87,10 @@
                             </div>
                             <div class="col col-33 p-15" style="text-align:right;font-color:black;" ng-if="y.vendorPrice == y.fab2uPrice">
                                 <span style="font-size: 0.9em;">
-                                  &nbsp &#x20B9; {{y.fab2uPrice}}
+                                  &nbsp &#x20B9; {{y.vendorPrice}}
                                 </span>
                             </div>
+
                             <!-- .col -->
                         </div> <!-- .item -->
                     </div> <!-- .col -->

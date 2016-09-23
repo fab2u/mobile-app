@@ -226,7 +226,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         if(($scope.thisCancelTime == $scope.thisBookingTime) || ($scope.thisCancelTime < $scope.thisBookingTime)){
             console.log("refund wallet money if used");
             if($scope.bookingInformation.walletAmount > 0){
-                var walletTransactionId = db.ref('userWallet/data/' + localStorage.getItem('uid')+'/credit').push().key;
+                var walletTransactionId = db.ref('userWallet/' + localStorage.getItem('uid')+'/credit').push().key;
                 var transactionDetail = {
                     'amount': $scope.bookingInformation.walletAmount,
                     'transactionId': walletTransactionId,
@@ -234,7 +234,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
                     'creditDate': new Date().getTime(),
                     'type':'userCancelled'
                 };
-                updates['userWallet/data/' + localStorage.getItem('uid')+'/credit/'+walletTransactionId] = transactionDetail;
+                updates['userWallet/' + localStorage.getItem('uid')+'/credit/'+walletTransactionId] = transactionDetail;
             }
             updates['bookings/'+$scope.bookingInformation.bookingId+'/'+'userStatus'] = 'cancel';
             updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancel';

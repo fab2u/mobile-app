@@ -1,7 +1,19 @@
 app.controller('VendorListCtrl',
-    function($scope,$ionicHistory,$state,$stateParams,$ionicLoading,$http){
+    function($scope,$ionicHistory,$state,$stateParams,$ionicLoading,$http,$cordovaGeolocation){
         $scope.gender = '';
         $scope.vendorList = '';
+
+        var posOptions = {timeout: 10000, enableHighAccuracy: false};
+        $cordovaGeolocation
+            .getCurrentPosition(posOptions)
+
+            .then(function (position) {
+                var lat  = position.coords.latitude
+                var long = position.coords.longitude
+                console.log(lat + '   ' + long)
+            }, function(err) {
+                console.log(err)
+            });
 
         var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
         $scope.serviceIds = [];

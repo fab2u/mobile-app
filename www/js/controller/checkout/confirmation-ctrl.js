@@ -81,7 +81,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	        $ionicLoading.show({
 	            template: 'Loading...'
 	        })
-	        firebase.database().ref('userWallet/data/' + userId).once('value', function(response) {
+	        firebase.database().ref('userWallet/' + userId).once('value', function(response) {
 	        	var debitAmount = 0;
 	        	var creditAmount = 0;
 	        	if(response.val()){
@@ -379,7 +379,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 			var updates = {};
 			if(bookingDetails.walletAmount > 0){
 				console.log('yes');
-				var walletTransactionId = db.ref('userWallet/data/' + userId+'/debit').push().key;
+				var walletTransactionId = db.ref('userWallet/' + userId+'/debit').push().key;
 				bookingDetails.walletTransId = walletTransactionId;
 				console.log(walletTransactionId);
 				var transactionDetail = {
@@ -389,11 +389,11 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 					'usedAt': bookingDetails.createdDate,
 					'type':''
 				}
-				updates['userWallet/data/' + userId+'/debit/'+walletTransactionId] = transactionDetail;
+				updates['userWallet/' + userId+'/debit/'+walletTransactionId] = transactionDetail;
 			}
 			if(bookingDetails.discountAmount > 0){
 				console.log(bookingDetails.discountAmount);
-				var walletTransactionId1 = db.ref('userWallet/data/' + userId+'/discountCoupons').push().key;
+				var walletTransactionId1 = db.ref('userWallet/' + userId+'/discountCoupons').push().key;
 				bookingDetails.discountTransId = walletTransactionId1;
 				bookingDetails.couponUsed = couponForBooking;
 				var transactionDetail1 = {
@@ -403,7 +403,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 					'usedAt': bookingDetails.createdDate,
 					'couponCode': couponForBooking
 				}
-				updates['userWallet/data/' + userId+'/discountCoupons/'+walletTransactionId1] = transactionDetail1;
+				updates['userWallet/' + userId+'/discountCoupons/'+walletTransactionId1] = transactionDetail1;
 			}
 			updates['bookings/'+bookingDetails.bookingId] = bookingDetails;
 			updates['userBookings/'+userId+'/'+bookingDetails.bookingId] = 'active';

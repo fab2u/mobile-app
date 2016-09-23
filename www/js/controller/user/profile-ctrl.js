@@ -1,18 +1,28 @@
 // Edit By Deepank
-app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '$cordovaCamera', function($scope, $timeout, $ionicLoading, $http, $cordovaCamera){
+app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '$cordovaCamera', '$ionicModal', function($scope, $timeout, $ionicLoading, $http, $cordovaCamera, $ionicModal){
    $scope.uid = window.localStorage.uid;
    console.log($scope.uid);
    $scope.email = window.localStorage.email;
    // $scope.img_hash = md5($scope.uid);
    // jdenticon.update("#identicon", $scope.img_hash);
 
-
-
    $scope.goBack = function(){
       history.back();
    }
 
+   $ionicModal.fromTemplateUrl('templates/user/image-crop.html', {
+      scope: $scope
+   }).then(function(modal) {
+      $scope.modal = modal;
+   });
+
+   $scope.testData = 'asdsdfb';
+
    $ionicLoading.show();
+
+   $timeout(function () {
+      $ionicLoading.hide();
+   }, 10000);
 
    firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
@@ -23,16 +33,9 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '
             $ionicLoading.hide();
             console.log(snapshot.val());
             $scope.userDetails = snapshot.val();
-            if(snapshot.val().mobile.mobileFlag == false){
-               $scope.showMobileVerify = true;
-            } else {
-               $scope.showMobileVerify = false;
-               $scope.showOTPfield = false;
-            }
          });
 
          $scope.galleryUpload = function() {
-
             var options = {
                destinationType : Camera.DestinationType.FILE_URI,
                sourceType :	Camera.PictureSourceType.PHOTOLIBRARY, //, Camera.PictureSourceType.CAMERA,
@@ -40,23 +43,18 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '
                encodingType: Camera.EncodingType.JPEG,
                popoverOptions: CameraPopoverOptions,
             };
-
             $cordovaCamera.getPicture(options).then(function(imageURI) {
                var image = document.getElementById('profile-pic');
                image.src = imageURI;
                $scope.url = imageURI;
-
                cropImage(imageURI);
-
                // resizeImage(imageURI);
-
             }, function(err) {
                console.log(err);
             });
          };
 
          $scope.cameraUpload = function() {
-
             var options = {
                destinationType : Camera.DestinationType.FILE_URI,
                sourceType :	Camera.PictureSourceType.CAMERA,
@@ -64,23 +62,25 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '
                encodingType: Camera.EncodingType.JPEG,
                popoverOptions: CameraPopoverOptions,
             };
-
             $cordovaCamera.getPicture(options).then(function(imageURI) {
                var image = document.getElementById('profile-pic');
                image.src = imageURI;
                $scope.url = imageURI;
                alert(JSON.stringify(imageURI)+ 'line number 283, imageURI');
-
                cropImage(imageURI);
-
                // resizeImage(imageURI);
-
             }, function(err) {
                console.log(err);
             });
          };
 
+         $scope.testFunc = function(){
+            $scope.modal.show();
+         }
+
+
          function cropImage(source){
+            $scope.modal.show();
             var basic = $('.demo').croppie({
                viewport: {
                   width: 200,

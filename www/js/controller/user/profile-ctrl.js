@@ -6,6 +6,8 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '
    // $scope.img_hash = md5($scope.uid);
    // jdenticon.update("#identicon", $scope.img_hash);
 
+   var basic;
+
    $scope.goBack = function(){
       history.back();
    }
@@ -45,7 +47,7 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '
             };
             $cordovaCamera.getPicture(options).then(function(imageURI) {
                var image = document.getElementById('profile-pic');
-               image.src = imageURI;
+               // image.src = imageURI;
                $scope.url = imageURI;
                cropImage(imageURI);
                // resizeImage(imageURI);
@@ -78,25 +80,54 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '
             $scope.modal.show();
          }
 
-
          function cropImage(source){
             $scope.modal.show();
-            var basic = $('.demo').croppie({
+            basic = $('.demo').croppie({
                viewport: {
                   width: 200,
-                  height: 200
+                  height: 200,
+                  type: 'circle'
                }
             });
             basic.croppie('bind', {
       			url: source
       		});
-            $(".basic-result").on('click', function(){
-               basic.croppie('result', {
-      				type: 'canvas',
-                  circle: true
-      			}).then(function (resp) {
-      				alert(resp);
-      			});
+         }
+
+         $scope.cropClick = function(){
+            $ionicLoading.show({
+               template: 'Loading! Please wait...'
+            });
+            basic.croppie('result', {
+               type: 'canvas',
+               format: 'jpeg',
+               circle: true
+            }).then(function (resp) {
+               $ionicLoading.hide();
+               alert('test');
+               // alert(JSON.stringify(resp));
+               $http.post("http://139.162.3.205/api/testupload", {path: resp})
+               .success(function(response){
+                  alert("success "+JSON.stringify(response));
+
+                  var updates1 = {};
+                  alert($scope.uid + " " + response.Message);
+                  updates1["/users/data/"+$scope.uid+"/photoUrl"] = response.Message;
+                  window.localStorage.setItem("userPhoto", response.Message);
+                  db.ref().update(updates1).then(function(){
+                     alert("updated in users obj")
+                     user.updateProfile({
+                        photoURL: response.Message
+                     }).then(function(){
+                        alert("photo updated in firebase object");
+                        $scope.modal.hide();
+                     });
+                  });
+
+               })
+               .error(function(response){
+                  alert(JSON.stringify(response));
+               });
             });
          }
 

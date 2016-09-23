@@ -1,11 +1,12 @@
-<ion-modal-view>
+<ion-modal-view class="userProfile">
    <ion-header-bar class="bar bar-header bar-positive">
       <h1 class="title">Crop Image</h1>
       <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
    </ion-header-bar>
    <ion-content class="padding">
-      {{testData}}
       <div class="demo"></div>
-      <button class="basic-result">Crop Image</button>
+      <div class="center">
+         <a class="follow-btn" ng-click="cropClick()">Crop Image</a>
+      </div>
    </ion-content>
 </ion-modal-view>

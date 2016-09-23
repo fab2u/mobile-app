@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0a90707b-bb48-47ba-9167-7f50f00e366c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/legal/privacyPolicy.html" afterPath="$PROJECT_DIR$/www/templates/legal/privacyPolicy.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/legal/termsnConditions.html" afterPath="$PROJECT_DIR$/www/templates/legal/termsnConditions.html" />
     </list>
     <ignored path="mobile-app.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="privacyPolicy.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/www/templates/legal/privacyPolicy.html">
+      <file leaf-file-name="termsnConditions.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/www/templates/legal/termsnConditions.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+            <state relative-caret-position="945">
+              <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -50,7 +51,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/www/js/controller/checkout/cart-ctrl.js" />
         <option value="$PROJECT_DIR$/www/index.html" />
         <option value="$PROJECT_DIR$/www/templates/user/bookings.html" />
         <option value="$PROJECT_DIR$/www/js/controller/home/search-ctrl.js" />
@@ -101,6 +101,7 @@
         <option value="$PROJECT_DIR$/www/js/controller/user/refer-ctrl.js" />
         <option value="$PROJECT_DIR$/www/templates/user/userWallet.html" />
         <option value="$PROJECT_DIR$/www/templates/legal/privacyPolicy.html" />
+        <option value="$PROJECT_DIR$/www/templates/legal/termsnConditions.html" />
       </list>
     </option>
   </component>
@@ -495,12 +496,12 @@
       <workItem from="1474347617464" duration="19711000" />
       <workItem from="1474374373001" duration="4651000" />
       <workItem from="1474436235266" duration="17992000" />
-      <workItem from="1474611156631" duration="2894000" />
+      <workItem from="1474611156631" duration="3103000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="521095000" />
+    <option name="totallyTimeSpent" value="521304000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
@@ -621,13 +622,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/www/templates/home/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/css/checkout/cart.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="254">
@@ -1020,8 +1014,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/legal/privacyPolicy.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+        <state relative-caret-position="120">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/legal/termsnConditions.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="945">
+          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
           <folding />
         </state>
       </provider>

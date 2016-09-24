@@ -55,7 +55,7 @@ app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$locati
 
    $scope.doRefresh = function(){
 		console.log('pull to refresh');
-		db.ref("cityBlogs/"+$scope.cityId).orderByKey().startAt($scope.topKey).once("value", function(snapshot){
+		db.ref("cityBlogs/"+$scope.cityId+"/blogs").orderByKey().startAt($scope.topKey).once("value", function(snapshot){
 			console.log(snapshot.val());
 			if(snapshot.numChildren() == 1){
 				console.log('one child');
@@ -80,17 +80,17 @@ app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$locati
 	$scope.loadMore = function(){
 		console.log(Object.keys($scope.blogIdList).length);
 		if(Object.keys($scope.blogIdList).length > 0){
-			db.ref("cityBlogs/"+$scope.cityId).orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){
-				console.log(snap.val());
+			db.ref("cityBlogs/"+$scope.cityId+"/blogs").orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){
+				// console.log(snap.val());
 				if(snap.numChildren() == 1){
 					$scope.moreMessagesScroll = false;
 					$scope.$broadcast('scroll.infiniteScrollComplete');
 				}
 				else{
-					console.log($scope.bottomKey);
+					// console.log($scope.bottomKey);
 					$scope.oldBottomKey = $scope.bottomKey;
 					$scope.bottomKey = Object.keys(snap.val())[0];
-					console.log($scope.bottomKey);
+					// console.log($scope.bottomKey);
 					for(var i in snap.val()){
 						// console.log(i); // i is the key of blogs object or the id of each blog
 						if (i != $scope.oldBottomKey){
@@ -103,17 +103,17 @@ app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$locati
 		}
 		else if(Object.keys($scope.blogIdList).length == 0){
 			console.log("length = 0");
-			db.ref("cityBlogs/"+$scope.cityId).limitToLast(25).once('value', function(snapshot){
+			db.ref("cityBlogs/"+$scope.cityId+"/blogs").limitToLast(25).once('value', function(snapshot){
 				$ionicLoading.hide();
 				$scope.blogIdList = snapshot.val();
-				console.log($scope.blogIdList);
+				// console.log($scope.blogIdList);
 				$scope.bottomKey = Object.keys($scope.blogIdList)[0];
-				console.log(Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1]);
+				// console.log(Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1]);
 				$scope.topKey = Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1];
-				console.log($scope.bottomKey);
+				// console.log($scope.bottomKey);
 				$scope.blogArr = [];
 				for(var i in $scope.blogIdList){
-					console.log(i); // i is the key of blogs object or the id of each blog
+					// console.log(i); // i is the key of blogs object or the id of each blog
                blogAlgo(i);
 				}
             $timeout(function () {
@@ -128,20 +128,25 @@ app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$locati
    function blogAlgo(i, callback){
       var blogData = db.ref().child("blogs").child(i);
       blogData.once("value", function(snap){ //access individual blog
-         console.log(snap.val());
+         console.log(i, snap.val());
          single_blog = snap.val();
          single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-         db.ref("users/data/"+single_blog.user.user_id+"/photoUrl").once("value", function(snap){
-            if(snap.val() !== null){
-               console.log(single_blog);
-               console.log(snap.val());
-               single_blog.profilePic = snap.val();
-            }
-         });
+         // If you want to run asynchronous functions inside a loop, but still want to keep the index or other variables after a callback gets executed you can wrap your code in an IIFE (immediately-invoked function expression).
+			(function(single_blog){
+				db.ref("users/data/"+single_blog.user.user_id+"/photoUrl").once("value", function(snap){
+					if(snap.val() !== null){
+						// console.log('not null');
+						console.log(snap.val());
+						console.log(single_blog.blog_id);
+						single_blog.profilePic = snap.val();
+						// console.log(single_blog.profilePic);
+					}
+				});
+			})(single_blog);
          if(single_blog.likedBy){
             count = Object.keys(single_blog.likedBy).length;
-            console.log(single_blog.likedBy);
-            console.log($scope.uid);
+            // console.log(single_blog.likedBy);
+            // console.log($scope.uid);
             single_blog['numLikes'] = count;
             if($scope.uid in single_blog.likedBy){
                $timeout(function () {

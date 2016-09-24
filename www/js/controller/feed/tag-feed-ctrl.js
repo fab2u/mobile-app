@@ -132,15 +132,18 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 			single_blog = snap.val();
 			single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 			console.log(single_blog.blog_id);
-			db.ref("users/data/"+single_blog.user.user_id+"/photoUrl").once("value", function(snap){
-				if(snap.val() !== null){
-					// console.log('not null');
-					console.log(snap.val());
-					console.log(single_blog.blog_id);
-					single_blog.profilePic = snap.val();
-					// console.log(single_blog.profilePic);
-				}
-			});
+			// If you want to run asynchronous functions inside a loop, but still want to keep the index or other variables after a callback gets executed you can wrap your code in an IIFE (immediately-invoked function expression).
+			(function(single_blog){
+				db.ref("users/data/"+single_blog.user.user_id+"/photoUrl").once("value", function(snap){
+					if(snap.val() !== null){
+						// console.log('not null');
+						console.log(snap.val());
+						console.log(single_blog.blog_id);
+						single_blog.profilePic = snap.val();
+						// console.log(single_blog.profilePic);
+					}
+				});
+			})(single_blog);
 			if(single_blog.likedBy){
 				count = Object.keys(single_blog.likedBy).length;
 				// console.log(single_blog.likedBy);

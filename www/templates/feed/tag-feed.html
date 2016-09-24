@@ -1,5 +1,5 @@
 <ion-view class="fabFeed" cache-view="false">
-	<ion-header-bar class="bar-stable" title="Profile">
+	<ion-header-bar class="bar-dark" title="Profile">
       <a class="button icon ion-chevron-left button-clear" ng-click="goBack()"></a>
       <h1 class="title">{{tagName}}</h1>
    </ion-header-bar>
@@ -16,9 +16,9 @@
 						<p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_name}}</a> | {{feed.created_time | date:'d MMM yy'}}</p>
 						<p class="feed-name"><i class="ion ion-location"></i> Gurgaon</p>
 					</div>
-					<!-- <div class="col col-25">
-						<a href="#" class="follow-btn">Follow</a>
-					</div> -->
+					<div class="col col-25">
+						<span class="follow-btn {{feed.user.user_id}}-follow" ng-click="followUser(feed.user.user_id)">Follow</span>
+					</div>
 				</div>
 				<div class="row">
 					<div class="col col-20"></div>

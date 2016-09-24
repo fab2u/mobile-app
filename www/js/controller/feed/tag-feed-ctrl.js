@@ -22,6 +22,19 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 		$ionicLoading.hide();
 	}, 10000);
 
+	$scope.followUser = function(id){
+		console.log(id, $scope.uid);
+		// id - post creator's uid
+		// $scope.uid - my uid
+		var updateFollow = {};
+		updateFollow['users/data/'+id+'/myFollowers/'+$scope.uid] = true;
+		updateFollow['users/data/'+$scope.uid+'/following/'+id] = true;
+		db.ref().update(updateFollow).then(function(){
+			console.log('success');
+			$('.'+id+'-follow').hide();
+		});
+	}
+
 	$scope.likeThisFeed = function(feedId){
 		if($("#"+feedId+"-likeFeed").hasClass('clicked')){
 			console.log('inside remove');
@@ -131,16 +144,26 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 			// console.log(snap.val());
 			single_blog = snap.val();
 			single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-			console.log(single_blog.blog_id);
+			console.log(single_blog.user.user_id, $scope.uid);
+			if(single_blog.user.user_id == $scope.uid){
+				console.log('both equal');
+				$timeout(function () {
+					$('.'+single_blog.user.user_id+'-follow').hide();
+				}, 0);
+			}
+
 			// If you want to run asynchronous functions inside a loop, but still want to keep the index or other variables after a callback gets executed you can wrap your code in an IIFE (immediately-invoked function expression).
 			(function(single_blog){
-				db.ref("users/data/"+single_blog.user.user_id+"/photoUrl").once("value", function(snap){
-					if(snap.val() !== null){
-						// console.log('not null');
-						console.log(snap.val());
-						console.log(single_blog.blog_id);
-						single_blog.profilePic = snap.val();
-						// console.log(single_blog.profilePic);
+				db.ref("users/data/"+single_blog.user.user_id).once("value", function(snap){
+					console.log(single_blog.user.user_id, snap.val());
+					if(snap.val().photoUrl){
+						single_blog.profilePic = snap.val().photoUrl;
+					}
+					if(snap.val().myFollowers){
+						console.log(snap.val().myFollowers);
+						if ($scope.uid in snap.val().myFollowers){
+							$('.'+single_blog.user.user_id+'-follow').hide();
+						}
 					}
 				});
 			})(single_blog);
@@ -155,7 +178,6 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 					}, 1000);
 				}
 			}
-			// console.log(single_blog);
 			$scope.blogArr.push(single_blog);
 			// console.log($scope.blogArr);
 		});
@@ -163,5 +185,4 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 			callback();
 		}
 	}
-
 }]);

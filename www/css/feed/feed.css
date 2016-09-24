@@ -1,5 +1,10 @@
+
+.fabFeed .feeds{
+	border-bottom: 1px solid #bcbcbc;
+}
+
 .fabFeed .clicked{
-	color: #F0563B;
+	color: #EF0F20;
 }
 
 .fabFeed .upper-row{
@@ -15,9 +20,14 @@
 
 .fabFeed .tab-row{
 	padding: 0px;
+	border-bottom: 1px solid #bcbcbc;
 }
 .fabFeed .active-tab{
 	border-bottom: 4px solid #FF8386;
+}
+.fabFeed .center-tab{
+	border-left: 1px solid #bcbcbc;
+	border-right: 1px solid #bcbcbc;
 }
 
 .fabFeed .profile-pic{
@@ -35,10 +45,12 @@
 	text-transform: uppercase;
 }
 .fabFeed .user-details{
-	border-left: 1px solid black;
-	border-right: 1px solid black;
 	margin-top: 20px;
 	font-size: 1.5em;
+}
+.fabFeed .det-border{
+	border-left: 1px solid black;
+	border-right: 1px solid black;
 }
 .fabFeed .user-details span{
 	font-size: 0.8em;
@@ -113,7 +125,7 @@
 
 .fabFeed i.like-btn.ion-heart {
   font-size: 25px;
-  /*color: #FF8386;*/
+  /*color: #bcbcbc;*/
 }
 
 .fabFeed .likenum{

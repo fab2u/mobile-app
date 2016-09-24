@@ -5,7 +5,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 	$scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
 
 	$scope.goBack = function(){
-		history.back();
+		$location.path("/app/home");
 	}
 
 	$scope.createNew = function(){
@@ -29,10 +29,12 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 
 	db.ref("users/data/"+uid).on("value", function(snapshot){
 		console.log(snapshot.val());
+		$scope.following = Object.keys(snapshot.val().following).length;
 		$scope.userDetails = snapshot.val();
 		$scope.email = snapshot.val().email.userEmail;
 		$scope.userPhoto = snapshot.val().photoUrl;
 		$scope.numFeeds = Object.keys(snapshot.val().blogs).length;
+		$scope.followers = Object.keys(snapshot.val().myFollowers).length;
 	});
 
 	$scope.likeThisFeed = function(feedId){

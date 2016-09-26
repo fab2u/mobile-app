@@ -306,6 +306,6 @@ app
 	else if(window.localStorage.getItem('SkipIntro')== "true"){
 		$urlRouterProvider.otherwise("/app/home");
 	}else{
-		$urlRouterProvider.otherwise("/app-start");
+		$urlRouterProvider.otherwise("/intro-slider");
 	}
 });

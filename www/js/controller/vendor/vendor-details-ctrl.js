@@ -90,7 +90,6 @@ app.controller('VendorDetailsCtrl',
         if(localStorage.getItem('uid')){
             firebase.database().ref('favourites/'+localStorage.getItem('uid'))
                 .once('value',function(response) {
-                    console.log("response",JSON.stringify(response.val()))
                     angular.forEach(response.val(),function (value,key) {
                         if(value.vendorId == $stateParams.ven_id){
                             $scope.liked = true;

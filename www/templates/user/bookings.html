@@ -21,8 +21,8 @@
                 <div id ="landmark" >{{bookingAddress.landmark}}</div>
                 <div id = "booking" >Booking ID {{booking.bookingId}}</div>
                 <div id = "amount" >Amount Payable {{booking.amountPayable}}</div>
-                <div id ="date" ><b><i class = "icon ion-calendar" id = "calendar"></i></b><br>{{booking.appointmentDate}}</div>
-                <div id="time"  ><b><i class = "icon ion-clock" id = "clock" ></i></b><br>{{booking.appointmentTime}}</div>
+                <div id ="date" ><b><i class = "icon ion-calendar" id = "calendar"></i></b><br>{{booking.appointmentTime | date:'dd-MM-yyyy'}}</div>
+                <div id="time"  ><b><i class = "icon ion-clock" id = "clock" ></i></b><br>{{booking.appointmentTime | date:"h:mma"}}</div>
             </div>
           </div>
           <div class = "button-bar myButtonsDiv">

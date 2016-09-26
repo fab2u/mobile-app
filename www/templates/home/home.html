@@ -1,5 +1,5 @@
 <ion-view id="home-page">
-   <ion-content class="has-header">
+   <ion-content class="has-header" ng-show="banners">
         <div class="services-n-fab">
             <div class="services" ng-class="fabSelected? 'no-border':'with-border'" ng-click="selectMain(1)">SERVICES</div>
             <div class="fab" ng-class="fabSelected? 'with-border':'no-border'" ng-click="selectMain(2)"></div>
@@ -7,9 +7,9 @@
         </div>
         <div class="offerList">
             <ion-slide-box class="offers">
-                <ion-slide ng-repeat="offer in offers" class="offer-slide">
+                <ion-slide ng-repeat="banner in banners" class="offer-slide">
                     <div class="offer-img">
-                        <img ng-src="{{offer.image}}"/>
+                        <img ng-src="{{banner.url}}"/>
                         <!-- <div class="description"></div> -->
                     </div>
                 </ion-slide>

@@ -23,8 +23,8 @@
 
                     <div class = "custom-border  padding class"><b>Amount Payable</b>: ₹{{bookingInformation.amountPayable}}</div>
                     <div class = "custom-border  padding class" ng-show="bookingInformation.walletAmount"><b>Paid From Wallet</b>: ₹{{bookingInformation.walletAmount}}</div>
-                    <div class = "custom-border padding class"><b>Time</b>: {{bookingInformation.appointmentTime}}</div>
-                    <div class = "custom-border padding class"><b>Date</b>: {{bookingInformation.appointmentDate}}</div>
+                    <div class = "custom-border padding class"><b>Time</b>: {{bookingInformation.appointmentTime | date:"h:mma"}}</div>
+                    <div class = "custom-border padding class"><b>Date</b>: {{bookingInformation.appointmentTime| date:'dd-MM-yyyy'}}</div>
                     <div class = "custom-border padding class"><b>Status</b>: {{bookingInformation.userStatus}}</div>
                 </div>
             </div>

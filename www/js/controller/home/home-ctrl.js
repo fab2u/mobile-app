@@ -1,5 +1,5 @@
 app
-.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$location) {
+.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$location,$ionicSlideBoxDelegate) {
 
 	$scope.fabSelected = false;
 	// window.localStorage.setItem("serviceId",'');
@@ -16,6 +16,26 @@ app
 		}
 	};
 
+	$scope.get_banners = function(){
+		$ionicLoading.show();
+		firebase.database().ref('banners/'+JSON.parse(window.localStorage['selectedLocation']).cityId).once('value',function(response){
+			console.log("response for banner",JSON.stringify(response.val()))
+			if(response.val()){
+				$ionicLoading.hide();
+				$scope.banners = response.val();
+				$ionicSlideBoxDelegate.update();
+			}
+			else{
+				firebase.database().ref('banners/fab2u').once('value',function(response){
+					console.log("response for banner",JSON.stringify(response.val()))
+						$ionicLoading.hide();
+						$scope.banners = response.val();
+						$ionicSlideBoxDelegate.update();
+				});
+			}
+		});
+	}
+	$scope.get_banners();
 	$scope.offers = [
 		{offer: 'Refer a friend and get hidden gift', image: 'img/home/slider/slider1.jpg'},
 		{offer: 'Refer a friend and get hidden gift', image: 'img/home/slider/slider2.jpg'}

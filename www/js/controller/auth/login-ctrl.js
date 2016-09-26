@@ -16,7 +16,7 @@ app.controller('LoginCtrl',
             if(response.uid){
                 db.ref("users/data/"+response.uid).on("value", function(snapshot){
                     window.localStorage.setItem("name", snapshot.val().name);
-                    
+
                 });
                 if(localStorage.getItem('confirmation') == 'true'){
                     localStorage.setItem('confirmation', '');

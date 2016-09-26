@@ -1,16 +1,15 @@
 app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $timeout,$ionicPopup,$rootScope) {
 	$ionicLoading.show();
 	var loggedIn = checkLocalStorage('uid');
+	$scope.appointmentTime = '';
 	$scope.goBack = function(){
 		$state.go('dateTime');
 	};
 	if(!loggedIn){
-		console.log('logged out');
 		localStorage.setItem('confirmation', true);
 		$ionicLoading.hide();
 		$state.go('login');
 	} else {
-		console.log('logged in');
 		var hasCartItems = checkLocalStorage('BegItems');
 		var vendorId = window.localStorage.getItem("vendorId");
 		var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
@@ -19,6 +18,35 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 		var appointmentDate = JSON.parse(localStorage.getItem('appointmentDate'));
 		var appointmentDateInfo = appointmentDate.date + '/' + appointmentDate.month + '/' + appointmentDate.year;
 		var couponForBooking;
+
+		var bookDateForAppointment = appointmentDate.date +'-'+appointmentDate.month+'-'+appointmentDate.year;
+
+		var time = '';
+		var format = timeOfAppointment.substring(timeOfAppointment.length-2, timeOfAppointment.length);
+		console.log("time format",format);
+		if(format == 'AM'){
+			time = timeOfAppointment.substring(0, timeOfAppointment.length-2);
+			toTimestamp(bookDateForAppointment + ' ' + time);
+			console.log("time in case of am",time);
+		} else {
+			var res = timeOfAppointment.split(":");
+			var hh = res[0];
+			console.log("hh",hh);
+			if(hh == 12){
+				time= hh+':'+res[1];
+				time = time.substring(0, time.length-2);
+				toTimestamp(bookDateForAppointment + ' ' + time);
+				console.log("time in case of pm with 12",time);
+			}
+			else{
+				hh = parseInt(hh)+12;
+				time= hh+':'+res[1];
+				time = time.substring(0, time.length-2);
+				toTimestamp(bookDateForAppointment + ' ' + time);
+				console.log("time in case of pm",time);
+			}
+		}
+
 		// console.log(vendorId, locationInfo);
 
 		// console.log(hasCartItems);
@@ -75,6 +103,14 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	        }
 	        $ionicLoading.hide();
 	    }
+
+
+		function toTimestamp(thisBookingTime) {
+			console.log("thisBookingTime",thisBookingTime)
+
+			$scope.appointmentTime = Date.parse(thisBookingTime);
+              console.log("datum",$scope.appointmentTime)
+		}
 
 	    $scope.getWalletInfo = function() {
 	        $ionicLoading.show({
@@ -341,11 +377,12 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
                 'cityName': locationInfo.cityName,
                 'vendorId': vendorId,
                 'vendorName': window.localStorage.getItem("vendorName"),
-                'vendorAmount': $scope.total_original,
+				'vendorMobile':window.localStorage.getItem("vendorMobile"),
+			    'vendorLandline':window.localStorage.getItem("vendorLandline"),
+			    'vendorAmount': $scope.total_original,
                 'serviceInfo': newCart,
                 'createdDate': new Date().getTime(),
-                'appointmentDate': appointmentDateInfo,
-                'appointmentTime': timeOfAppointment,
+                'appointmentTime': $scope.appointmentTime,
                 'versionNumber': $scope.version,
 				'userStatus': 'upComing',
                 'walletAmount' : $scope.paidFromWallet,
@@ -358,7 +395,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 				'vendorStatus':'upComing'
 
             };
-            console.log(bookingDetails);
+            console.log("bookingDetails",bookingDetails);
 			$scope.insertBooking(bookingDetails);
 
 			// firebase.database().ref('userBookings/'+userId+'/active').once('value', function(response){

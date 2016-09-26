@@ -20,6 +20,12 @@ app
             $ionicLoading.show();
             firebase.database().ref('vendors/' + JSON.parse(window.localStorage['selectedLocation']).cityId + '/' + $stateParams.vendor_id).once('value', function (response) {
                 $scope.vendor_detail = response.val();
+                console.log("vendor detail",JSON.stringify($scope.vendor_detail.contactDetails,null,2))
+                console.log("vendor detail",JSON.stringify($scope.vendor_detail.contactDetails.landline))
+                console.log("vendor detail",JSON.stringify($scope.vendor_detail.contactDetails.phone))
+                window.localStorage.setItem("vendorMobile",$scope.vendor_detail.contactDetails.phone);
+                window.localStorage.setItem("vendorLandline",$scope.vendor_detail.contactDetails.landline);
+
                 $ionicLoading.hide();
             });
         };

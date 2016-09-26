@@ -14,6 +14,10 @@ app.controller('LoginCtrl',
             window.localStorage.setItem("email", response.email);
             window.localStorage.setItem("uid", response.uid);
             if(response.uid){
+                db.ref("users/data/"+response.uid).on("value", function(snapshot){
+                    window.localStorage.setItem("name", snapshot.val().name);
+                    
+                });
                 if(localStorage.getItem('confirmation') == 'true'){
                     localStorage.setItem('confirmation', '');
                     alert("Logged in successfully!");

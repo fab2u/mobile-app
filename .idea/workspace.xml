@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a90707b-bb48-47ba-9167-7f50f00e366c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/img/sideMenu/Contact-us.png" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/www/templates/home/tedt.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/checkout/bill.css" afterPath="$PROJECT_DIR$/www/css/checkout/bill.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/home/service-list.css" afterPath="$PROJECT_DIR$/www/css/home/service-list.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/vendor/vendor-services-list.css" afterPath="$PROJECT_DIR$/www/css/vendor/vendor-services-list.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/vendor/vendorDetails.css" afterPath="$PROJECT_DIR$/www/css/vendor/vendorDetails.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/home/menu.html" afterPath="$PROJECT_DIR$/www/templates/home/menu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/home/service-list.html" afterPath="$PROJECT_DIR$/www/templates/home/service-list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/vendor/vendor-menu.html" afterPath="$PROJECT_DIR$/www/templates/vendor/vendor-menu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/vendor/vendorDetails.html" afterPath="$PROJECT_DIR$/www/templates/vendor/vendorDetails.html" />
     </list>
     <ignored path="mobile-app.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -44,7 +35,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vendor-menu.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="vendor-menu.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/templates/vendor/vendor-menu.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="481">
@@ -56,11 +47,31 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="vendor-details-ctrl.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="544">
+              <caret line="95" column="47" selection-start-line="95" selection-start-column="47" selection-end-line="95" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login-ctrl.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/js/controller/auth/login-ctrl.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="48" selection-start-line="19" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="vendorDetails.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/css/vendor/vendorDetails.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="524">
-              <caret line="391" column="0" selection-start-line="369" selection-start-column="0" selection-end-line="391" selection-end-column="0" />
+            <state relative-caret-position="224">
+              <caret line="371" column="14" selection-start-line="371" selection-start-column="14" selection-end-line="371" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -139,11 +150,11 @@
         <option value="$PROJECT_DIR$/www/templates/home/service-list.html" />
         <option value="$PROJECT_DIR$/www/templates/home/menu.html" />
         <option value="$PROJECT_DIR$/www/css/home/service-list.css" />
-        <option value="$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js" />
         <option value="$PROJECT_DIR$/www/templates/vendor/vendorDetails.html" />
-        <option value="$PROJECT_DIR$/www/css/vendor/vendorDetails.css" />
         <option value="$PROJECT_DIR$/www/css/vendor/vendor-services-list.css" />
         <option value="$PROJECT_DIR$/www/templates/vendor/vendor-menu.html" />
+        <option value="$PROJECT_DIR$/www/css/vendor/vendorDetails.css" />
+        <option value="$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js" />
       </list>
     </option>
   </component>
@@ -517,6 +528,58 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="auth" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mobile-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mobile-app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mobile-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mobile-app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="css" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -701,12 +764,12 @@
       <workItem from="1474374373001" duration="4651000" />
       <workItem from="1474436235266" duration="17992000" />
       <workItem from="1474611156631" duration="24016000" />
-      <workItem from="1474869111080" duration="4679000" />
+      <workItem from="1474869111080" duration="5513000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="546896000" />
+    <option name="totallyTimeSpent" value="547730000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
@@ -817,11 +880,6 @@
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js</url>
-          <line>48</line>
-          <option name="timeStamp" value="36" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/www/js/controller/user/referral-details-ctrl.js</url>
           <line>14</line>
           <option name="timeStamp" value="37" />
@@ -842,13 +900,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/www/templates/auth/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/img/Hands-feet.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1176,26 +1227,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/checkout/cart.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
           <caret line="60" column="56" selection-start-line="60" selection-start-column="44" selection-end-line="60" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/vendor/vendorDetails.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="524">
-          <caret line="391" column="0" selection-start-line="369" selection-start-column="0" selection-end-line="391" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1223,6 +1258,30 @@
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#ion-header-bar#0;n#ion-view#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/vendor/vendorDetails.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="371" column="14" selection-start-line="371" selection-start-column="14" selection-end-line="371" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/auth/login-ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="48" selection-start-line="19" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="95" column="47" selection-start-line="95" selection-start-column="47" selection-end-line="95" selection-end-column="47" />
+          <folding />
         </state>
       </provider>
     </entry>

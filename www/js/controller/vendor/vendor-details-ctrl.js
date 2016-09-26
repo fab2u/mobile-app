@@ -46,9 +46,7 @@ app.controller('VendorDetailsCtrl',
   $scope.liked = false;
 
   $scope.likeVendor = function(){
-    console.log('clicked');
       var key = db.ref('favourites/'+localStorage.getItem('uid')).push().key;
-
       var favouriteData = {
           vendorId:$stateParams.ven_id,
           cityId:$scope.vendor_detail.address.cityId,
@@ -84,6 +82,22 @@ app.controller('VendorDetailsCtrl',
    //  	$scope.slideIndex = index;
    //    console.log(index);
   	// };
+
+
+        ////// To get vendor fav or not //////////////
+
+
+        if(localStorage.getItem('uid')){
+            firebase.database().ref('favourites/'+localStorage.getItem('uid'))
+                .once('value',function(response) {
+                    console.log("response",JSON.stringify(response.val()))
+                    angular.forEach(response.val(),function (value,key) {
+                        if(value.vendorId == $stateParams.ven_id){
+                            $scope.liked = true;
+                        }
+                    })
+                })
+        }
 
 /// To get review for a particular vendor ///////
         $scope.reviewList = function(){
@@ -305,9 +319,15 @@ app.controller('VendorDetailsCtrl',
                 updates['userReviews/'+localStorage.getItem('uid')+'/'+reviewData.ReviewId] = userReviewData;
                 db.ref().update(updates).then(function () {
                     $ionicLoading.hide();
+                    $rootScope.$broadcast('reviews', { message: 'review list changed' });
+
                     alert('Your review has been submitted successfully!');
                 });
             }
         };
+        $rootScope.$on('reviews', function (event, args) {
+            $scope.message = args.message;
+            $scope.reviewList();
+        });
 
 });

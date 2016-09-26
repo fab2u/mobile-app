@@ -70,18 +70,24 @@
                 </ion-slide-box>
         </div>
         </div>
-<div class="cart-details row">
-    <div class="col" style="text-align:center;    margin-top: -40px;margin-left: 90px;">
-    <div class="cart" ng-click="proceedButton()">
-        <span class="total-cart">{{cart_item}}</span>
-        <i class="icon ion-ios-cart"></i>
-    </div>
-</div></div>
+<!--<div class="cart-details row">-->
+    <!--<div class="col" style="text-align:center;    margin-top: -40px;margin-left: 90px;">-->
+    <!--<div class="cart" ng-click="proceedButton()">-->
+        <!--<span class="total-cart">{{cart_item}}</span>-->
+        <!--<i class="icon ion-ios-cart"></i>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--</div>-->
 
     </ion-content>
 
 
     <ion-footer-bar class="footer">
+        <div class="cartValue" ng-click="proceedButton()">
+            <i class="icon ion-ios-cart" style="font-size: 30px;"></i>
+            <p>{{cart_item}}</p>
+        </div>
         <div class="row newFooter">
             <div class="col col-33" id="overview" ng-click="overviewButton()">OVERVIEW</div>
             <div class="col col-66" id="proceed" ng-click="proceedButton()">SELECT DATE AND TIME</div>

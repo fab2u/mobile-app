@@ -8,7 +8,6 @@ app.controller('VendorDetailsCtrl',
         $scope.cart_item = '';
         $scope.selectedServices = {};
         $scope.begItems = {};
-
         // Get selected services if previously stored in localstorage
         if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
             $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
@@ -241,5 +240,74 @@ app.controller('VendorDetailsCtrl',
     };
 
 
+
+        $scope.ratingsCallback = function(rating) {
+            $scope.custReview.rating = rating;
+        };
+        $scope.ratingsObject = {
+            iconOn: 'ion-ios-star',
+            iconOff: 'ion-ios-star-outline',
+            iconOnColor: '#ffd11a',
+            iconOffColor: '#b38f00',
+            rating: 0,
+            minRating: 0,
+            readOnly:false,
+            callback: function(rating) {
+                $scope.ratingsCallback(rating);
+            }
+        };
+
+
+
+        $scope.custReview ={
+            review:'',
+            rating: 0
+        };
+        $ionicModal.fromTemplateUrl('templates/checkout/review.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.rate_vendor = modal;
+        });
+
+        $scope.rateVendor = function() {
+            $scope.custReview ={
+                review:'',
+                rating: 0
+            };
+            $scope.rate_vendor.show();
+        };
+
+        $scope.storeReview = function(){
+            console.log("review detail",JSON.stringify($scope.custReview));
+            if($scope.custReview.rating == 0){
+                alert('Please, select ratings!')
+            }
+            else{
+                var updates = {};
+                var reviewId = firebase.database().ref('reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id+'/Reviews').push().key;
+                var reviewData = {
+                    'ReviewId':reviewId,
+                    'BookingId':'',
+                    'userId':localStorage.getItem('uid'),
+                    'ReviewText':$scope.custReview.review,
+                    'ReviewRating':$scope.custReview.rating,
+                    'VendorId':$stateParams.ven_id,
+                    'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName
+                };
+                var userReviewData = {
+                    'VendorId':$stateParams.ven_id,
+                    'cityId':JSON.parse(window.localStorage['selectedLocation']).cityId,
+                    'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName
+
+                }
+                updates['reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id+'/Reviews/'+reviewData.ReviewId] = reviewData;
+                updates['userReviews/'+localStorage.getItem('uid')+'/'+reviewData.ReviewId] = userReviewData;
+                db.ref().update(updates).then(function () {
+                    $ionicLoading.hide();
+                    alert('Your review has been submitted successfully!');
+                });
+            }
+        };
 
 });

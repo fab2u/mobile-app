@@ -8,7 +8,7 @@
 					<span ng-repeat="counter in starrating(vendor_detail.rating) track by $index" class="trueRating">&#9733</span>
 				    <span ng-repeat="counter in starrating(5-vendor_detail.rating) track by $index" class="remRating">&#9733</span>
 			    </div>
-			    <div class="category">
+			    <div class="category capitalize">
 			    	{{vendor_detail.type}}
 			    </div>
 			</div>
@@ -150,7 +150,7 @@
 
 	</ion-content>
 	<ion-footer-bar class="footer">
-	    <div class="rateNow" ng-show="currentValue==2" ng-click="rateUs()">
+	    <div class="rateNow" ng-show="currentValue==2" ng-click="rateVendor()">
 	    	<i class="icon ion-android-star"></i>
 			<p>Rate Now</p>
 		</div>

@@ -229,3 +229,26 @@
 	border-top-right-radius: 8px;
 	padding-bottom: 20px;
 }
+
+#vendor-services .cartValue {
+	position: fixed !important;
+	bottom: 80px;
+	right: 33px;
+	height: 60px;
+	width: 60px;
+	background-color: #ff8386;
+	border-radius: 50%;
+	text-align: center;
+	color: white;
+}
+
+.vendorDetails .cartValue i{
+	font-size:2em;
+	line-height:40px;
+}
+
+.vendorDetails .cartValue p{
+	font-size: 0.75em;
+	font-weight: 500;
+	line-height:0px;
+}

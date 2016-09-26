@@ -2,7 +2,6 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	$ionicLoading.show();
 	var loggedIn = checkLocalStorage('uid');
 	$scope.goBack = function(){
-		console.log("ddd")
 		$state.go('dateTime');
 	};
 	if(!loggedIn){
@@ -339,7 +338,9 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
                 'userName': localStorage.getItem('name'),
                 'userMobile': localStorage.getItem('mobileNumber'),
                 'cityId': locationInfo.cityId,
+                'cityName': locationInfo.cityName,
                 'vendorId': vendorId,
+                'vendorName': window.localStorage.getItem("vendorName"),
                 'vendorAmount': $scope.total_original,
                 'serviceInfo': newCart,
                 'createdDate': new Date().getTime(),

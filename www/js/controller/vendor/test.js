@@ -24,56 +24,61 @@ app
             });
         };
 
-            firebase.database().ref('menu/'+$stateParams.vendor_id+'/services').once('value',function(response){
-                $scope.menuInfo = response.val();
+            firebase.database().ref('menu/'+$stateParams.vendor_id).once('value',function(response){
+                if(response.val()){
+                    $scope.menuInfo = response.val().services;
+                    console.log(response.val().vendorName)
+                    window.localStorage.setItem("vendorName",response.val().vendorName);
+
+                    angular.forEach($scope.menuInfo, function(value, key) {
+                        if(key == 'cat-01'){
+                            $scope.catName.push("HAIR");
+                            $scope.menu.push(value)
+                        }
+                        else if(key =='cat-02'){
+                            $scope.catName.push("FACE");
+                            $scope.menu.push(value)
+                        }
+                        else if(key =='cat-03'){
+                            $scope.catName.push("HAIR REMOVAL");
+                            $scope.menu.push(value)
+                        }
+                        else if(key =='cat-04'){
+                            $scope.catName.push("BODY");
+                            $scope.menu.push(value)
+                        }
+                        else if(key =='cat-05'){
+                            $scope.catName.push("HANDS & FEETS");
+                            $scope.menu.push(value)
+                        }
+                        else if(key =='cat-06'){
+                            $scope.catName.push("NAILS");
+                            $scope.menu.push(value)
+                        }
+                        else if(key =='cat-07'){
+                            $scope.catName.push("PACKAGES");
+                            $scope.menu.push(value)
+                        }
+                        else if(key =='cat-08'){
+                            $scope.catName.push("SPA & MASSAGES");
+                            $scope.menu.push(value)
+                        }
+                        else if(key =='cat-09'){
+                            $scope.catName.push("FITNESS");
+                            $scope.menu.push(value)
+                        }
+                        else if(key =='cat-11'){
+                            $scope.catName.push("WEDDING & PARTY");
+                            $scope.menu.push(value)
+                        }
+                        else if(key =='cat-12'){
+                            $scope.catName.push("TATTOO");
+                            $scope.menu.push(value)
+                        }
+                    });
+                }
                 $scope.vendorDetail();
                 $ionicLoading.hide();
-                angular.forEach(response.val(), function(value, key) {
-                    if(key == 'cat-01'){
-                        $scope.catName.push("HAIR");
-                        $scope.menu.push(value)
-                    }
-                    else if(key =='cat-02'){
-                        $scope.catName.push("FACE");
-                        $scope.menu.push(value)
-                    }
-                    else if(key =='cat-03'){
-                        $scope.catName.push("HAIR REMOVAL");
-                        $scope.menu.push(value)
-                    }
-                    else if(key =='cat-04'){
-                        $scope.catName.push("BODY");
-                        $scope.menu.push(value)
-                    }
-                    else if(key =='cat-05'){
-                        $scope.catName.push("HANDS & FEETS");
-                        $scope.menu.push(value)
-                    }
-                    else if(key =='cat-06'){
-                        $scope.catName.push("NAILS");
-                        $scope.menu.push(value)
-                    }
-                    else if(key =='cat-07'){
-                        $scope.catName.push("PACKAGES");
-                        $scope.menu.push(value)
-                    }
-                    else if(key =='cat-08'){
-                        $scope.catName.push("SPA & MASSAGES");
-                        $scope.menu.push(value)
-                    }
-                    else if(key =='cat-09'){
-                        $scope.catName.push("FITNESS");
-                        $scope.menu.push(value)
-                    }
-                    else if(key =='cat-11'){
-                        $scope.catName.push("WEDDING & PARTY");
-                        $scope.menu.push(value)
-                    }
-                    else if(key =='cat-12'){
-                        $scope.catName.push("TATTOO");
-                        $scope.menu.push(value)
-                    }
-                });
                 $timeout( function() {
                     $ionicSlideBoxDelegate.update();
                 },200);
@@ -454,32 +459,5 @@ app
                     "serviceid": "1111"
                 }
             };
-        // $scope.liked = false;
-        //
-        // $scope.likeVendor = function(){
-        //     console.log('clicked');
-        //     var key = db.ref('favourites/'+localStorage.getItem('uid')).push().key;
-        //
-        //     var favouriteData = {
-        //         vendorId:$stateParams.ven_id,
-        //         cityId:$scope.vendor_detail.address.cityId,
-        //         vendorName:$scope.vendor_detail.vendorName,
-        //         vendorLandmark:$scope.vendor_detail.address.landmark,
-        //         vendorImg:$scope.vendor_detail.images.main.url
-        //     };
-        //     $scope.liked  = !$scope.liked ;
-        //     if(localStorage.getItem('uid') && key){
-        //         firebase.database().ref('favourites/'+localStorage.getItem('uid')+'/'+key)
-        //             .set(favouriteData,function(response) {
-        //                 if(response ==null){
-        //                     alert('Added to your favourites list!')
-        //                 }
-        //             })
-        //     }
-        //     else{
-        //         alert('Login first!')
-        //     }
-        //
-        // };
 
   })

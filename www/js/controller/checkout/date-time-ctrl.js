@@ -139,11 +139,43 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
     var bookDateForAppointment = dateApt.date+'-'+dateApt.month+'-'+dateApt.year;
 
     /// add '1' for difference of 1 hour from right now time ////////
-    $scope.timeTobe = (new Date().getHours()+1)+':'+new Date().getMinutes();
 
-    $scope.currentHour = new Date().getHours()+1;
-    $scope.thisBookingTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
-    $scope.checkSlots($scope.currentHour);
+    var tempMinute = new Date().getMinutes() + 30;
+    if(tempMinute>60){
+      var newMinute = tempMinute-60;
+      var tempHours = 1;
+      $scope.timeTobe = (new Date().getHours() + tempHours)+':'+newMinute;
+      $scope.currentHour = (new Date().getHours() + tempHours);
+      $scope.thisBookingTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
+      $scope.checkSlots($scope.currentHour);
+      console.log("tempHours",tempHours,newMinute)
+    }
+    else if(tempMinute==60){
+      var newMinute = 00;
+      var tempHours = 1;
+      $scope.timeTobe = (new Date().getHours() + tempHours)+':'+newMinute;
+      $scope.currentHour = (new Date().getHours() + tempHours);
+      $scope.thisBookingTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
+      $scope.checkSlots($scope.currentHour);
+      console.log("tempHours",tempHours,newMinute)
+    }
+    else{
+      var newMinute = tempMinute;
+      var tempHours = 0;
+      $scope.timeTobe = (new Date().getHours() + tempHours)+':'+newMinute;
+      $scope.currentHour = (new Date().getHours() + tempHours);
+      $scope.thisBookingTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
+      $scope.checkSlots($scope.currentHour);
+      console.log("tempHours",tempHours,newMinute)
+    }
+    console.log("tempMinute",tempMinute)
+
+
+    // $scope.timeTobe = (new Date().getHours()+1)+':'+new Date().getMinutes();
+    //
+    // $scope.currentHour = new Date().getHours()+1;
+    // $scope.thisBookingTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
+    // $scope.checkSlots($scope.currentHour);
   };
 
   //  To calculate the time stamp for selected date and and current time  ////

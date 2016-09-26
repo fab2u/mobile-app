@@ -353,7 +353,9 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
                 'amountPayable': $scope.amountPayable,
                 'walletTransId': '0',
                 'discountTransId': '0',
-                'specialRequest': 'updated soon!'
+                'specialRequest': 'updated soon!',
+				'vendorStatus':'upComing'
+
             };
             console.log(bookingDetails);
 			$scope.insertBooking(bookingDetails);

@@ -1,7 +1,10 @@
 app.controller('IntroSliderCtrl',
-    function($scope, $ionicSlideBoxDelegate, $state, $ionicLoading, $interval,$timeout,$cordovaDevice,$ionicHistory) {
+    function($scope, $ionicSlideBoxDelegate, $state, $ionicLoading, $interval,$timeout,$cordovaDevice,$cordovaSplashscreen,
+             $ionicHistory) {
 
-
+        $timeout( function() {
+            $cordovaSplashscreen.show();
+        },5000);
 
         $ionicHistory.clearHistory();
         $ionicHistory.clearCache();

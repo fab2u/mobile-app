@@ -335,8 +335,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                         var userData = {
                             activeFlag:true,
                             createdTime:new Date().getTime(),
-                            // deviceId: $cordovaDevice.getDevice().uuid,
-                            deviceId: "",
+                            deviceId: $cordovaDevice.getDevice().uuid,
                             email:{
                                 userEmail:$scope.user.email,
                                 verifiedTime:'',

@@ -16,7 +16,8 @@ app.controller('LoginCtrl',
             if(response.uid){
                 db.ref("users/data/"+response.uid).on("value", function(snapshot){
                     window.localStorage.setItem("name", snapshot.val().name);
-
+                    window.localStorage.setItem("mobileNumber", snapshot.val().mobile.mobileNum);
+                    window.localStorage.setItem("referralCode", snapshot.val().referralCode);
                 });
                 if(localStorage.getItem('confirmation') == 'true'){
                     localStorage.setItem('confirmation', '');

@@ -56,7 +56,6 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
                 $scope.bookingInformation.vendorLat = response.val().address.latitude;
                 $scope.bookingInformation.vendorLong = response.val().address.longitude;
                 $scope.bookingInformation.vendorName = response.val().contactDetails.name;
-                console.log($scope.bookingInformation);
                 $scope.vendorAddress = response.val();
                 $ionicLoading.hide();
             }
@@ -135,7 +134,6 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
     };
 
     $scope.storeReview = function(){
-        console.log("review detail",JSON.stringify($scope.custReview));
         if($scope.custReview.rating == 0){
             alert('Please, select ratings!')
         }
@@ -205,8 +203,6 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         $scope.timeTobe = (new Date().getHours()+2)+':'+new Date().getMinutes();
 
         $scope.thisCancelTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
-
-        console.log("thisCancelTime", $scope.thisCancelTime)
     };
 
     //  To calculate the time stamp for selected date and and current time  ////
@@ -255,7 +251,6 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
                 $ionicLoading.hide();
                 alert('Thank you for canceling your booking!')
             });
-            console.log('no refund for wallet money if used')
         }
 
     };

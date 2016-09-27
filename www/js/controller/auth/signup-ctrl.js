@@ -375,6 +375,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                                     window.localStorage.setItem("mobileNumber", $scope.user.mobile_num);
                                     window.localStorage.setItem("email", $scope.user.email);
                                     window.localStorage.setItem("uid", $scope.uid);
+                                    window.localStorage.setItem("referralCode", $scope.user.referral_code);
                                     $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
                                     if(localStorage.getItem('confirmation') == 'true'){
                                         localStorage.setItem('confirmation', '');

@@ -10,6 +10,28 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 		$ionicLoading.hide();
 		$state.go('login');
 	} else {
+		function referralDetail() {
+			if(window.localStorage.getItem("referralCode")){
+				console.log("inside dsnmdnms",window.localStorage.getItem("referralCode"))
+				db.ref('referralCode/'+window.localStorage.getItem("referralCode")).on("value", function(response){
+					console.log("dddddddddddddddddddd",JSON.stringify(response.val().uid))
+					if(response.val().uid){
+						db.ref("users/data/"+response.val().uid).on("value", function(snapshot){
+							$scope.referralName = snapshot.val().name;
+							$scope.referralContact = snapshot.val().mobile.mobileNum;
+
+							console.log("ssssssssssssss",$scope.referralName,$scope.referralContact)
+						});
+					}
+				});
+			}
+			else{
+				$scope.referralContact = '',
+					$scope.referralName = ''
+			}
+		}
+		referralDetail();
+
 		var hasCartItems = checkLocalStorage('BegItems');
 		var vendorId = window.localStorage.getItem("vendorId");
 		var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
@@ -61,6 +83,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
         $scope.hasWalletBalance = false;
         $scope.discountAmount = 0;
         $scope.amountPayable = 0;
+        $scope.fab2uPayableAmount = 0;
         $scope.promoCodeApplied = false;
         $scope.amount;
 
@@ -328,6 +351,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	            $scope.paidFromWallet = $scope.walletAmount;
 	            $scope.amount = $scope.amount- $scope.walletAmount;
 	            $scope.amountPayable = $scope.customer_price - $scope.walletAmount -$scope.discountAmount;
+				$scope.fab2uPayableAmount = $scope.walletAmount + $scope.discountAmount;
 	            if ($scope.amountPayable < 0) {
 	                $scope.amountPayable = 0;
 	            }
@@ -336,6 +360,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	        	$scope.amount = $scope.amount;
 	            $scope.paidFromWallet = 0;
 	            $scope.amountPayable = $scope.customer_price -$scope.discountAmount;
+				$scope.fab2uPayableAmount = $scope.discountAmount;
 	            console.log($scope.amountPayable);
 	            if ($scope.amountPayable < 0) {
 	                $scope.amountPayable = 0;
@@ -363,6 +388,8 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 		    return (result+Math.floor(Math.random() * 10)).shuffle();
 		}
 		var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+
 
 	    $scope.confirmedBooking = function(){
 	    	$ionicLoading.show();
@@ -392,7 +419,11 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
                 'walletTransId': '0',
                 'discountTransId': '0',
                 'specialRequest': 'updated soon!',
-				'vendorStatus':'upComing'
+				'vendorStatus':'upComing',
+				'referralCode':window.localStorage.getItem("referralCode"),
+				'referralName':$scope.referralName,
+				'referralContactNumber':$scope.referralContact,
+				'fab2uPayableAmount':$scope.fab2uPayableAmount
 
             };
             console.log("bookingDetails",bookingDetails);

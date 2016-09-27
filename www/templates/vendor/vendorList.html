@@ -84,27 +84,27 @@
                         <!--<div class="row original-price" ng-repeat="(key, value) in vendor.menu_union" ng-if="(key == service_id)">-->
                         <div class="row original-price">
                             <!--<div id="line-through"></div>-->
-                            <div id="line-through-fb"></div>
+                            <div id="line-through"></div>
                             <span id="one" class="left-price badge">
                         <i>&#x20B9;</i>
-                       {{vendor.price_min}}
+                       {{vendor.min_price_vendor}}
                     </span>
                             <span id="two" class="badge">
                         <i>&#x20B9;</i>
-                       {{vendor.price_max}}
+                       {{vendor.max_price_vendor}}
                     </span>
                         </div>
-                        <!--<div class="row discounted-price">-->
-                        <!--<div id="line-through-fb"></div>-->
-                        <!--<span class="left-price badge">-->
-                        <!--<i>&#x20B9;</i>-->
-                        <!--10-->
-                        <!--</span>-->
-                        <!--<span class="badge">-->
-                        <!--<i>&#x20B9;</i>-->
-                        <!--10000-->
-                        <!--</span>-->
-                        <!--</div>-->
+                        <div class="row discounted-price">
+                        <div id="line-through-fb"></div>
+                        <span class="left-price badge">
+                        <i>&#x20B9;</i>
+                       {{vendor.min_price_customer}}
+                        </span>
+                        <span class="badge">
+                        <i>&#x20B9;</i>
+                       {{vendor.max_price_customer}}
+                        </span>
+                        </div>
                     </div>
                 </div>
             </div>

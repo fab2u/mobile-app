@@ -32,6 +32,7 @@ app.controller('VendorListCtrl',
         }
 
         $scope.vendorList = function(){
+            $ionicLoading.show();
             if($scope.serviceIds.length>0){
                 var serviceIdList = $scope.serviceIds.join();
                 $http.post("http://139.162.31.204/search_services?services="+$scope.serviceIds+
@@ -86,6 +87,7 @@ app.controller('VendorListCtrl',
     }
     defaultColor();
     $scope.toggleColor = function () {
+        $ionicLoading.show();
       var female = document.getElementById('female');
       var male = document.getElementById('male');
       if(male.classList.contains('is-active')) {
@@ -118,7 +120,6 @@ app.controller('VendorListCtrl',
 
       }
       else {
-          console.log("else")
           male.classList.add('is-active');
           female.classList.remove('is-active');
           $scope.gender = 'female';

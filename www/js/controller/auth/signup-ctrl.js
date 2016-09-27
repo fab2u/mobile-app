@@ -257,33 +257,31 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
     };
     $scope.reSendVerification = function(){
         $scope.user.mobile_num = '8447785980';
-        var headers = {
-            'Access-Control-Allow-Origin' : '*',
-        };
         $scope.generateVerificationCode();
         $ionicLoading.show();
         $http({
             method: 'POST',
-            headers: headers,
-            url: 'http://smsapi.24x7sms.com/api_2.0/SendSMS.aspx?APIKEY=rNfGwBJ7xcV&MobileNo='
-            +$scope.user.mobile_num+'&SenderID=ROOFPK&Message=Greetings! '+$scope.generatedCode+
-            ' is your FAB2U verification code.&ServiceName=TEMPLATE_BASED'
+            url:'http://139.162.27.64/api/send?mob='+$scope.user.mobile_num+'&otp='+$scope.generatedCode
+        }) .success(function (data, status, headers, config) {
+            if(status == 200){
+                $ionicLoading.hide();
+                $scope.otp = $scope.generatedCode;
+                storedOTP.push($scope.otp);
+                window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
+                $ionicPopup.alert({
+                    title: 'Verification Code Sent',
+                    template: 'We have sent a verification code to your registered mobile number'
+                }).then(function(){
+                    $scope.showOTPfield = true;
+                    $scope.showPopup();
+                })
+            }
+        })
+            .error(function (data, status, header, config) {
+                $ionicLoading.hide();
 
-            // params: {
-            //     mobno: $scope.user.mobile_num
-            // }
-        })
-        $ionicLoading.hide();
-        $scope.otp = $scope.generatedCode;
-        storedOTP.push($scope.otp);
-        window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
-        $ionicPopup.alert({
-            title: 'Verification Code Sent',
-            template: 'We have sent a verification code to your registered mobile number'
-        }).then(function(){
-            $scope.showOTPfield = true;
-            $scope.showPopup();
-        })
+            });
+
     };
     $scope.showPopup = function() {
             $scope.data = {};
@@ -294,7 +292,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                 buttons: [
                     { text: 'Resend' ,
                     onTap:function () {
-                        $scope.sendVerification();
+                        $scope.reSendVerification();
                     }
                     },
                     {

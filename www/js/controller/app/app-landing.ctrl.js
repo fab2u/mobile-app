@@ -3,7 +3,8 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     $ionicHistory.clearHistory();
     $ionicHistory.clearCache();
     $ionicLoading.show();
-   localStorage.clear();
+   // localStorage.clear();
+    console.log("called")
 
     var appInfo = {};
     var location = {};
@@ -45,7 +46,18 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                     $state.go('under-construction');
                 } else {
                     $ionicLoading.hide();
-                    $state.go('intro-slider');
+                    // $state.go('intro-slider');
+                    var hasCurrentBooking = checkLocalStorage('currentBooking');
+                    console.log("hasCurrentBooking",hasCurrentBooking)
+                    if(hasCurrentBooking == true){
+                        console.log("condition for current booking")
+                    	$state.go('bill');
+                    }
+                    else if(window.localStorage.getItem('SkipIntro')== "true"){
+                        $state.go('app.home');
+                    }else{
+                      $state.go('intro-slider');
+                    }
                 }
             });
         }
@@ -53,7 +65,11 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
 
     function checkLoginStatus() {
         var checkLogin = checkLocalStorage('userUid');
-        if (checkLogin) {
+        var hasCurrentBooking = checkLocalStorage('currentBooking');
+        if(hasCurrentBooking == true){
+            $state.go('bill');
+        }
+        else if (checkLogin) {
             $ionicLoading.hide();
             $state.go('app.home');
         } else {
@@ -131,6 +147,46 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
             }
         } catch (e) {}
         window.localStorage['selectedLocation'] = JSON.stringify(location);
+    }
+
+    // All the booking id for cancelled booking and active booking and their detail
+
+    function bookingInfo() {
+        var activeBookingId = [];
+        var activeBookings = [];
+        firebase.database().ref('userBookings/'+localStorage.getItem('uid')).once('value', function (response) {
+            if(response.val()){
+                angular.forEach(response.val(), function (value, key) {
+                    if(value == 'active'){
+                        activeBookingId.push(key);
+                    }
+                });
+                for (var i = 0; i < activeBookingId.length; i++) {
+                    firebase.database().ref('bookings/' + activeBookingId[i]).once('value', function (response) {
+                        if (response.val()) {
+                            activeBookings.push(response.val())
+                            window.localStorage['activeBooking'] = JSON.stringify(activeBookings);
+                        }
+                    });
+                }
+            }
+        })
+    };
+    if(localStorage.getItem('uid')){
+        bookingInfo();
+    }
+    var hasActiveBookings = checkLocalStorage('activeBooking');
+    if(hasActiveBookings) {
+        var activeBookingInformation = JSON.parse(window.localStorage['activeBooking']);
+        var sortedActiveBookings = _.sortBy(activeBookingInformation, function(o) { return o.appointmentTime; })
+        console.log("sorted result",JSON.stringify(sortedActiveBookings[0],null,2));
+        if(sortedActiveBookings[0].appointmentTime < new Date().getTime()){
+            console.log("current booking");
+
+            window.localStorage['currentBooking'] = JSON.stringify(sortedActiveBookings[0]);
+            $state.go('bill');
+
+        }
     }
 
 });

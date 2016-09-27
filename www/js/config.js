@@ -3,7 +3,8 @@ app
 	if (!ionic.Platform.isIOS()) {
 		$ionicConfigProvider.scrolling.jsScrolling(false);
 	}
-    // App starting controller
+
+	// App starting controller
 
     $stateProvider.state('app-start', {
         url: '/app-start',
@@ -277,15 +278,15 @@ app
 			controller: 'nearmeFeedCtrl'
 		});
 
-	// $urlRouterProvider.otherwise('/app-start');
+	 $urlRouterProvider.otherwise('/app-start');
 
-	var hasCurrentBooking = checkLocalStorage('currentBooking');
-	if(hasCurrentBooking == true){
-		$urlRouterProvider.otherwise("/bill");
-	}
-	else if(window.localStorage.getItem('SkipIntro')== "true"){
-		$urlRouterProvider.otherwise("/app/home");
-	}else{
-		$urlRouterProvider.otherwise("/intro-slider");
-	}
+	// var hasCurrentBooking = checkLocalStorage('currentBooking');
+	// if(hasCurrentBooking == true){
+	// 	$urlRouterProvider.otherwise("/bill");
+	// }
+	// else if(window.localStorage.getItem('SkipIntro')== "true"){
+	// 	$urlRouterProvider.otherwise("/app/home");
+	// }else{
+	// 	$urlRouterProvider.otherwise("/app-start");
+	// }
 });

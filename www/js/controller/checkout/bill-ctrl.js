@@ -3,49 +3,13 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
     $scope.cancelButton = false;
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
     $scope.vendorAddress = '';
+    $scope.bookingInformation = {};
 
-
-
-    // function toTimestamp(strDate) {
-    //     var datum = Date.parse(strDate);
-    //     return datum;
-    // }
-    //
-    // function setFormat(str){
-    //     var mystring = str;
-    //     var newchar = '-'
-    //     mystring = mystring.split('/').join(newchar);
-    //     return mystring;
-    // }
 
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
     var hasCurrentBooking = checkLocalStorage('currentBooking');
     if(hasCurrentBooking){
         $scope.bookingInformation = JSON.parse(window.localStorage['currentBooking']);
-        // var date = setFormat($scope.bookingInformation.appointmentDate);
-        // var time = '';
-        // var format = $scope.bookingInformation.appointmentTime.substring($scope.bookingInformation.appointmentTime.length-2, $scope.bookingInformation.appointmentTime.length);
-        // console.log("time format",format);
-        // if(format == 'AM'){
-        //     time = $scope.bookingInformation.appointmentTime.substring(0, $scope.bookingInformation.appointmentTime.length-2);
-        //     console.log("time in case of am",time);
-        // } else {
-        //     var res = $scope.bookingInformation.appointmentTime.split(":");
-        //     var hh = res[0];
-        //     console.log("hh",hh);
-        //     if(hh == 12){
-        //         time= hh+':'+res[1];
-        //         time = time.substring(0, time.length-2);
-        //         console.log("time in case of pm with 12",time);
-        //     }
-        //     else{
-        //         hh = parseInt(hh)+12;
-        //         time= hh+':'+res[1];
-        //         time = time.substring(0, time.length-2);
-        //         console.log("time in case of pm",time);
-        //     }
-        // }
-        // $scope.thisBookingTime = toTimestamp(date + ' ' + time);
         $scope.vendorId = $scope.bookingInformation.vendorId;
         // $ionicLoading.hide();
         db.ref('vendors/'+locationInfo.cityId+'/'+$scope.vendorId).once('value', function(response){
@@ -63,7 +27,43 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
                 $ionicLoading.hide();
             }
         })
-    };
+        $scope.cancelButton = true;
+        //// To check we, can cancel a booking or not! ///////
+        // $scope.isActiveCancel = function(){
+        //     if($scope.bookingInformation.appointmentTime>new Date().getTime()){
+        //         $scope.cancelButton = true;
+        //     }
+        //     else{
+        //         $scope.cancelButton = false;
+        //     }
+        // };
+        //
+        // $scope.isActiveCancel();
+    }
+  else if(window.localStorage.getItem("currentBookingId")){
+       firebase.database().ref('bookings/' + window.localStorage.getItem("currentBookingId")).once('value', function (response) {
+           if (response.val()) {
+               $scope.bookingInformation = response.val();
+               $scope.vendorId = response.val().vendorId;
+               db.ref('vendors/'+locationInfo.cityId+'/'+$scope.vendorId).once('value', function(response){
+                   if(response.val()){
+                       $scope.bookingInformation.venue = response.val().vendorName;
+                       $scope.bookingInformation.address1 = response.val().address.address1;
+                       $scope.bookingInformation.address2 = response.val().address.address2;
+                       $scope.bookingInformation.vendorLat = response.val().address.latitude;
+                       $scope.bookingInformation.vendorLong = response.val().address.longitude;
+                       $scope.bookingInformation.vendorName = response.val().contactDetails.name;
+                       $scope.vendorAddress = response.val();
+                       $ionicLoading.hide();
+                   }
+                   else{
+                       $ionicLoading.hide();
+                   }
+               })
+           }
+       });
+   }
+
 
 //////////////Map for vendor location  ////////////////////////////////
     $scope.open_map = function(latitude,longitude,line1,line2,vendorName){
@@ -76,20 +76,11 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         });
     };
 
-    //// To check we, can cancel a booking or not! ///////
-    $scope.isActiveCancel = function(){
-        if($scope.bookingInformation.appointmentTime>new Date().getTime()){
-            $scope.cancelButton = true;
-        }
-        else{
-            $scope.cancelButton = false;
-        }
-    };
 
-    $scope.isActiveCancel();
 
 
     $scope.home = function(){
+        window.localStorage.setItem("currentBookingId", '');
         $state.go('app.home');
     };
     $scope.ratingsCallback = function(rating) {
@@ -189,70 +180,6 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
             $ionicLoading.hide();
             alert('Thank you for updating your booking status!')
         });
-    };
-
-    //////    To check time of cancellation of booking is less than two hour of appointment time ////////////
-    $scope.fromDate = new Date();
-    $scope.monthName = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-
-    $scope.getTimeFormat = function () {
-
-        var bookDateForAppointment = $scope.fromDate.getDate()+'-'+$scope.monthName[$scope.fromDate.getMonth()]+'-'+$scope.fromDate.getFullYear();
-
-        /// add '2' for difference of 2 hour from right now time ////////
-        $scope.timeTobe = (new Date().getHours()+2)+':'+new Date().getMinutes();
-
-        $scope.thisCancelTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
-    };
-
-    //  To calculate the time stamp for selected date and and current time  ////
-
-
-    function toTimestamp(thisBookingTime) {
-        var datum = Date.parse(thisBookingTime);
-        return datum;
-    }
-
-    $scope.getTimeFormat();
-
-    $scope.cancel = function(){
-        $ionicLoading.show();
-        var updates = {};
-        if(($scope.thisCancelTime == $scope.bookingInformation.appointmentTime) || ($scope.thisCancelTime < $scope.bookingInformation.appointmentTime)){
-            console.log("refund wallet money if used");
-            if($scope.bookingInformation.walletAmount > 0){
-                var walletTransactionId = db.ref('userWallet/' + localStorage.getItem('uid')+'/credit').push().key;
-                var transactionDetail = {
-                    'amount': $scope.bookingInformation.walletAmount,
-                    'transactionId': walletTransactionId,
-                    'bookingId': $scope.bookingInformation.bookingId,
-                    'creditDate': new Date().getTime(),
-                    'type':'userCancelled'
-                };
-                updates['userWallet/' + localStorage.getItem('uid')+'/credit/'+walletTransactionId] = transactionDetail;
-            }
-            updates['bookings/'+$scope.bookingInformation.bookingId+'/'+'userStatus'] = 'cancelled';
-            updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancelled';
-            updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancelled';
-            db.ref().update(updates).then(function(){
-                delete window.localStorage.currentBooking;
-                $state.go('app.home');
-                $ionicLoading.hide();
-                alert('Thank you, your appointment has been cancelled!')
-            });
-        }
-        else{
-            updates['bookings/'+$scope.bookingInformation.bookingId+'/'+'userStatus'] = 'cancelled';
-            updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancelled';
-            updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancelled';
-            db.ref().update(updates).then(function(){
-                delete window.localStorage.currentBooking;
-                $state.go('app.home');
-                $ionicLoading.hide();
-                alert('Thank you for canceling your booking!')
-            });
-        }
-
     };
 
 

@@ -26,6 +26,8 @@ var app = angular.module('Fab2u', ['ionic', 'ngCordova', 'ion-floating-menu'])
 
 var db = firebase.database();
 
+
+
 function checkLocalStorage(item) {
     if (localStorage.getItem(item) === null || typeof window.localStorage[item] === 'undefined') {
         return false

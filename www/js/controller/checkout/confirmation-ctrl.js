@@ -446,7 +446,6 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 		};
 
 		$scope.insertBooking = function(bookingDetails){
-			console.log(bookingDetails);
 			var updates = {};
 			if(bookingDetails.walletAmount > 0){
 				console.log('yes');
@@ -480,14 +479,13 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 			updates['userBookings/'+userId+'/'+bookingDetails.bookingId] = 'active';
 			updates['cityBookings/'+locationInfo.cityId+'/'+vendorId+'/'+bookingDetails.bookingId] = true;
 			updates['vendorBookings/'+vendorId+'/'+bookingDetails.bookingId] = 'active';
-			console.log(updates);
-
 			db.ref().update(updates).then(function(){
 				$ionicLoading.hide();
-				window.localStorage['currentBooking'] = JSON.stringify(bookingDetails);
+				// window.localStorage['currentBooking'] = JSON.stringify(bookingDetails);
+				window.localStorage.setItem("currentBookingId", bookingDetails.bookingId);
+
 				$state.go('bill');
 				alert('Booking confirmed!')
-				console.log('booking successful');
 			});
 		}
 	}

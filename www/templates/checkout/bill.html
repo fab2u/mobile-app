@@ -20,12 +20,12 @@
           <div class = "custom-border  padding class" ng-show="bookingInformation.walletAmount"><b>Paid From Wallet</b>: ₹{{bookingInformation.walletAmount}}</div>
           <div class = "custom-border padding class"><b>Time</b>: {{bookingInformation.appointmentTime |date:"h:mma"}}</div>
           <div class = "custom-border padding class"><b>Date</b>: {{bookingInformation.appointmentTime |date:'dd-MM-yyyy'}}</div>
-          <p align = "center" ng-show="cancelButton">
-              <button class = "button button-assertive button-small custom-button" ng-click="cancel()">CANCEL</button>
+          <p align = "center" ng-show="cancelButton == false">
+              <button class = "button button-assertive button-small custom-button" ng-click="home()">TAKE ME HOME</button>
               <br>
               <b> * wallet amount only refundable, if booking is cancelled before 2 hour of appointment time.</b>
           </p>
-              <div class="row" ng-hide="cancelButton">
+              <div class="row" ng-show="cancelButton == true">
             <div class="col-50 pull-left">
                 <button class = "button button-assertive button-small custom-button" ng-click="availed()">
                     AVAILED</button>

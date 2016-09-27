@@ -13,11 +13,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 	$scope.moreMessagesRefresh = true;
 
 	$scope.goBack = function(){
-		history.back();
-	}
-
-	$scope.goToNearme = function(){
-		$location.path("/nearme/"+$scope.cityId);
+		$location.path("/app/home");
 	}
 
 	$scope.createNew = function(){
@@ -27,6 +23,19 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 	$timeout(function () {
 		$ionicLoading.hide();
 	}, 10000);
+
+	$scope.followUser = function(id){
+		console.log(id, $scope.uid);
+		// id - post creator's uid
+		// $scope.uid - my uid
+		var updateFollow = {};
+		updateFollow['users/data/'+id+'/myFollowers/'+$scope.uid] = true;
+		updateFollow['users/data/'+$scope.uid+'/following/'+id] = true;
+		db.ref().update(updateFollow).then(function(){
+			console.log('success');
+			$('.'+id+'-follow').hide();
+		});
+	}
 
 	$scope.likeThisFeed = function(feedId){
 		if($("#"+feedId+"-likeFeed").hasClass('clicked')){
@@ -75,11 +84,25 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 					console.log(key, $scope.prevTopKey);
 					if (key != $scope.prevTopKey){
 						value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-						value.profilePic = 'img/person.jpg';
-						// $timeout(function () {
-						// 	console.log(value.blog_id, value.user.user_id);
-						// 	jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
-						// }, 0);
+						console.log(value.user.user_id, $scope.uid);
+						if(value.user.user_id == $scope.uid){
+							console.log('both equal');
+							$timeout(function () {
+								$('.'+value.user.user_id+'-follow').hide();
+							}, 0);
+						}
+						db.ref("users/data/"+value.user.user_id).once("value", function(snap){
+							console.log(value.user.user_id, snap.val());
+							if(snap.val().photoUrl){
+								value.profilePic = snap.val().photoUrl;
+							}
+							if(snap.val().myFollowers){
+								console.log(snap.val().myFollowers);
+								if ($scope.uid in snap.val().myFollowers){
+									$('.'+value.user.user_id+'-follow').hide();
+								}
+							}
+						});
 						if(value.likedBy){
 							count = Object.keys(value.likedBy).length;
 							console.log(value.likedBy);
@@ -118,10 +141,26 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 					angular.forEach(snap.val(), function(value, key){
 						if(key != $scope.oldBottomKey){
 							value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-							value.profilePic = 'img/person.jpg';
-							// $timeout(function () {
-							// 	jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
-							// }, 0);
+							console.log(value.user.user_id, $scope.uid);
+							if(value.user.user_id == $scope.uid){
+								console.log('both equal');
+								$timeout(function () {
+									$('.'+value.user.user_id+'-follow').hide();
+								}, 0);
+							}
+							db.ref("users/data/"+value.user.user_id).once("value", function(snap){
+								console.log(value.user.user_id, snap.val());
+								if(snap.val().photoUrl){
+									value.profilePic = snap.val().photoUrl;
+								}
+								if(snap.val().myFollowers){
+									console.log(snap.val().myFollowers);
+									if ($scope.uid in snap.val().myFollowers){
+										$('.'+value.user.user_id+'-follow').hide();
+									}
+								}
+							});
+
 							if(value.likedBy){
 								count = Object.keys(value.likedBy).length;
 								console.log(value.likedBy);
@@ -143,7 +182,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 		else if($scope.events2.length == 0){
 			db.ref().child("blogs").limitToLast(25).once("value", function(snapshot){
 				$ionicLoading.hide();
-				console.log(snapshot.val());
+				// console.log(snapshot.val());
 				// console.log(Object.keys(snapshot.val())[0]);
 				$scope.bottomKey = Object.keys(snapshot.val())[0];
 				// console.log(Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1]);
@@ -151,19 +190,29 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 				// console.log($scope.bottomKey, $scope.topKey);
 				angular.forEach(snapshot.val(), function(value, key){
 					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-					// console.log(value.user.user_id);
-					db.ref("users/data/"+value.user.user_id+"/photoUrl").once("value", function(snap){
-						// console.log(snap.val());
-						value.profilePic = snap.val();
+					console.log(value.user.user_id, $scope.uid);
+					if(value.user.user_id == $scope.uid){
+						console.log('both equal');
+						$timeout(function () {
+							$('.'+value.user.user_id+'-follow').hide();
+						}, 0);
+					}
+					db.ref("users/data/"+value.user.user_id).once("value", function(snap){
+						// console.log(value.user.user_id, snap.val());
+						if(snap.val().photoUrl){
+							value.profilePic = snap.val().photoUrl;
+						}
+						if(snap.val().myFollowers){
+							// console.log(snap.val().myFollowers);
+							if ($scope.uid in snap.val().myFollowers){
+								$('.'+value.user.user_id+'-follow').hide();
+							}
+						}
 					});
-					// $timeout(function () {
-					// 	console.log(value.user.user_id, value.blog_id);
-					// 	jdenticon.update("#"+value.blog_id, md5(value.user.user_id));
-					// }, 0);
 					if(value.likedBy){
 						count = Object.keys(value.likedBy).length;
-						console.log(value.likedBy);
-						console.log(count);
+						// console.log(value.likedBy);
+						// console.log(count);
 						value['numLikes'] = count;
 						if($scope.uid in value.likedBy){
 							$timeout(function () {

@@ -8,6 +8,7 @@
     "js-md5": "md5#^0.4.1",
     "angularfire": "^2.0.1",
     "Jdenticon": "jdenticon#^1.3.2",
-    "ion-floating-menu": "^1.0.1"
+    "ion-floating-menu": "^1.0.1",
+    "Croppie": "croppie#^2.3.0"
   }
 }

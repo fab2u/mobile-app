@@ -233,10 +233,42 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
             template: 'Loading...'
         });
         $http({
-            url: 'http://BULKSMS.FLYFOTSERVICES.COM/unified.php?usr=28221&pwd=password1&ph=' + $scope.user.mobile_num + '&sndr=IAMFAB&text=Greetings.' + $scope.generatedCode + ' is your FAB2U verification code&type=json ',
+            url: 'http://BULKSMS.FLYFOTSERVICES.COM/unified.php?usr=28221&pwd=password1&ph=' +
+            $scope.user.mobile_num + '&sndr=IAMFAB&text=Greetings.' +
+            $scope.generatedCode + ' is your FAB2U verification code&type=json ',
             method: 'POST',
             "async": true,
             "crossDomain": true
+            // params: {
+            //     mobno: $scope.user.mobile_num
+            // }
+        })
+        $ionicLoading.hide();
+        $scope.otp = $scope.generatedCode;
+        storedOTP.push($scope.otp);
+        window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
+        $ionicPopup.alert({
+            title: 'Verification Code Sent',
+            template: 'We have sent a verification code to your registered mobile number'
+        }).then(function(){
+            $scope.showOTPfield = true;
+            $scope.showPopup();
+        })
+    };
+    $scope.reSendVerification = function(){
+        $scope.user.mobile_num = '8447785980';
+        var headers = {
+            'Access-Control-Allow-Origin' : '*',
+        };
+        $scope.generateVerificationCode();
+        $ionicLoading.show();
+        $http({
+            method: 'POST',
+            headers: headers,
+            url: 'http://smsapi.24x7sms.com/api_2.0/SendSMS.aspx?APIKEY=rNfGwBJ7xcV&MobileNo='
+            +$scope.user.mobile_num+'&SenderID=ROOFPK&Message=Greetings! '+$scope.generatedCode+
+            ' is your FAB2U verification code.&ServiceName=TEMPLATE_BASED'
+
             // params: {
             //     mobno: $scope.user.mobile_num
             // }
@@ -258,7 +290,6 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
             $ionicPopup.show({
                 template: '<input type="tel" ng-model="data.otp">',
                 title: 'Please, enter otp',
-                // subTitle: 'Please Enter Username',
                 scope: $scope,
                 buttons: [
                     { text: 'Resend' ,
@@ -304,7 +335,8 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                         var userData = {
                             activeFlag:true,
                             createdTime:new Date().getTime(),
-                            deviceId: $cordovaDevice.getDevice().uuid,
+                            // deviceId: $cordovaDevice.getDevice().uuid,
+                            deviceId: "",
                             email:{
                                 userEmail:$scope.user.email,
                                 verifiedTime:'',

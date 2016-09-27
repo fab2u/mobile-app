@@ -25,7 +25,7 @@
 				<h4>{{vendor_detail.vendorName}}</h4>
 				<p>{{vendor_detail.address.landmark}}</p>
 			</div>
-			<div class="likeOption" ng-click="likeVendor()">
+			<div class="likeOption button" style="background-color: grey;" ng-click="likeVendor()" ng-disabled="liked">
 				<i class="icon ion-ios-heart" ng-class="liked?'likedHeart': 'normalHeart'"></i>
 			</div>
 			<div class="row" id="tabS">

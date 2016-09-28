@@ -1,4 +1,4 @@
-app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
+app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal,$rootScope){
     $ionicLoading.show();
     $scope.cancelButton = false;
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
@@ -162,9 +162,12 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         updates['vendorBookings/' + $scope.bookingInformation.vendorId + '/' + $scope.bookingInformation.bookingId] = 'Availed';
         db.ref().update(updates).then(function () {
             delete window.localStorage.currentBooking;
+            delete window.localStorage.activeBooking;
             $state.go('app.home');
             $ionicLoading.hide();
             alert('Your review has been submitted successfully!');
+            $rootScope.$broadcast('booking', { message: 'booking changed' });
+
         });
     };
 
@@ -176,9 +179,13 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal){
         updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'notAvailed';
         db.ref().update(updates).then(function(){
             delete window.localStorage.currentBooking;
+            delete window.localStorage.activeBooking;
             $state.go('app.home');
             $ionicLoading.hide();
             alert('Thank you for updating your booking status!')
+            $rootScope.$broadcast('booking', { message: 'booking changed' });
+
+
         });
     };
 

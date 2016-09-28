@@ -1,4 +1,5 @@
-app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ionicLoading, $state, $cordovaDevice, $cordovaNetwork, $ionicPopup, $rootScope) {
+app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ionicLoading, $state,
+                                          $cordovaDevice, $cordovaNetwork, $ionicPopup, $rootScope) {
 
     $ionicHistory.clearHistory();
     $ionicHistory.clearCache();
@@ -149,7 +150,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
         window.localStorage['selectedLocation'] = JSON.stringify(location);
     }
 
-    // All the booking id for cancelled booking and active booking and their detail
+    // All the booking id for active booking and their detail
 
     function bookingInfo() {
         var activeBookingId = [];
@@ -188,5 +189,19 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
 
         }
     }
+    $rootScope.$on('booking', function (event, args) {
+        console.log("rootscope calleddddddddddddddd")
+        bookingInfo();
+        var hasActiveBookings = checkLocalStorage('activeBooking');
+        if(hasActiveBookings) {
+            var activeBookingInformation = JSON.parse(window.localStorage['activeBooking']);
+            var sortedActiveBookings = _.sortBy(activeBookingInformation, function(o) { return o.appointmentTime; })
+            console.log("sortedjjjjjjjjjjjjjjj result",JSON.stringify(sortedActiveBookings[0],null,2));
+            if(sortedActiveBookings[0].appointmentTime < new Date().getTime()){
+                window.localStorage['currentBooking'] = JSON.stringify(sortedActiveBookings[0]);
+                $state.go('bill');
+            }
+        }
+    });
 
 });

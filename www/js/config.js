@@ -9,6 +9,7 @@ app
     $stateProvider.state('app-start', {
         url: '/app-start',
         abstract: false,
+		cache:false,
         templateUrl: 'templates/app/app-start.html',
         controller: 'appStartCtrl'
     });
@@ -17,6 +18,7 @@ app
     $stateProvider.state('landing', {
         url: '/landing',
         abstract: false,
+		cache:false,
         templateUrl: 'templates/app/app-landing.html',
         controller: 'appLandingCtrl'
     });

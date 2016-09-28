@@ -1,4 +1,4 @@
-app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup){
+app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,$rootScope){
 
 
 	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
@@ -111,9 +111,12 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup)
 					updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancelled';
 					db.ref().update(updates).then(function(){
 						delete window.localStorage.currentBooking;
+						delete window.localStorage.activeBooking;
 						$state.go('app.home');
 						$ionicLoading.hide();
 						alert('Thank you, your appointment has been cancelled!')
+						$rootScope.$broadcast('booking', { message: 'booking cancelled' });
+
 					});
 				}
 				else{
@@ -122,9 +125,13 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup)
 					updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancelled';
 					db.ref().update(updates).then(function(){
 						delete window.localStorage.currentBooking;
+						delete window.localStorage.activeBooking;
+
 						$state.go('app.home');
 						$ionicLoading.hide();
 						alert('Thank you for canceling your booking!')
+						$rootScope.$broadcast('booking', { message: 'booking cancelled' });
+
 					});
 				}
 

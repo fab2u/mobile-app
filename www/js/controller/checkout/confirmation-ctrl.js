@@ -483,6 +483,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 				$ionicLoading.hide();
 				// window.localStorage['currentBooking'] = JSON.stringify(bookingDetails);
 				window.localStorage.setItem("currentBookingId", bookingDetails.bookingId);
+				$rootScope.$broadcast('booking', { message: 'booking changed' });
 
 				$state.go('bill');
 				alert('Booking confirmed!')

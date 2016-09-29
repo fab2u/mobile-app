@@ -1,9 +1,14 @@
-app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', function($scope, $timeout, $location, $ionicLoading){
+app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', '$cordovaSocialSharing', '$ionicPopup', function($scope, $timeout, $location, $ionicLoading, $cordovaSocialSharing, $ionicPopup){
 
 	$ionicLoading.show();
 
 	console.log('test');
 	$scope.uid = window.localStorage.getItem("uid");
+	db.ref("users/data/"+$scope.uid+"/name").once("value", function(snapshot){
+		console.log(snapshot.val());
+		$scope.userName = snapshot.val();
+		$ionicLoading.hide();
+	})
 	console.log(JSON.parse(window.localStorage.getItem('selectedLocation')));
 	$scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
 	console.log($scope.cityId);
@@ -11,6 +16,53 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 	$scope.events2 = [];
 	$scope.moreMessagesScroll = true;
 	$scope.moreMessagesRefresh = true;
+
+	$scope.showPopup = function(id) {
+	   $scope.data = {}
+		var myPopup = $ionicPopup.show({
+			template: '<input type="text" ng-model="data.comment">',
+			title: 'Enter your Comment',
+			// subTitle: 'Please use normal things',
+			scope: $scope,
+			buttons: [
+				{ text: 'Cancel' },
+				{
+					text: '<b>Comment</b>',
+					type: 'button-positive',
+					onTap: function(e) {
+						if (!$scope.data.comment) {
+							e.preventDefault();
+						} else {
+							console.log(id);
+							var newCommentKey = db.ref().push().key;
+							// var commentObject_user = {
+							// 	blogId: id,
+							// 	comment: res,
+								// commentId: newCommentKey
+							// };
+							var commentObject_blog = {
+								blogId: id,
+								comment: $scope.data.comment,
+								userId: $scope.uid,
+								userName: $scope.userName
+							};
+							console.log(commentObject_blog);
+							var updateComment = {};
+							updateComment['blogs/'+id+'/comments/'+newCommentKey] = commentObject_blog;
+							// updateComment['users/data/'+$scope.uid+"/comments/"+newCommentKey] = commentObject_user;
+							db.ref().update(updateComment).then(function(){
+								console.log('comment addedd successfully');
+							});
+							return $scope.data.comment;
+						}
+					}
+				},
+			]
+		});
+		myPopup.then(function(res) {
+			console.log('Tapped!', res, id);
+		});
+	};
 
 	$scope.goBack = function(){
 		$location.path("/app/home");
@@ -23,6 +75,22 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 	$timeout(function () {
 		$ionicLoading.hide();
 	}, 10000);
+
+	$scope.otherShare = function(){
+		alert('called');
+		message = 'This is your message';
+		subject = 'Subject Line';
+		file = null;
+		link = 'www.google.com';
+
+		$cordovaSocialSharing
+		.share(message, subject, file, link)
+		.then(function(result) {
+			alert(JSON.stringify(result));
+		}, function(err) {
+			alert(JSON.stringify(err));
+		});
+	}
 
 	$scope.followUser = function(id){
 		console.log(id, $scope.uid);

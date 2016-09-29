@@ -180,23 +180,18 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     if(hasActiveBookings) {
         var activeBookingInformation = JSON.parse(window.localStorage['activeBooking']);
         var sortedActiveBookings = _.sortBy(activeBookingInformation, function(o) { return o.appointmentTime; })
-        console.log("sorted result",JSON.stringify(sortedActiveBookings[0],null,2));
         if(sortedActiveBookings[0].appointmentTime < new Date().getTime()){
-            console.log("current booking");
-
             window.localStorage['currentBooking'] = JSON.stringify(sortedActiveBookings[0]);
             $state.go('bill');
 
         }
     }
     $rootScope.$on('booking', function (event, args) {
-        console.log("rootscope calleddddddddddddddd")
         bookingInfo();
         var hasActiveBookings = checkLocalStorage('activeBooking');
         if(hasActiveBookings) {
             var activeBookingInformation = JSON.parse(window.localStorage['activeBooking']);
             var sortedActiveBookings = _.sortBy(activeBookingInformation, function(o) { return o.appointmentTime; })
-            console.log("sortedjjjjjjjjjjjjjjj result",JSON.stringify(sortedActiveBookings[0],null,2));
             if(sortedActiveBookings[0].appointmentTime < new Date().getTime()){
                 window.localStorage['currentBooking'] = JSON.stringify(sortedActiveBookings[0]);
                 $state.go('bill');

@@ -43,7 +43,7 @@ app.controller('VendorListCtrl',
                         $ionicLoading.hide();
                     });
             }
-            else{
+            else if(serviceId){
                 $http.post("http://139.162.31.204/search_services?services="+serviceId+
                     "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender=''&user_lat=''&user_lon=''")
                     .then(function (response) {
@@ -51,6 +51,16 @@ app.controller('VendorListCtrl',
                         $ionicLoading.hide();
                     });
 
+            }
+            else{
+                $http.post("http://139.162.31.204/get_vendors?user_id="+$scope.uid+
+                    "&user_city="+locationInfo.cityId+"&user_gender=''&user_lat=''&user_lon=''")
+                    .then(function (response) {
+                        $scope.vendorList = response.data.results;
+
+                        console.log("discover salons",JSON.stringify($scope.vendorList ,null,2))
+                        $ionicLoading.hide();
+                    });
             }
 
         };
@@ -106,10 +116,20 @@ app.controller('VendorListCtrl',
                       console.log(JSON.stringify($scope.vendorList,null,2));
                   });
           }
-          else{
-              console.log("serviceId",serviceId)
+          else if(serviceId){
               $http.post("http://139.162.31.204/search_services?services="+serviceId+
                   "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender='1'&user_lat=''&user_lon=''")
+                  .then(function (response) {
+                      $scope.vendorList = response.data.results;
+                      $ionicLoading.hide();
+                      console.log(JSON.stringify($scope.vendorList,null,2)) ;
+
+                  });
+          }
+          else{
+              console.log("else")
+              $http.post("http://139.162.31.204/get_vendors?user_id="+$scope.uid+"&user_city="+locationInfo.cityId+
+                  "&user_gender='1'&user_lat=''&user_lon=''")
                   .then(function (response) {
                       $scope.vendorList = response.data.results;
                       $ionicLoading.hide();
@@ -133,13 +153,24 @@ app.controller('VendorListCtrl',
                       console.log(JSON.stringify($scope.vendorList,null,2));
                   });
           }
-          else{
+          else if(serviceId){
               $http.post("http://139.162.31.204/search_services?services="+serviceId+
                   "&user_id="+$scope.uid+"&user_city="+locationInfo.cityId+"&user_gender='2'&user_lat=''&user_lon=''")
                   .then(function (response) {
                       $scope.vendorList = response.data.results;
                       $ionicLoading.hide();
                       console.log(JSON.stringify($scope.vendorList,null,2)) ;
+                  });
+          }
+          else{
+              console.log("else")
+              $http.post("http://139.162.31.204/get_vendors?user_id="+$scope.uid+"&user_city="+locationInfo.cityId+
+                  "&user_gender='2'&user_lat=''&user_lon=''")
+                  .then(function (response) {
+                      $scope.vendorList = response.data.results;
+                      $ionicLoading.hide();
+                      console.log(JSON.stringify($scope.vendorList,null,2)) ;
+
                   });
           }
       }

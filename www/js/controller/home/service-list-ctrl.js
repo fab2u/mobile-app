@@ -32,7 +32,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
     $scope.tabActive = false;
 
     $scope.searchButton = function () {
-        $state.go('search');
+        $state.go('vendorList');
     };
 
     $scope.nextSlide = function() {

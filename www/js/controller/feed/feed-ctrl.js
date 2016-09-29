@@ -152,7 +152,9 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 					console.log(key, $scope.prevTopKey);
 					if (key != $scope.prevTopKey){
 						value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-						console.log(value.user.user_id, $scope.uid);
+						if(value.comments){
+							value['commentCount'] = Object.keys(value.comments).length;
+						}
 						if(value.user.user_id == $scope.uid){
 							console.log('both equal');
 							$timeout(function () {
@@ -209,6 +211,9 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 					angular.forEach(snap.val(), function(value, key){
 						if(key != $scope.oldBottomKey){
 							value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+							if(value.comments){
+								value['commentCount'] = Object.keys(value.comments).length;
+							}
 							console.log(value.user.user_id, $scope.uid);
 							if(value.user.user_id == $scope.uid){
 								console.log('both equal');
@@ -258,9 +263,20 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 				// console.log($scope.bottomKey, $scope.topKey);
 				angular.forEach(snapshot.val(), function(value, key){
 					value.introduction = value.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-					console.log(value.user.user_id, $scope.uid);
+					if(value.comments){
+						value['commentCount'] = Object.keys(value.comments).length;
+					}
+
+					// start convert comments object to array
+					value['commentsArr'] = $.map(value.comments, function(value, index) {
+						return [value];
+					});
+					console.log(value.commentsArr);
+					// end convert comments object to array
+
+					// console.log(value.user.user_id, $scope.uid);
 					if(value.user.user_id == $scope.uid){
-						console.log('both equal');
+						// console.log('both equal');
 						$timeout(function () {
 							$('.'+value.user.user_id+'-follow').hide();
 						}, 0);

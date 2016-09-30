@@ -207,11 +207,13 @@ app
 
 	$stateProvider.state('map', {
 		url: '/map/:lat/:lng/:add1/:add2/:name',
+		cache:false,
 		templateUrl: 'templates/vendor/map.html',
 		controller: 'mapCtrl'
 	});
 	$stateProvider.state('mapMultiple', {
 		url: '/mapMultiple',
+		cache:false,
 		templateUrl: 'templates/vendor/mapMultiple.html',
 		controller: 'multipleMapCtrl'
 	});

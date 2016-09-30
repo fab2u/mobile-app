@@ -6,6 +6,14 @@ app
         $scope.total_original=0;
         $scope.total_customer = 0;
 
+        var selected_items = JSON.parse(localStorage.getItem('catItems'));
+        console.log(JSON.stringify(selected_items));
+        if(selected_items){
+            angular.forEach(selected_items,function (value,key) {
+                console.log("valuee",value.id);
+                console.log("key",key);
+            })
+        }
 
             $scope.show = function() {
                 $ionicLoading.show();
@@ -20,9 +28,6 @@ app
             $ionicLoading.show();
             firebase.database().ref('vendors/' + JSON.parse(window.localStorage['selectedLocation']).cityId + '/' + $stateParams.vendor_id).once('value', function (response) {
                 $scope.vendor_detail = response.val();
-                console.log("vendor detail",JSON.stringify($scope.vendor_detail.contactDetails,null,2))
-                console.log("vendor detail",JSON.stringify($scope.vendor_detail.contactDetails.landline))
-                console.log("vendor detail",JSON.stringify($scope.vendor_detail.contactDetails.phone))
                 window.localStorage.setItem("vendorMobile",$scope.vendor_detail.contactDetails.phone);
                 window.localStorage.setItem("vendorLandline",$scope.vendor_detail.contactDetails.landline);
 
@@ -33,9 +38,7 @@ app
             firebase.database().ref('menu/'+$stateParams.vendor_id).once('value',function(response){
                 if(response.val()){
                     $scope.menuInfo = response.val().services;
-                    console.log(response.val().vendorName)
                     window.localStorage.setItem("vendorName",response.val().vendorName);
-
                     angular.forEach($scope.menuInfo, function(value, key) {
                         if(key == 'cat-01'){
                             $scope.catName.push("HAIR");

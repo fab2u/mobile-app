@@ -79,6 +79,17 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 							// updateComment['users/data/'+$scope.uid+"/comments/"+newCommentKey] = commentObject_user;
 							db.ref().update(updateComment).then(function(){
 								console.log('comment addedd successfully');
+								// start: adding comment to particular feed
+								var result = $.grep($scope.events2, function(e){ return e.blog_id == id; });
+								console.log(result);
+								if(result[0].commentCount == undefined){
+									result[0].commentCount = 0;
+								}
+								$timeout(function () {
+									result[0].commentCount += 1;
+									result[0].commentsArr.push(commentObject_blog);
+								}, 0);
+								// end: adding comment to particular feed
 							});
 							return $scope.data.comment;
 						}
@@ -146,6 +157,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 		}
 		else {
 			console.log(feedId, $scope.uid);
+			// start: adding and incrementing a like to particular feed
 			var result = $.grep($scope.events2, function(e){ return e.blog_id == feedId; });
 			console.log(result[0].numLikes);
 			if(result[0].numLikes == undefined){
@@ -159,6 +171,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 				$("#"+feedId+"-likeFeed").addClass("clicked");
 				console.log($scope.events2);
 			});
+			// end: adding and incrementing a like to particular feed
 		}
 		db.ref("blogs/"+feedId+"/likedBy").on("value", function(snap){
 			console.log(snap.numChildren());
@@ -298,7 +311,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 					value['commentsArr'] = $.map(value.comments, function(value, index) {
 						return [value];
 					});
-					console.log(value.commentsArr);
+					// console.log(value.commentsArr);
 					// end convert comments object to array
 
 					// console.log(value.user.user_id, $scope.uid);

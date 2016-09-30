@@ -4,8 +4,10 @@
 }
 
 .fabFeed .image-modal .fullscreen-image {
+	display: block;
 	max-width: 100% !important;
-    height: 90% !important;
+	max-height: 90% !important;
+    height: AUTO !important;
     width: auto !important;
     bottom: 0;
     left: 0;

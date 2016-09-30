@@ -22,17 +22,6 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 	$scope.$on('$destroy', function() {
 		$scope.modal.remove();
 	});
-	// Execute action on hide modal
-	$scope.$on('modal.hide', function() {
-		// Execute action
-	});
-	// Execute action on remove modal
-	$scope.$on('modal.removed', function() {
-		// Execute action
-	});
-	$scope.$on('modal.shown', function() {
-		console.log('Modal is shown!');
-	});
 
 	$scope.showImage = function(source) {
 		$scope.imageSrc = source;

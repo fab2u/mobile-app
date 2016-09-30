@@ -30,8 +30,14 @@ app.directive('expandingTextarea', function () {
 });
 
 app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cordovaCamera', '$ionicLoading', function($scope, $http, $location, $timeout, $cordovaCamera, $ionicLoading){
+   $ionicLoading.show();
+
    uid = localStorage.getItem("uid");
-   uname = localStorage.getItem("name");
+   db.ref("users/data/"+uid+"/name").once("value", function(snapshot){
+		console.log(snapshot.val());
+		uname = snapshot.val();
+		$ionicLoading.hide();
+	});
    console.log(uid);
    console.log(uname);
    var blogData;

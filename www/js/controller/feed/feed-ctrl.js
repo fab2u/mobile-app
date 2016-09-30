@@ -35,7 +35,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 		console.log(snapshot.val());
 		$scope.userName = snapshot.val();
 		$ionicLoading.hide();
-	})
+	});
 	console.log(JSON.parse(window.localStorage.getItem('selectedLocation')));
 	$scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
 	console.log($scope.cityId);
@@ -186,6 +186,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 	$scope.doRefresh = function(){
 		console.log('pull to refresh');
 		db.ref("blogs").orderByKey().startAt($scope.topKey).once('value', function(snapshot){
+			// console.log(snapshot.val());
 			if(snapshot.numChildren() == 1){
 				$scope.moreMessagesRefresh = false;
 			}

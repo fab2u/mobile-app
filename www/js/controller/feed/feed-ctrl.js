@@ -88,6 +88,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 								$timeout(function () {
 									result[0].commentCount += 1;
 									result[0].commentsArr.push(commentObject_blog);
+									$("#"+id+"-commentsBlock").show();
 								}, 0);
 								// end: adding comment to particular feed
 							});
@@ -141,6 +142,10 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 			console.log('success');
 			$('.'+id+'-follow').hide();
 		});
+	}
+
+	$scope.commentToggle = function(feedId) {
+		$("#"+feedId+"-commentsBlock").toggle();
 	}
 
 	$scope.likeThisFeed = function(feedId){

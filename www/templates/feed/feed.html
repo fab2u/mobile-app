@@ -42,7 +42,7 @@
 					<i class="icon ion-heart"></i>
 					<span>{{feed.numLikes || 0}} likes</span>
 				</div>
-				<div class="col col-40 likenum">
+				<div class="col col-40 likenum" ng-click="commentToggle(feed.blog_id)">
 					<i class="icon ion-ios-chatbubble"></i>
 					{{feed.commentCount || 0}} comments
 				</div>
@@ -56,10 +56,12 @@
 					<i class="share-btn icon ion-android-share-alt" ng-click="otherShare()"></i>
 				</div>
 			</div>
-			<div class="row" ng-repeat="comment in feed.commentsArr">
-				<div class="col">
-					<p>{{comment.userName}}</p>
-					<p>{{comment.comment}}</p>
+			<div id="{{feed.blog_id}}-commentsBlock" class="initiallyHidden">
+				<div class="row" ng-repeat="comment in feed.commentsArr">
+					<div class="col">
+						<p>{{comment.userName}}</p>
+						<p>{{comment.comment}}</p>
+					</div>
 				</div>
 			</div>
 		</div>

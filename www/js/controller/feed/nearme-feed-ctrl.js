@@ -1,4 +1,4 @@
-app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location', '$ionicLoading', function($scope, $timeout, $stateParams, $location, $ionicLoading){
+app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location', '$ionicLoading', '$ionicModal', function($scope, $timeout, $stateParams, $location, $ionicLoading, $ionicModal){
 
    $ionicLoading.show();
 	$scope.uid = window.localStorage.getItem("uid");
@@ -21,6 +21,33 @@ app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$locati
 	$timeout(function () {
 		$ionicLoading.hide();
 	}, 10000);
+
+   // ----------------------------------------------------------------------
+   $ionicModal.fromTemplateUrl('templates/feed/image-modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+   }).then(function(modal) {
+      $scope.modal = modal;
+   });
+
+   $scope.openModal = function() {
+      $scope.modal.show();
+   };
+
+   $scope.closeModal = function() {
+      $scope.modal.hide();
+   };
+
+   //Cleanup the modal when we're done with it!
+   $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+   });
+
+   $scope.showImage = function(source) {
+      $scope.imageSrc = source;
+      $scope.openModal();
+   }
+   // ----------------------------------------------------------------------
 
    $scope.followUser = function(id){
 		console.log(id, $scope.uid);

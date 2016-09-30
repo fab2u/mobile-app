@@ -1,4 +1,4 @@
-app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location', '$ionicLoading', function($scope, $timeout, $stateParams, $location, $ionicLoading){
+app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location', '$ionicLoading', '$ionicModal', function($scope, $timeout, $stateParams, $location, $ionicLoading, $ionicModal){
 
 	$ionicLoading.show();
 
@@ -16,11 +16,33 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 		$ionicLoading.hide();
 	}, 10000);
 
-	// $scope.email = window.localStorage.email;
-	// $scope.userPhoto = window.localStorage.userPhoto;
-	// $scope.img_hash = md5(uid);
-	// jdenticon.update("#identicon", $scope.img_hash);
-	// var uid = window.localStorage.uid;
+	// ----------------------------------------------------------------------
+	$ionicModal.fromTemplateUrl('templates/feed/image-modal.html', {
+		scope: $scope,
+		animation: 'slide-in-up'
+	}).then(function(modal) {
+		$scope.modal = modal;
+	});
+
+	$scope.openModal = function() {
+		$scope.modal.show();
+	};
+
+	$scope.closeModal = function() {
+		$scope.modal.hide();
+	};
+
+	//Cleanup the modal when we're done with it!
+	$scope.$on('$destroy', function() {
+		$scope.modal.remove();
+	});
+
+	$scope.showImage = function(source) {
+		$scope.imageSrc = source;
+		$scope.openModal();
+	}
+	// ----------------------------------------------------------------------
+
 	var uid = $stateParams.user_id;
 	$scope.uid = $stateParams.user_id;
 	console.log(uid, $scope.uid);

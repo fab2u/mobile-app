@@ -157,16 +157,10 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
       // alert('img '+ img);
       img.onload = function () {
          alert("onload called javascript");
-         canvas.height = canvas.width * (img.height / img.width);
-         /// step 1
-         var oc = document.createElement('canvas');
-         var octx = oc.getContext('2d');
-         oc.width = img.width * 0.5;
-         oc.height = img.height * 0.5;
-         octx.drawImage(img, 0, 0, oc.width, oc.height);
-         /// step 2
-         octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
-         ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5, 0, 0, canvas.width, canvas.height);
+         canvas.width = img.width;
+         canvas.height = img.height;
+         var ctx = canvas.getContext("2d");
+         ctx.drawImage(img, 0, 0);
          alert(canvas.width+" "+canvas.height+" "+img.width+" "+img.height);
          var dataURL = canvas.toDataURL("image/jpeg");
          // alert('before api 1');

@@ -1,5 +1,7 @@
 app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location', '$ionicLoading', '$ionicModal', '$ionicPopup', function($scope, $timeout, $stateParams, $location, $ionicLoading, $ionicModal, $ionicPopup){
 
+	// major bug here!!!!!! resolve asap!
+
 	$ionicLoading.show();
 
 	$scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
@@ -43,9 +45,13 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 	}
 	// ----------------------------------------------------------------------
 
+	var myUid = window.localStorage.getItem("uid");
+	db.ref("users/data/"+myUid+"/name").on('value', function(snapshot){
+		console.log(snapshot.val());
+		$scope.myName = snapshot.val();
+	});
+
 	var uid = $stateParams.user_id;
-	$scope.uid = $stateParams.user_id;
-	console.log(uid, $scope.uid);
 	$scope.blogIdList = {};
 	$scope.moreMessagesScroll = true;
 
@@ -64,6 +70,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 	};
 
 	$scope.showPopup = function(id) {
+		// id ==> feedId
 		$scope.data = {}
 		var myPopup = $ionicPopup.show({
 			template: '<input type="text" ng-model="data.comment">',
@@ -89,13 +96,13 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 							var commentObject_blog = {
 								blogId: id,
 								comment: $scope.data.comment,
-								userId: uid,
-								userName: $scope.userDetails.name
+								userId: myUid,
+								userName: $scope.myName
 							};
 							console.log(commentObject_blog);
 							var updateComment = {};
 							updateComment['blogs/'+id+'/comments/'+newCommentKey] = commentObject_blog;
-							// updateComment['users/data/'+$scope.uid+"/comments/"+newCommentKey] = commentObject_user;
+							// updateComment['users/data/'+myUid+"/comments/"+newCommentKey] = commentObject_user;
 							db.ref().update(updateComment).then(function(){
 								console.log('comment addedd successfully');
 								// start: adding comment to particular feed
@@ -128,13 +135,13 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 			var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
 			console.log(result);
 			result[0].numLikes -= 1;
-			db.ref("blogs/"+feedId+"/likedBy/"+uid).remove().then(function(){
+			db.ref("blogs/"+feedId+"/likedBy/"+myUid).remove().then(function(){
 				console.log('removed successfully');
 				$("#"+feedId+"-likeFeed").removeClass("clicked");
 			});
 		}
 		else {
-			console.log(feedId, uid);
+			console.log(feedId, myUid);
 			var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
 			console.log(result);
 			if(result[0].numLikes == undefined){
@@ -142,7 +149,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 			}
 			result[0].numLikes += 1;
 			var updates = {};
-			updates["blogs/"+feedId+"/likedBy/"+uid] = true;
+			updates["blogs/"+feedId+"/likedBy/"+myUid] = true;
 			db.ref().update(updates).then(function(){
 				console.log('success');
 				$("#"+feedId+"-likeFeed").addClass("clicked");
@@ -220,26 +227,22 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 			// end convert comments object to array
 			// end: comment system code
 
-			// $timeout(function () {
-			// 	jdenticon.update("#"+single_blog.blog_id, md5(single_blog.user.user_id));
-			// }, 0);
 			if(single_blog.likedBy){
 				count = Object.keys(single_blog.likedBy).length;
-				console.log(single_blog.likedBy);
-				console.log(count);
+				// console.log(single_blog.likedBy);
+				// console.log(count);
 				single_blog['numLikes'] = count;
-				if(uid in single_blog.likedBy){
-					$timeout(function () {
+				if(myUid in single_blog.likedBy){
+					// $timeout(function () {
 						$("#"+i+"-likeFeed").addClass("clicked");
-					}, 1000);
+					// }, 1000);
 				}
 			}
-			console.log($scope.blogArr);
+			// console.log($scope.blogArr);
 			$scope.blogArr.push(single_blog);
 		});
 		if(callback){
 			callback();
 		}
 	}
-
 }]);

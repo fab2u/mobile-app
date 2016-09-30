@@ -1,8 +1,13 @@
-app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location', '$ionicLoading', '$ionicModal', function($scope, $stateParams, $timeout, $location, $ionicLoading, $ionicModal){
+app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location', '$ionicLoading', '$ionicModal', '$ionicPopup', function($scope, $stateParams, $timeout, $location, $ionicLoading, $ionicModal, $ionicPopup){
 
 	$ionicLoading.show();
 	$scope.uid = window.localStorage.getItem("uid");
 	console.log($scope.uid);
+	db.ref("users/data/"+$scope.uid+"/name").once("value", function(snapshot){
+		console.log(snapshot.val());
+		$scope.userName = snapshot.val();
+		$ionicLoading.hide();
+	});
 
 	$scope.moreMessagesScroll = true;
 	$scope.moreMessagesRefresh = true;
@@ -48,6 +53,69 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 		$scope.openModal();
 	}
 	// ----------------------------------------------------------------------
+
+	$scope.commentToggle = function(feedId) {
+		$("#"+feedId+"-commentsBlock").toggle();
+	};
+
+	$scope.showPopup = function(id) {
+		$scope.data = {}
+		var myPopup = $ionicPopup.show({
+			template: '<input type="text" ng-model="data.comment">',
+			title: 'Enter your Comment',
+			// subTitle: 'Please use normal things',
+			scope: $scope,
+			buttons: [
+				{ text: 'Cancel' },
+				{
+					text: '<b>Comment</b>',
+					type: 'button-positive',
+					onTap: function(e) {
+						if (!$scope.data.comment) {
+							e.preventDefault();
+						} else {
+							console.log(id);
+							var newCommentKey = db.ref().push().key;
+							// var commentObject_user = {
+							// 	blogId: id,
+							// 	comment: res,
+							// commentId: newCommentKey
+							// };
+							var commentObject_blog = {
+								blogId: id,
+								comment: $scope.data.comment,
+								userId: $scope.uid,
+								userName: $scope.userName
+							};
+							console.log(commentObject_blog);
+							var updateComment = {};
+							updateComment['blogs/'+id+'/comments/'+newCommentKey] = commentObject_blog;
+							// updateComment['users/data/'+$scope.uid+"/comments/"+newCommentKey] = commentObject_user;
+							db.ref().update(updateComment).then(function(){
+								console.log('comment addedd successfully');
+								// start: adding comment to particular feed
+								var result = $.grep($scope.blogArr, function(e){ return e.blog_id == id; });
+								console.log(result);
+								if(result[0].commentCount == undefined){
+									result[0].commentCount = 0;
+								}
+								$timeout(function () {
+									result[0].commentCount += 1;
+									result[0].commentsArr.push(commentObject_blog);
+									$("#"+id+"-commentsBlock").show();
+								}, 0);
+								// end: adding comment to particular feed
+							});
+							return $scope.data.comment;
+						}
+					}
+				},
+			]
+		});
+		myPopup.then(function(res) {
+			console.log('Tapped!', res, id);
+		});
+	};
 
 	$scope.followUser = function(id){
 		console.log(id, $scope.uid);
@@ -178,6 +246,19 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 					$('.'+single_blog.user.user_id+'-follow').hide();
 				}, 0);
 			}
+
+			// start: comment system code
+         if(single_blog.comments){
+            single_blog['commentCount'] = Object.keys(single_blog.comments).length;
+         }
+
+         // start convert comments object to array
+         single_blog['commentsArr'] = $.map(single_blog.comments, function(value, index) {
+            return [value];
+         });
+         // console.log(value.commentsArr);
+         // end convert comments object to array
+         // end: comment system code
 
 			// If you want to run asynchronous functions inside a loop, but still want to keep the index or other variables after a callback gets executed you can wrap your code in an IIFE (immediately-invoked function expression).
 			(function(single_blog){

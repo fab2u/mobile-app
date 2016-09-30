@@ -1,4 +1,4 @@
-app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location', '$ionicLoading', '$ionicModal', function($scope, $timeout, $stateParams, $location, $ionicLoading, $ionicModal){
+app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location', '$ionicLoading', '$ionicModal', '$ionicPopup', function($scope, $timeout, $stateParams, $location, $ionicLoading, $ionicModal, $ionicPopup){
 
 	$ionicLoading.show();
 
@@ -58,6 +58,69 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 		$scope.numFeeds = Object.keys(snapshot.val().blogs).length;
 		$scope.followers = Object.keys(snapshot.val().myFollowers).length;
 	});
+
+	$scope.commentToggle = function(feedId) {
+		$("#"+feedId+"-commentsBlock").toggle();
+	};
+
+	$scope.showPopup = function(id) {
+		$scope.data = {}
+		var myPopup = $ionicPopup.show({
+			template: '<input type="text" ng-model="data.comment">',
+			title: 'Enter your Comment',
+			// subTitle: 'Please use normal things',
+			scope: $scope,
+			buttons: [
+				{ text: 'Cancel' },
+				{
+					text: '<b>Comment</b>',
+					type: 'button-positive',
+					onTap: function(e) {
+						if (!$scope.data.comment) {
+							e.preventDefault();
+						} else {
+							console.log(id);
+							var newCommentKey = db.ref().push().key;
+							// var commentObject_user = {
+							// 	blogId: id,
+							// 	comment: res,
+							// commentId: newCommentKey
+							// };
+							var commentObject_blog = {
+								blogId: id,
+								comment: $scope.data.comment,
+								userId: uid,
+								userName: $scope.userDetails.name
+							};
+							console.log(commentObject_blog);
+							var updateComment = {};
+							updateComment['blogs/'+id+'/comments/'+newCommentKey] = commentObject_blog;
+							// updateComment['users/data/'+$scope.uid+"/comments/"+newCommentKey] = commentObject_user;
+							db.ref().update(updateComment).then(function(){
+								console.log('comment addedd successfully');
+								// start: adding comment to particular feed
+								var result = $.grep($scope.blogArr, function(e){ return e.blog_id == id; });
+								console.log(result);
+								if(result[0].commentCount == undefined){
+									result[0].commentCount = 0;
+								}
+								$timeout(function () {
+									result[0].commentCount += 1;
+									result[0].commentsArr.push(commentObject_blog);
+									$("#"+id+"-commentsBlock").show();
+								}, 0);
+								// end: adding comment to particular feed
+							});
+							return $scope.data.comment;
+						}
+					}
+				},
+			]
+		});
+		myPopup.then(function(res) {
+			console.log('Tapped!', res, id);
+		});
+	};
 
 	$scope.likeThisFeed = function(feedId){
 		if($("#"+feedId+"-likeFeed").hasClass('clicked')){
@@ -143,6 +206,20 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 			single_blog = snap.val();
 			single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 			single_blog.profilePic = $scope.userPhoto;
+
+			// start: comment system code
+			if(single_blog.comments){
+				single_blog['commentCount'] = Object.keys(single_blog.comments).length;
+			}
+
+			// start convert comments object to array
+			single_blog['commentsArr'] = $.map(single_blog.comments, function(value, index) {
+				return [value];
+			});
+			// console.log(value.commentsArr);
+			// end convert comments object to array
+			// end: comment system code
+
 			// $timeout(function () {
 			// 	jdenticon.update("#"+single_blog.blog_id, md5(single_blog.user.user_id));
 			// }, 0);

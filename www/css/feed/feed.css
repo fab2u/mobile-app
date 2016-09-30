@@ -1,4 +1,51 @@
+/*------------------------------------------*/
+.fabFeed.transparent {
+  background: transparent !important;
+}
 
+.fabFeed .image-modal .fullscreen-image {
+	max-width: 100% !important;
+    height: 90% !important;
+    width: auto !important;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    overflow: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+/*.fabFeed.image-modal {
+  width: 100% !important;
+  height: 100% !important;
+  top: 0;
+  left: 0;
+}
+.fabFeed.fullscreen-image {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+}*/
+
+/* Fix modal backdrop for smaller devices */
+@media (max-width: 679px) {
+  .fabFeed.active .modal-backdrop-bg {
+    opacity: 1;
+  }
+  .fabFeed.modal-backdrop-bg {
+    -webkit-transition: opacity 300ms ease-in-out;
+    transition: opacity 300ms ease-in-out;
+    background-color: #000;
+    opacity: 0;
+  }
+}
+/*------------------------------------------*/
 .fabFeed .feeds{
 	border-bottom: 1px solid #bcbcbc;
 }

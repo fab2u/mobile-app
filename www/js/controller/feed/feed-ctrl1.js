@@ -1,5 +1,8 @@
 app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', '$cordovaSocialSharing', '$ionicPopup', '$ionicModal', function($scope, $timeout, $location, $ionicLoading, $cordovaSocialSharing, $ionicPopup, $ionicModal){
 
+	// duplicate file, contains code for comment photo, due to some other things breaking not used for now.
+	// DO NOT DELETE - Deepank
+
 	$ionicLoading.show();
 
 	// ----------------------------------------------------------------------
@@ -335,17 +338,22 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 
 					// start: comment system code
 					if(value.comments){
-						console.log(value.comments);
+						// console.log(value.comments);
 						object = value.comments;
 						value['commentCount'] = Object.keys(value.comments).length;
 						for (var key in object) {
-							commentAlgo(key);
-							console.log(value['commentsArr']);
+							if (object.hasOwnProperty(key)) {
+								(function(key){
+									db.ref("users/data/" + object[key].userId).once("value", function(snap) {
+										if (snap.val().photoUrl) {
+											object[key]['profilePic'] = snap.val().photoUrl;
+										}
+										value['commentsArr'].unshift(object[key]);
+									});
+								})(key);
+							}
 						}
-						$timeout(function () {
-						}, 0);
 					}
-
 					// end: comment system code
 
 					// console.log(value.user.user_id, $scope.uid);
@@ -390,19 +398,4 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 	$scope.$on('$stateChangeSuccess', function() {
 		$scope.loadMore();
 	});
-
-	function commentAlgo(key, callback){
-		if (object.hasOwnProperty(key)) {
-			db.ref("users/data/" + object[key].userId).once("value", function (snap) {
-				if (snap.val().photoUrl) {
-					object[key]['profilePic'] = snap.val().photoUrl;
-				}
-				console.log(object[key]);
-				value['commentsArr'].push(object[key]);
-			});
-		}
-		if(callback){
-			callback();
-		}
-	};
 }]);

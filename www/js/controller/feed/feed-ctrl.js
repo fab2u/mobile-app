@@ -69,6 +69,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 							// };
 							var commentObject_blog = {
 								blogId: id,
+								created_time: new Date().getTime(),
 								comment: $scope.data.comment,
 								userId: $scope.uid,
 								userName: $scope.userName
@@ -211,7 +212,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 						// console.log(value.commentsArr);
 						// end convert comments object to array
 						// end: comment system code
-						
+
 						if(value.user.user_id == $scope.uid){
 							console.log('both equal');
 							$timeout(function () {

@@ -121,11 +121,16 @@
 	text-align: center;
 }
 
-.fabFeed .feed-name a{
+.fabFeed .feed-name a, .comment-name{
 	font-weight:500;
 	color: #000;
 	text-decoration: none;
 	font-weight: bold;
+}
+
+.comment-date{
+   color: #bcbcbc !important;
+   font-size: 0.9em;
 }
 
 .fabFeed .feed-name{

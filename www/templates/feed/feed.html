@@ -15,23 +15,19 @@
 			<div class="upper-row">
 				<div class="row">
 					<div class="col col-20">
-						<!-- <canvas class="user_icon img-circle" id="{{feed.blog_id}}" width="40" height="40"></canvas> -->
 		            <img class="user_icon img-circle" id="{{feed.blog_id}}" ng-src="{{feed.profilePic || 'img/person.jpg'}}" width="40" height="40"/>
 					</div>
 					<div class="col col-55">
 						<p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_name}}</a> | {{feed.created_time | date:'d MMM yy'}}</p>
 						<p class="feed-name"><i class="ion ion-location"></i> {{feed.city_name}}</p>
 					</div>
-
 					<div class="col col-25">
 						<span class="follow-btn {{feed.user.user_id}}-follow" ng-click="followUser(feed.user.user_id)">Follow</span>
 					</div>
-
 				</div>
 				<div class="row">
 					<div class="col col-20"></div>
 					<div class="col col-80">
-						<!-- <p class="feed-title">{{feed.title}}</p> -->
 						<p ng-bind-html="feed.introduction" class="feed-introduction"></p>
 					</div>
 				</div>
@@ -57,13 +53,13 @@
 				</div>
 			</div>
 			<div id="{{feed.blog_id}}-commentsBlock" class="initiallyHidden">
-				<div class="row" ng-repeat="comment in feed.commentsArr">
-					<div class="col col-20">
-            <img class="user_icon img-circle" id="{{feed.blog_id}}" ng-src="{{comment.profilePic || 'img/person.jpg'}}" width="40" height="40"/>
-          </div>
-          <div class="col col-80">
-            <p>{{comment}}</p>
-						<!--<p>{{comment.userName}}, {{comment.comment}}</p>-->
+				<div class="row padding-left" ng-repeat="comment in feed.commentsArr">
+					<div class="col col-25">
+						<span class="comment-name">{{comment.userName}}</span><br>
+						<span class="comment-date">{{comment.created_time | date:'d MMM yy'}}</span>
+					</div>
+					<div class="col col-75">
+						<p>{{comment.comment}}</p>
 					</div>
 				</div>
 			</div>

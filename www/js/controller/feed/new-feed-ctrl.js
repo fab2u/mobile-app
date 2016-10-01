@@ -38,8 +38,6 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
 		uname = snapshot.val();
 		$ionicLoading.hide();
 	});
-   console.log(uid);
-   console.log(uname);
    var blogData;
 
    var locDetails = JSON.parse(localStorage.getItem('selectedLocation'));

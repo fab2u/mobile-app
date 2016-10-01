@@ -6,16 +6,11 @@ app
         $scope.total_original=0;
         $scope.total_customer = 0;
 
-        var selected_items = JSON.parse(localStorage.getItem('catItems'));
-        console.log(JSON.stringify(selected_items));
-        if(selected_items){
-            angular.forEach(selected_items,function (value,key) {
-                console.log("valuee",value.id);
-                console.log("key",key);
-            })
-        }
+        $scope.demo = 'cat-08';
+        $scope.newMenu = [];
 
-            $scope.show = function() {
+
+        $scope.show = function() {
                 $ionicLoading.show();
             };
             $scope.show();
@@ -93,7 +88,10 @@ app
                 },200);
             });
 
-                    ///To calculate cart price //////
+
+
+
+        ///To calculate cart price //////
 
             $scope.calPrice = function (item_list) {
                 $scope.total_fabtu=0;
@@ -236,6 +234,9 @@ app
                     localStorage.setItem('service_type', '');
                     console.log("else")
                     $state.go('app.home');
+                }
+                else if(window.localStorage.getItem("selectedTab")=='true'){
+                    $state.go('vendorSelectedMenu',{vendor_id:$stateParams.vendor_id});
                 }
 
                 else{

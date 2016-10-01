@@ -154,9 +154,12 @@
 	    	<i class="icon ion-android-star"></i>
 			<p>Rate Now</p>
 		</div>
-	  	<div class="row newFooter">
+	  	<div class="row newFooter" ng-show="menu_button">
 			<div class="col col-33" id="menu" ng-click="vendorMenu()">MENU</div>
 			<div class="col col-66" id="proceed" ng-click="cart()">PROCEED</div>
+		</div>
+		<div class="row newFooter" ng-hide="menu_button">
+			<div class="col" id="proceed" ng-click="cart()">PROCEED</div>
 		</div>
 	</ion-footer-bar>
 </ion-view>

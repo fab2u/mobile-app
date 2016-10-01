@@ -127,7 +127,6 @@ app.controller('VendorListCtrl',
                   });
           }
           else{
-              console.log("else")
               $http.post("http://139.162.31.204/get_vendors?user_id="+$scope.uid+"&user_city="+locationInfo.cityId+
                   "&user_gender='1'&user_lat=''&user_lon=''")
                   .then(function (response) {
@@ -163,7 +162,6 @@ app.controller('VendorListCtrl',
                   });
           }
           else{
-              console.log("else")
               $http.post("http://139.162.31.204/get_vendors?user_id="+$scope.uid+"&user_city="+locationInfo.cityId+
                   "&user_gender='2'&user_lat=''&user_lon=''")
                   .then(function (response) {
@@ -184,7 +182,12 @@ app.controller('VendorListCtrl',
        delete window.localStorage.slectedItems;
        // delete window.localStorage.catItems;
        delete window.localStorage.BegItems;
-       $state.go('vendorMenu',{vendor_id:id});
+       if(localStorage.getItem('catItems')){
+           $state.go('vendorSelectedMenu',{vendor_id:id});
+       }
+       else{
+           $state.go('vendorMenu',{vendor_id:id});
+       }
    };
    $scope.multipleAddressMapView = function(){
      $state.go('mapMultiple')

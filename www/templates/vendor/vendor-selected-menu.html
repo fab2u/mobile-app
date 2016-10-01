@@ -1,0 +1,72 @@
+<ion-view id="vendor-services">
+    <ion-header-bar class="m-navColor">
+        <a href="" class="button icon-left ion-chevron-left button-clear" ng-click="backButton()"></a>
+        <h1 class="title">{{vendor_detail.vendorName}}</h1>
+        <div class="col">
+            <div class="row cart-price" style="margin-top: -5px;">
+                <div class="col currency">&#x20B9;</div>
+                <div class="col price">{{total_customer}}</div>
+            </div> <!-- .cart-price -->
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <div ng-show="menuInfo">
+            <div class="row">
+                <button class="button button-full" style="background-color: #ff8386;color: white; font-size: 1.2em;">
+                   SELECTED SERVICES
+                </button>
+                <button class="button button-full" style="background-color: #3D3D3D; color: white; font-size: 1.2em;"
+                        ng-click="complete_menu()">
+                   COMPLETED MENU
+                </button>
+            </div>
+            <div class="row padding">
+                <div ng-repeat="data in menu" style="width: 100%">
+                <div class="col" ng-repeat="(key, value) in data" style="width: 100%;margin: auto; ">
+                    <div class="item item-text-wrap list-heading" ng-repeat="(key1, value1) in selected_items"
+                         ng-if="key == value1.id">{{value1.name}}
+                    </div>
+                    <div ng-repeat="(key1, value1) in selected_items">
+                      <div id="y.id " class="item item-text-wrap row" id="custom-servicelist" ng-repeat="(key3,y) in value"
+                         ng-click="selectItem($index, y.menuItemName,y)" ng-if="key == value1.id">
+                        <div ng-show="selectedServices[y.menuItemName]" style="background-color:#0dd1d1; width:20px;">
+                        </div>
+                        <div class="col col-50 item-text-wrap p-15">
+                            <span style="font-size: 0.9em;">{{y.menuItemName}}</span>
+                        </div>
+                        <div class="col col-33 p-15" style="text-align:right;font-color:black;"
+                             ng-if="y.vendorPrice != y.fab2uPrice">
+                            <strike>
+                                <span class="striked-text" style="font-size: 0.9em;">&#x20B9;{{y.vendorPrice}} </span>
+                                <span class="line-arrow right" style="position:relative;bottom:1px ;left:4px;"></span>
+                            </strike>
+                            <span style="font-size: 0.9em;">
+                                    &nbsp &#x20B9; {{y.fab2uPrice}}
+                            </span>
+                        </div>
+                        <div class="col col-33 p-15" style="text-align:right;font-color:black;"
+                             ng-if="y.vendorPrice == y.fab2uPrice">
+                             <span style="font-size: 0.9em;">
+                               &nbsp &#x20B9; {{y.vendorPrice}}
+                             </span>
+                        </div>
+                       </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+
+
+    <ion-footer-bar class="footer">
+        <div class="cartValue" ng-click="proceedButton()">
+            <i class="icon ion-ios-cart" style="font-size: 30px;"></i>
+            <p>{{cart_item}}</p>
+        </div>
+        <div class="row newFooter">
+            <div class="col col-33" id="overview" ng-click="overviewButton()">OVERVIEW</div>
+            <div class="col col-66" id="proceed" ng-click="proceedButton()">SELECT DATE AND TIME</div>
+        </div> <!-- .newFooter -->
+    </ion-footer-bar>
+</ion-view>

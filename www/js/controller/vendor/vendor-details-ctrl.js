@@ -2,12 +2,20 @@ app.controller('VendorDetailsCtrl',
     function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,$cordovaGeolocation,
              $ionicPopup,$ionicLoading,$rootScope,$cordovaDevice,$cordovaInAppBrowser){
 
+
+
         $scope.images =[];
         $scope.reviewerName = '';
         $scope.reviewerImage = '';
         $scope.cart_item = '';
         $scope.selectedServices = {};
         $scope.begItems = {};
+        $scope.menu_button = true;
+
+        if(window.localStorage.getItem("selectedTab")=='true'){
+            $scope.menu_button = false;
+        }
+
         // Get selected services if previously stored in localstorage
         if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
             $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
@@ -249,7 +257,13 @@ app.controller('VendorDetailsCtrl',
     };
 
     $scope.vendorMenu = function(){
-        $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id})
+        if(window.localStorage.getItem("selectedTab")=='true'){
+            $state.go('vendorSelectedMenu',{vendor_id:$stateParams.ven_id});
+        }
+        else{
+            $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id})
+
+        }
     };
 
 

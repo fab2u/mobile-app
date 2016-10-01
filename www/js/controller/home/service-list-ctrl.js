@@ -296,7 +296,6 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
     $scope.findVendors = function() {
         var itemLength = _.size($scope.selectedServices);
         if(itemLength == 0){
-            console.log("items");
             alert('Please, select some services!')
         }
         else{
@@ -305,7 +304,6 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
     };
 
     $scope.tabWithSlideChanged = function (indexNum) {
-        console.log("indexNum",indexNum);
         $scope.tabActive = true;
         $ionicSlideBoxDelegate.slide(indexNum);
     };

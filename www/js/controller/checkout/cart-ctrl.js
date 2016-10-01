@@ -53,12 +53,22 @@ app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$state){
     };
 
     $scope.edit_cart = function(){
-        $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id});
+        if(window.localStorage.getItem("selectedTab")=='true'){
+            $state.go('vendorSelectedMenu',{vendor_id:$stateParams.ven_id});
+        }
+        else{
+            $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id});
+        }
     };
 
     $scope.backButton = function () {
         //later on back trake history will be here////////
-        $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id});
+        if(window.localStorage.getItem("selectedTab")=='true'){
+            $state.go('vendorSelectedMenu',{vendor_id:$stateParams.ven_id});
+        }
+        else{
+            $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id});
+        }
 
     };
 

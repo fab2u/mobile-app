@@ -232,12 +232,18 @@ app
 		controller: 'UserWalletCtrl'
 	});
 
-	//State for user wallet
 	$stateProvider.state('vendor-services-list', {
 		url: '/vendor-services-list/:vendor_id',
 		templateUrl: 'templates/vendor/vendor-services-list.html',
 		controller: 'VendorServicesListCtrl'
 	});
+	$stateProvider.state('vendorSelectedMenu', {
+		url: '/vendorSelectedMenu/:vendor_id',
+		cache:false,
+		templateUrl: 'templates/vendor/vendor-selected-menu.html',
+		controller: 'VendorSelectedServicesListCtrl'
+	});
+
 
 	$stateProvider.state('profile', {
 		url: '/profile',

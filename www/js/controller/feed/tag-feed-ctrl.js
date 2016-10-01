@@ -270,7 +270,9 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 					if(snap.val().myFollowers){
 						console.log(snap.val().myFollowers);
 						if ($scope.uid in snap.val().myFollowers){
-							$('.'+single_blog.user.user_id+'-follow').hide();
+              $timeout(function () {
+                $('.' + single_blog.user.user_id + '-follow').hide();
+              },0);
 						}
 					}
 				});

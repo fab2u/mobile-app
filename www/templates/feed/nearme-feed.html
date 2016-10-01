@@ -8,7 +8,7 @@
 		<div class="row tab-row">
 			<a href="#/user/{{uid}}" class="col text-center"><img ng-src="img/fabbook-header/profile.png"/></a>
 			<a href="#/feed" class="col text-center center-tab"><img ng-src="img/fabbook-header/fabbook.png"/></a>
-			<a href="#/nearme/{{cityId}}" class="col active-tab text-center"><img ng-src="img/fabbook-header/Nearby.png"/></a>
+			<a href="#/nearme/{{cityId}}" class="col active-tab text-center"><img ng-src="img/fabbook-header/Nearby_fill.png"/></a>
 		</div>
 		<ion-refresher pulling-text="Loading New Feed" on-refresh="doRefresh()"></ion-refresher>
 		<div class="feeds" ng-repeat="feed in blogArr | orderBy:'-created_time'">

@@ -233,9 +233,9 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 				// console.log(count);
 				single_blog['numLikes'] = count;
 				if(myUid in single_blog.likedBy){
-					// $timeout(function () {
+					$timeout(function () {
 						$("#"+i+"-likeFeed").addClass("clicked");
-					// }, 1000);
+					}, 1000);
 				}
 			}
 			// console.log($scope.blogArr);

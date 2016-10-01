@@ -1,5 +1,5 @@
 <ion-view class="fabFeed" cache-view="false">
-	<ion-header-bar class="bar-dark" title="Profile">
+	<ion-header-bar align-title="center" class="bar-dark" title="FABBOOK">
       <a class="button icon ion-ios-home button-clear" ng-click="goBack()"></a>
       <h1 class="title">FABBOOK</h1>
    </ion-header-bar>
@@ -58,8 +58,12 @@
 			</div>
 			<div id="{{feed.blog_id}}-commentsBlock" class="initiallyHidden">
 				<div class="row" ng-repeat="comment in feed.commentsArr">
-					<div class="col">
-						<p>{{comment.userName}}, {{comment.comment}}</p>
+					<div class="col col-20">
+            <img class="user_icon img-circle" id="{{feed.blog_id}}" ng-src="{{comment.profilePic || 'img/person.jpg'}}" width="40" height="40"/>
+          </div>
+          <div class="col col-80">
+            <p>{{comment}}</p>
+						<!--<p>{{comment.userName}}, {{comment.comment}}</p>-->
 					</div>
 				</div>
 			</div>

@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0a90707b-bb48-47ba-9167-7f50f00e366c" name="Default" comment="" />
+    <list default="true" id="0a90707b-bb48-47ba-9167-7f50f00e366c" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/feed/feed.css" afterPath="$PROJECT_DIR$/www/css/feed/feed.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/feed/feed-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/feed/feed-ctrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/feed/tag-feed-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/feed/tag-feed-ctrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js" />
+    </list>
     <ignored path="mobile-app.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -20,46 +27,56 @@
     <favorites_list name="mobile-app" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="tag-feed.html" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/www/templates/feed/tag-feed.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="90">
-                  <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="nearme-feed-ctrl.js" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="348">
-                  <caret line="277" column="11" selection-start-line="277" selection-start-column="11" selection-end-line="277" selection-end-column="11" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="tag-feed-ctrl.js" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/www/js/controller/feed/tag-feed-ctrl.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="228">
-                  <caret line="255" column="12" selection-start-line="255" selection-start-column="12" selection-end-line="255" selection-end-column="12" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file leaf-file-name="tag-feed-ctrl.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/js/controller/feed/tag-feed-ctrl.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user-feed-ctrl.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-825">
+              <caret line="24" column="37" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="feed-ctrl.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/js/controller/feed/feed-ctrl.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="5" column="26" selection-start-line="4" selection-start-column="2" selection-end-line="5" selection-end-column="26" />
+              <folding>
+                <element signature="e#5490#5802#0" expanded="false" />
+                <marker date="1475469116000" expanded="true" signature="27:14776" ph="[...]" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="nearme-feed-ctrl.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="5" selection-end-column="26" />
+              <folding>
+                <element signature="e#1785#2185#0" expanded="false" />
+                <element signature="e#2217#2639#0" expanded="false" />
+                <element signature="e#2672#3078#0" expanded="false" />
+                <marker date="1475469377000" expanded="true" signature="6091:7276" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -76,7 +93,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/www/js/controller/home/app-ctrl.js" />
         <option value="$PROJECT_DIR$/www/css/style.css" />
         <option value="$PROJECT_DIR$/www/js/controller/vendor/demo.js" />
         <option value="$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js" />
@@ -115,18 +131,19 @@
         <option value="$PROJECT_DIR$/www/templates/auth/login.html" />
         <option value="$PROJECT_DIR$/www/js/controller/auth/signup-ctrl.js" />
         <option value="$PROJECT_DIR$/www/js/controller/auth/login-ctrl.js" />
-        <option value="$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js" />
-        <option value="$PROJECT_DIR$/www/js/controller/feed/feed-ctrl.js" />
         <option value="$PROJECT_DIR$/www/js/ellipsis.directive.js" />
         <option value="$PROJECT_DIR$/www/index.html" />
         <option value="$PROJECT_DIR$/www/templates/feed/feed.html" />
         <option value="$PROJECT_DIR$/www/js/controller/feed/new-feed-ctrl.js" />
-        <option value="$PROJECT_DIR$/www/css/feed/feed.css" />
         <option value="$PROJECT_DIR$/www/js/directive/ellipsis.directive.js" />
         <option value="$PROJECT_DIR$/www/templates/feed/nearme-feed.html" />
         <option value="$PROJECT_DIR$/www/templates/feed/tag-feed.html" />
         <option value="$PROJECT_DIR$/www/templates/feed/user-feed.html" />
+        <option value="$PROJECT_DIR$/www/css/feed/feed.css" />
+        <option value="$PROJECT_DIR$/www/js/controller/feed/feed-ctrl.js" />
+        <option value="$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js" />
         <option value="$PROJECT_DIR$/www/js/controller/feed/tag-feed-ctrl.js" />
+        <option value="$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js" />
       </list>
     </option>
   </component>
@@ -178,7 +195,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -320,6 +336,7 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -330,7 +347,7 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path" value="/opt/node/bin/node" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="settings.editor.selected.configurable" value="preferences.pathVariables" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="editor.config.accepted" value="true" />
   </component>
@@ -439,11 +456,13 @@
       <workItem from="1475298531830" duration="3533000" />
       <workItem from="1475307448619" duration="21000" />
       <workItem from="1475316106729" duration="2634000" />
+      <workItem from="1475340072497" duration="15000" />
+      <workItem from="1475465186092" duration="4570000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="388760000" />
+    <option name="totallyTimeSpent" value="393345000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -591,7 +610,7 @@
           <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="28" />
+      <option name="time" value="31" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -870,27 +889,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/feed/feed-ctrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="86">
-          <caret line="351" column="16" selection-start-line="351" selection-start-column="16" selection-end-line="351" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controller/feed/new-feed-ctrl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="34" column="37" selection-start-line="34" selection-start-column="37" selection-end-line="34" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/feed/feed.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="167" column="1" selection-start-line="167" selection-start-column="1" selection-end-line="167" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -898,7 +900,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -906,7 +907,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
           <caret line="61" column="51" selection-start-line="61" selection-start-column="51" selection-end-line="61" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -914,6 +914,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="47" column="80" selection-start-line="47" selection-start-column="80" selection-end-line="47" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/feed/tag-feed.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -928,40 +935,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/feed/feed.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="82" selection-start-line="30" selection-start-column="74" selection-end-line="30" selection-end-column="82" />
+        <state relative-caret-position="120">
+          <caret line="5" column="143" selection-start-line="5" selection-start-column="143" selection-end-line="5" selection-end-column="143" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js">
+    <entry file="file://$PROJECT_DIR$/www/css/feed/feed.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="222" column="39" selection-start-line="222" selection-start-column="39" selection-end-line="222" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/feed/tag-feed.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+        <state relative-caret-position="300">
+          <caret line="35" column="24" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="277" column="11" selection-start-line="277" selection-start-column="11" selection-end-line="277" selection-end-column="11" />
-          <folding />
+        <state relative-caret-position="45">
+          <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="5" selection-end-column="26" />
+          <folding>
+            <element signature="e#1785#2185#0" expanded="false" />
+            <element signature="e#2217#2639#0" expanded="false" />
+            <element signature="e#2672#3078#0" expanded="false" />
+            <marker date="1475469377000" expanded="true" signature="6091:7276" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/feed/feed-ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="26" selection-start-line="4" selection-start-column="2" selection-end-line="5" selection-end-column="26" />
+          <folding>
+            <element signature="e#5490#5802#0" expanded="false" />
+            <marker date="1475469116000" expanded="true" signature="27:14776" ph="[...]" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controller/feed/tag-feed-ctrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="255" column="12" selection-start-line="255" selection-start-column="12" selection-end-line="255" selection-end-column="12" />
+        <state relative-caret-position="90">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-825">
+          <caret line="24" column="37" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="37" />
           <folding />
         </state>
       </provider>

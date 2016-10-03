@@ -1,3 +1,41 @@
+/*------------------------------------------*/
+.fabFeed.transparent {
+  background: transparent !important;
+}
+
+.fabFeed .image-modal .fullscreen-image {
+	display: block;
+	max-width: 100% !important;
+	max-height: 90% !important;
+    height: AUTO !important;
+    width: auto !important;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    overflow: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+
+/* Fix modal backdrop for smaller devices */
+@media (max-width: 679px) {
+  .fabFeed.active .modal-backdrop-bg {
+    opacity: 1;
+  }
+  .fabFeed.modal-backdrop-bg {
+    -webkit-transition: opacity 300ms ease-in-out;
+    transition: opacity 300ms ease-in-out;
+    background-color: #000;
+    opacity: 0;
+  }
+}
+/*------------------------------------------*/
+
+.button-custom {
+  color: #fff !important;
+  background-color: #FF8386 !important;
+}
 
 .fabFeed .feeds{
 	border-bottom: 1px solid #bcbcbc;
@@ -67,6 +105,14 @@
 	padding: 1px 10px;
 }
 
+.fabFeed .unfollow-btn{
+  border: 1px solid #bcbcbc;
+  border-radius: 5px;
+  color: #bcbcbc;
+  padding: 1px 5px;
+  font-size: 12px
+}
+
 .fabFeed .follow-btn1{
 	border: 2px solid #FF8386;
 	border-radius: 5px;
@@ -87,11 +133,16 @@
 	text-align: center;
 }
 
-.fabFeed .feed-name a{
+.fabFeed .feed-name a, .comment-name{
 	font-weight:500;
 	color: #000;
 	text-decoration: none;
 	font-weight: bold;
+}
+
+.comment-date{
+   color: #bcbcbc !important;
+   font-size: 0.9em;
 }
 
 .fabFeed .feed-name{
@@ -123,7 +174,7 @@
 	margin:10px;
 }
 
-.fabFeed i.like-btn.ion-heart {
+.fabFeed i.like-btn.ion-heart, .fabFeed i.comment-btn.ion-ios-chatbubble, .fabFeed i.share-btn.ion-android-share-alt{
   font-size: 25px;
   /*color: #bcbcbc;*/
 }
@@ -205,4 +256,8 @@
 	border: none;
 	color: #fff;
 	font-weight: bold;
+}
+
+.fabFeed .initiallyHidden{
+   display: none;
 }

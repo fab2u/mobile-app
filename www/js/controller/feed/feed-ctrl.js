@@ -2,9 +2,6 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 
 	$ionicLoading.show();
 
-  var userStatus = firebase.auth().currentUser;
-  console.log(userStatus);
-
 	// ----------------------------------------------------------------------
 	$ionicModal.fromTemplateUrl('templates/feed/image-modal.html', {
 		scope: $scope,
@@ -105,7 +102,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
   };
 
 	$scope.showPopup = function(id) {
-	  if(!userStatus){
+	  if(!$scope.uid){
       showAlertComment();
     }
     else{
@@ -198,7 +195,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 	}
 
 	$scope.followUser = function(id){
-    if(!userStatus) {
+    if(!$scope.uid) {
       showAlertFollow();
     }
     else{
@@ -217,7 +214,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 	}
 
 	$scope.unfollowUser = function(id){
-	  if(!userStatus){
+	  if(!$scope.uid){
 	    showAlertFollow();
     }
     else{
@@ -237,7 +234,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 	};
 
 	$scope.likeThisFeed = function(feedId){
-    if(!userStatus) {
+    if(!$scope.uid) {
       showAlertLike();
     }
     else {

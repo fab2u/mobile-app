@@ -81,15 +81,16 @@
 	margin-top: 5px;
 	font-size: 1.5em;
 	text-transform: uppercase;
+  margin-bottom: 10px;
 }
 .fabFeed .user-details{
-	margin-top: 20px;
+	/*margin-top: 10px;*/
 	font-size: 1.5em;
 }
-.fabFeed .det-border{
-	border-left: 1px solid black;
-	border-right: 1px solid black;
+.fabFeed .col-border{
+  border-right: solid 2px #606060;
 }
+
 .fabFeed .user-details span{
 	font-size: 0.8em;
 }

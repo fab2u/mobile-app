@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a90707b-bb48-47ba-9167-7f50f00e366c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/feed/feed.css" afterPath="$PROJECT_DIR$/www/css/feed/feed.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/feed/feed-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/feed/feed-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/feed/tag-feed-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/feed/tag-feed-ctrl.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/feed/feed.html" afterPath="$PROJECT_DIR$/www/templates/feed/feed.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/feed/nearme-feed.html" afterPath="$PROJECT_DIR$/www/templates/feed/nearme-feed.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/feed/tag-feed.html" afterPath="$PROJECT_DIR$/www/templates/feed/tag-feed.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/feed/user-feed.html" afterPath="$PROJECT_DIR$/www/templates/feed/user-feed.html" />
     </list>
     <ignored path="mobile-app.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,34 +28,12 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf>
-          <file leaf-file-name="nearme-feed.html" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/www/templates/feed/nearme-feed.html">
+          <file leaf-file-name="user-feed.html" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/www/templates/feed/user-feed.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="105">
-                  <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
-                  <folding>
-                    <element signature="n#style#0;n#span#1;n#div#2;n#div#0;n#div#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="feed-ctrl.js" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/www/js/controller/feed/feed-ctrl.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="139">
-                  <caret line="387" column="0" selection-start-line="387" selection-start-column="0" selection-end-line="387" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#1566#1966#0" expanded="false" />
-                    <element signature="e#1998#2420#0" expanded="false" />
-                    <element signature="e#2453#2859#0" expanded="false" />
-                    <element signature="e#2895#5264#0" expanded="false" />
-                    <element signature="e#5294#5329#0" expanded="false" />
-                    <element signature="e#5361#5396#0" expanded="false" />
-                    <element signature="e#5420#5448#0" expanded="false" />
-                    <element signature="e#5490#5802#0" expanded="false" />
-                    <element signature="e#6960#8453#0" expanded="false" />
-                  </folding>
+                <state relative-caret-position="315">
+                  <caret line="38" column="52" selection-start-line="38" selection-start-column="52" selection-end-line="38" selection-end-column="52" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -70,33 +42,29 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="tag-feed-ctrl.js" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/www/js/controller/feed/tag-feed-ctrl.js">
+          <file leaf-file-name="user-feed-ctrl.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="422">
-                  <caret line="202" column="54" selection-start-line="202" selection-start-column="54" selection-end-line="202" selection-end-column="54" />
+                <state relative-caret-position="255">
+                  <caret line="84" column="14" selection-start-line="84" selection-start-column="14" selection-end-line="84" selection-end-column="14" />
                   <folding>
-                    <element signature="e#1680#2080#0" expanded="false" />
-                    <element signature="e#2112#2534#0" expanded="false" />
-                    <element signature="e#2567#2973#0" expanded="false" />
-                    <element signature="e#3010#5435#0" expanded="false" />
+                    <element signature="e#271#703#0" expanded="false" />
+                    <element signature="e#2715#3115#0" expanded="false" />
+                    <element signature="e#3148#3554#0" expanded="false" />
+                    <element signature="e#3591#6018#0" expanded="false" />
+                    <element signature="e#6060#7308#0" expanded="false" />
+                    <marker date="1475514201000" expanded="true" signature="2075:2258" ph="{...}" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="nearme-feed-ctrl.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js">
+          <file leaf-file-name="feed.css" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/www/css/feed/feed.css">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="77">
-                  <caret line="54" column="40" selection-start-line="54" selection-start-column="40" selection-end-line="54" selection-end-column="40" />
-                  <folding>
-                    <element signature="e#1785#2185#0" expanded="false" />
-                    <element signature="e#2217#2639#0" expanded="false" />
-                    <element signature="e#2672#3078#0" expanded="false" />
-                    <element signature="e#3115#5542#0" expanded="false" />
-                    <marker date="1475483157000" expanded="true" signature="6635:7820" ph="{...}" />
-                  </folding>
+                <state relative-caret-position="100">
+                  <caret line="83" column="22" selection-start-line="83" selection-start-column="22" selection-end-line="83" selection-end-column="22" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -161,16 +129,16 @@
         <option value="$PROJECT_DIR$/www/index.html" />
         <option value="$PROJECT_DIR$/www/js/controller/feed/new-feed-ctrl.js" />
         <option value="$PROJECT_DIR$/www/js/directive/ellipsis.directive.js" />
-        <option value="$PROJECT_DIR$/www/templates/feed/user-feed.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/www/css/feed/feed.css" />
         <option value="$PROJECT_DIR$/www/templates/feed/feed.html" />
-        <option value="$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js" />
         <option value="$PROJECT_DIR$/www/templates/feed/nearme-feed.html" />
         <option value="$PROJECT_DIR$/www/templates/feed/tag-feed.html" />
         <option value="$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js" />
         <option value="$PROJECT_DIR$/www/js/controller/feed/tag-feed-ctrl.js" />
         <option value="$PROJECT_DIR$/www/js/controller/feed/feed-ctrl.js" />
+        <option value="$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js" />
+        <option value="$PROJECT_DIR$/www/css/feed/feed.css" />
+        <option value="$PROJECT_DIR$/www/templates/feed/user-feed.html" />
       </list>
     </option>
   </component>
@@ -485,12 +453,12 @@
       <workItem from="1475316106729" duration="2634000" />
       <workItem from="1475340072497" duration="15000" />
       <workItem from="1475465186092" duration="5360000" />
-      <workItem from="1475478398766" duration="5180000" />
+      <workItem from="1475478398766" duration="7114000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="399315000" />
+    <option name="totallyTimeSpent" value="401249000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -511,7 +479,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290653" sideWeight="0.5081043" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290653" sideWeight="0.4918957" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24947146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290653" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3290653" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -525,6 +493,27 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290653" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290653" sideWeight="0.5081043" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32884902" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290653" sideWeight="0.4918957" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3290653" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18322763" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41704035" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24947146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -941,32 +930,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/feed/user-feed.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="47" column="80" selection-start-line="47" selection-start-column="80" selection-end-line="47" selection-end-column="80" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/feed/feed.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="585">
           <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-881">
-          <caret line="96" column="4" selection-start-line="96" selection-start-column="4" selection-end-line="96" selection-end-column="4" />
-          <folding>
-            <element signature="e#2578#2978#0" expanded="false" />
-            <element signature="e#3011#3417#0" expanded="false" />
-            <element signature="e#3454#5886#0" expanded="false" />
-            <element signature="e#5928#7181#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -978,47 +946,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/feed/feed.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="111" column="16" selection-start-line="111" selection-start-column="16" selection-end-line="111" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/feed/nearme-feed.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
           <folding>
             <element signature="n#style#0;n#span#1;n#div#2;n#div#0;n#div#0;n#div#1;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="54" column="40" selection-start-line="54" selection-start-column="40" selection-end-line="54" selection-end-column="40" />
-          <folding>
-            <element signature="e#1785#2185#0" expanded="false" />
-            <element signature="e#2217#2639#0" expanded="false" />
-            <element signature="e#2672#3078#0" expanded="false" />
-            <element signature="e#3115#5542#0" expanded="false" />
-            <marker date="1475483157000" expanded="true" signature="6635:7820" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/feed/tag-feed-ctrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="202" column="54" selection-start-line="202" selection-start-column="54" selection-end-line="202" selection-end-column="54" />
-          <folding>
-            <element signature="e#1680#2080#0" expanded="false" />
-            <element signature="e#2112#2534#0" expanded="false" />
-            <element signature="e#2567#2973#0" expanded="false" />
-            <element signature="e#3010#5435#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1038,6 +971,64 @@
             <element signature="e#5490#5802#0" expanded="false" />
             <element signature="e#6960#8453#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/feed/tag-feed-ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="202" column="54" selection-start-line="202" selection-start-column="54" selection-end-line="202" selection-end-column="54" />
+          <folding>
+            <element signature="e#1680#2080#0" expanded="false" />
+            <element signature="e#2112#2534#0" expanded="false" />
+            <element signature="e#2567#2973#0" expanded="false" />
+            <element signature="e#3010#5435#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="54" column="40" selection-start-line="54" selection-start-column="40" selection-end-line="54" selection-end-column="40" />
+          <folding>
+            <element signature="e#1785#2185#0" expanded="false" />
+            <element signature="e#2217#2639#0" expanded="false" />
+            <element signature="e#2672#3078#0" expanded="false" />
+            <element signature="e#3115#5542#0" expanded="false" />
+            <marker date="1475483157000" expanded="true" signature="6635:7820" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/feed/feed.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="83" column="22" selection-start-line="83" selection-start-column="22" selection-end-line="83" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="84" column="14" selection-start-line="84" selection-start-column="14" selection-end-line="84" selection-end-column="14" />
+          <folding>
+            <element signature="e#271#703#0" expanded="false" />
+            <element signature="e#2715#3115#0" expanded="false" />
+            <element signature="e#3148#3554#0" expanded="false" />
+            <element signature="e#3591#6018#0" expanded="false" />
+            <element signature="e#6060#7308#0" expanded="false" />
+            <marker date="1475514201000" expanded="true" signature="2075:2258" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/feed/user-feed.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="38" column="52" selection-start-line="38" selection-start-column="52" selection-end-line="38" selection-end-column="52" />
+          <folding />
         </state>
       </provider>
     </entry>

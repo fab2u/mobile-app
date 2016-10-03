@@ -19,19 +19,24 @@
             {{userDetails.name}}
          </div>
          <div class="row">
-            <div class="col">
-               <div class="center user-details">
+           <div class="col col-border">
+             <div class="center user-details">
+               {{totalLikes}}<br><span>Likes</span>
+             </div>
+           </div>
+           <div class="col col-border">
+             <div class="center user-details det-border">
+               {{numFeeds || 0}}<br><span>Posts</span>
+             </div>
+           </div>
+            <div class="col col-border">
+               <div class="center user-details det-border">
                   {{followers || 0}}<br><span>Followers</span>
                </div>
             </div>
             <div class="col">
-               <div class="center user-details det-border">
-                  {{numFeeds || 0}}<br><span>Posts</span>
-               </div>
-            </div>
-            <div class="col">
                <div class="center user-details">
-                  {{following || 0}}<br><span>Following</span>
+                  {{following || 0}}<br><span>Follow</span>
                </div>
             </div>
          </div>

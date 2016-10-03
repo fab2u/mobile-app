@@ -200,9 +200,26 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
       db.ref().update(updateFollow).then(function () {
         console.log('success');
         $('.' + id + '-follow').hide();
+        $("."+id+'-unfollow').css("display", "block");
       });
     }
 	}
+
+  $scope.unfollowUser = function(id){
+    if(!userStatus){
+      showAlertFollow();
+    }
+    else{
+      var updateFollow = {};
+      updateFollow['users/data/'+id+'/myFollowers/'+$scope.uid] = null;
+      updateFollow['users/data/'+$scope.uid+'/following/'+id] = null;
+      db.ref().update(updateFollow).then(function(){
+        console.log('success');
+        $('.'+id+'-follow').show();
+        $("."+id+'-unfollow').css("display", "none");
+      });
+    }
+  }
 
 	$scope.likeThisFeed = function(feedId){
     if(!userStatus){
@@ -355,6 +372,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 						if ($scope.uid in snap.val().myFollowers){
               $timeout(function () {
                 $('.' + single_blog.user.user_id + '-follow').hide();
+                $("."+single_blog.user.user_id+'-unfollow').css("display", "block");
               },0);
 						}
 					}

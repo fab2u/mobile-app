@@ -115,25 +115,6 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
     });
   };
 
-  function showAlertFollow() {
-    var alertPopup = $ionicPopup.alert({
-      title: 'Sign up for Fabbook',
-      template: 'Not on Fabbook? Sign up on Fab2u to follow this user.',
-      buttons: [
-        { text: 'Cancel' },
-        {
-          text: 'Join Now',
-          type: 'button-custom',
-          onTap: function(e) {
-            $location.path("/login");
-          }
-        }
-      ]
-    });
-    alertPopup.then(function(res) {
-    });
-  };
-
   function showAlertComment() {
     var alertPopup = $ionicPopup.alert({
       title: 'Sign up for Fabbook',

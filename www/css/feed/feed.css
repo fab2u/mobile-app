@@ -105,6 +105,14 @@
 	padding: 1px 10px;
 }
 
+.fabFeed .unfollow-btn{
+  border: 1px solid #bcbcbc;
+  border-radius: 5px;
+  color: #bcbcbc;
+  padding: 1px 5px;
+  font-size: 12px
+}
+
 .fabFeed .follow-btn1{
 	border: 2px solid #FF8386;
 	border-radius: 5px;

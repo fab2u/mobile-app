@@ -211,9 +211,26 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
       db.ref().update(updateFollow).then(function(){
         console.log('success');
         $('.'+id+'-follow').hide();
+        $("."+id+'-unfollow').css("display", "block");
       });
     }
 	}
+
+	$scope.unfollowUser = function(id){
+	  if(!userStatus){
+	    showAlertFollow();
+    }
+    else{
+      var updateFollow = {};
+      updateFollow['users/data/'+id+'/myFollowers/'+$scope.uid] = null;
+      updateFollow['users/data/'+$scope.uid+'/following/'+id] = null;
+      db.ref().update(updateFollow).then(function(){
+        console.log('success');
+        $('.'+id+'-follow').show();
+        $("."+id+'-unfollow').css("display", "none");
+      });
+    }
+  }
 
 	$scope.commentToggle = function(feedId) {
 		$("#"+feedId+"-commentsBlock").toggle();
@@ -307,7 +324,8 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 								console.log(snap.val().myFollowers);
 								if ($scope.uid in snap.val().myFollowers){
 									$('.'+value.user.user_id+'-follow').hide();
-								}
+                  $("."+value.user.user_id+'-unfollow').css("display", "block");
+                }
 							}
 						});
 						if(value.likedBy){
@@ -367,7 +385,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 								console.log('both equal');
 								$timeout(function () {
 									$('.'+value.user.user_id+'-follow').hide();
-								}, 0);
+                }, 0);
 							}
 							db.ref("users/data/"+value.user.user_id).once("value", function(snap){
 								console.log(value.user.user_id, snap.val());
@@ -378,7 +396,9 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 									console.log(snap.val().myFollowers);
 									if ($scope.uid in snap.val().myFollowers){
 										$('.'+value.user.user_id+'-follow').hide();
-									}
+                    $("."+value.user.user_id+'-unfollow').css("display", "block");
+
+                  }
 								}
 							});
 
@@ -430,7 +450,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 						// console.log('both equal');
 						$timeout(function () {
 							$('.'+value.user.user_id+'-follow').hide();
-						}, 0);
+            }, 0);
 					}
 					db.ref("users/data/"+value.user.user_id).once("value", function(snap){
 						// console.log(value.user.user_id, snap.val());
@@ -441,6 +461,7 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 							// console.log(snap.val().myFollowers);
 							if ($scope.uid in snap.val().myFollowers){
 								$('.'+value.user.user_id+'-follow').hide();
+                $("."+value.user.user_id+'-unfollow').css("display", "block");
 							}
 						}
 					});

@@ -18,7 +18,8 @@
 					</div>
 					<div class="col col-25">
 						<span class="follow-btn {{feed.user.user_id}}-follow" ng-click="followUser(feed.user.user_id)">Follow</span>
-					</div>
+            <span class="unfollow-btn {{feed.user.user_id}}-unfollow" style="display: none" ng-click="unfollowUser(feed.user.user_id)">Unfollow</span>
+          </div>
 				</div>
 				<div class="row">
 					<div class="col col-20"></div>

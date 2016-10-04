@@ -4,9 +4,12 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
 
     $scope.categoryItems = {};
 
+    $scope.index_number = 0;
 
 
-   ///////     Get selected services if previously stored in localStorage           //////////
+
+
+    ///////     Get selected services if previously stored in localStorage           //////////
 
 
     if ((localStorage.getItem("slectedItems") != null) && (localStorage.getItem('catItems') != null)) {
@@ -266,11 +269,15 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
 //             update the slide number for slide box
 
     $scope.slideHasChanged = function(index,activeTab) {
+        console.log("index",index,activeTab)
         if(activeTab == true){
+            console.log('if')
             $scope.currSlide = index;
             $scope.tabActive = false;
         }
         else if(activeTab == false){
+            console.log("else")
+            $scope.index_number = index;
             $scope.currSlide = $ionicSlideBoxDelegate.currentIndex();
         }
     };
@@ -305,6 +312,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
 
     $scope.tabWithSlideChanged = function (indexNum) {
         $scope.tabActive = true;
+        $scope.index_number = indexNum;
         $ionicSlideBoxDelegate.slide(indexNum);
     };
 

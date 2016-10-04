@@ -19,7 +19,7 @@
             <div id="container">
                 <div style="width:1800px;">
                     <div class="tab"
-                         ng-class="$index == 0 ? 'active':''"
+                         ng-class="$index == index_number ? 'active':''"
                          ng-repeat="item in ['FACE', 'HAIR','HAIR REMOVAL', 'BODY', 'HANDS & FEET','NAILS','PACKAGES']"
                          ng-click="tabWithSlideChanged($index)">
                         <img ng-if="item == 'FACE'" src="img/Face.png" style="height: 35px;">

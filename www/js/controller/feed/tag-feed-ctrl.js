@@ -2,9 +2,6 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 
 	$ionicLoading.show();
 
-  var userStatus = firebase.auth().currentUser;
-  console.log(userStatus);
-
 	$scope.uid = window.localStorage.getItem("uid");
 	console.log($scope.uid);
 	db.ref("users/data/"+$scope.uid+"/name").once("value", function(snapshot){
@@ -120,7 +117,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
   };
 
   $scope.showPopup = function(id) {
-    if(!userStatus){
+    if(!$scope.uid){
       showAlertComment();
     }
     else {
@@ -187,7 +184,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 	};
 
 	$scope.followUser = function(id){
-    if(!userStatus){
+    if(!$scope.uid){
       showAlertFollow();
     }
     else {
@@ -206,7 +203,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
 	}
 
   $scope.unfollowUser = function(id){
-    if(!userStatus){
+    if(!$scope.uid){
       showAlertFollow();
     }
     else{
@@ -222,7 +219,7 @@ app.controller("tagFeedCtrl", ['$scope', '$stateParams', '$timeout', '$location'
   }
 
 	$scope.likeThisFeed = function(feedId){
-    if(!userStatus){
+    if(!$scope.uid){
       showAlertLike();
     }
     else {

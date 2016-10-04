@@ -1,15 +1,6 @@
 app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location', '$ionicLoading', '$ionicModal', '$ionicPopup', function($scope, $timeout, $stateParams, $location, $ionicLoading, $ionicModal, $ionicPopup){
 
-
-
 	$ionicLoading.show();
-
-  var userStatus = firebase.auth().currentUser;
-  console.log(userStatus);
-
-  if(!userStatus){
-    showAlert();
-  }
 
   function showAlert(){
     $ionicLoading.hide();
@@ -82,8 +73,20 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 	$scope.blogIdList = {};
 	$scope.moreMessagesScroll = true;
 
-	db.ref("users/data/"+uid).on("value", function(snapshot){
-		console.log(snapshot.val());
+  if(!myUid){
+    showAlert();
+  }
+
+
+  db.ref("users/data/"+uid).on("value", function(snapshot){
+    $scope.totalLikes = 0;
+    for(var i in snapshot.val().blogs){
+      db.ref("blogs/"+i).on("value", function(snap){
+        if(snap.val().likedBy){
+          $scope.totalLikes += Object.keys(snap.val().likedBy).length;
+        }
+      });
+    }
 		$scope.following = Object.keys(snapshot.val().following).length;
 		$scope.userDetails = snapshot.val();
 		$scope.email = snapshot.val().email.userEmail;
@@ -136,7 +139,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 
   $scope.showPopup = function(id) {
 		// id ==> feedId
-    if(!userStatus){
+    if(!myUid){
       showAlertComment();
     }
     else {
@@ -203,7 +206,7 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 	};
 
 	$scope.likeThisFeed = function(feedId){
-    if(!userStatus){
+    if(!myUid){
       showAlertLike();
     }
     else {

@@ -192,4 +192,8 @@ app.controller('VendorListCtrl',
    $scope.multipleAddressMapView = function(){
      $state.go('mapMultiple')
    };
+
+   $scope.filterScreen = function(){
+       $state.go('filter');
+   }
 });

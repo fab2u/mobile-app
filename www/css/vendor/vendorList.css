@@ -24,7 +24,7 @@
 }
 
 .vendorList .location-icon-container div {
-     border-radius: 50%; background-color: red; height: 35px;width: 35px; padding-top: 5px;
+    border-radius: 50%; background-color: red; height: 35px;width: 35px; padding-top: 5px;
 }
 
 .vendorList .m-navColor {
@@ -63,15 +63,17 @@
 }
 
 .vendorList .p-fix.card .row .c-col-40 {
-     text-align: center; padding-top: 2em;
+    text-align: center; padding-top: 2em;
 }
 
 .vendorList .c-title {
-    color: black;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .vendorList .c-subtitle {
-    color: black;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .vendorList span.badge {
@@ -88,11 +90,12 @@
 }
 
 .vendorList .c-location-distance {
-    color: green;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
 }
 
 .vendorList .fab-button {
-     height: 50px; width: 50px; border-radius: 50%; position: fixed; bottom: 50px; right: 20px;
+    height: 50px; width: 50px; border-radius: 50%; position: fixed; bottom: 50px; right: 20px;
 }
 
 @media(max-width: 240px) {
@@ -140,7 +143,7 @@
         font-size: 0.7em;
     }
     .vendorList #rating p {
-        font-size: 0.7em;  
+        font-size: 0.7em;
         right: 0.5em;
         margin-top: 0em;
     }
@@ -187,7 +190,7 @@
         font-size: 0.7em;
     }
     .vendorList #rating p {
-        font-size: 0.7em;  
+        font-size: 0.7em;
         right: 0.5em;
         margin-top: 0em;
     }
@@ -235,7 +238,7 @@
         font-size: 0.8em;
     }
     .vendorList #rating p {
-        font-size: 0.7em;  
+        font-size: 0.7em;
         right: 0.5em;
         margin-top: 0em;
     }
@@ -317,7 +320,7 @@
         font-size: 0.9em;
     }
     .vendorList #rating p {
-        font-size: 0.8em;  
+        font-size: 0.8em;
         right: 0.5em;
         margin-top: 0em;
     }
@@ -399,7 +402,7 @@
         font-size: 1em;
     }
     .vendorList #rating p {
-        font-size: 0.9em;  
+        font-size: 0.9em;
         right: 0.5em;
         margin-top: 0em;
     }
@@ -481,7 +484,7 @@
         font-size: 1em;
     }
     .vendorList #rating p {
-        font-size: 0.9em;  
+        font-size: 0.9em;
         right: 0.5em;
         margin-top: 0em;
     }
@@ -538,7 +541,7 @@
 }
 
 .vendorList .tabs .tab-item i {
-     font-size: 25px; padding-top: 5px;
+    font-size: 25px; padding-top: 5px;
 }
 
 .vendorList #toggleButton {
@@ -583,10 +586,9 @@
     padding: 0;
 }
 .vendorList .c-title {
-     font-weight: bold;
+    font-weight: bold;
 }
 .vendorList .card {
-    height: 10em !important;
     overflow: hidden;
 }
 .vendorList #rating p {
@@ -596,6 +598,6 @@
     margin: 0;
 }
 .vendorList .p-fix.card {
-    position: relative; 
+    position: relative;
     border: 1px darkgrey;
 }

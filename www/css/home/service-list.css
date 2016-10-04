@@ -70,6 +70,10 @@
 #servicelistslider .tab i {
     font-size: 2em;
 }
+#servicelistslider .activated{
+    color: #FFFFFF;
+    background-color: #ff8386
+}
 #servicelistslider .active {
     color: #FFFFFF;
     background-color: #ff8386

@@ -28,8 +28,8 @@
 	font-weight: 600;
 }
 #side-menu div.title.title-left.header-item {
-    top: 10px;
-    left:30px !important;
+	top: 10px;
+	left:30px !important;
 }
 
 #side-menu .pink {
@@ -38,10 +38,22 @@
 
 #side-menu .side-menu-header {
 	background-color:#444444;
-	
+
 }
 
 #side-menu .side-menu-header h1 {
 	color:#fff;
 }
-
+.menu-left a.item-content{
+	line-height: 45px;
+	padding: 0;
+}
+.menu-left .item{
+	line-height: 45px;
+	padding: 5px 49px 5px 16px;
+}
+.menu-left .item img{
+	margin-top: 10px;
+	float: left;
+	margin-right: 10px;
+}

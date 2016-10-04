@@ -43,7 +43,7 @@
                                ng-click="open_map(vendor.address.latitude,vendor.address.longitude,vendor.address.address1,vendor.address.address2,vendor.vendor_name)">
                             </i>
                         </div>
-                        <p class="c-location-distance">2.4 Km</p>
+                        <p class="c-location-distance">{{vendor.distance| number : 2}} Km</p>
                     </div>
                     <div id="section2" class="col c-col-60" ng-click="vendor_menu(vendor.vendor_id)">
                         <div id="rating">

@@ -1,0 +1,11 @@
+<ion-modal-view class="modal-view" style="width: 60%;float: right;position: absolute;right:0;top:0;">
+    <ion-header-bar>
+        <h1 class="title modal-title">Location</h1>
+        <a class="button button-assertive" ng-click="close_location()"><span class="icon ion-ios-close"></span></a>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <ion-list ng-repeat="location in location_detail">
+            <ion-checkbox ng-model="location.name" ng-click="location_selected(location.locationId)">{{location.cityName}} - {{location.locationName}}</ion-checkbox>
+        </ion-list>
+    </ion-content>
+</ion-modal-view>

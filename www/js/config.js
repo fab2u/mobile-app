@@ -239,6 +239,7 @@ app
 	});
 	$stateProvider.state('filter', {
 		url: '/filter',
+		cache:false,
 		templateUrl: 'templates/vendor/filter.html',
 		controller: 'filterCtrl'
 	});

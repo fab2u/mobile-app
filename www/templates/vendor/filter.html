@@ -1,5 +1,82 @@
-<ion-view>
+<ion-view class="vendorList">
+    <ion-header-bar class="m-navColor">
+        <a href="" class="button icon-left ion-chevron-left button-clear" ng-click="backButton()"></a>
+        <h1 class="title">FILTER</h1>
+        <div id="toggleButton">
+           <i class="icon ion-refresh" ng-click="refresh()"></i>
+        </div>
+    </ion-header-bar>
     <ion-content>
-        <h1>Filter screen!</h1>
-    </ion-content>
+        <div class="filter_row">
+            Salon Type
+        </div>
+        <div class="filter_row2">
+            <center>
+                <div class="colmn">
+                    <input type="button" class="type_btn" value="SILVER" ng-model="type" ng-click="typeFn('1')">
+                    <input type="button" class="type_btn" value="GOLD" ng-model="type" ng-click="typeFn('2')">
+                    <input type="button" class="type_btn" value="PLATINUM" ng-model="type" ng-click="typeFn('3')">
+                </div>
+            </center>
+        </div>
+        <div class="filter_row">
+           <spna style="margin-right: 190px;">Price</spna>
+            <span class="rightText">&#2352; 0 to &#2352; 200000</span>
+        </div>
+        <div class="item range">
+            <span class="rightText">&#2352; {{price_range}}</span>
+                <input type="range" ng-model="range" min="1" max="200000" ng-change="smFn(range)">
+            <span> &#2352; 200000</span>
+        </div>
+        <div class="filter_row">
+            <spna style="margin-right: 190px;">Star Rating</spna>
+            <span class="rightText">All Stars</span>
+        </div>
+        <div class="filter_row2">
+                <div class="padding" style="font-size:40px;">
+                    <ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+                </div>
+        </div>
+        <div class="filter_row">
+            Advanced Filter
+        </div>
+        <div class="filter_row2">
+            <div class="loc" ng-click="open_location()">
+               <b class="pull-left" style="margin-left: 20px;font-size: 20px;">Locations</b>
+                <i class="icon ion-chevron-right" style="font-size: 20px;margin-left: 260px;"></i>
+               <p style="margin-left: 20px;">All Locations</p>
+            </div>
+        </div>
+        <div class="filter_row">
+            Amenities
+        </div>
+        <div class="filter_row2">
+            <center>
+                <div class="row amenities">
+                    <div class="col col-25" ng-model="ame_type" ng-click="amenity_type('card')">
+                        <i class="icon ion-card" style="font-size: 30px;" ></i>
+                        <p>Card</p>
+                    </div>
+                    <div class="col col-25" ng-model="ame_type" ng-click="amenity_type('ac')">
+                        <i class="icon ion-laptop" style="font-size: 30px;"></i>
+                        <p>AC</p>
+                    </div>
+                    <div class="col col-25" ng-model="ame_type" ng-click="amenity_type('parking')">
+                        <i class="icon ion-android-car" style="font-size: 30px;"></i>
+                        <p>Parking</p>
+                    </div>
+                    <div class="col col-25" ng-model="ame_type" ng-click="amenity_type('wifi')">
+                        <i class="icon ion-wifi" style="font-size: 30px;"></i>
+                        <p>Wifi</p>
+                    </div>
+                </div>
+
+            </center>
+        </div>
+     </ion-content>
+    <ion-footer-bar class="bar bar-assertive custom-footer" align-title="center" ng-click="apply()">
+        <h1 class="title">
+            APPLY
+        </h1>
+    </ion-footer-bar>
 </ion-view>

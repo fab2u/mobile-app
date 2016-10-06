@@ -237,12 +237,7 @@ app
 		templateUrl: 'templates/vendor/vendor-services-list.html',
 		controller: 'VendorServicesListCtrl'
 	});
-	$stateProvider.state('filter', {
-		url: '/filter',
-		cache:false,
-		templateUrl: 'templates/vendor/filter.html',
-		controller: 'filterCtrl'
-	});
+
 	$stateProvider.state('vendorSelectedMenu', {
 		url: '/vendorSelectedMenu/:vendor_id',
 		cache:false,

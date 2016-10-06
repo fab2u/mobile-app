@@ -1,6 +1,6 @@
 <ion-view class="vendorList">
         <div class="tabs tabs-icon-top col">
-            <a class="tab-item" style="border-radius: 10px 0px 0px 0px;" ng-click="filterScreen()">
+            <a class="tab-item" style="border-radius: 10px 0px 0px 0px;" ng-click="open_filter()">
                 <i class="icon ion-funnel"></i>
                 FILTER
             </a>
@@ -54,35 +54,10 @@
                             <p>{{vendor.vendor_type}}</p>
                         </div>
                     </div>
-                    <!--<div id="price-tag" class="col" ng-click="vendor_menu(vendor.vendor_id)">-->
-                        <!--&lt;!&ndash;<div class="row original-price" ng-repeat="(key, value) in vendor.menu_union" ng-if="(key == service_id)">&ndash;&gt;-->
-                        <!--<div class="row original-price" ng-repeat="(key, value) in vendor.menu_union">-->
-                            <!--&lt;!&ndash;<div id="line-through"></div>&ndash;&gt;-->
-                            <!--<div id="line-through-fb"></div>-->
-                            <!--<span id="one" class="left-price badge">-->
-                        <!--<i>&#x20B9;</i>-->
-                       <!--{{value.min_price}}-->
-                    <!--</span>-->
-                            <!--<span id="two" class="badge">-->
-                        <!--<i>&#x20B9;</i>-->
-                       <!--{{value.max_price}}-->
-                    <!--</span>-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash;<div class="row discounted-price">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<div id="line-through-fb"></div>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<span class="left-price badge">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<i>&#x20B9;</i>&ndash;&gt;-->
-                        <!--&lt;!&ndash;10&ndash;&gt;-->
-                        <!--&lt;!&ndash;</span>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<span class="badge">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<i>&#x20B9;</i>&ndash;&gt;-->
-                        <!--&lt;!&ndash;10000&ndash;&gt;-->
-                        <!--&lt;!&ndash;</span>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--</div>-->
                     <div id="price-tag" class="col" ng-click="vendor_menu(vendor.vendor_id)">
                         <!--<div class="row original-price" ng-repeat="(key, value) in vendor.menu_union" ng-if="(key == service_id)">-->
-                        <div class="row original-price">
+                        <div class="row original-price"
+                             ng-if="(vendor.min_price_vendor != vendor.min_price_customer) &&(vendor.max_price_vendor != vendor.max_price_customer)">
                             <!--<div id="line-through"></div>-->
                             <div id="line-through"></div>
                             <span id="one" class="left-price badge">

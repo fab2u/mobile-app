@@ -192,15 +192,26 @@ app.controller('VendorListCtrl',
                 }
             }
             else{
-                if (typeof cordova.plugins.settings.openSetting != undefined) {
-                    cordova.plugins.settings.openSetting("location_source", function () {
-                            console.log("opened location_source settings");
-                            $scope.toggleColor();
-                    },
-                        function () {
-                            console.log("failed to open nfc settings")
-                        });
-                }
+                $ionicLoading.show();
+                $cordovaGeolocation
+                    .getCurrentPosition(posOptions)
+                    .then(function (position) {
+                        $scope.lat = position.coords.latitude
+                        $scope.long = position.coords.longitude
+                        console.log($scope.lat + '   ' + $scope.long);
+                        $scope.toggleColor();
+                    }, function (err) {
+                        console.log(JSON.stringify(err));
+                        if (typeof cordova.plugins.settings.openSetting != undefined) {
+                            cordova.plugins.settings.openSetting("location_source", function () {
+                                    console.log("opened location_source settings");
+                                    $scope.toggleColor();
+                                },
+                                function () {
+                                    console.log("failed to open nfc settings")
+                                });
+                        }
+                    });
             }
         };
 

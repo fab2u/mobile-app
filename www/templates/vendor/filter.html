@@ -53,24 +53,12 @@
         <div class="filter_row2">
             <center>
                 <div class="row amenities">
-                    <div class="col col-25" ng-model="ame_type" ng-click="amenity_type('card')">
-                        <i class="icon ion-card" style="font-size: 30px;" ></i>
-                        <p>Card</p>
-                    </div>
-                    <div class="col col-25" ng-model="ame_type" ng-click="amenity_type('ac')">
-                        <i class="icon ion-laptop" style="font-size: 30px;"></i>
-                        <p>AC</p>
-                    </div>
-                    <div class="col col-25" ng-model="ame_type" ng-click="amenity_type('parking')">
-                        <i class="icon ion-android-car" style="font-size: 30px;"></i>
-                        <p>Parking</p>
-                    </div>
-                    <div class="col col-25" ng-model="ame_type" ng-click="amenity_type('wifi')">
-                        <i class="icon ion-wifi" style="font-size: 30px;"></i>
-                        <p>Wifi</p>
+                    <div class="col col-25" ng-repeat="amenity in amenities" ng-model="ame_type" ng-click="amenity_list(amenity)"
+                         ng-class="amenity.selected?'selected_amenity':'not_selected_amenity'">
+                        <i class="icon {{amenity.icon}}" style="font-size: 30px;" ></i>
+                        <p>{{amenity.name}}</p>
                     </div>
                 </div>
-
             </center>
         </div>
      </ion-content>

@@ -1,7 +1,12 @@
 .vendorList .m-navColor {
     background-color: #424242;
 }
-
+.selected_amenity{
+    color: #0a9dc7;
+}
+.not_selected_amenity{
+    color: #666;
+}
 .vendorList .m-navColor .title {
     text-decoration: #EEEEEE;
     color: #EEEEEE;

@@ -5,7 +5,7 @@
     </ion-header-bar>
     <ion-content class="padding">
         <ion-list ng-repeat="location in location_detail">
-            <ion-checkbox ng-model="location.name" ng-click="location_selected(location.locationId)">{{location.cityName}} - {{location.locationName}}</ion-checkbox>
+            <ion-checkbox ng-model="isChecked" ng-click="location_selected(location.locationId,isChecked)">{{location.cityName}} - {{location.locationName}}</ion-checkbox>
         </ion-list>
     </ion-content>
 </ion-modal-view>

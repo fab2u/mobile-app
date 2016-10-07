@@ -1,4 +1,5 @@
-app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate,$timeout,$ionicScrollDelegate,$rootScope) {
+app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate,$timeout,$ionicScrollDelegate,
+                                           $rootScope,$cordovaToast) {
 
     $scope.selectedServices = {}; // Stores selected services
 
@@ -300,7 +301,15 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
     $scope.findVendors = function() {
         var itemLength = _.size($scope.selectedServices);
         if(itemLength == 0){
-            alert('Please, select some services!')
+            $cordovaToast
+                .show('Please select at least one service', 'long', 'center')
+                .then(function(success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
+
+            // alert('Please, select some services!')
         }
         else{
           $state.go('vendorList');

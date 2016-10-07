@@ -1,4 +1,5 @@
-app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $timeout,$ionicPopup,$rootScope) {
+app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $timeout,$ionicPopup,
+											$rootScope) {
 	$ionicLoading.show();
 	var loggedIn = checkLocalStorage('uid');
 	$scope.appointmentTime = '';
@@ -12,15 +13,11 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	} else {
 		function referralDetail() {
 			if(window.localStorage.getItem("referralCode")){
-				console.log("inside dsnmdnms",window.localStorage.getItem("referralCode"))
 				db.ref('referralCode/'+window.localStorage.getItem("referralCode")).on("value", function(response){
-					console.log("dddddddddddddddddddd",JSON.stringify(response.val().uid))
 					if(response.val().uid){
 						db.ref("users/data/"+response.val().uid).on("value", function(snapshot){
 							$scope.referralName = snapshot.val().name;
 							$scope.referralContact = snapshot.val().mobile.mobileNum;
-
-							console.log("ssssssssssssss",$scope.referralName,$scope.referralContact)
 						});
 					}
 				});
@@ -218,7 +215,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 		$scope.toggleCheckbox = function(){
 			$scope.isChecked = !$scope.isChecked;
 			$scope.calculateAmountPayable();
-		}
+		};
 
 		$scope.addCoupon = function(couponCode) {
 			console.log('called');

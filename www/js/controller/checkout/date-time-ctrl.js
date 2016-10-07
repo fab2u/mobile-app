@@ -1,4 +1,4 @@
-app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
+app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$cordovaToast) {
 
   $scope.chosenTime = ''; // will store the time selected by the user*/
 
@@ -232,7 +232,13 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
           console.log($scope.chosenTime);
         }
         else{
-          alert('Booking can only be done after half an hour of current time!')
+          $cordovaToast
+              .show('Booking can only be done after 30 min from current time', 'long', 'center')
+              .then(function(success) {
+                // success
+              }, function (error) {
+                // error
+              });
 
         }
       }
@@ -249,8 +255,13 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
           console.log($scope.chosenTime);
         }
         else{
-          alert('Booking can only be done after half an hour of current time!')
-        }
+          $cordovaToast
+              .show('Booking can only be done after 30 min from current time', 'long', 'center')
+              .then(function(success) {
+                // success
+              }, function (error) {
+                // error
+              });        }
       }
     }
     for (var key in $scope.timeSlots3To6) {
@@ -265,7 +276,13 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
           console.log($scope.chosenTime);
         }
         else{
-          alert('Booking can only be done after half an hour of current time!')
+          $cordovaToast
+              .show('Booking can only be done after 30 min from current time', 'long', 'center')
+              .then(function(success) {
+                // success
+              }, function (error) {
+                // error
+              });
         }
       }
     }
@@ -281,7 +298,13 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
           console.log($scope.chosenTime);
         }
         else{
-          alert('Booking can only be done after half an hour of current time!')
+          $cordovaToast
+              .show('Booking can only be done after 30 min from current time', 'long', 'center')
+              .then(function(success) {
+                // success
+              }, function (error) {
+                // error
+              });
         }
       }
     }
@@ -366,7 +389,13 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope) {
       $state.go('confirmation');
     }
     else{
-      alert('Please select time for appointment!');
+      $cordovaToast
+          .show('Please select time for appointment', 'long', 'center')
+          .then(function(success) {
+            // success
+          }, function (error) {
+            // error
+          });
     }
     // $state.go('confirmation');
   };

@@ -177,7 +177,7 @@ app
             if(_.size($scope.selectedServices)>0){
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Note',
-                    template: 'Your selection will be discarded, please select services from menu again'
+                    template: 'Your current selection will be discarded. You have to select services again from menu.'
                 });
                 confirmPopup.then(function(res) {
                     if(res) {

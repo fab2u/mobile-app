@@ -11,14 +11,10 @@
     </ion-header-bar>
     <ion-content>
         <div ng-show="menuInfo">
-            <div class="row">
-                <button class="button button-full" style="background-color: #ff8386;color: white; font-size: 1.2em;">
-                   SELECTED SERVICES
-                </button>
-                <button class="button button-full" style="background-color: #3D3D3D; color: white; font-size: 1.2em;"
-                        ng-click="complete_menu()">
-                   COMPLETED MENU
-                </button>
+            <div class="services-n-fab">
+                <div class="services" ng-class="fabSelected? 'no-border':'with-border'" ng-click="selectMain(1)">SELECTED SERVICES</div>
+                <div class="fab" ng-class="fabSelected? 'with-border':'no-border'" ng-click="selectMain(2)"></div>
+                <div class="fab-book" ng-click="selectMain(2)">COMPLETED MENU</div>
             </div>
             <div class="row padding">
                 <div ng-repeat="data in menu" style="width: 100%">

@@ -1,4 +1,4 @@
-app.controller('ContactCtrl', function($state, $scope) {
+app.controller('ContactCtrl', function($state, $scope,$cordovaToast) {
     firebase.database().ref('city').once('value',function(response){
         $scope.location_list = response.val();
     });
@@ -10,10 +10,22 @@ app.controller('ContactCtrl', function($state, $scope) {
     $scope.submit_query = function(){
         firebase.database().ref('contactUs').push($scope.user,function (error) {
             if(error){
-           alert('some thing went wrong');
+                $cordovaToast
+                    .show('Please try again!', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
             }
             else{
-           alert('Your query submitted !');
+                $cordovaToast
+                    .show('Thanks for submitting your query. We will soon get back to you.', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
             }
         });
     };

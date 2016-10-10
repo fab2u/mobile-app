@@ -1,11 +1,12 @@
 app.controller('VendorListCtrl',
     function ($scope, $ionicHistory, $state, $stateParams, $ionicLoading, $http,
-              $cordovaGeolocation,$ionicModal,$ionicPopover,$rootScope) {
+              $cordovaGeolocation,$ionicModal,$ionicPopover,$rootScope,$cordovaToast) {
         $scope.lat = '1';
         $scope.long = '2';
         $scope.gender = '';
         $scope.vendorList = '';
         var posOptions = {timeout: 10000, enableHighAccuracy: false};
+
 
         //////////////////            To open network setting of device          ////////////////////
 
@@ -56,6 +57,16 @@ app.controller('VendorListCtrl',
                         "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender=''&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                         .then(function (response) {
                             $scope.vendorList = response.data.results;
+                            if($scope.vendorList.length == 0){
+                                $cordovaToast
+                                    .show('No vendors available for selected services. Please select again.', 'long', 'center')
+                                    .then(function(success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+
+                            }
                             console.log("list", JSON.stringify($scope.vendorList, null, 2))
                             $ionicLoading.hide();
                         });
@@ -65,6 +76,16 @@ app.controller('VendorListCtrl',
                         "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender=''&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                         .then(function (response) {
                             $scope.vendorList = response.data.results;
+                            if($scope.vendorList.length == 0){
+                                $cordovaToast
+                                    .show('No vendors available for selected services. Please select again.', 'long', 'center')
+                                    .then(function(success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+
+                            }
                             $ionicLoading.hide();
                         });
 
@@ -74,6 +95,16 @@ app.controller('VendorListCtrl',
                         "&user_city=" + locationInfo.cityId + "&user_gender=''&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                         .then(function (response) {
                             $scope.vendorList = response.data.results;
+                            if($scope.vendorList.length == 0){
+                                $cordovaToast
+                                    .show('No vendors available for selected services. Please select again.', 'long', 'center')
+                                    .then(function(success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+
+                            }
 
                             console.log("discover salons", JSON.stringify($scope.vendorList, null, 2))
                             $ionicLoading.hide();
@@ -124,6 +155,16 @@ app.controller('VendorListCtrl',
                             "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender='1'&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                             .then(function (response) {
                                 $scope.vendorList = response.data.results;
+                                if($scope.vendorList.length == 0){
+                                    $cordovaToast
+                                        .show('No vendors available for selected services. Please select again.', 'long', 'center')
+                                        .then(function(success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
+
+                                }
                                 $ionicLoading.hide();
                                 console.log(JSON.stringify($scope.vendorList, null, 2));
                             });
@@ -133,6 +174,16 @@ app.controller('VendorListCtrl',
                             "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender='1'&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                             .then(function (response) {
                                 $scope.vendorList = response.data.results;
+                                if($scope.vendorList.length == 0){
+                                    $cordovaToast
+                                        .show('No vendors available for selected services. Please select again.', 'long', 'center')
+                                        .then(function(success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
+
+                                }
                                 $ionicLoading.hide();
                                 console.log(JSON.stringify($scope.vendorList, null, 2));
 
@@ -143,6 +194,16 @@ app.controller('VendorListCtrl',
                             "&user_gender='1'&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                             .then(function (response) {
                                 $scope.vendorList = response.data.results;
+                                if($scope.vendorList.length == 0){
+                                    $cordovaToast
+                                        .show('No vendors available for selected services. Please select again.', 'long', 'center')
+                                        .then(function(success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
+
+                                }
                                 $ionicLoading.hide();
                                 console.log(JSON.stringify($scope.vendorList, null, 2));
 
@@ -160,6 +221,16 @@ app.controller('VendorListCtrl',
                             "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender='2'&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                             .then(function (response) {
                                 $scope.vendorList = response.data.results;
+                                if($scope.vendorList.length == 0){
+                                    $cordovaToast
+                                        .show('No vendors available for selected services. Please select again.', 'long', 'center')
+                                        .then(function(success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
+
+                                }
                                 $ionicLoading.hide();
                                 console.log(JSON.stringify($scope.vendorList, null, 2));
                             });
@@ -169,6 +240,16 @@ app.controller('VendorListCtrl',
                             "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender='2'&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                             .then(function (response) {
                                 $scope.vendorList = response.data.results;
+                                if($scope.vendorList.length == 0){
+                                    $cordovaToast
+                                        .show('No vendors available for selected services. Please select again.', 'long', 'center')
+                                        .then(function(success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
+
+                                }
                                 $ionicLoading.hide();
                                 console.log(JSON.stringify($scope.vendorList, null, 2));
                             });
@@ -178,6 +259,16 @@ app.controller('VendorListCtrl',
                             "&user_gender='2'&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                             .then(function (response) {
                                 $scope.vendorList = response.data.results;
+                                if($scope.vendorList.length == 0){
+                                    $cordovaToast
+                                        .show('No vendors available for selected services. Please select again.', 'long', 'center')
+                                        .then(function(success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
+
+                                }
                                 $ionicLoading.hide();
                                 console.log(JSON.stringify($scope.vendorList, null, 2));
 
@@ -227,6 +318,16 @@ app.controller('VendorListCtrl',
                     $http.post("http://139.162.31.204/sort_results?user_id=" + $scope.uid + "&key="+sortby)
                         .then(function (response) {
                             $scope.vendorList = response.data.sorted_results;
+                            if($scope.vendorList.length == 0){
+                                $cordovaToast
+                                    .show('No vendors available for selected services. Please select again.', 'long', 'center')
+                                    .then(function(success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+
+                            }
                             $ionicLoading.hide();
                             console.log(JSON.stringify($scope.vendorList, null, 2));
                         });
@@ -235,6 +336,16 @@ app.controller('VendorListCtrl',
                     $http.post("http://139.162.31.204/sort_results?user_id=" + $scope.uid + "&key=price&order="+sortby)
                         .then(function (response) {
                             $scope.vendorList = response.data.sorted_results;
+                            if($scope.vendorList.length == 0){
+                                $cordovaToast
+                                    .show('No vendors available for selected services. Please select again.', 'long', 'center')
+                                    .then(function(success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+
+                            }
                             $ionicLoading.hide();
                             console.log(JSON.stringify($scope.vendorList, null, 2));
                         });
@@ -373,6 +484,16 @@ app.controller('VendorListCtrl',
                     "&locations="+final_query.location+"&facilities="+final_query.amenities)
                     .then(function (response) {
                         $scope.vendorList = response.data.filtered_results;
+                        if($scope.vendorList.length == 0){
+                            $cordovaToast
+                                .show('No vendors available for selected services. Please select again.', 'long', 'center')
+                                .then(function(success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+
+                        }
                         console.log("list",JSON.stringify($scope.vendorList,null,2));
                         $scope.filter_screen.hide();
                         $ionicLoading.hide();

@@ -1,6 +1,6 @@
 app
     .controller('VendorSelectedServicesListCtrl',function($scope,$stateParams,$rootScope,$state,
-                                                          $ionicLoading,$ionicPopup) {
+                                                          $ionicLoading,$ionicPopup,$cordovaToast) {
 
         $scope.total_fabtu=0;
         $scope.total_original=0;
@@ -79,14 +79,11 @@ app
                     for(var j = 0; j< mySubArray.length;j++){
                         angular.forEach($scope.menuInfo, function (value, key) {
                             if(key == mySubArray[j]){
-                                console.log("iffffffffffffff",JSON.stringify(value))
                                 $scope.menu.push(value);
                             }
                         })
                     }
                     $scope.vendorDetail();
-                    console.log("selected hhhhhhhhhhhhhhhhhh menu value",JSON.stringify($scope.menu,null,2))
-
                 }
             })
 
@@ -200,7 +197,13 @@ app
 
             }
             else{
-                alert('Please, select some services!')
+                $cordovaToast
+                    .show('Please select at least one service', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
             }
         };
 

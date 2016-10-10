@@ -1,5 +1,5 @@
 app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ionicLoading,$ionicPopup,
-                                      $timeout,$rootScope){
+                                      $timeout,$rootScope,$cordovaToast){
     $scope.generatedCode = '';
     $scope.myReferral = '';
     $scope.validReferralcode = [];
@@ -16,15 +16,33 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                 .once('value', function (response) {
                     console.log("response for all valid codes", JSON.stringify(response.val()))
                     if (response.val()) {
-                        alert('Congratulation,you will get 25 rs. in your wallet')
+                        $cordovaToast
+                            .show('Congratulation,you will get 25 rs. in your wallet', 'long', 'center')
+                            .then(function(success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
                     }
                     else {
-                        alert('Please, enter a valid code')
+                        $cordovaToast
+                            .show('Please, enter a valid code', 'long', 'center')
+                            .then(function(success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
                     }
                 })
         }
         else {
-            alert('Please, enter a code')
+            $cordovaToast
+                .show('Please, enter a code', 'long', 'center')
+                .then(function(success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
         }
     };
 
@@ -199,9 +217,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
 
     $scope.sendVerification = function(){
         $scope.generateVerificationCode();
-        $ionicLoading.show({
-            template: 'Loading...'
-        });
+        $ionicLoading.show();
         $http({
             url: 'http://BULKSMS.FLYFOTSERVICES.COM/unified.php?usr=28221&pwd=password1&ph=' +
             $scope.user.mobile_num + '&sndr=IAMFAB&text=Greetings.' +
@@ -349,10 +365,22 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                                     else{
                                         $state.go('app.home');
                                     }
-                                    alert('Registration successfully completed!')
+                                    $cordovaToast
+                                        .show('Your account is successfully created.', 'long', 'center')
+                                        .then(function(success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
                                 }
                                 else{
-                                    alert('Try again!');
+                                    $cordovaToast
+                                        .show('Try again!', 'long', 'center')
+                                        .then(function(success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
                                 }
                             })
                     })

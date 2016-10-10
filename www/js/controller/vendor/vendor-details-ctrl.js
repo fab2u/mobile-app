@@ -1,6 +1,6 @@
 app.controller('VendorDetailsCtrl',
     function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,$cordovaGeolocation,
-             $ionicPopup,$ionicLoading,$rootScope,$cordovaDevice,$cordovaInAppBrowser){
+             $ionicPopup,$ionicLoading,$rootScope,$cordovaDevice,$cordovaInAppBrowser,$cordovaToast){
 
 
 
@@ -67,12 +67,24 @@ app.controller('VendorDetailsCtrl',
               .set(favouriteData,function(response) {
                   if(response ==null){
                       $scope.liked  = !$scope.liked ;
-                      alert('Added to your favourites list!')
+                      $cordovaToast
+                          .show('Vendor added to your favorite list.', 'long', 'center')
+                          .then(function(success) {
+                              // success
+                          }, function (error) {
+                              // error
+                          });
                   }
               })
       }
       else{
-          alert('Login first!')
+          $cordovaToast
+              .show('Please login.', 'long', 'center')
+              .then(function(success) {
+                  // success
+              }, function (error) {
+                  // error
+              });
       }
 
   };
@@ -252,7 +264,13 @@ app.controller('VendorDetailsCtrl',
             $state.go('cart',{'ven_id':$stateParams.ven_id});
         }
         else{
-            alert('Please, select some services!')
+            $cordovaToast
+                .show('Please select at least one service.', 'long', 'center')
+                .then(function(success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
         }
     };
 
@@ -308,7 +326,13 @@ app.controller('VendorDetailsCtrl',
         $scope.storeReview = function(){
             console.log("review detail",JSON.stringify($scope.custReview));
             if($scope.custReview.rating == 0){
-                alert('Please, select ratings!')
+                $cordovaToast
+                    .show('Please, select ratings!', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
             }
             else{
                 var updates = {};
@@ -333,8 +357,13 @@ app.controller('VendorDetailsCtrl',
                 db.ref().update(updates).then(function () {
                     $ionicLoading.hide();
                     $rootScope.$broadcast('reviews', { message: 'review list changed' });
-
-                    alert('Your review has been submitted successfully!');
+                    $cordovaToast
+                        .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
+                        .then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
                 });
             }
         };

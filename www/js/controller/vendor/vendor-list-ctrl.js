@@ -1,8 +1,8 @@
 app.controller('VendorListCtrl',
-    function ($scope, $ionicHistory, $state, $stateParams, $ionicLoading, $http,
+    function ($scope, $ionicHistory, $state, $stateParams, $ionicLoading, $http,$rootScope,
               $cordovaGeolocation,$ionicModal,$ionicPopover,$rootScope,$cordovaToast) {
-        $scope.lat = '';
-        $scope.long = '';
+        $scope.lat = '23.456';
+        $scope.long = '24.567';
         $scope.gender = '';
         $scope.vendorList = '';
         var posOptions = {timeout: 10000, enableHighAccuracy: false};
@@ -22,7 +22,7 @@ app.controller('VendorListCtrl',
                     console.log(JSON.stringify(err));
                     if (typeof cordova.plugins.settings.openSetting != undefined) {
                         cordova.plugins.settings.openSetting("location_source", function () {
-                                console.log("opened location_source settings");
+                                $rootScope.$broadcast('location_setting', { message: 'location changed'});
                             },
                             function () {
                                 console.log("failed to open nfc settings")
@@ -32,7 +32,7 @@ app.controller('VendorListCtrl',
         }
 
 
-        if($scope.lat && $scope.long){
+        $scope.vendor_info = function(){
             var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
             $scope.serviceIds = [];
             var serviceId = window.localStorage.getItem("serviceId");
@@ -42,7 +42,6 @@ app.controller('VendorListCtrl',
             else {
                 $scope.uid = localStorage.getItem('uid');
             }
-
             if (localStorage.getItem('catItems')) {
                 angular.forEach(JSON.parse(localStorage.getItem('catItems')), function (value, key) {
                     $scope.serviceIds.push(value.id);
@@ -510,6 +509,14 @@ app.controller('VendorListCtrl',
                 $scope.custReview = {};
                 $ionicLoading.hide();
             };
+        }
+
+
+        $rootScope.$on('location_setting', function (event, args) {
+            $scope.vendor_info();
+        });
+        if($scope.lat && $scope.long){
+            $scope.vendor_info();
         }
         else{
             get_user_location();

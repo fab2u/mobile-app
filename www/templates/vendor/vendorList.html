@@ -52,24 +52,19 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div id="price-tag" class="col" ng-click="vendor_menu(vendor.vendor_id)">
-                                <!--<div class="row original-price"-->
-                                     <!--ng-if="(vendor.min_price_vendor != vendor.min_price_customer)-->
-                                     <!--&&(vendor.max_price_vendor != vendor.max_price_customer)">-->
-                                    <div class="row original-price">
-                                    <div id="line-through"></div>
-                                    <span id="one" class="left-price badge">
+                            <div ng-if="(vendor.min_price_vendor != vendor.min_price_customer)
+                            &&(vendor.max_price_vendor != vendor.max_price_customer)">
+                                <span id="one" class="left-price badge">
                                       <i>&#x20B9;</i>
                                        {{vendor.min_price_vendor}}
                                     </span>
-                                    <span id="two" class="badge">
+                                <span id="two" class="badge">
                                         <i>&#x20B9;</i>
                                     {{vendor.max_price_vendor}}
-                                    </span>
-                                </div>
-                                <div class="row discounted-price">
-                                    <div id="line-through-fb"></div>
-                                    <span class="left-price badge">
+                                 </span>
+                            </div>
+                            <div>
+                                  <span class="left-price badge">
                                       <i>&#x20B9;</i>
                                       {{vendor.min_price_customer}}
                                     </span>
@@ -77,7 +72,6 @@
                                      <i>&#x20B9;</i>
                                      {{vendor.max_price_customer}}
                                     </span>
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,8 @@
 app.controller('VendorListCtrl',
     function ($scope, $ionicHistory, $state, $stateParams, $ionicLoading, $http,
               $cordovaGeolocation,$ionicModal,$ionicPopover,$rootScope,$cordovaToast) {
-        $scope.lat = '1';
-        $scope.long = '2';
+        $scope.lat = '';
+        $scope.long = '';
         $scope.gender = '';
         $scope.vendorList = '';
         var posOptions = {timeout: 10000, enableHighAccuracy: false};

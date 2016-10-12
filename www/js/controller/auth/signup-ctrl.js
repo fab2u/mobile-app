@@ -219,32 +219,40 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
         $scope.generateVerificationCode();
         $ionicLoading.show();
         $http({
-            url: 'http://BULKSMS.FLYFOTSERVICES.COM/unified.php?usr=28221&pwd=password1&ph=' +
-            $scope.user.mobile_num + '&sndr=IAMFAB&text=Greetings.' +
-            $scope.generatedCode + ' is your FAB2U verification code&type=json ',
+            url: 'http://139.162.27.64/api/send-otp?otp='+$scope.generatedCode+'&mobile='+$scope.user.mobile_num,
             method: 'POST',
             "async": true,
             "crossDomain": true
+        }) .success(function (data, status, headers, config) {
+            if(status == 200){
+                $ionicLoading.hide();
+               console.log(status,data)
+                $scope.otp = $scope.generatedCode;
+                storedOTP.push($scope.otp);
+                window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
+                $ionicPopup.alert({
+                    title: 'Verification Code Sent',
+                    template: 'We have sent a verification code to your registered mobile number'
+                }).then(function(){
+                    $scope.showOTPfield = true;
+                    $scope.showPopup();
+                })
+            }
         })
-        $ionicLoading.hide();
-        $scope.otp = $scope.generatedCode;
-        storedOTP.push($scope.otp);
-        window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
-        $ionicPopup.alert({
-            title: 'Verification Code Sent',
-            template: 'We have sent a verification code to your registered mobile number'
-        }).then(function(){
-            $scope.showOTPfield = true;
-            $scope.showPopup();
-        })
+            .error(function (data, status, header, config) {
+                $ionicLoading.hide();
+                console.log(status,data)
+                alert(data.msg);
+
+            });
+
     };
     $scope.reSendVerification = function(){
-        $scope.user.mobile_num = '8447785980';
         $scope.generateVerificationCode();
         $ionicLoading.show();
         $http({
             method: 'POST',
-            url:'http://139.162.27.64/api/send?mob='+$scope.user.mobile_num+'&otp='+$scope.generatedCode
+            url:'http://139.162.27.64/api/send-otp?otp='+$scope.generatedCode+'&mobile='+$scope.user.mobile_num
         }) .success(function (data, status, headers, config) {
             if(status == 200){
                 $ionicLoading.hide();
@@ -262,7 +270,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
         })
             .error(function (data, status, header, config) {
                 $ionicLoading.hide();
-
+                alert(data.msg)
             });
 
     };

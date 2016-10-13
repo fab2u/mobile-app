@@ -25,7 +25,7 @@
         <ion-content>
             <div class="card m-5 fab_card" ng-show="packages.length !='0'" ng-repeat="vendor in vendorList">
                 <div class="row" ng-click="vendor_menu(vendor.vendor_id)">
-                    <div class="col-33" id="image_display_1">
+                    <div class="col-33 image_display_1">
                         <img ng-src="{{vendor.image_url || 'img/vendorImage.jpeg'}}" class="pkg-img">
                     </div>
                     <div id="part2" class="col-67">

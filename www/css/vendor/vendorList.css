@@ -57,9 +57,15 @@
 .vendorList.pkg-img{
     position: relative;
 }
-#image_display_1 img {
+.vendorList .image_display_1 img {
     object-fit: cover;
     height: 100%;
+    overflow: hidden;
+    width: auto;
+
+}
+
+.vendorList .image_display_1{
     overflow: hidden;
 }
 
@@ -126,8 +132,17 @@
     }
     .vendorList #image_display_1 {
         height: 100%; }
+
     #image_display_1 img {
         object-fit: cover;
+        height: 100%;
+        overflow: hidden;
+        width: auto;
+    }
+
+    #part2 {
+        background-color: #f1f2f3;
+        margin-left: 5px;
     }
 }
 

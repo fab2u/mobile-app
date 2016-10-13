@@ -1,39 +1,13 @@
 app.controller('VendorListCtrl',
     function ($scope, $ionicHistory, $state, $stateParams, $ionicLoading, $http,$rootScope,
               $cordovaGeolocation,$ionicModal,$ionicPopover,$rootScope,$cordovaToast) {
-        $scope.lat = '23.456';
-        $scope.long = '24.567';
+
         $scope.gender = '';
         $scope.vendorList = '';
-        var posOptions = {timeout: 10000, enableHighAccuracy: false};
-
-
-        //////////////////            To open network setting of device          ////////////////////
-
-        function get_user_location() {
-            $ionicLoading.show();
-            $cordovaGeolocation
-                .getCurrentPosition(posOptions)
-                .then(function (position) {
-                    $scope.lat = position.coords.latitude;
-                    $scope.long = position.coords.longitude;
-                    console.log($scope.lat + '   ' + $scope.long);
-                }, function (err) {
-                    console.log(JSON.stringify(err));
-                    if (typeof cordova.plugins.settings.openSetting != undefined) {
-                        cordova.plugins.settings.openSetting("location_source", function () {
-                                $rootScope.$broadcast('location_setting', { message: 'location changed'});
-                            },
-                            function () {
-                                console.log("failed to open nfc settings")
-                            });
-                    }
-                });
-        }
-
-
+        var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+        $scope.lat = locationInfo.latitude;
+        $scope.long = locationInfo.longitude;
         $scope.vendor_info = function(){
-            var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
             $scope.serviceIds = [];
             var serviceId = window.localStorage.getItem("serviceId");
             if (localStorage.getItem('uid') == '' || localStorage.getItem('uid') == null || localStorage.getItem('uid') == undefined) {
@@ -511,14 +485,6 @@ app.controller('VendorListCtrl',
             };
         }
 
+            $scope.vendor_info();
 
-        $rootScope.$on('location_setting', function (event, args) {
-            $scope.vendor_info();
-        });
-        if($scope.lat && $scope.long){
-            $scope.vendor_info();
-        }
-        else{
-            get_user_location();
-        }
     });

@@ -88,7 +88,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                     id:'2010'
                 }
                 ],
-            "image": 'img/home/new-slider/face.jpg'
+            "image": 'img/home/new-slider/Face.jpg'
         },
         "Hair":
         {
@@ -146,7 +146,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                     id:'1013'
                 }
                 ],
-            "image": 'img/home/new-slider/hair.jpg'
+            "image": 'img/home/new-slider/Hair.jpg'
         },
         "HairRemoval":{
             "name": [
@@ -187,7 +187,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                     id:'3009'
                 }
                 ],
-            "image": 'img/home/new-slider/hair-removal.jpg'
+            "image": 'img/home/new-slider/Hair-Removal.jpg'
         },
         "Body": {
             "name": [
@@ -243,7 +243,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                     name:'Cleanings',
                     id:'5003'
                 }],
-            "image": 'img/home/new-slider/Hands-and-Feet.jpg'
+            "image": 'img/home/new-slider/Hands-Feet.jpg'
         },
         "Nails": {
             "name": [
@@ -263,7 +263,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                     name:'Packages',
                     id:'7001'
                 }],
-            "image": 'img/home/new-slider/packages.jpg'
+            "image": 'img/home/new-slider/Packages.jpg'
         }
     };
 

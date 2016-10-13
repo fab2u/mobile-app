@@ -6,11 +6,12 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
     $scope.walletMoney = 0;
     $scope.updates = {};
     $scope.apply_code = false;
+    $scope.referralName = '';
+    $scope.referralContact = '';
 
 
     /////////////////////////////// To check apply referral code valid or not ////////////////
     $scope.apply_promoCode = function (referralCode) {
-        console.log("apply promo code called")
         if (referralCode) {
             firebase.database().ref('referralCode/' + referralCode)
                 .once('value', function (response) {
@@ -63,8 +64,13 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                     };
                     firebase.database().ref('referralCode/'+referralCode)
                         .once('value', function (response) {
-                            var referredByUid = response.val().uid;
-                            $scope.updates['referralCode/'+$scope.myReferral+'/referredBy'] = referredByUid;
+                            $scope.referredByUid = response.val().uid;
+                            firebase.database().ref('users/data/' + $scope.referredByUid)
+                                .once('value', function (response) {
+                                    $scope.referralName = response.val().name;
+                                    $scope.referralContact = response.val().mobile.mobileNum;
+                                })
+                            $scope.updates['referralCode/'+$scope.myReferral+'/referredBy'] = $scope.referredByUid;
                             firebase.database().ref('referralCode/'+referralCode+'/referredUsers/')
                                 .push({
                                     userUid:$scope.uid,
@@ -183,11 +189,8 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
 
 
     $scope.signup = function(){
-        $ionicLoading.show({
-            template: 'Loading...'
-        });
+        $ionicLoading.show();
         firebase.auth().createUserWithEmailAndPassword($scope.user.email, $scope.user.password).then(function(data){
-            console.log("uid",data.uid);
             $scope.uid = data.uid;
             if($scope.uid){
                 $scope.sendVerification();
@@ -226,7 +229,6 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
         }) .success(function (data, status, headers, config) {
             if(status == 200){
                 $ionicLoading.hide();
-               console.log(status,data)
                 $scope.otp = $scope.generatedCode;
                 storedOTP.push($scope.otp);
                 window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
@@ -321,25 +323,29 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                         title: 'Mobile Number Verified'
                     }).then(function(){
                         window.localStorage.setItem('mobile_verify','true');
-                        var userData = {
-                            activeFlag:true,
-                            createdTime:new Date().getTime(),
-                            deviceId: $cordovaDevice.getDevice().uuid,
-                            email:{
-                                userEmail:$scope.user.email,
-                                verifiedTime:'',
-                                emailFlag:false
-                            },
-                            mobile:{
-                                mobileNum: $scope.user.mobile_num,
-                                mobileFlag:true
-                            },
-                            myReferralCode:$scope.myReferral,
-                            name: $scope.user.name,
-                            referralCode: $scope.user.referral_code,
-                            userId:$scope.uid,
-                            gender: $scope.user.gender,
-                        };
+                                var userData = {
+                                    activeFlag:true,
+                                    createdTime:new Date().getTime(),
+                                    deviceId: $cordovaDevice.getDevice().uuid,
+                                    deviceName:$cordovaDevice.getDevice().manufacturer,
+                                    email:{
+                                        userEmail:$scope.user.email,
+                                        verifiedTime:'',
+                                        emailFlag:false
+                                    },
+                                    mobile:{
+                                        mobileNum: $scope.user.mobile_num,
+                                        mobileFlag:true
+                                    },
+                                    myReferralCode:$scope.myReferral,
+                                    name: $scope.user.name,
+                                    referralCode: $scope.user.referral_code,
+                                    referralName:$scope.referralName,
+                                    referralContact:$scope.referralContact,
+                                    userId:$scope.uid,
+                                    gender: $scope.user.gender,
+                                };
+
                         var referralData = {
                             uid:$scope.uid,
                             amount:25,

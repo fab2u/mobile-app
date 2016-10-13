@@ -57,7 +57,44 @@
 .vendorList.pkg-img{
     position: relative;
 }
+#image_display_1 img {
+    object-fit: cover;
+    height: 100%;
+    overflow: hidden;
+}
 
+#part2 {
+    background-color: #f1f2f3;
+    margin-left: 5px;
+}
+
+#m_t {
+    margin-top: -20px;
+}
+#f_13{
+    font-size: 13px;
+}
+#f_15{
+    font-size: 15px;
+}
+#m_l_15{
+    margin-left: 15px;
+}
+
+
+
+#vendor_type{
+    text-transform: uppercase;
+    font-size: 10px;
+    margin-bottom: -4px;
+}
+#land_mark{
+    font-size: 10px;
+    margin-top: -10px;
+}
+#m_t_5{
+    margin-top: 5px;
+}
 
 /*.vendorList.w-500{*/
     /*font-weight: 500!important;*/
@@ -88,9 +125,10 @@
         height: 150px;
     }
     .vendorList #image_display_1 {
-        height: 135px; }
-    .vendorList #image_display_1 img {
-        height: 140px; }
+        height: 100%; }
+    #image_display_1 img {
+        object-fit: cover;
+    }
 }
 
 
@@ -126,6 +164,7 @@
 
 .vendorList #rating {
     float: right;
+    position: absolute;
 }
 
 .vendorList #rating p {

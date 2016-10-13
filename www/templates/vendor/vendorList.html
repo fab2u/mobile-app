@@ -26,17 +26,16 @@
             <div class="card m-5 fab_card" ng-show="packages.length !='0'" ng-repeat="vendor in vendorList">
                 <div class="row" ng-click="vendor_menu(vendor.vendor_id)">
                     <div class="col-33" id="image_display_1">
-                        <img style="height: 100%; width:100%;"
-                             ng-src="{{vendor.image_url || 'img/vendorImage.jpeg'}}" class="pkg-img">
+                        <img ng-src="{{vendor.image_url || 'img/vendorImage.jpeg'}}" class="pkg-img">
                     </div>
-                    <div class="col-67">
+                    <div id="part2" class="col-67">
                             <div class="row">
                                 <div class="col-50 icon ion-ios-location c-location-icon"
                                      ng-click="open_map(vendor.address.latitude,vendor.address.longitude,vendor.address.address1,vendor.address.address2,vendor.vendor_name)">
-                                    &nbsp;<p>{{vendor.distance| number : 2}} Km</p>
+                                    &nbsp;<p id="f_13">{{vendor.distance| number : 2}} Km</p>
                                 </div>
                                 <div class="col-50" style="padding-left: 55px;">
-                                    <p>{{vendor.vendor_type }}</p>
+                                    <p id="vendor_type">{{vendor.vendor_type }}</p>
                                     <div id="rating">
                                         <i class="icon ion-star active"
                                            ng-repeat="counter in starRating(vendor.vendor_rating) track by $index"></i>
@@ -45,30 +44,30 @@
                                     </div>
                                 </div>
                             </div>
-                        <div class="row">
+                        <div class="row" id="m_t">
                             <div class="col">
-                                <h4>{{vendor.vendor_name}}</h4>
-                                <p>{{vendor.address.landmark}}</p>
+                                <p id="f_15">{{vendor.vendor_name}}</p>
+                                <p id="land_mark">{{vendor.address.landmark}}</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div ng-if="(vendor.min_price_vendor != vendor.min_price_customer)
-                            &&(vendor.max_price_vendor != vendor.max_price_customer)">
+                        <div class="col" id="m_t">
+                            <div class="row" ng-if="(vendor.min_price_vendor != vendor.min_price_customer)
+                            &&(vendor.max_price_vendor != vendor.max_price_customer)" style="text-decoration: line-through;">
                                 <span id="one" class="left-price badge">
                                       <i>&#x20B9;</i>
                                        {{vendor.min_price_vendor}}
                                     </span>
-                                <span id="two" class="badge">
+                                <span id="two" class="badge" style="margin-left: 15px;">
                                         <i>&#x20B9;</i>
-                                    {{vendor.max_price_vendor}}
-                                 </span>
+                                      {{vendor.max_price_vendor}}
+                                </span>
                             </div>
-                            <div>
+                            <div class="row" id="m_t_5">
                                   <span class="left-price badge">
                                       <i>&#x20B9;</i>
                                       {{vendor.min_price_customer}}
                                     </span>
-                                    <span class="badge">
+                                    <span class="badge" id="m_l_15">
                                      <i>&#x20B9;</i>
                                      {{vendor.max_price_customer}}
                                     </span>

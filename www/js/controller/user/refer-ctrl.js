@@ -17,7 +17,7 @@ app.controller('ReferCtrl',function($scope, $state,$cordovaSocialSharing,$ionicL
 
 	$scope.WhatsApp = function () {
 		$cordovaSocialSharing
-			.shareViaWhatsApp('Download the Fab2u app and use my referral code'+$scope.myReferralCode +'and get RS. 25 in wallet', '', '')
+			.shareViaWhatsApp('Download the Fab2u app and use my referral code  '+$scope.myReferralCode +'and get RS. 25 in wallet', '', '')
 			.then(function (result) {
 				// Success!
 			}, function (err) {
@@ -29,7 +29,7 @@ app.controller('ReferCtrl',function($scope, $state,$cordovaSocialSharing,$ionicL
 
 	$scope.Facebook = function () {
 		$cordovaSocialSharing
-			.shareViaFacebook('Download the Fab2u app and use my referral code'+$scope.myReferralCode +'and get RS. 25 in wallet', '', '')
+			.shareViaFacebook('Download the Fab2u app and use my referral code  '+$scope.myReferralCode +'and get RS. 25 in wallet', '', '')
 			.then(function (result) {
 				// Success!
 			}, function (err) {

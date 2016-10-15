@@ -277,6 +277,12 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
         else if(activeTab == false){
             $scope.index_number = index;
             $scope.currSlide = $ionicSlideBoxDelegate.currentIndex();
+            if(index == 3){
+                $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(500, 0, true);
+            }
+            else if(index == 6){
+                $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(0, 0, true);
+            }
         }
     };
 
@@ -320,6 +326,12 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
         $scope.tabActive = true;
         $scope.index_number = indexNum;
         $ionicSlideBoxDelegate.slide(indexNum);
+        if(indexNum == 3){
+            $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(500, 0, true);
+        }
+        else if(indexNum == 6){
+            $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(0, 0, true);
+        }
     };
 
     $scope.selectItem = function(index,serviceName,service_id) {

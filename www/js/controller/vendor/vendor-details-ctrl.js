@@ -1,5 +1,5 @@
 app.controller('VendorDetailsCtrl',
-    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,$cordovaGeolocation,
+    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,
              $ionicPopup,$ionicLoading,$rootScope,$cordovaDevice,$cordovaInAppBrowser,$cordovaToast){
 
 
@@ -139,10 +139,12 @@ app.controller('VendorDetailsCtrl',
                 console.log("reviews",JSON.stringify($scope.reviews))
             });
         };
-        $scope.reviewList();
 
     $scope.slideHasChanged = function(value){
       console.log(value);
+        if(value == 2){
+            $scope.reviewList();
+        }
       $scope.currentValue = value;
     };
 

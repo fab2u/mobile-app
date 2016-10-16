@@ -397,27 +397,28 @@
 }
 #vendor-services .item{
 	margin-bottom: 10px;
-	height: 60px;
+	/*height: 60px;*/
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
+	line-height: 40px;
 }
 #vendor-services .item .p-15{
-	padding-top: 18px;
+	/*padding-top: 18px;*/
 }
 
 #vendor-services .list-heading{
-	background-color: #342D2D;
-	color:white;
-	right:1px;
-	border-top-left-radius:1em;
-	position:relative;
-	top:-2px;
-	margin-right:50%;
-	height: 55px;
-	min-height: 40px;
-	padding: 10px;
-	text-align: center;
-	line-height: 30px;
+    background-color: #342D2D;
+    color: white;
+    right: 1px;
+    border-top-left-radius: 1em;
+    position: relative;
+    top: -2px;
+    margin-right: 50%;
+    height: 45px;
+    min-height: 40px;
+    padding: 10px;
+    text-align: center;
+    line-height: 24px;
 
 }
 #vendor-services #custom-servicelist {
@@ -507,4 +508,26 @@
 	font-size: 0.75em;
 	font-weight: 500;
 	line-height: 0px;
+}
+
+
+.cartValue i{
+	 position: absolute;
+    top: 25px;
+    left: 18px;
+}
+.cartValue p{
+	      position: absolute;
+    top: 11px;
+    left: 22px;
+}
+
+.button-menuInfo{
+	background-color: #ff8386;color: #fff !important; font-size: 12px;
+	margin-top:0px !important;
+	margin-bottom:30px !important;
+}
+
+body, .ionic-body{
+	font-size: 12px !important;
 }

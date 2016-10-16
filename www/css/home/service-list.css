@@ -111,5 +111,9 @@
     max-height: 40px;
 }
 #servicelistslider .list_view{
-    min-height: 60px;
+    padding: 0px 0px 0 10px;
+    line-height: 62px;
+    width: 100%;
+    min-height: 0px;
+}
 }

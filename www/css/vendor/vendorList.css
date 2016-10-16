@@ -48,9 +48,9 @@
     color: white;
 }
 
-.vendorList i.icon.ion-ios-location {
+/*.vendorList i.icon.ion-ios-location {
     color: #F5F5F5;
-}
+}*/
 
 .vendorList.fab_card {
     max-height: 110px; }
@@ -58,10 +58,10 @@
     position: relative;
 }
 .vendorList .image_display_1 img {
-    object-fit: cover;
-    height: 100%;
+
     overflow: hidden;
-    width: auto;
+        width:100px;
+    height:100px;
 
 }
 
@@ -70,15 +70,22 @@
 }
 
 #part2 {
-    background-color: #f1f2f3;
-    margin-left: 5px;
+    /*background-color: #f1f2f3;*/
+    /*margin-left: 5px;*/
 }
 
 #m_t {
     margin-top: -20px;
+    padding:0px;
 }
 #f_13{
     font-size: 13px;
+    color: #545252;
+}
+
+#f_13 i{
+    margin-right: 10px;
+
 }
 #f_15{
     font-size: 15px;
@@ -93,10 +100,12 @@
     text-transform: uppercase;
     font-size: 10px;
     margin-bottom: -4px;
+    text-align: right
 }
 #land_mark{
     font-size: 10px;
     margin-top: -10px;
+     /*padding-bottom: 5px;*/
 }
 #m_t_5{
     margin-top: 5px;
@@ -173,8 +182,8 @@
 }
 
 .vendorList span.badge {
-    background-color: #FF8386;
-    color: #F5F5F5;
+    /*background-color: #FF8386;*/
+    color: #9e9e9e;
 }
 
 .vendorList #rating {
@@ -285,7 +294,8 @@
         font-size: 0.8em;
     }
     .vendorList #rating {
-        padding-right: 0.1em;;
+    /*    padding-right: 0.1em;;*/
+    right: 18px;
     }
     .vendorList #rating i {
         font-size: 0.7em;
@@ -326,14 +336,16 @@
         line-height: 0em;
     }
     .vendorList .c-location-icon {
-        font-size: 1.5em;
+        font-size: 1.0em;
+        color:#545252;
     }
     .vendorList .c-location-distance {
         font-size: 0.8em;
         font-weight: bold;
     }
     .vendorList #rating {
-        padding-right: 0.1em;;
+        padding-right: 0.1em;
+        right:18px;
     }
     .vendorList #rating i {
         font-size: 0.8em;
@@ -701,4 +713,32 @@
 .vendorList .p-fix.card {
     position: relative;
     border: 1px darkgrey;
+}
+
+.vendor-price{
+    text-align: right;
+    padding:0px;
+}
+
+.price-strike{
+    padding:0px;
+}
+
+
+.price-discount-1{
+
+    color: #585858 !important;
+    padding: 0 0px 0 10px;
+}
+
+
+
+.price-discount-2{
+
+    color: #585858 !important;
+    padding: 0px;
+}
+
+.popover{
+    height:175px !important;
 }

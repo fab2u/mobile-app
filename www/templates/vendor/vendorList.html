@@ -30,11 +30,12 @@
                     </div>
                     <div id="part2" class="col-67">
                             <div class="row">
-                                <div class="col-50 icon ion-ios-location c-location-icon"
+                                <div class="col-50 "
                                      ng-click="open_map(vendor.address.latitude,vendor.address.longitude,vendor.address.address1,vendor.address.address2,vendor.vendor_name)">
-                                    &nbsp;<p id="f_13">{{vendor.distance| number : 2}} Km</p>
+                                    <p id="f_13"> <i class="icon ion-ios-location c-location-icon"></i>{{vendor.distance| number : 2}} Km</p>
+                                    &nbsp;
                                 </div>
-                                <div class="col-50" style="padding-left: 55px;">
+                                <div class="col-50">
                                     <p id="vendor_type">{{vendor.vendor_type }}</p>
                                     <div id="rating">
                                         <i class="icon ion-star active"
@@ -50,28 +51,31 @@
                                 <p id="land_mark">{{vendor.address.landmark}}</p>
                             </div>
                         </div>
-                        <div class="col" id="m_t">
-                            <div class="row" ng-if="(vendor.min_price_vendor != vendor.min_price_customer)
+                        <div class="col vendor-price">
+                           
+                                <span id="one" class="left-price badge price-strike" ng-if="(vendor.min_price_vendor != vendor.min_price_customer)
                             &&(vendor.max_price_vendor != vendor.max_price_customer)" style="text-decoration: line-through;">
-                                <span id="one" class="left-price badge">
-                                      <i>&#x20B9;</i>
-                                       {{vendor.min_price_vendor}}
+                                    (<i>&#x20B9;</i>
+                                       {{vendor.min_price_vendor}} 
                                     </span>
-                                <span id="two" class="badge" style="margin-left: 15px;">
+                                    <span ng-if="(vendor.min_price_vendor != vendor.min_price_customer)
+                            &&(vendor.max_price_vendor != vendor.max_price_customer)"> - </span>
+                                <span id="two" class="badge price-strike " ng-if="(vendor.min_price_vendor != vendor.min_price_customer)
+                            &&(vendor.max_price_vendor != vendor.max_price_customer)" style="text-decoration: line-through;">
                                         <i>&#x20B9;</i>
-                                      {{vendor.max_price_vendor}}
+                                      {{vendor.max_price_vendor}})
                                 </span>
-                            </div>
-                            <div class="row" id="m_t_5">
-                                  <span class="left-price badge">
+                                <span class="left-price badge price-discount-1">
                                       <i>&#x20B9;</i>
                                       {{vendor.min_price_customer}}
                                     </span>
-                                    <span class="badge" id="m_l_15">
+                                    <span>
+                                    -
+                                    </span>
+                                    <span class="badge price-discount-2">
                                      <i>&#x20B9;</i>
                                      {{vendor.max_price_customer}}
                                     </span>
-                            </div>
                         </div>
                     </div>
                 </div>

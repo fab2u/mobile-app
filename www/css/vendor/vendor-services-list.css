@@ -541,13 +541,14 @@ body, .ionic-body{
 	font-weight:500;
 }
 #vendor-services .services{
-	line-height:30px;
+	line-height:40px;
 	width:51%;
 	height:90%;
 	margin-top:4px;
 	background: #f2f2f2;
 	float:left;
 	text-align: center;
+	    color: #444;
 }
 #vendor-services .fab{
 	line-height:45px;
@@ -571,11 +572,12 @@ body, .ionic-body{
 	right: 0px;
 	margin-top: 14px;
 	text-align: center;
+	color:#5a5a5a;
 }
 #vendor-services .no-border {
 	border-bottom:0px solid #ff8386;
 }
 
 #vendor-services .with-border {
-	border-bottom:8px solid #ff8386;
+	border-bottom:4px solid #ff8386;
 }

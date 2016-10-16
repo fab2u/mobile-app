@@ -9,12 +9,13 @@
     float: left;
 }
 
+.vendorImg{
+	height:265px;
+}
 .vendorDetails .vendorImg img{
-	position:relative;
+	position:absolute;
 	width:100%;
-	height:40%;
-	margin:0px;
-	padding:0px;
+	top:0px;
 }
 
 .vendorDetails .backButton {
@@ -41,6 +42,9 @@
 	position:absolute;
 	top:100px;
 	right:20px;
+	    min-width: 30px;
+    min-height: 20px;
+        padding: 0px 5px;
 	/*color:#fff;*/
 }
 
@@ -72,12 +76,13 @@
 
 .vendorDetails .nameNlandmark{
 	position: absolute;
-	top: 90px;
+	top: 92px;
 	left: 0%;
 	width: 100%;
 	text-align: center;
 	color:#fff;
 	font-weight:500;
+	background-color: rgba(255, 255, 255, 0.68)
 }
 
 .vendorDetails .nameNlandmark h4 {
@@ -85,10 +90,11 @@
 	margin: 0 auto;
 	color:#3D3D3D;
 	font-size:1.5em;
+	padding-top: 10px;
 }
 .vendorDetails .nameNlandmark p {
 	color: #3D3D3D;
-	font-size:1.5em;
+	font-size:1.0em;
 }
 
 .vendorDetails .vendorContact {
@@ -112,27 +118,30 @@
 }
 
 .vendorDetails #tabS {
-    position: relative;
+      position: absolute;
     height: 42px;
-    top: 21%;
+    top: 160px;
     text-align: center;
+    width: 100%;
 }
 
 .vendorDetails .tabA {
 	background-color: #ff8386;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    margin-bottom: -5px;
+
     margin-left: 3px;
     margin-right: 3px;
-    opacity: 0.8;
-    margin-top: -60px;
+    opacity: 1;
+
     color:#f1f2f3;
     font-weight:200;
+    height:44px;
 }
 
 .vendorDetails .tabA i{
 	font-size:1.6em;
+	display: block;
 }
 
 .vendorDetails .tabA p{
@@ -144,15 +153,14 @@
 	background-color: #ff8386 ;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    margin-bottom: -5px;
+	height:44px;
     margin-left: 3px;
     margin-right: 3px;
-    opacity: 0.8;
-    margin-top: -60px;
-    color:#f1f2f3;
+    opacity: 1;
+
+    color:#fff;
     font-weight:200;
-    border-bottom:50px;
-    border-bottom:60px solid #0DD1D1;
+    border-bottom:5px solid #0DD1D1;
 }
 
 .vendorDetails .tabB i{
@@ -207,8 +215,7 @@
 }
 
 .vendorDetails .mapImg img{
-	border-radius: 12px;
-    border: 1px solid #4d4d4d;
+
     width: 100%;
     height: 140px;
     z-index: -1;
@@ -232,8 +239,8 @@
     margin-top: 15px;
     border-radius: 50%;
     background-color: red;
-    padding: 6px 5px 5px 12px;
-    font-size: 30px;
+    padding: 8px 0px 5px 14px;
+    font-size: 22px;
     color: white;
 }
 
@@ -263,13 +270,18 @@
 
 .vendorDetails .amenities div{
 	margin: 0px 8px;
-    border-radius: 5px;
+    border-radius: 0px;
     font-weight: 200;
     padding: 0px;
 }
 
+
+.vendorDetails .amenities div p{
+	margin:0px;
+}
 .vendorDetails .amenities div i{
-	font-size: 2em;
+	font-size: 20px;
+    line-height: 30px;
 }
 
 .vendorDetails .amenities div p {
@@ -288,11 +300,11 @@
 
 .vendorDetails .showTimings .clockIcon {
 	font-size: 2.6em;
-	padding-top:2px;
+	padding-top:4px;
 }
 
 .vendorDetails .showTimings .workTime {
-	line-height:20px;
+	line-height:32px;
 }
 
 .vendorDetails .workTime p{
@@ -311,9 +323,20 @@
 	margin:0px auto;
 }
 
-.vendorDetails .timingDetail span {
-	float:right;
+.timingDetail .align-right {
+	text-align:right;
+	font-size: 12px;
+	float: right;
+
 }
+
+.vendorDetails .timingDetail .align-left {
+	text-align:left;
+	font-size: 12px;
+	float: left;
+
+}
+
 
 .vendorDetails .trueRating {
 	color:#FF8386;
@@ -445,4 +468,6 @@
 }
 .vendorDetails .capitalize {
 	text-transform: capitalize;
+	text-align: center;
 }
+

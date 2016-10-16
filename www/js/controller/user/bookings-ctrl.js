@@ -1,4 +1,4 @@
-app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,$rootScope){
+app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,$rootScope,$cordovaToast){
 
 
 	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
@@ -114,7 +114,13 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 						delete window.localStorage.activeBooking;
 						$state.go('app.home');
 						$ionicLoading.hide();
-						alert('Thank you, your appointment has been cancelled!')
+						$cordovaToast
+							.show('Your booking is cancelled. Rs.'+ $scope.bookingInformation.walletAmount +'is successfully refunded in your wallet', 'long', 'center')
+							.then(function(success) {
+								// success
+							}, function (error) {
+								// error
+							});
 						$rootScope.$broadcast('booking', { message: 'booking cancelled' });
 
 					});
@@ -129,7 +135,13 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 
 						$state.go('app.home');
 						$ionicLoading.hide();
-						alert('Thank you for canceling your booking!')
+						$cordovaToast
+							.show('Your booking is cancelled.', 'long', 'center')
+							.then(function(success) {
+								// success
+							}, function (error) {
+								// error
+							});
 						$rootScope.$broadcast('booking', { message: 'booking cancelled' });
 
 					});

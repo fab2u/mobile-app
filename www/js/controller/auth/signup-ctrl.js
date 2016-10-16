@@ -1,30 +1,49 @@
 app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ionicLoading,$ionicPopup,
-                                      $timeout,$rootScope){
+                                      $timeout,$rootScope,$cordovaToast){
     $scope.generatedCode = '';
     $scope.myReferral = '';
     $scope.validReferralcode = [];
     $scope.walletMoney = 0;
     $scope.updates = {};
     $scope.apply_code = false;
+    $scope.referralName = '';
+    $scope.referralContact = '';
 
 
     /////////////////////////////// To check apply referral code valid or not ////////////////
     $scope.apply_promoCode = function (referralCode) {
-        console.log("apply promo code called")
         if (referralCode) {
             firebase.database().ref('referralCode/' + referralCode)
                 .once('value', function (response) {
                     console.log("response for all valid codes", JSON.stringify(response.val()))
                     if (response.val()) {
-                        alert('Congratulation,you will get 25 rs. in your wallet')
+                        $cordovaToast
+                            .show('Congratulation,you will get 25 rs. in your wallet', 'long', 'center')
+                            .then(function(success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
                     }
                     else {
-                        alert('Please, enter a valid code')
+                        $cordovaToast
+                            .show('Please, enter a valid code', 'long', 'center')
+                            .then(function(success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
                     }
                 })
         }
         else {
-            alert('Please, enter a code')
+            $cordovaToast
+                .show('Please, enter a code', 'long', 'center')
+                .then(function(success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
         }
     };
 
@@ -45,8 +64,13 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                     };
                     firebase.database().ref('referralCode/'+referralCode)
                         .once('value', function (response) {
-                            var referredByUid = response.val().uid;
-                            $scope.updates['referralCode/'+$scope.myReferral+'/referredBy'] = referredByUid;
+                            $scope.referredByUid = response.val().uid;
+                            firebase.database().ref('users/data/' + $scope.referredByUid)
+                                .once('value', function (response) {
+                                    $scope.referralName = response.val().name;
+                                    $scope.referralContact = response.val().mobile.mobileNum;
+                                })
+                            $scope.updates['referralCode/'+$scope.myReferral+'/referredBy'] = $scope.referredByUid;
                             firebase.database().ref('referralCode/'+referralCode+'/referredUsers/')
                                 .push({
                                     userUid:$scope.uid,
@@ -165,11 +189,8 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
 
 
     $scope.signup = function(){
-        $ionicLoading.show({
-            template: 'Loading...'
-        });
+        $ionicLoading.show();
         firebase.auth().createUserWithEmailAndPassword($scope.user.email, $scope.user.password).then(function(data){
-            console.log("uid",data.uid);
             $scope.uid = data.uid;
             if($scope.uid){
                 $scope.sendVerification();
@@ -199,36 +220,12 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
 
     $scope.sendVerification = function(){
         $scope.generateVerificationCode();
-        $ionicLoading.show({
-            template: 'Loading...'
-        });
+        $ionicLoading.show();
         $http({
-            url: 'http://BULKSMS.FLYFOTSERVICES.COM/unified.php?usr=28221&pwd=password1&ph=' +
-            $scope.user.mobile_num + '&sndr=IAMFAB&text=Greetings.' +
-            $scope.generatedCode + ' is your FAB2U verification code&type=json ',
+            url: 'http://139.162.27.64/api/send-otp?otp='+$scope.generatedCode+'&mobile='+$scope.user.mobile_num,
             method: 'POST',
             "async": true,
             "crossDomain": true
-        })
-        $ionicLoading.hide();
-        $scope.otp = $scope.generatedCode;
-        storedOTP.push($scope.otp);
-        window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
-        $ionicPopup.alert({
-            title: 'Verification Code Sent',
-            template: 'We have sent a verification code to your registered mobile number'
-        }).then(function(){
-            $scope.showOTPfield = true;
-            $scope.showPopup();
-        })
-    };
-    $scope.reSendVerification = function(){
-        $scope.user.mobile_num = '8447785980';
-        $scope.generateVerificationCode();
-        $ionicLoading.show();
-        $http({
-            method: 'POST',
-            url:'http://139.162.27.64/api/send?mob='+$scope.user.mobile_num+'&otp='+$scope.generatedCode
         }) .success(function (data, status, headers, config) {
             if(status == 200){
                 $ionicLoading.hide();
@@ -246,7 +243,36 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
         })
             .error(function (data, status, header, config) {
                 $ionicLoading.hide();
+                console.log(status,data)
+                alert(data.msg);
 
+            });
+
+    };
+    $scope.reSendVerification = function(){
+        $scope.generateVerificationCode();
+        $ionicLoading.show();
+        $http({
+            method: 'POST',
+            url:'http://139.162.27.64/api/send-otp?otp='+$scope.generatedCode+'&mobile='+$scope.user.mobile_num
+        }) .success(function (data, status, headers, config) {
+            if(status == 200){
+                $ionicLoading.hide();
+                $scope.otp = $scope.generatedCode;
+                storedOTP.push($scope.otp);
+                window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
+                $ionicPopup.alert({
+                    title: 'Verification Code Sent',
+                    template: 'We have sent a verification code to your registered mobile number'
+                }).then(function(){
+                    $scope.showOTPfield = true;
+                    $scope.showPopup();
+                })
+            }
+        })
+            .error(function (data, status, header, config) {
+                $ionicLoading.hide();
+                alert(data.msg)
             });
 
     };
@@ -297,25 +323,29 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                         title: 'Mobile Number Verified'
                     }).then(function(){
                         window.localStorage.setItem('mobile_verify','true');
-                        var userData = {
-                            activeFlag:true,
-                            createdTime:new Date().getTime(),
-                            deviceId: $cordovaDevice.getDevice().uuid,
-                            email:{
-                                userEmail:$scope.user.email,
-                                verifiedTime:'',
-                                emailFlag:false
-                            },
-                            mobile:{
-                                mobileNum: $scope.user.mobile_num,
-                                mobileFlag:true
-                            },
-                            myReferralCode:$scope.myReferral,
-                            name: $scope.user.name,
-                            referralCode: $scope.user.referral_code,
-                            userId:$scope.uid,
-                            gender: $scope.user.gender,
-                        };
+                                var userData = {
+                                    activeFlag:true,
+                                    createdTime:new Date().getTime(),
+                                    deviceId: $cordovaDevice.getDevice().uuid,
+                                    deviceName:$cordovaDevice.getDevice().manufacturer,
+                                    email:{
+                                        userEmail:$scope.user.email,
+                                        verifiedTime:'',
+                                        emailFlag:false
+                                    },
+                                    mobile:{
+                                        mobileNum: $scope.user.mobile_num,
+                                        mobileFlag:true
+                                    },
+                                    myReferralCode:$scope.myReferral,
+                                    name: $scope.user.name,
+                                    referralCode: $scope.user.referral_code,
+                                    referralName:$scope.referralName,
+                                    referralContact:$scope.referralContact,
+                                    userId:$scope.uid,
+                                    gender: $scope.user.gender,
+                                };
+
                         var referralData = {
                             uid:$scope.uid,
                             amount:25,
@@ -349,10 +379,22 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                                     else{
                                         $state.go('app.home');
                                     }
-                                    alert('Registration successfully completed!')
+                                    $cordovaToast
+                                        .show('Your account is successfully created.', 'long', 'center')
+                                        .then(function(success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
                                 }
                                 else{
-                                    alert('Try again!');
+                                    $cordovaToast
+                                        .show('Try again!', 'long', 'center')
+                                        .then(function(success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
                                 }
                             })
                     })

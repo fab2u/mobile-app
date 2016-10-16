@@ -232,11 +232,6 @@ app
 		controller: 'UserWalletCtrl'
 	});
 
-	$stateProvider.state('vendor-services-list', {
-		url: '/vendor-services-list/:vendor_id',
-		templateUrl: 'templates/vendor/vendor-services-list.html',
-		controller: 'VendorServicesListCtrl'
-	});
 
 	$stateProvider.state('vendorSelectedMenu', {
 		url: '/vendorSelectedMenu/:vendor_id',

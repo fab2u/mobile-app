@@ -228,24 +228,28 @@ app
             $scope.backButton = function() {
                 if(localStorage.getItem('favourite') == 'true') {
                     localStorage.setItem('favourite', '');
+                    console.log("1")
                     $state.go('favourite');
                 }
                 else if(localStorage.getItem("service_type")=='vendor'){
                     localStorage.setItem('service_type', '');
-                    console.log("else")
+                    console.log("2")
+
                     $state.go('app.home');
                 }
                 else if(window.localStorage.getItem("selectedTab")=='true'){
+                    console.log("3");
+                    localStorage.setItem('selectedTab', '');
                     $state.go('vendorSelectedMenu',{vendor_id:$stateParams.vendor_id});
                 }
-
                 else{
+                    console.log("else");
                     $state.go('vendorList');
                 }
                 // TODO
             };
 
-            // handel on click overview button
+            // handel on click overview buttonmySubArray,
             $scope.overviewButton = function() {
                 $state.go('vendorDetails',{'ven_id':$stateParams.vendor_id})
                 // TODO

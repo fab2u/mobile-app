@@ -1,6 +1,6 @@
 app
     .controller('VendorSelectedServicesListCtrl',function($scope,$stateParams,$rootScope,$state,
-                                                          $ionicLoading,$ionicPopup) {
+                                                          $ionicLoading,$ionicPopup,$cordovaToast) {
 
         $scope.total_fabtu=0;
         $scope.total_original=0;
@@ -12,6 +12,37 @@ app
         $scope.cart_item = 0;
         $scope.cart_price = {};
 
+        $scope.fabSelected = false;
+
+
+        $scope.selectMain = function(val){
+            if(val == 1){
+                $scope.fabSelected = false;
+            } else {
+                $scope.fabSelected = true;
+                if(_.size($scope.selectedServices)>0){
+                    var confirmPopup = $ionicPopup.confirm({
+                        title: 'Note',
+                        template: 'Your current selection will be discarded. You have to select services again from menu.'
+                    });
+                    confirmPopup.then(function(res) {
+                        if(res) {
+                            window.localStorage.setItem("selectedTab", false)
+                            $state.go('vendorMenu',{vendor_id:$stateParams.vendor_id});
+                            delete window.localStorage.slectedItems;
+                            delete window.localStorage.BegItems;
+                            $rootScope.$broadcast('cart', { message: 'cart length changed' });
+                        } else {
+                            console.log('You are not sure');
+                        }
+                    });
+                }
+                else{
+                    window.localStorage.setItem("selectedTab", true)
+                    $state.go('vendorMenu',{vendor_id:$stateParams.vendor_id});
+                }
+            }
+        };
 
        $scope.selected_items = JSON.parse(localStorage.getItem('catItems'));
         console.log(JSON.stringify( $scope.selected_items));
@@ -48,14 +79,11 @@ app
                     for(var j = 0; j< mySubArray.length;j++){
                         angular.forEach($scope.menuInfo, function (value, key) {
                             if(key == mySubArray[j]){
-                                console.log("iffffffffffffff",JSON.stringify(value))
                                 $scope.menu.push(value);
                             }
                         })
                     }
                     $scope.vendorDetail();
-                    console.log("selected hhhhhhhhhhhhhhhhhh menu value",JSON.stringify($scope.menu,null,2))
-
                 }
             })
 
@@ -169,33 +197,14 @@ app
 
             }
             else{
-                alert('Please, select some services!')
+                $cordovaToast
+                    .show('Please select at least one service', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
             }
-        };
-
-        $scope.complete_menu = function () {
-            if(_.size($scope.selectedServices)>0){
-                var confirmPopup = $ionicPopup.confirm({
-                    title: 'Note',
-                    template: 'Your current selection will be discarded. You have to select services again from menu.'
-                });
-                confirmPopup.then(function(res) {
-                    if(res) {
-                        window.localStorage.setItem("selectedTab", false)
-                        $state.go('vendorMenu',{vendor_id:$stateParams.vendor_id});
-                        delete window.localStorage.slectedItems;
-                        delete window.localStorage.BegItems;
-                        $rootScope.$broadcast('cart', { message: 'cart length changed' });
-                    } else {
-                        console.log('You are not sure');
-                    }
-                });
-            }
-            else{
-                window.localStorage.setItem("selectedTab", true)
-                $state.go('vendorMenu',{vendor_id:$stateParams.vendor_id});
-            }
-
         };
 
     });

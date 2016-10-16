@@ -1,5 +1,5 @@
 app.controller('LoginCtrl',
-    function($scope, AuthenticationService, $ionicPopup,$ionicHistory,$state,$ionicLoading,$rootScope){
+    function($scope, AuthenticationService,$cordovaToast, $ionicPopup,$ionicHistory,$state,$ionicLoading,$rootScope){
 
 	AuthenticationService.Logout();
 
@@ -26,7 +26,13 @@ app.controller('LoginCtrl',
                     $state.go('confirmation');
                 }
                 else{
-                    alert("Logged in successfully!");
+                    $cordovaToast
+                        .show('Logged in successfully!', 'long', 'center')
+                        .then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
                     $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
                     $state.go('app.home');
                 }

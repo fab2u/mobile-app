@@ -6,6 +6,7 @@ app.controller('SearchCtrl', function($state, $scope,$http,$ionicLoading) {
     delete window.localStorage.slectedItems;
     delete window.localStorage.catItems;
     delete window.localStorage.serviceId;
+    delete window.localStorage.selectedTab;
     window.localStorage.setItem("serviceId",'');
 
 
@@ -15,7 +16,6 @@ app.controller('SearchCtrl', function($state, $scope,$http,$ionicLoading) {
         if($scope.searchQuery != ''){
             $http.post("http://139.162.31.204/suggest?search_query="+$scope.searchQuery+"&typing_word="+$scope.searchQuery)
                 .then(function (response) {
-                    console.log(JSON.stringify(response)) ;
                     if(response){
                         $scope.suggestedServices = response.data.suggestions;
                         $ionicLoading.hide();
@@ -41,7 +41,6 @@ app.controller('SearchCtrl', function($state, $scope,$http,$ionicLoading) {
             delete window.localStorage.BegItems;
             window.localStorage.setItem("service_type",'vendor');
             $state.go('vendorMenu',{vendor_id:service.value.vendor_id});
-            console.log("else");
         }
 
     }

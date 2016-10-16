@@ -1,8 +1,7 @@
 <ion-view class="vendorDetails">
 	<ion-content>
 		<div class="vendorImg">
-			<!--<img src ="img/vendorImage.jpeg">-->
-			<img ng-src ="{{vendor_detail.images.main.url}}">
+			<img ng-src ="{{vendor_detail.images.main.url|| 'img/vendorImage.jpeg'}}">
 			<div class="ratingNcategory">
 				<div class="rating">
 					<span ng-repeat="counter in starrating(vendor_detail.rating) track by $index" class="trueRating">&#9733</span>
@@ -99,7 +98,7 @@
 			    			{{item.name}}
 			    			<span ng-class="time" ng-repeat="slots in item.Times">
 								<p style="margin-right: 5px;">
-									{{slots.start | date:"h:mma"}} - {{slots.end | date:"h:mma"}}
+									{{slots.start | date:"h:mma"}} - {{slots.end | date:"h:mma"}},
 								</p>
 							</span>
 			    		</ion-item>

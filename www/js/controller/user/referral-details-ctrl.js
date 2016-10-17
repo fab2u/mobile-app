@@ -12,15 +12,20 @@ app.controller('ReferralDetailsCtrl', ['$scope', '$state' , '$ionicLoading',func
 			if($scope.myReferralCode){
 				firebase.database().ref('referralCode/'+$scope.myReferralCode)
 					.once('value', function (response) {
-						$scope.referralDetails = response.val().referredUsers;
-						$scope.referredBy = response.val().referredBy;
-						$scope.referredDate = response.val().referredDate;
-						if($scope.referredBy){
-							firebase.database().ref('/users/data/' + $scope.referredBy).once('value', function (response) {
-								$scope.referredByDetail = response.val();
-								console.log("detail",JSON.stringify($scope.referredByDetail))
+						if(response.val()){
+							$scope.referralDetails = response.val().referredUsers;
+							$scope.referredBy = response.val().referredBy;
+							$scope.referredDate = response.val().referredDate;
+							if($scope.referredBy){
+								firebase.database().ref('/users/data/' + $scope.referredBy).once('value', function (response) {
+									$scope.referredByDetail = response.val();
+									console.log("detail",JSON.stringify($scope.referredByDetail))
+									$ionicLoading.hide();
+								})
+							}
+							else{
 								$ionicLoading.hide();
-							})
+							}
 						}
 						else{
 							$ionicLoading.hide();

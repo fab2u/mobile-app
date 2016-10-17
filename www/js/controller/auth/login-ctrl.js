@@ -26,13 +26,13 @@ app.controller('LoginCtrl',
                     $state.go('confirmation');
                 }
                 else{
-                    $cordovaToast
-                        .show('Logged in successfully!', 'long', 'center')
-                        .then(function(success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
+                    // $cordovaToast
+                    //     .show('Logged in successfully!', 'long', 'center')
+                    //     .then(function(success) {
+                    //         // success
+                    //     }, function (error) {
+                    //         // error
+                    //     });
                     $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
                     $state.go('app.home');
                 }

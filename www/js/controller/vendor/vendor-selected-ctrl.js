@@ -73,6 +73,7 @@ app
 
         if(mySubArray.length>0) {
             firebase.database().ref('menu/' + $stateParams.vendor_id).once('value', function (response) {
+                console.log("data",JSON.stringify(response.val()))
                 if (response.val()) {
                     $scope.menuInfo = response.val().services;
                     window.localStorage.setItem("vendorName", response.val().vendorName);
@@ -84,6 +85,10 @@ app
                         })
                     }
                     $scope.vendorDetail();
+                }
+                else{
+                    alert('No,menu found for this vendor,please select another vendor!');
+                    $ionicLoading.hide();
                 }
             })
 

@@ -24,7 +24,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 			}
 			else{
 				$scope.referralContact = '',
-					$scope.referralName = ''
+				$scope.referralName = ''
 			}
 		}
 		referralDetail();

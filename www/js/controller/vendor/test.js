@@ -80,12 +80,17 @@ app
                             $scope.menu.push(value)
                         }
                     });
+                    $scope.vendorDetail();
+                    $ionicLoading.hide();
+                    $timeout( function() {
+                        $ionicSlideBoxDelegate.update();
+                    },200);
                 }
-                $scope.vendorDetail();
-                $ionicLoading.hide();
-                $timeout( function() {
-                    $ionicSlideBoxDelegate.update();
-                },200);
+                else{
+                    $ionicLoading.hide();
+                    alert('No,menu found for this vendor,please select another vendor!');
+                }
+
             });
 
 

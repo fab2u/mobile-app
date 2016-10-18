@@ -119,6 +119,7 @@ app.controller('VendorDetailsCtrl',
         }
 
 /// To get review for a particular vendor ///////
+        $scope.review_info = [];
         $scope.reviewList = function(){
             $ionicLoading.show();
             firebase.database().ref('reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id+'/Reviews').once('value',function(response){
@@ -126,9 +127,10 @@ app.controller('VendorDetailsCtrl',
                 if(response.val()){
                     angular.forEach(response.val(), function(value, key) {
                         firebase.database().ref('users/data/'+value.userId).once('value',function(response) {
-                            $scope.reviewerName =response.val().name;
-                            $scope.reviewerImage =response.val().photoUrl;
                             $ionicLoading.hide();
+                            value.name = response.val().name;
+                            value.image = response.val().photoUrl;
+                            $scope.review_info.push(value);
                         })
                      });
                 }

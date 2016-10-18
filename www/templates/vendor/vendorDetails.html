@@ -121,11 +121,11 @@
 			</ion-slide>
 			<ion-slide>
 			    <div class="Reviews">
-			    	<div class="card ratingCard" ng-repeat="review in reviews" ng-show="reviews">
+			    	<div class="card ratingCard" ng-repeat="review in review_info" ng-show="reviews">
 			    		<div class="row">
 				    		<div class="col col-20 imgNname">
-				    			<img ng-src="{{reviewerImage}}" class="profilePic">
-				    			<p class="profileName">{{reviewerName}}</p>
+				    			<img ng-src="{{review.image}}" class="profilePic">
+				    			<p class="profileName">{{review.name}}</p>
 				    		</div>
 				    		<div class="col col-80 reviewNRating">
 				    			<div class="rating1">

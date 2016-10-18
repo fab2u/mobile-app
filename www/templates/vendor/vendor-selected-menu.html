@@ -6,25 +6,15 @@
             <div class="row cart-price" style="margin-top: -5px;">
                 <div class="col currency">&#x20B9;</div>
                 <div class="col price">{{total_customer}}</div>
-            </div> <!-- .cart-price -->
+            </div>
         </div>
     </ion-header-bar>
     <ion-content>
         <div ng-show="menuInfo">
-
-            <!-- <div class="row"> -->
-      <!--           <button class="button button-full button-menuInfo">
-                   SELECTED SERVICES
-                </button>
-                <button class="button button-full button-menuInfo" style="background-color: #3D3D3D;"
-                        ng-click="complete_menu()">
-                   COMPLETED MENU
-                </button> -->
-
             <div class="services-n-fab">
                 <div class="services" ng-class="fabSelected? 'no-border':'with-border'" ng-click="selectMain(1)">SELECTED SERVICES</div>
                 <div class="fab" ng-class="fabSelected? 'with-border':'no-border'" ng-click="selectMain(2)"></div>
-                <div class="fab-book" ng-click="selectMain(2)">COMPLETED MENU</div>
+                <div class="fab-book" ng-click="selectMain(2)">FULL MENU</div>
 
             </div>
             <div class="row padding">

@@ -1,18 +1,18 @@
 app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ionicModal,$ionicLoading) {
 
-	$scope.show = function() {
+	function location() {
 		$ionicLoading.show();
-	};
-	$scope.show();
+		firebase.database().ref('city').once('value',function(response){
+			$scope.location_list = response.val();
+			if($scope.location_list){
+				$ionicLoading.hide();
+			}
+		});
+	}
+	location();
 
-    firebase.database().ref('city').once('value',function(response){
-        $scope.location_list = response.val();
-		if($scope.location_list){
-			$ionicLoading.hide();
-		}
-    });
-
-    $scope.home = function(){
+    $scope.backButton = function(){
+    	console.log("clicked")
         $state.go('app.home');
     };
 

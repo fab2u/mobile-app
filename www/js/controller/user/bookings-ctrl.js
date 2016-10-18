@@ -26,7 +26,6 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 								$scope.bookingAddress = response.val().address;
 								$ionicLoading.hide();
 							});
-
 						}
 					});
 				}

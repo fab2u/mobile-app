@@ -196,6 +196,7 @@
 }
 .vendorList #rating i {
     color: black;
+    font-size: 15px !important;
 }
 
 

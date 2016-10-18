@@ -329,7 +329,7 @@ app.controller('VendorDetailsCtrl',
             console.log("review detail",JSON.stringify($scope.custReview));
             if($scope.custReview.rating == 0){
                 $cordovaToast
-                    .show('Please, select ratings!', 'long', 'center')
+                    .show('Please, select rating', 'long', 'center')
                     .then(function(success) {
                         // success
                     }, function (error) {

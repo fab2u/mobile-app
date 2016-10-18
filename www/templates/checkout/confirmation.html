@@ -1,5 +1,6 @@
 <ion-view class="confirmation" cache-view="false">
     <ion-content>
+        <div id="bg"><img src="img/background.jpg" alt=""></div>
         <button class="button button-dark button-small icon ion-chevron-left" id="backbutton" ng-click="goBack()"></button>
         <div class="card myCard">
             <br>
@@ -38,12 +39,12 @@
         <div id="walletPayableAmount" align="center" ng-show="hasWalletBalance">
             <p>WALLET BALANCE &nbsp; ₹{{amount}}</p>
             <ion-checkbox ng-model="isChecked" ng-click="toggleCheckbox()" id="walletCheckBox">
-                &nbsp; Pay from wallet &nbsp; ₹{{walletAmount}}</ion-checkbox>
+                &nbsp; PAY FROM WALLET &nbsp; ₹{{walletAmount}}</ion-checkbox>
         </div>
     </ion-content>
     <div style="text-align: center;">
         <ion-footer-bar class='bar bar-assertive custom-footer' ng-click="confirmedBooking()">
-            <div id="footerContent">BOOK NOW</div>
+            <div id="footerContent">CONFIRM APPOINTMENT</div>
         </ion-footer-bar>
     </div>
 </ion-view>

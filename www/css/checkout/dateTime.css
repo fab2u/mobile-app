@@ -3,7 +3,12 @@
 .appointment .custom-bar {
 	background-color: #404040 !important;
 }
-
+.appointment .footer_text{
+	font-size: 16px;
+	line-height: 35px;
+	text-align: center;
+	color: white
+}
 .appointment .custom-title {
 	background-color: #404040 !important;
 }
@@ -66,6 +71,8 @@
 	width: calc(100% - 10px);
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
+	background-color: #FF8385;
+	border: 5px #FF8385;
 }
 
 .appointment .custom-row {

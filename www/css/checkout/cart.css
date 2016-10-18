@@ -51,8 +51,9 @@
 }
 #cartview #totalcart
 {
-    background-color:#D3D3D3;
+    background-color:rgb(211,211,211);
     margin-top: -20px;
+    color: #444;
 }
 
 #cartview #totalfab2u
@@ -62,7 +63,7 @@
 }
 #cartview #carttotalprice
 {
-    color:white;
+    color:#444;
     position:absolute;
     right:17%;
 }
@@ -126,7 +127,7 @@
 }
 
 #cartview .striked-text {
-    color: black;
+    color: #444 !important;
 }
 #cartview table, th, td {
     border: 1px solid white;

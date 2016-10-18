@@ -12,7 +12,6 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 	location();
 
     $scope.backButton = function(){
-    	console.log("clicked")
         $state.go('app.home');
     };
 
@@ -31,6 +30,7 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
         	}, 500);
     };
 	$scope.location_selected = function(val){
+		console.log("val",val)
 		var selectedLocation = JSON.parse(window.localStorage['selectedLocation'] || '{}');
 		selectedLocation.cityId = val.cityId;
 		selectedLocation.cityName	= val.cityName;
@@ -38,6 +38,7 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 		selectedLocation.longitude = val.longitude;
 		selectedLocation.state = val.state;
 		selectedLocation.country = val.country;
+		selectedLocation.locationName = val.locationName;
 		window.localStorage['selectedLocation'] = JSON.stringify(selectedLocation);
 		$rootScope.$broadcast('location', { message: 'location changed' });
 		console.log("selected Location options :",val);

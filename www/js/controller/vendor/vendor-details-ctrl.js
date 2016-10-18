@@ -366,6 +366,7 @@ app.controller('VendorDetailsCtrl',
                         }, function (error) {
                             // error
                         });
+                    $scope.rate_vendor.hide();
                 });
             }
         };

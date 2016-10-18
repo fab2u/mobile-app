@@ -96,11 +96,9 @@
 			    	</div>
 			    	<ion-list ng-show="more">
 			    		<ion-item ng-repeat="item in days" class="timingDetail capitalize">
-			    			<span class="align-left">	{{item.name}} </span>
+			    			<span class="align-left">{{item.name}}</span>
 			    			<span class="align-right" ng-repeat="slots in item.Times">
-								
-									{{slots.start | date:"h:mma"}} - {{slots.end | date:"h:mma"}}
-							
+									{{slots.start | date:"h:mma"}} - {{slots.end | date:"h:mma"}},&nbsp;
 							</span>
 			    		</ion-item>
 			    	</ion-list>

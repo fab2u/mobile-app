@@ -75,3 +75,9 @@ div.stars {
     text-align: center;
     color: #FFFFFF;
 }
+.close_icon{
+    margin-top: 5px;
+    margin-left: 5px;
+    font-size: 20px;
+    color:#FF8385 ;
+}

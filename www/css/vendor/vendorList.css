@@ -195,7 +195,7 @@
     color: #F5F5F5;
 }
 .vendorList #rating i {
-    color: black;
+    color: rgb(211,211,211);
     font-size: 15px !important;
 }
 

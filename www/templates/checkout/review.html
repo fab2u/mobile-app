@@ -1,7 +1,7 @@
 <ion-modal-view class="modal-view">
     <ion-header-bar>
         <h1 class="title modal-title">Rate Now</h1>
-        <a class="button button-balanced" ng-click="rate_vendor.hide()"><span class="icon ion-ios-close"></span></a>
+        <i class="icon ion-close close_icon" ng-click="rate_vendor.hide()"></i>
     </ion-header-bar>
     <ion-content class="padding">
         <div class="card padding" id="rateNow">
@@ -12,9 +12,10 @@
             <label class="item item-input">
                 <textarea rows="4" cols="50" name="customerReview" ng-model="custReview.review"></textarea>
             </label>
-            <button class="button button-block button-dark" ng-click="storeReview();rate_vendor.hide();">
+            <button class="button button-block button-dark" ng-click="storeReview();">
                 SUBMIT
             </button>
         </div>
     </ion-content>
 </ion-modal-view>
+<!--rate_vendor.hide();-->

@@ -6,10 +6,11 @@
             <br>
             <div id="image"> <img src="img/confirmation.png"></div>
             <div id="totalAmount">
-                TOTAL AMOUNT &nbsp; ₹{{customer_price}}
-                <span style="color:red;text-decoration:line-through" ng-if="customer_price != total_original">
+                TOTAL AMOUNT &nbsp;
+                <span style="color:#FFFFFF;text-decoration:line-through" ng-if="customer_price != total_original">
                     <span style='color:white'>₹({{total_original}})</span>
                 </span>
+                ₹{{customer_price}}
             </div>
             <div id="walletMoney" ng-show="paidFromWallet">
                 <p>PAID FROM WALLET &nbsp ₹{{paidFromWallet}}</p>

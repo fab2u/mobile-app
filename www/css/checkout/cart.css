@@ -117,13 +117,16 @@
 }
 
 #cartview .line-arrow.right {
-    border-top: 1px solid red;
-    border-left: 1px solid red;
+    /*border-top: 1px solid red;*/
+    /*border-left: 1px solid red;*/
+    /*transform: rotate(145deg);*/
+    skeborder-top: 0px black;
+    border-left: 0px black;
     transform: rotate(145deg) skew(20deg);
 }
 
 #cartview strike {
-    color: red;
+    color: #444;
 }
 
 #cartview .striked-text {

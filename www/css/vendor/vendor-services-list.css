@@ -444,13 +444,13 @@
 }
 
 #vendor-services .line-arrow.right {
-	border-top: 1px solid red;
-	border-left: 1px solid red;
+	border-top: 0px black;
+	border-left: 0px black;
 	transform: rotate(145deg) skew(20deg);
 }
 
 #vendor-services strike {
-	color: red;
+	color: #444;
 }
 
 #vendor-services .striked-text {

@@ -82,6 +82,7 @@ app
 	//State for date time
 	$stateProvider.state('dateTime', {
 		url: '/dateTime',
+		cache:false,
 		templateUrl: 'templates/checkout/dateTime.html',
 		controller: 'DateTimeCtrl'
 	});

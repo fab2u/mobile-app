@@ -144,7 +144,8 @@
 
 .appointment .time-interval {
 	display: block;
-	font-size: 9px;
+	font-size: 10px;
+	color:black !important;
 }
 
 .appointment .fix-bar {

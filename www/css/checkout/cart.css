@@ -9,11 +9,16 @@
     color:white;
 }
 
+
 #cartview #closeiconcolor
 {
-    color:cyan;
+    color:#FF8385;
 }
-
+#cartview .badge_color
+{
+    color:#000 !important;
+    background-color:#FFFFFF !important;
+}
 
 #cartview #cartbadge
 {
@@ -46,7 +51,7 @@
 }
 #cartview #totalcart
 {
-    background-color:#3C3C3C;
+    background-color:#D3D3D3;
     margin-top: -20px;
 }
 
@@ -71,7 +76,8 @@
     border:5px #FF8385;
 }
 #cartview .diagonal {
-    border-top: 60px solid #3C3C3C;
+    /*border-top: 60px solid #3C3C3C;*/
+    border-top: 60px solid #D3D3D3;
     border-left: 60px solid rgba(0, 0, 0, 0);
     display: block;
     height: 0;

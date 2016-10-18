@@ -61,12 +61,17 @@ div.stars {
     display: inline-block;
     width: auto;
 }
-.filter .custom-footer {
+.vendorList .custom-footer {
     margin-left: 5px;
     width: calc(100% - 10px);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    background-color: #FF8386 !important;
-
+    background-color: #FF8385;
+    border: 5px #FF8385;
 }
-
+.vendorList .footer_text{
+    font-size: 16px;
+    line-height: 35px;
+    text-align: center;
+    color: #FFFFFF;
+}

@@ -7,8 +7,8 @@
             <div id="image"> <img src="img/confirmation.png"></div>
             <div id="totalAmount">
                 TOTAL AMOUNT &nbsp;
-                <span style="color:#FFFFFF;text-decoration:line-through" ng-if="customer_price != total_original">
-                    <span style='color:white'>₹({{total_original}})</span>
+                <span style="color:#444;text-decoration:line-through" ng-if="customer_price != total_original">
+                    <span style='color:#444'>₹({{total_original}})</span>
                 </span>
                 ₹{{customer_price}}
             </div>
@@ -37,12 +37,14 @@
                 <br>
             </div>
         </div>
-        <div id="walletPayableAmount" align="center" ng-show="hasWalletBalance">
+        <div id="walletPayable" align="center" ng-show="hasWalletBalance">
             <p>WALLET BALANCE &nbsp; ₹{{amount}}</p>
-            <ion-checkbox ng-model="isChecked" ng-click="toggleCheckbox()" id="walletCheckBox">
-                &nbsp; PAY FROM WALLET &nbsp; ₹{{walletAmount}}</ion-checkbox>
         </div>
-    </ion-content>
+        <div id="walletPayableAmount" align="center" ng-show="hasWalletBalance">
+            <ion-checkbox ng-model="isChecked" ng-click="toggleCheckbox()" id="walletCheckBox">
+            <p>&nbsp; PAY FROM WALLET &nbsp; ₹{{walletAmount}}</p></ion-checkbox>
+        </div>
+         </ion-content>
     <div style="text-align: center;">
         <ion-footer-bar class='bar bar-assertive custom-footer' ng-click="confirmedBooking()">
             <div id="footerContent">CONFIRM APPOINTMENT</div>

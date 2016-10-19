@@ -407,8 +407,8 @@
 }
 
 #vendor-services .list-heading{
-    background-color: #342D2D;
-    color: white;
+    background-color: rgb(211,211,211);
+    color: #444;
     right: 1px;
     border-top-left-radius: 1em;
     position: relative;

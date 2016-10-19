@@ -7,6 +7,8 @@ app.controller('VendorListCtrl',
         var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
         $scope.lat = locationInfo.latitude;
         $scope.long = locationInfo.longitude;
+        $scope.min_price = '';
+        $scope.max_price = '';
 
         $scope.price_list = [
             {
@@ -522,7 +524,6 @@ app.controller('VendorListCtrl',
                                 }, function (error) {
                                     // error
                                 });
-
                         }
                         console.log("list",JSON.stringify($scope.vendorList,null,2));
                         $scope.filter_screen.hide();

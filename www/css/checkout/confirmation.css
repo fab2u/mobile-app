@@ -72,7 +72,8 @@
 .confirmation #totalAmount {
 	width: 70%; 
 	margin: 15px auto; 
-	background-color: #3d3d3d;
+	/*background-color: #3d3d3d;*/
+	background-color: rgb(211,211,211);
 	height: 12%;
 	padding-bottom: 14px;
 	border-radius: 0.5em;
@@ -80,22 +81,36 @@
 	font-weight: 50;
 	text-align: center;
 	padding-top: 10px;
-	color: white;
+	color: #444;
 }
 
-.confirmation #walletPayableAmount{
+.confirmation #walletPayable{
     width: 80%;
     margin: 5px auto;
-    background-color: #3d3d3d;
+    background-color: rgb(211,211,211);
     /* height: 8%; */
-    /* padding-bottom: 14px; */
+     padding-bottom: 14px;
     border-radius: 0.5em;
     margin: auto;
     font-weight: 50;
     text-align: center;
     padding-top: 10px;
-    color: white;
-    /* margin-top: 50px; */
+    color: #444;
+     margin-top: 30px;
+}
+.confirmation #walletPayableAmount{
+	width: 80%;
+	margin: 5px auto;
+	/*background-color: rgb(211,211,211);*/
+	/* height: 8%; */
+	padding-bottom: 14px;
+	border-radius: 0.5em;
+	margin: auto;
+	font-weight: 50;
+	text-align: center;
+	padding-top: 10px;
+	/*color: #444;*/
+	margin-top: 30px;
 }
 
 .confirmation .Div {
@@ -105,13 +120,13 @@
 .confirmation #walletMoney {
 	width: 70%; 
 	margin: 5px auto; 
-	background-color: #3d3d3d;
+	background-color: rgb(211,211,211);
 	height: 12%;
 	border-radius: 0.5em;
 	font-weight: 50;
 	text-align: center;
 	padding-top: 10px;
-	color: white;
+	color: #444;
 }
 
 .confirmation #amountToPay {
@@ -131,10 +146,10 @@
 }
 
 .confirmation #haveCode {
-    background-color: #3d3d3d;
+    background-color: rgb(211,211,211);
     width: 80%;
     margin: 0 auto;
-    color: #fff;
+    color: #444;
     padding: 5px;
     border-radius: 0.5em;
 }
@@ -184,9 +199,11 @@
 }
 
 .confirmation #walletCheckBox {
-	background-color: #3D3D3D;
-	color: white;
-	font-size: 17px;
+	background-color: rgb(211,211,211);
+	color: #444;
+	font-weight: 50;
+	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
+	border-top-left-radius: 10px;
 	border-bottom-left-radius: 10px;
 }

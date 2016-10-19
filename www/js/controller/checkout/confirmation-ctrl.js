@@ -133,9 +133,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 		}
 
 	    $scope.getWalletInfo = function() {
-	        $ionicLoading.show({
-	            template: 'Loading...'
-	        })
+	        $ionicLoading.show();
 	        firebase.database().ref('userWallet/' + userId).once('value', function(response) {
 	        	var debitAmount = 0;
 	        	var creditAmount = 0;

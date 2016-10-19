@@ -7,6 +7,45 @@ app.controller('VendorListCtrl',
         var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
         $scope.lat = locationInfo.latitude;
         $scope.long = locationInfo.longitude;
+
+        $scope.price_list = [
+            {
+                min_price:1,
+                max_price:10000
+            },
+            {
+                min_price:10001,
+                max_price:25000
+            },
+            {
+                min_price:25001,
+                max_price:50000
+            },
+            {
+                min_price:50001,
+                max_price:75000
+            },
+            {
+                min_price:75001,
+                max_price:100000
+            },
+            {
+                min_price:100001,
+                max_price:125000
+            },
+            {
+                min_price:125001,
+                max_price:150000
+            },
+            {
+                min_price:150001,
+                max_price:175000
+            },
+            {
+                min_price:175001,
+                max_price:200000
+            }
+        ];
         $scope.vendor_info = function(){
             $scope.serviceIds = [];
             var serviceId = window.localStorage.getItem("serviceId");
@@ -436,6 +475,23 @@ app.controller('VendorListCtrl',
             $scope.smFn = function(value){
                 $scope.price_range = value;
             };
+            $ionicModal.fromTemplateUrl('templates/vendor/price.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function(modal) {
+                $scope.price_modal = modal;
+            });
+            $scope.open_price = function(){
+                $scope.price_modal.show();
+            };
+
+            $scope.close_price = function () {
+                $scope.price_modal.hide();
+            };
+            $scope.price_selected = function (selected_range) {
+                $scope.min_price = selected_range.min_price;
+                $scope.max_price = selected_range.max_price;
+            }
 
             $scope.apply = function () {
                 $ionicLoading.show();
@@ -445,7 +501,8 @@ app.controller('VendorListCtrl',
                     }
                 }
                 var final_query = {
-                    'price':$scope.price_range,
+                    'min_price':$scope.min_price,
+                    'max_price':$scope.max_price,
                     'amenities': $scope.final_amenity.join(),
                     'service_type': $scope.type,
                     'location':Object.keys($scope.selectedLocation).join(),
@@ -453,7 +510,7 @@ app.controller('VendorListCtrl',
                 };
                 console.log(final_query);
                 $http.post("http://139.162.31.204/filter_results?user_id="+$scope.uid+"&vendor_type="+final_query.service_type+
-                    "&price_range_min="+final_query.price+"&price_range_max=200000"+"&rating="+final_query.rating+
+                    "&price_range_min="+final_query.min_price+"&price_range_max="+final_query.max_price+"&rating="+final_query.rating+
                     "&locations="+final_query.location+"&facilities="+final_query.amenities)
                     .then(function (response) {
                         $scope.vendorList = response.data.filtered_results;

@@ -284,6 +284,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                 $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(0, 0, true);
             }
         }
+        $ionicScrollDelegate.resize();
     };
 
     $scope.scrollToBottom = function($event) {
@@ -332,6 +333,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
         else if(indexNum == 6){
             $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(0, 0, true);
         }
+        $ionicScrollDelegate.resize();
     };
 
     $scope.selectItem = function(index,serviceName,service_id) {

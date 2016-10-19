@@ -6,7 +6,7 @@
             <div class="fab-book" ng-click="selectMain(2)">FAB BOOK</div>
         </div>
         <div class="offerList">
-            <ion-slide-box class="offers">
+            <ion-slide-box class="offers" does-continue="true" auto-play="true">
                 <ion-slide ng-repeat="banner in banners" class="offer-slide">
                     <div class="offer-img">
                         <img ng-src="{{banner.url}}"/>

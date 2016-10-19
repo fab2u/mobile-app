@@ -57,7 +57,8 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                     else if(window.localStorage.getItem('SkipIntro')== "true"){
                         $state.go('app.home');
                     }else{
-                      $state.go('intro-slider');
+                      // $state.go('intro-slider');
+                      $state.go('location');
                     }
                 }
             });

@@ -30,7 +30,6 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
         	}, 500);
     };
 	$scope.location_selected = function(val){
-		console.log("val",val)
 		var selectedLocation = JSON.parse(window.localStorage['selectedLocation'] || '{}');
 		selectedLocation.cityId = val.cityId;
 		selectedLocation.cityName	= val.cityName;
@@ -41,7 +40,6 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 		selectedLocation.locationName = val.locationName;
 		window.localStorage['selectedLocation'] = JSON.stringify(selectedLocation);
 		$rootScope.$broadcast('location', { message: 'location changed' });
-		console.log("selected Location options :",val);
 		$timeout( function() {
 			$scope.location.hide();
 			$state.go('app.home');
@@ -57,7 +55,6 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 		$ionicLoading.show();
 		firebase.database().ref('location/' + JSON.parse(window.localStorage['selectedLocation']).cityId).once('value', function (response) {
 			$scope.location_detail = response.val();
-			console.log("location",JSON.stringify($scope.location_detail,null,2))
 			$scope.location.show();
 			$ionicLoading.hide();
 		});

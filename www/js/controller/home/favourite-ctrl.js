@@ -1,4 +1,4 @@
-app.controller('FavouriteCtrl', function($state,$ionicLoading, $scope) {
+app.controller('FavouriteCtrl', function($state,$ionicLoading,$cordovaToast, $scope) {
     $scope.favouriteList = function () {
         $ionicLoading.show();
         if(localStorage.getItem('uid')){
@@ -8,7 +8,13 @@ app.controller('FavouriteCtrl', function($state,$ionicLoading, $scope) {
             });
         }
         else{
-            alert('Please,login first!');
+            $cordovaToast
+                .show('Please,login first!', 'long', 'center')
+                .then(function(success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
             $ionicLoading.hide();
         }
     };

@@ -1,4 +1,4 @@
-app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$state){
+app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$cordovaToast,$state){
   $scope.total_original=0;
   $scope.total_fabtu=0;
     $scope.total_customer = 0;
@@ -77,7 +77,13 @@ $scope.select_time = function(){
         $state.go('dateTime');
     }
     else{
-        alert('Please, select some service!')
+        $cordovaToast
+            .show('Please, select some service!', 'long', 'center')
+            .then(function(success) {
+                // success
+            }, function (error) {
+                // error
+            });
     }
 };
 

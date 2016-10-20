@@ -1,4 +1,4 @@
-app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal,$rootScope){
+app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$ionicModal,$rootScope){
     $ionicLoading.show();
     $scope.cancelButton = false;
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
@@ -126,7 +126,13 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal,$roo
 
     $scope.storeReview = function(){
         if($scope.custReview.rating == 0){
-            alert('Please, select ratings!')
+            $cordovaToast
+                .show('Please, select ratings!', 'long', 'center')
+                .then(function(success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
         }
         else{
             var updates = {};
@@ -165,7 +171,13 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal,$roo
             delete window.localStorage.activeBooking;
             $state.go('app.home');
             $ionicLoading.hide();
-            alert('Your review has been submitted successfully!');
+            $cordovaToast
+                .show('Your review has been submitted successfully!', 'long', 'center')
+                .then(function(success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
             $rootScope.$broadcast('booking', { message: 'booking changed' });
 
         });
@@ -182,7 +194,13 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$state,$ionicModal,$roo
             delete window.localStorage.activeBooking;
             $state.go('app.home');
             $ionicLoading.hide();
-            alert('Thank you for updating your booking status!')
+            $cordovaToast
+                .show('Your review has been submitted successfully!', 'long', 'center')
+                .then(function(success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
             $rootScope.$broadcast('booking', { message: 'booking changed' });
 
 

@@ -270,7 +270,6 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
 //             update the slide number for slide box
 
     $scope.slideHasChanged = function(index,activeTab) {
-        console.log(index)
         if(activeTab == true){
             $scope.currSlide = index;
             $scope.tabActive = false;
@@ -289,7 +288,6 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                 $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(700, 0, true);
             }
         }
-        $ionicScrollDelegate.resize();
     };
 
     $scope.scrollToBottom = function($event) {
@@ -335,14 +333,13 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
         if(indexNum == 3){
             $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(300, 0, true);
         }
-        else if(index == 2){
+        else if(indexNum == 2){
             $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(30, 0, true);
 
         }
         else if(indexNum == 5){
             $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(700, 0, true);
         }
-        $ionicScrollDelegate.resize();
     };
 
     $scope.selectItem = function(index,serviceName,service_id) {

@@ -404,7 +404,9 @@
 }
 #vendor-services .item .p-15{
 	/*padding-top: 18px;*/
+	line-height: 20px;
 }
+
 
 #vendor-services .list-heading{
     background-color: rgb(211,211,211);

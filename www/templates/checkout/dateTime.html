@@ -21,21 +21,21 @@
 				</div>
 			</div>
 		</div>
-		<ion-item class = "custom-divider" >
+		<ion-item class= "custom-divider" ng-class="active_slot_1?'selected_slot':'not_selected_slot'">
 			<i class="icon ion-android-sunny custom-icon"></i>
-			<span class = "time-interval">9AM-12AM</span>
+			<span class ="time-interval" ng-class="active_slot_1?'selected_slot':'not_selected_slot'">9AM-12AM</span>
 		</ion-item>
-		<ion-item class = "custom-divider">
+		<ion-item class = "custom-divider" ng-class="active_slot_2?'selected_slot':'not_selected_slot'">
 			<i class="icon ion-android-sunny custom-icon"></i>
-			<span class = "time-interval">12AM-3PM</span>
+			<span class = "time-interval" ng-class="active_slot_2?'selected_slot':'not_selected_slot'">12AM-3PM</span>
 		</ion-item>
-		<ion-item class = "custom-divider">
+		<ion-item class = "custom-divider" ng-class="active_slot_3?'selected_slot':'not_selected_slot'">
 			<i class="icon ion-ios-time-outline custom-icon"></i>
-			<span class = "time-interval">3PM-6PM</span>
+			<span class = "time-interval" ng-class="active_slot_3?'selected_slot':'not_selected_slot'">3PM-6PM</span>
 		</ion-item>
-		<ion-item class = "custom-divider">
-			<i class="icon ion-ios-time-outline custom-icon"></i>
-			<span class = "time-interval">6PM-9PM</span>
+		<ion-item class = "custom-divider" ng-class="active_slot_4?'selected_slot':'not_selected_slot'">
+			<i class="icon ion-ios-moon custom-icon"></i>
+			<span class = "time-interval" ng-class="active_slot_4?'selected_slot':'not_selected_slot'">6PM-9PM</span>
 		</ion-item>
 
 		<ion-scroll has-bouncing="false" direction="y" scrollbar-y="false" ng-style="{height: getItemHeight()}"  style = "width: 25%;float:left;">

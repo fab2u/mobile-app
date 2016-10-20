@@ -270,6 +270,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
 //             update the slide number for slide box
 
     $scope.slideHasChanged = function(index,activeTab) {
+        console.log("index",index)
         if(activeTab == true){
             $scope.currSlide = index;
             $scope.tabActive = false;

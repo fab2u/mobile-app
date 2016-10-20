@@ -14,7 +14,7 @@
                 <img src="img/search.png">
             </div>
         </div>
-        <ion-scroll zooming="false" direction="x" id="scrollTabs" delegate-handle="myhandel">
+        <ion-scroll zooming="false" direction="x" id="scrollTabs" delegate-handle="myhandel" style="position: relative">
             <div id="container">
                 <div style="width:1800px;">
                     <div class="tab"
@@ -38,13 +38,14 @@
             <ion-slide-box on-slide-changed="slideHasChanged($index,false)" show-pager="false">
                 <ion-slide ng-repeat="service in services">
                     <ion-list>
+                        <span ng-if="currSlide==$index">
                         <ion-item ng-repeat="serviceItem in service.name"
                                   class="item-thumbnail-right list_view"
                                   ng-click="selectItem($index,serviceItem.name,serviceItem.id)">
-                          {{serviceItem.name}}
+                            {{serviceItem.name}}
                                 <img src="img/home/new-slider/square-blue.png"
                                      class="img_icon" ng-show="selectedServices[serviceItem.name]">
-                        </ion-item>
+                        </ion-item></span>
                     </ion-list>
                 </ion-slide>
             </ion-slide-box>

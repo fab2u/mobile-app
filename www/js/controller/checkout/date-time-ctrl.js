@@ -3,6 +3,10 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
   $scope.chosenTime = ''; // will store the time selected by the user*/
 
   $scope.monthName = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+  $scope.active_slot_1 = false;
+  $scope.active_slot_2 = false;
+  $scope.active_slot_3 = false;
+  $scope.active_slot_4 = false;
 
   $scope.slotValues = function() {
 
@@ -213,10 +217,6 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
   });
 
   $scope.timeSelected = function(index, id) {
-    // alert('Booking can only done after half an hour of current time!')
-    // console.log("index",index);
-    // console.log("id",id);
-    // console.log($scope.timeSlots[index].selected);
     for (var key in $scope.timeSlots9To12) {
       if ($scope.timeSlots9To12[key].id != id) {
   /** using jquery to remove the class */
@@ -226,6 +226,10 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
 
     /** using jquery to add the class */
           $('#'+id).addClass('selected-time');
+          $scope.active_slot_1 = true;
+          $scope.active_slot_2 = false;
+          $scope.active_slot_3 = false;
+          $scope.active_slot_4 = false;
           $scope.chosenTime = $scope.timeSlots9To12[key].time+'AM';
           window.localStorage.setItem("chosenTime", $scope.chosenTime);
 
@@ -249,6 +253,10 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
       } else {
         if ($scope.timeSlots12To3[key].isDisabled != true) {
           $('#'+id).addClass('selected-time');
+          $scope.active_slot_1 = false;
+          $scope.active_slot_2 = true;
+          $scope.active_slot_3 = false;
+          $scope.active_slot_4 = false;
           $scope.chosenTime = $scope.timeSlots12To3[key].time+'PM';
           window.localStorage.setItem("chosenTime", $scope.chosenTime);
 
@@ -270,6 +278,10 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
       } else {
         if ($scope.timeSlots3To6[key].isDisabled != true) {
           $('#'+id).addClass('selected-time');
+          $scope.active_slot_1 = false;
+          $scope.active_slot_2 = false;
+          $scope.active_slot_3 = true;
+          $scope.active_slot_4 = false;
           $scope.chosenTime = $scope.timeSlots3To6[key].time+'PM';
           window.localStorage.setItem("chosenTime", $scope.chosenTime);
 
@@ -292,6 +304,10 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
       } else {
         if ($scope.timeSlots6To9[key].isDisabled != true) {
           $('#'+id).addClass('selected-time');
+          $scope.active_slot_1 = false;
+          $scope.active_slot_2 = false;
+          $scope.active_slot_3 = false;
+          $scope.active_slot_4 = true;
           $scope.chosenTime = $scope.timeSlots6To9[key].time+'PM';
           window.localStorage.setItem("chosenTime", $scope.chosenTime);
 
@@ -340,9 +356,6 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
     localStorage.setItem('appointmentDate', JSON.stringify(appointmentDate));
 
     $rootScope.$broadcast('appointment', { message: 'appointment date changed' });
-
-    console.log($scope.date, $scope.currentMonth, $scope.year)
-
   };
 
 
@@ -375,9 +388,6 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
     }
     localStorage.setItem('appointmentDate', JSON.stringify(appointmentDate));
     $rootScope.$broadcast('appointment', { message: 'appointment date changed' });
-
-    console.log($scope.date, $scope.currentMonth, $scope.year)
-
   };
 
   $scope.getItemHeight = function() {
@@ -397,7 +407,6 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
             // error
           });
     }
-    // $state.go('confirmation');
   };
 
 });

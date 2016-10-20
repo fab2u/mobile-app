@@ -12,7 +12,12 @@
 .appointment .custom-title {
 	background-color: #404040 !important;
 }
-
+.selected_slot{
+	color: #FF8385 !important;
+}
+.not_selected_slot{
+	color: #666;
+}
 .appointment .custom-card {
 	border-radius: 10px;
 	padding-top:10px;
@@ -139,13 +144,13 @@
 }
 
 .appointment .custom-icon {
-	font-size:20px;
+	font-size:30px;
 }
 
 .appointment .time-interval {
 	display: block;
 	font-size: 10px;
-	color:black !important;
+	color:#444;
 }
 
 .appointment .fix-bar {

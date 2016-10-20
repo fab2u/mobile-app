@@ -36,12 +36,14 @@
         <div class="moreButton icon ion-chevron-right" ng-click="scrollToRight($event)"></div>
         <div>
             <ion-slide-box on-slide-changed="slideHasChanged($index,false)" show-pager="false">
-                <ion-slide  ng-repeat="service in services">
+                <ion-slide ng-repeat="service in services">
                     <ion-list>
                         <ion-item ng-repeat="serviceItem in service.name"
-                                  class="item-thumbnail-right list_view" ng-click="selectItem($index,serviceItem.name,serviceItem.id)">
+                                  class="item-thumbnail-right list_view"
+                                  ng-click="selectItem($index,serviceItem.name,serviceItem.id)">
                           {{serviceItem.name}}
-                                <img src="img/home/new-slider/square-blue.png" class="img_icon" ng-show="selectedServices[serviceItem.name]">
+                                <img src="img/home/new-slider/square-blue.png"
+                                     class="img_icon" ng-show="selectedServices[serviceItem.name]">
                         </ion-item>
                     </ion-list>
                 </ion-slide>
@@ -49,7 +51,7 @@
         </div>
     </ion-content>
     <!--<div class="moreDownButton icon ion-chevron-down" ng-click="scrollToBottom($event)">-->
-    </div>
+    <!--</div>-->
     <ion-footer-bar id="footer-bar" align-title="center" ng-click="findVendors()">
         <h1 class="title">FIND VENDORS</h1>
     </ion-footer-bar>

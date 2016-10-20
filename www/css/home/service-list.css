@@ -83,6 +83,7 @@
 #servicelistslider .activated {
     color: #FFFFFF;
     /*background-color: #ff8386*/
+    background-color: #fff !important;
 }
 
 #servicelistslider .active {

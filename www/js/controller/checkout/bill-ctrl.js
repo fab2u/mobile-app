@@ -26,7 +26,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$i
             else{
                 $ionicLoading.hide();
             }
-        })
+        });
         $scope.cancelButton = true;
         //// To check we, can cancel a booking or not! ///////
         // $scope.isActiveCancel = function(){

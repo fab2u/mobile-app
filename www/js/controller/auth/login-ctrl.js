@@ -1,11 +1,12 @@
 app.controller('LoginCtrl',
-    function($scope, AuthenticationService,$cordovaToast, $ionicPopup,$ionicHistory,$state,$ionicLoading,$rootScope){
+    function($scope, AuthenticationService,$cordovaToast,$timeout,
+             $ionicPopup,$ionicHistory,$state,$ionicLoading,$rootScope){
 
 	AuthenticationService.Logout();
 
 	$scope.user = {
       user_email: '',
-      user_password: '',
+      user_password: ''
     };
 
 	$scope.loginEmail = function(){
@@ -36,14 +37,18 @@ app.controller('LoginCtrl',
                     $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
                     $state.go('app.home');
                 }
-                $ionicLoading.hide();
+                $timeout( function() {
+                    $ionicLoading.hide();
+                },300);
             }
         })
             .catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-                $ionicLoading.hide();
+                $timeout( function() {
+                    $ionicLoading.hide();
+                },300);
 
                 alert(errorMessage);
 

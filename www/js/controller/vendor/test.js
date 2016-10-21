@@ -81,10 +81,10 @@ app
                         }
                     });
                     $scope.vendorDetail();
-                    $ionicLoading.hide();
                     $timeout( function() {
                         $ionicSlideBoxDelegate.update();
-                    },200);
+                        $ionicLoading.hide();
+                    },300);
                 }
                 else{
                     $ionicLoading.hide();

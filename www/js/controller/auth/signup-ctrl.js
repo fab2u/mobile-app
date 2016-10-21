@@ -198,7 +198,9 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                 if($scope.user.referral_code){
                     $scope.checkValidCode($scope.user.referral_code);
                 }
-                $ionicLoading.hide();
+                $timeout( function() {
+                    $ionicLoading.hide();
+                },300);
             }
         })
             .catch(function(error) {
@@ -206,8 +208,9 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
             var errorCode = error.code;
             var errorMessage = error.message;
                 alert(errorMessage)
-                $ionicLoading.hide();
-
+                $timeout( function() {
+                    $ionicLoading.hide();
+                },300);
                 console.log("errorCode",errorCode,errorMessage)
         })
     };
@@ -228,7 +231,9 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
             "crossDomain": true
         }) .success(function (data, status, headers, config) {
             if(status == 200){
-                $ionicLoading.hide();
+                $timeout( function() {
+                    $ionicLoading.hide();
+                },300);
                 $scope.otp = $scope.generatedCode;
                 storedOTP.push($scope.otp);
                 window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
@@ -242,7 +247,9 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
             }
         })
             .error(function (data, status, header, config) {
-                $ionicLoading.hide();
+                $timeout( function() {
+                    $ionicLoading.hide();
+                },300);
                 console.log(status,data)
                 alert(data.msg);
 
@@ -257,7 +264,9 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
             url:'http://139.162.27.64/api/send-otp?otp='+$scope.generatedCode+'&mobile='+$scope.user.mobile_num
         }) .success(function (data, status, headers, config) {
             if(status == 200){
-                $ionicLoading.hide();
+                $timeout( function() {
+                    $ionicLoading.hide();
+                },300);
                 $scope.otp = $scope.generatedCode;
                 storedOTP.push($scope.otp);
                 window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
@@ -271,7 +280,9 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
             }
         })
             .error(function (data, status, header, config) {
-                $ionicLoading.hide();
+                $timeout( function() {
+                    $ionicLoading.hide();
+                },300);
                 alert(data.msg)
             });
 

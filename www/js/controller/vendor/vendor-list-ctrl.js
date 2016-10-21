@@ -524,6 +524,7 @@ app.controller('VendorListCtrl',
                                 }, function (error) {
                                     // error
                                 });
+                            $ionicLoading.hide();
                         }
                         console.log("list",JSON.stringify($scope.vendorList,null,2));
                         $scope.filter_screen.hide();
@@ -542,7 +543,5 @@ app.controller('VendorListCtrl',
                 $ionicLoading.hide();
             };
         }
-
-            $scope.vendor_info();
-
+         $scope.vendor_info();
     });

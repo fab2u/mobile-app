@@ -19,15 +19,16 @@ app.controller('ReferralDetailsCtrl', ['$scope', '$state' , '$ionicLoading',func
 							if($scope.referredBy){
 								firebase.database().ref('/users/data/' + $scope.referredBy).once('value', function (response) {
 									$scope.referredByDetail = response.val();
-									console.log("detail",JSON.stringify($scope.referredByDetail))
 									$ionicLoading.hide();
 								})
 							}
 							else{
+								$scope.msg = 'Referred by none!';
 								$ionicLoading.hide();
 							}
 						}
 						else{
+							$scope.msg1 = 'Sorry,no history found yet!';
 							$ionicLoading.hide();
 						}
 					})

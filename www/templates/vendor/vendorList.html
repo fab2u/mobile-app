@@ -24,8 +24,8 @@
         </ion-header-bar>
         <ion-content>
             <div class="card m-5 fab_card" ng-show="packages.length !='0'" ng-repeat="vendor in vendorList">
-                <div class="row" ng-click="vendor_menu(vendor.vendor_id)">
-                    <div class="col-33 image_display_1">
+                <div class="row">
+                    <div class="col-33 image_display_1" ng-click="vendor_menu(vendor.vendor_id)">
                         <img ng-src="{{vendor.image_url || 'img/vendorImage.jpeg'}}" class="pkg-img">
                     </div>
                     <div id="part2" class="col-67">
@@ -35,7 +35,7 @@
                                     <p id="f_13"> <i class="icon ion-ios-location c-location-icon"></i>{{vendor.distance| number : 2}} Km</p>
                                     &nbsp;
                                 </div>
-                                <div class="col-50">
+                                <div class="col-50" ng-click="vendor_menu(vendor.vendor_id)">
                                     <p id="vendor_type">{{vendor.vendor_type }}</p>
                                     <div id="rating">
                                         <i class="icon ion-star active"
@@ -45,13 +45,13 @@
                                     </div>
                                 </div>
                             </div>
-                        <div class="row" id="m_t">
+                        <div class="row" id="m_t" ng-click="vendor_menu(vendor.vendor_id)">
                             <div class="col">
                                 <p id="f_15">{{vendor.vendor_name}}</p>
                                 <p id="land_mark">{{vendor.address.landmark}}</p>
                             </div>
                         </div>
-                        <div class="col vendor-price">
+                        <div class="col vendor-price" ng-click="vendor_menu(vendor.vendor_id)">
                            
                                 <span id="one" class="left-price badge price-strike" ng-if="(vendor.min_price_vendor != vendor.min_price_customer)
                             &&(vendor.max_price_vendor != vendor.max_price_customer)" style="text-decoration: line-through;">

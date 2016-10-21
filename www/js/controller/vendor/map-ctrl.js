@@ -1,9 +1,10 @@
-app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $ionicLoading, $ionicHistory, $stateParams){
+app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $ionicLoading,
+                                   $cordovaLaunchNavigator,$ionicHistory, $stateParams){
 
     $scope.showPrevious = function(){
         $scope.hashistory = Object.keys($ionicHistory.viewHistory().views).length;
 
-        if(  $scope.hashistory != 1){
+        if($scope.hashistory != 1){
             $ionicHistory.goBack();
         }
         else{
@@ -38,8 +39,6 @@ app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $io
             content: address
         });
 
-
-
         infowindow.open(map, marker);
     }
 
@@ -52,6 +51,19 @@ app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $io
         $scope.coords.longitude = $stateParams.lng;
         showMap($scope.coords);
     });
+    var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
 
+    $scope.centerOnMe = function () {
+        alert("1")
+        var destination = [$stateParams.lat, $stateParams.lng];
+        var start = [locationInfo.latitude,locationInfo.longitude];
+        $cordovaLaunchNavigator.navigate(destination, start).then(function() {
+            console.log("Navigator launched");
+            alert("Navigator launched");
+        }, function (err) {
+            console.error(err);
+            alert(err)
+        });
+    };
 
 });

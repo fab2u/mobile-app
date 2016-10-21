@@ -48,7 +48,6 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                     // $state.go('intro-slider');
                     var hasCurrentBooking = checkLocalStorage('currentBooking');
                     if(hasCurrentBooking == true){
-                        console.log("condition for current booking")
                     	$state.go('bill');
                     }
                     else if(window.localStorage.getItem('SkipIntro')== "true"){

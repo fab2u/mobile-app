@@ -97,7 +97,8 @@ app.controller('IntroSliderCtrl',
         window.localStorage.setItem('SkipIntro','true');
         $timeout( function() {
             $ionicLoading.hide();
-            $state.go('app.home');
+            $state.go('location');
+            // $state.go('app.home');
         },500);
     };
 
@@ -116,7 +117,8 @@ app.controller('IntroSliderCtrl',
                 // if (count == 5) {
                     $ionicLoading.hide();
                     $interval.cancel(stop);
-                    $state.go('app.home');
+                    $state.go('location');
+                // $state.go('app.home');
                 // }
             }, 200);
         }

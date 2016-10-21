@@ -14,7 +14,8 @@ app.controller('SearchCtrl', function($state, $scope,$http,$ionicLoading) {
         $ionicLoading.show();
 
         if($scope.searchQuery != ''){
-            $http.post("http://139.162.31.204/suggest?search_query="+$scope.searchQuery+"&typing_word="+$scope.searchQuery)
+            $http.post("http://139.162.31.204/suggest?search_query="+$scope.searchQuery+"&typing_word="+
+                $scope.searchQuery)
                 .then(function (response) {
                     if(response){
                         $scope.suggestedServices = response.data.suggestions;

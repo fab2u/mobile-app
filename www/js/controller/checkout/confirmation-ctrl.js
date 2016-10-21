@@ -517,13 +517,6 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 				window.localStorage.setItem("chosenTime", '');
 				$rootScope.$broadcast('booking', { message: 'booking changed' });
 				$state.go('bill');
-				$cordovaToast
-					.show('Congratulations! Your booking is confirmed.', 'long', 'center')
-					.then(function(success) {
-						// success
-					}, function (error) {
-						// error
-					});
 			});
 		}
 	}

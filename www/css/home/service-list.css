@@ -36,6 +36,7 @@
     text-align: center;
     padding-top: 5px;
     background-color: transparent !important;
+    color:transparent !important;
 }
 
 #servicelistslider .moreDownButton {
@@ -83,7 +84,7 @@
 #servicelistslider .activated {
     color: #FFFFFF;
     /*background-color: #ff8386*/
-    background-color: #fff !important;
+    background-color: transparent !important;
 }
 
 #servicelistslider .active {

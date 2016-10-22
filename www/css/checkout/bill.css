@@ -30,7 +30,7 @@
 	padding-bottom: 0px;
 	position: relative;
     padding: 0.5px 0.5px 0.5px 0.5px;
-    background: #2D2D2D;
+    background: rgb(211,211,211);
     opacity: 0.7;
     filter: alpha(opacity=40);
     font-color: red !important;
@@ -41,7 +41,7 @@
     height: auto;
     font-size: 0.9em;
     margin: 1.5% auto;
-    color: white;
+    color: #444;
     opacity: 0.7;
     border-style: hidden;
 }
@@ -68,14 +68,14 @@
   border-top-width: 0px;
   border-style: solid;
   border-bottom-width: 0.1px;
-  border-color: white;
+  border-color: #444;
   padding: 8px;
 }
 
 .bill .container {
         position: relative;
         padding: 8px 8px 15px 8px;
-        background: #2D2D2D;
+        background: rgb(211,211,211);
         opacity: 0.7;
         border-style: hidden;
     	filter: alpha(opacity=40);

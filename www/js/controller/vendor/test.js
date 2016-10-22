@@ -298,31 +298,31 @@ app
                     "serviceid": "1006"
                 },
                 "1007":{
-                    "serviceName": "Head Massage",
+                    "serviceName": "Hair Transplant",
                     "serviceid": "1007"
                 },
                 "1008":{
-                    "serviceName": "Hair Spa",
+                    "serviceName": "Head Massage",
                     "serviceid": "1008"
                 },
                 "1009":{
-                    "serviceName": "Hair Transplant",
+                    "serviceName": "Hair Spa",
                     "serviceid": "1009"
                 },
                 "1010":{
-                    "serviceName": "Hair Wash",
+                    "serviceName": "Anti HairFall Treatment",
                     "serviceid": "1010"
                 },
                 "1011":{
-                    "serviceName": "Other Hair Treatments",
+                    "serviceName": "Hair Wash",
                     "serviceid": "1011"
                 },
                 "1012":{
-                    "serviceName": "Straightening/ Perming",
+                    "serviceName": "Other Hair Treatments",
                     "serviceid": "1012"
                 },
                 "1013":{
-                    "serviceName": "Anti HairFall Treatment",
+                    "serviceName": "Straightening/ Perming",
                     "serviceid": "1013"
                 },
                 "2001":{

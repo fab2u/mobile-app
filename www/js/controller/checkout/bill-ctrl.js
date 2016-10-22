@@ -169,7 +169,6 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$i
         db.ref().update(updates).then(function () {
             delete window.localStorage.currentBooking;
             delete window.localStorage.activeBooking;
-            $state.go('app.home');
             $ionicLoading.hide();
             $cordovaToast
                 .show('Your review has been submitted successfully!', 'long', 'center')
@@ -178,6 +177,8 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$i
                 }, function (error) {
                     // error
                 });
+            $scope.rate_vendor.hide();
+            $state.go('app.home');
             $rootScope.$broadcast('booking', { message: 'booking changed' });
 
         });

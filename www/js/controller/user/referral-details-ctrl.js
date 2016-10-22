@@ -40,6 +40,10 @@ app.controller('ReferralDetailsCtrl', ['$scope', '$state' , '$ionicLoading',func
 	};
 	$scope.myReferral();
 
+	$scope.referNearn = function () {
+		$state.go('refer');
+	};
+
 
 
 

@@ -207,8 +207,13 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-                alert(errorMessage)
-                $timeout( function() {
+                $cordovaToast
+                    .show(errorMessage, 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });                $timeout( function() {
                     $ionicLoading.hide();
                 },300);
                 console.log("errorCode",errorCode,errorMessage)
@@ -251,8 +256,13 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                     $ionicLoading.hide();
                 },300);
                 console.log(status,data)
-                alert(data.msg);
-
+                $cordovaToast
+                    .show(data.msg, 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
             });
 
     };
@@ -283,7 +293,13 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                 $timeout( function() {
                     $ionicLoading.hide();
                 },300);
-                alert(data.msg)
+                $cordovaToast
+                    .show(data.msg, 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
             });
 
     };

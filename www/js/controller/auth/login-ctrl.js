@@ -49,9 +49,13 @@ app.controller('LoginCtrl',
                 $timeout( function() {
                     $ionicLoading.hide();
                 },300);
-
-                alert(errorMessage);
-
+                $cordovaToast
+                    .show(errorMessage, 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
                 // ...
         });
    }

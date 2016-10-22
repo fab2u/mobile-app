@@ -16,7 +16,9 @@
 }
 
 .userWallet .walletImg img{
-	width:45%;
+	width:35%;
+	height: 20%;
+	margin-bottom: 20px;
 }
 
 .userWallet .walletBalance {

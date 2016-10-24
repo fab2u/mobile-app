@@ -420,6 +420,7 @@
 
 .allImages div img{
 	border-radius:5px;
+	height: 160px;
 }
 
 .transparent {

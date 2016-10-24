@@ -63,9 +63,48 @@ app
                 var cat_name = 'cat-01'
                 $scope.selected_cat.push(cat_name);
             }
+           else if(sorted_id[i]<='2010' && sorted_id[i]>='2001'){
+                var cat_name = 'cat-02'
+                $scope.selected_cat.push(cat_name);
+            }
+            else if(sorted_id[i]<='3009' && sorted_id[i]>='3001'){
+                var cat_name = 'cat-03'
+                $scope.selected_cat.push(cat_name);
+            }
+            else if(sorted_id[i]<='4009' && sorted_id[i]>='4001'){
+                var cat_name = 'cat-04'
+                $scope.selected_cat.push(cat_name);
+            }
+            else if(sorted_id[i]<='5003' && sorted_id[i]>='5001'){
+                var cat_name = 'cat-05'
+                $scope.selected_cat.push(cat_name);
+            }
+            else if(sorted_id[i]<='6002' && sorted_id[i]>='6001'){
+                var cat_name = 'cat-06'
+                $scope.selected_cat.push(cat_name);
+            }
+            else if(sorted_id[i]=='7001'){
+                var cat_name = 'cat-07'
+                $scope.selected_cat.push(cat_name);
+            }
+            else if(sorted_id[i]<='8001'){
+                var cat_name = 'cat-08'
+                $scope.selected_cat.push(cat_name);
+            }
+            else if(sorted_id[i]<='9001'){
+                var cat_name = 'cat-09'
+                $scope.selected_cat.push(cat_name);
+            }
+            else if(sorted_id[i]<='1101'){
+                var cat_name = 'cat-11'
+                $scope.selected_cat.push(cat_name);
+            }
+            else if(sorted_id[i]<='1201'){
+                var cat_name = 'cat-12'
+                $scope.selected_cat.push(cat_name);
+            }
 
         }
-        console.log("testing",$scope.selected_cat)
         var mySubArray = _.uniq($scope.selected_cat, function (name) {
             return name;
         });
@@ -87,7 +126,13 @@ app
                     $scope.vendorDetail();
                 }
                 else{
-                    alert('No,menu found for this vendor,please select another vendor!');
+                    $cordovaToast
+                        .show('No,menu found for this vendor,please select another vendor!', 'long', 'center')
+                        .then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
                     $ionicLoading.hide();
                 }
             })

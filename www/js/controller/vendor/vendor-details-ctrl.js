@@ -121,6 +121,7 @@ app.controller('VendorDetailsCtrl',
 
 /// To get review for a particular vendor ///////
         $scope.reviewList = function(){
+            $scope.review_info = [];
             $ionicLoading.show();
             firebase.database().ref('reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id+'/Reviews').once('value',function(response){
                 $scope.reviews = response.val();
@@ -141,7 +142,10 @@ app.controller('VendorDetailsCtrl',
                 console.log("reviews",$scope.review_info)
             });
         };
-
+        $rootScope.$on('reviewList', function (event, args) {
+            $scope.message = args.message;
+            $scope.reviewList();
+        });
     $scope.slideHasChanged = function(value){
       console.log(value);
         if(value == 2){
@@ -347,8 +351,10 @@ app.controller('VendorDetailsCtrl',
                     updates['reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id+'/Reviews/'+reviewData.ReviewId] = reviewData;
                     updates['userReviews/'+localStorage.getItem('uid')+'/'+reviewData.ReviewId] = userReviewData;
                     db.ref().update(updates).then(function () {
+                        $scope.custReview ={};
+                        location.reload();
                         $ionicLoading.hide();
-                        $rootScope.$broadcast('reviews', { message: 'review list changed' });
+                        $rootScope.$broadcast('reviewList', { message: 'review list changed' });
                         $cordovaToast
                             .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
                             .then(function(success) {
@@ -370,9 +376,6 @@ app.controller('VendorDetailsCtrl',
                     });
             }
         };
-        $rootScope.$on('reviews', function (event, args) {
-            $scope.message = args.message;
-            $scope.reviewList();
-        });
+
 
 });

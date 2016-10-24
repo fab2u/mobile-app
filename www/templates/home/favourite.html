@@ -9,19 +9,20 @@
                 No,vendor found for your favourite list!
             </p>
         </div>
-        <div class="p-fix card" ng-repeat="vendor in vendorList"
-             ng-show="vendorList"
-             style="background-image: url({{vendor.image_url || '../../img/vendorImage.jpeg'}})">
-            <!--profile_img || 'img/dummy.png'-->
-            <div class="row">
-                <div class="col c-col-40" ng-click="vendor_menu(vendor.vendorId)">
-                    <h6 class="c-title">{{vendor.vendorName}}</h6>
-                    <p class="c-subtitle">{{vendor.vendorLandmark}}</p>
+        <div class="card m-5 fab_card" ng-show="packages.length !='0'" ng-repeat="vendor in vendorList">
+            <div class="row" ng-click="vendor_menu(vendor.vendorId)">
+                <div class="col-33 image_display_1" ng-click="vendor_menu(vendor.vendor_id)">
+                    <img ng-src="{{vendor.image_url || 'img/vendorImage.jpeg'}}" class="pkg-img">
                 </div>
-                <div id="section2" class="col c-col-60" ng-click="vendor_menu(vendor.vendorId)">
+                <div id="part2" class="col-67">
+                    <div class="row" id="m_t">
+                        <div class="col" style="margin-top: 20px;">
+                            <p id="f_15">{{vendor.vendorName}}</p>
+                            <p id="land_mark">{{vendor.vendorLandmark}}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     </ion-content>
 </ion-view>

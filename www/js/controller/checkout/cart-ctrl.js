@@ -5,11 +5,6 @@ app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$cordovaToast,
 
     window.localStorage.setItem("vendorId", $stateParams.ven_id);
 
-
-    console.log(JSON.parse(localStorage.getItem('BegItems')))
-
-
-
     $scope.cartItems = {};
     $scope.cart_item = 0;
 

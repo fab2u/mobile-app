@@ -80,63 +80,6 @@
                     </div>
                 </div>
             </div>
-
-
-            <!--<div class="p-fix card" ng-repeat="vendor in vendorList"-->
-                 <!--ng-show="vendorList"-->
-                 <!--style="background-image: url({{vendor.image_url || '../../img/vendorImage.jpeg'}})">-->
-                <!--&lt;!&ndash;profile_img || 'img/dummy.png'&ndash;&gt;-->
-                <!--<div class="row">-->
-                    <!--<div class="col c-col-40" ng-click="vendor_menu(vendor.vendor_id)">-->
-                        <!--<h6 class="c-title">{{vendor.vendor_name}}</h6>-->
-                        <!--<p class="c-subtitle">{{vendor.address.landmark}}</p>-->
-                    <!--</div>-->
-                    <!--<div class="location-icon-container">-->
-                        <!--<div>-->
-                            <!--<i class="icon ion-ios-location c-location-icon"-->
-                               <!--ng-click="open_map(vendor.address.latitude,vendor.address.longitude,vendor.address.address1,vendor.address.address2,vendor.vendor_name)">-->
-                            <!--</i>-->
-                        <!--</div>-->
-                        <!--<p class="c-location-distance">{{vendor.distance| number : 2}} Km</p>-->
-                    <!--</div>-->
-                    <!--<div id="section2" class="col c-col-60" ng-click="vendor_menu(vendor.vendor_id)">-->
-                        <!--<div id="rating">-->
-                            <!--<i class="icon ion-star active"-->
-                               <!--ng-repeat="counter in starRating(vendor.vendor_rating) track by $index"></i>-->
-                            <!--<i class="icon ion-star"-->
-                               <!--ng-repeat="counter in starRating(5-vendor.vendor_rating) track by $index"></i>-->
-                            <!--<p>{{vendor.vendor_type}}</p>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div id="price-tag" class="col" ng-click="vendor_menu(vendor.vendor_id)">-->
-                        <!--&lt;!&ndash;<div class="row original-price" ng-repeat="(key, value) in vendor.menu_union" ng-if="(key == service_id)">&ndash;&gt;-->
-                        <!--<div class="row original-price"-->
-                             <!--ng-if="(vendor.min_price_vendor != vendor.min_price_customer) &&(vendor.max_price_vendor != vendor.max_price_customer)">-->
-                            <!--&lt;!&ndash;<div id="line-through"></div>&ndash;&gt;-->
-                            <!--<div id="line-through"></div>-->
-                            <!--<span id="one" class="left-price badge">-->
-                        <!--<i>&#x20B9;</i>-->
-                       <!--{{vendor.min_price_vendor}}-->
-                    <!--</span>-->
-                            <!--<span id="two" class="badge">-->
-                        <!--<i>&#x20B9;</i>-->
-                       <!--{{vendor.max_price_vendor}}-->
-                    <!--</span>-->
-                        <!--</div>-->
-                        <!--<div class="row discounted-price">-->
-                        <!--<div id="line-through-fb"></div>-->
-                        <!--<span class="left-price badge">-->
-                        <!--<i>&#x20B9;</i>-->
-                       <!--{{vendor.min_price_customer}}-->
-                        <!--</span>-->
-                        <!--<span class="badge">-->
-                        <!--<i>&#x20B9;</i>-->
-                       <!--{{vendor.max_price_customer}}-->
-                        <!--</span>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
     </ion-content>
 
     <button class="button button-assertive fab-button" ng-click="multipleAddressMapView()">

@@ -13,19 +13,19 @@
                 ₹{{customer_price}}
             </div>
             <div id="walletMoney" ng-show="paidFromWallet">
-                <p>PAID FROM WALLET &nbsp ₹{{paidFromWallet}}</p>
+                <p>PAID FROM WALLET &nbsp; ₹{{paidFromWallet}}</p>
             </div>
             <div id="walletMoney" ng-show="discountAmount">
-                <p>DISCOUNT &nbsp ₹{{discountAmount}}</p>
+                <p>DISCOUNT &nbsp; ₹{{discountAmount}}</p>
             </div>
             <div id="amountToPay" align="center">
-                <p>AMOUNT PAYABLE &nbsp ₹{{amountPayable}}</p>
+                <p>AMOUNT PAYABLE &nbsp; ₹{{amountPayable}}</p>
             </div>
         </div>
         <br>
         <div id="havePromo" ng-hide="promoCodeApplied">
             <div align="center" ng-click="isOpen=!isOpen" id="haveCode">
-                <p>HAVE PROMO CODE?</p>
+                <p style="padding-top: 5px;">HAVE PROMO CODE?</p>
             </div>
             <div ng-hide="!isOpen" id="applyCode" class="row">
                 <div id="applyCodeDiv" class="col col-67">

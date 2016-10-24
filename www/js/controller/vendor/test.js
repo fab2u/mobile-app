@@ -1,6 +1,7 @@
 app
     .controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate, $ionicScrollDelegate,
-                                                  $timeout,$stateParams,$rootScope,$state,$ionicLoading,$ionicHistory) {
+                                                  $timeout,$stateParams,$rootScope,$state,$ionicLoading,
+                                                  $ionicHistory,$cordovaToast) {
 
         $scope.total_fabtu=0;
         $scope.total_original=0;
@@ -26,7 +27,6 @@ app
                 $scope.vendor_detail = response.val();
                 window.localStorage.setItem("vendorMobile",$scope.vendor_detail.contactDetails.phone);
                 window.localStorage.setItem("vendorLandline",$scope.vendor_detail.contactDetails.landline);
-console.log( $scope.vendor_detail)
                 $ionicLoading.hide();
             });
         };
@@ -89,7 +89,13 @@ console.log( $scope.vendor_detail)
                 }
                 else{
                     $ionicLoading.hide();
-                    alert('No,menu found for this vendor,please select another vendor!');
+                    $cordovaToast
+                        .show('No,menu found for this vendor,please select another vendor!', 'long', 'center')
+                        .then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
                 }
 
             });
@@ -269,7 +275,13 @@ console.log( $scope.vendor_detail)
 
                 }
                 else{
-                    alert('Please, select some services!')
+                    $cordovaToast
+                        .show('Please, select some services!', 'long', 'center')
+                        .then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
                 }
             };
 

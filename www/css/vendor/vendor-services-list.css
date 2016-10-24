@@ -322,6 +322,7 @@
 #vendor-services .title {
 	width: 100%;
 	height: auto;
+	margin-left: 35px;
 }
 #vendor-services .title h1{
 	text-align: center;
@@ -362,6 +363,11 @@
 	width: max-content;
 	padding: 0px 5px;
 	margin-top: 10px;
+}
+#vendor-services .cart-price .gender{
+	color:#fff;
+	padding-right: 20px;
+	margin-top: 5px;
 }
 #vendor-services .currency {
 	background-color: #0dd1d1;

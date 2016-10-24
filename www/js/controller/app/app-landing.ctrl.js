@@ -51,8 +51,8 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                     	$state.go('bill');
                     }
                     else if(window.localStorage.getItem('SkipIntro')== "true"){
-                        // $state.go('app.home');
-                        $state.go('location');
+                        $state.go('app.home');
+                        // $state.go('location');
                     }else{
                       $state.go('intro-slider');
                       // $state.go('location');
@@ -73,8 +73,8 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
             $state.go('app.home');
         } else {
             $ionicLoading.hide();
-            // $state.go('app.home');
-            $state.go('location');
+            $state.go('app.home');
+            // $state.go('location');
         }
     }
 

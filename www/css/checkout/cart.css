@@ -26,7 +26,7 @@
     top:-20%;
     right:0%;
 }
-#cartview #cartdetails
+#cartview .cartdetails
 {
     position:absolute;
     left:3%;

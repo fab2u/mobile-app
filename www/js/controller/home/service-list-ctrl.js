@@ -107,7 +107,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                 },
                 {
                     name:'Hair Consulting',
-                    id:'1004',
+                    id:'1004'
                 },
                 {
                     name:'Hair Cut',
@@ -138,7 +138,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                     id:'1011'
                 },
                 {
-                    name:'Straightening/ Perming',
+                    name:'Straightening',
                     id:'1012'
                 },
                 {

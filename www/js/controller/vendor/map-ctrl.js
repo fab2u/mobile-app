@@ -1,5 +1,5 @@
 app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $ionicLoading,
-                                   $cordovaLaunchNavigator,$ionicHistory, $stateParams){
+                                   $cordovaLaunchNavigator,$ionicHistory, $stateParams,$cordovaToast){
 
     $scope.showPrevious = function(){
         $scope.hashistory = Object.keys($ionicHistory.viewHistory().views).length;
@@ -54,15 +54,19 @@ app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $io
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
 
     $scope.centerOnMe = function () {
-        alert("1")
         var destination = [$stateParams.lat, $stateParams.lng];
         var start = [locationInfo.latitude,locationInfo.longitude];
         $cordovaLaunchNavigator.navigate(destination, start).then(function() {
             console.log("Navigator launched");
-            alert("Navigator launched");
         }, function (err) {
+            $cordovaToast
+                .show(err, 'long', 'center')
+                .then(function(success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
             console.error(err);
-            alert(err)
         });
     };
 

@@ -11,7 +11,7 @@
               Sorry, no bookings found!
           </div>
 
-        <div ng-show="allBookings" ng-repeat ="booking in allBookings">
+        <div ng-show="allBookings" ng-repeat ="booking in allBookings | orderBy : '-appointmentTime'">
           <div class="main-cont">
             <div class="first-cont">
             <b ng-show="booking.userStatus == 'cancelled'">Status: Cancelled</b>

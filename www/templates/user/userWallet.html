@@ -38,10 +38,7 @@
                 	<div class="row allTransactions" ng-repeat="transaction in walletHistory"
 						 ng-if="walletHistory.length>0">
                     	<div class="col col-33 detail">
-        					<!--<p>{{transaction.name}}({{transaction.BookingId}})<p>-->
-        					<p>{{transaction.bookingId || transaction.type}}<p>
-        					<!--<p><span style="color:#0DD1D1">Ref: </span>|-->
-
+        					<p style="margin-left: 20px;">{{transaction.bookingId || transaction.type}}<p>
         				</div>
         				<div class="col col-33 amount">
 							{{transaction.usedAt||transaction.creditDate | date:'dd-MM-yyyy'}}

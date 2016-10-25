@@ -18,6 +18,7 @@
   left: -50%;
   width: 200%;
   height: 200%;
+	z-index: -1;
 }
 #bg img {
   position: absolute;
@@ -50,7 +51,8 @@
 	border-radius:8px; 
 	margin-top: 5%; 
 	height: 60%; 
-	margin-bottom: -2px; 
+	margin-bottom: -2px;
+	position: static;
 }
 
 .confirmation #backbutton {
@@ -155,7 +157,7 @@
 }
 
 .confirmation #applyCode {
-	background-color: #565656;
+	background-color: rgb(211,211,211);
     width: 80%;
     margin: -5px auto 0;
     padding: 0px;
@@ -194,8 +196,8 @@
 	width: 100%;
 }
 .confirmation #image img {
-	width: 40%;
-	height: auto;
+	width:35%;
+	height: 20%;
 }
 
 .confirmation #walletCheckBox {

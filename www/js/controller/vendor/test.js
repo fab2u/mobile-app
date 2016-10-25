@@ -19,6 +19,17 @@ app
             $scope.catName = [];
             $scope.cart_item = 0;
             $scope.cart_price = {};
+            $scope.Selected = '';
+
+
+        $scope.selectGender = function(val){
+                if(val == 1){
+                    console.log("1",JSON.stringify($scope.menu,null,2))
+                    $scope.Selected = val;
+                } else {
+                    $scope.Selected = val;
+                }
+            };
 
         $scope.vendorDetail = function() {
             $ionicLoading.show();
@@ -147,6 +158,7 @@ app
             $scope.slideHasChanged = function(index) {
                 tabPositionCenter(index);
                 $scope.currSlide = $ionicSlideBoxDelegate.currentIndex();
+                console.log("currSlide :",$scope.currSlide)
                 $timeout( function() {
                     $ionicSlideBoxDelegate.update();
                     $ionicScrollDelegate.$getByHandle('mainScroll').resize();

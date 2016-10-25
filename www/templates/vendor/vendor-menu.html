@@ -6,64 +6,149 @@
             <div class="row cart-price" style="margin-top: -5px;">
                 <div class="col currency">&#x20B9;</div>
                 <div class="col price">{{total_customer}}</div>
-            </div> <!-- .cart-price -->
+            </div>
         </div>
     </ion-header-bar>
     <ion-content delegate-handle="mainScroll">
         <div ng-show="menuInfo">
-        <div id="scroll-tabs" class="row">
-            <ion-scroll id="scrollTabs" direction="x" delegate-handle="myhandel">
-                <div id="container">
-                    <div style="width:1800px;">
-                        <div
-                                class="tab"
-                                ng-class="$index == 0 ? 'active':''"
-                                ng-repeat="item in catName"
-                                ng-click="tabHasChanged($index)">
-                            <img ng-if="item == 'FACE'" src="img/Face.png" style="height: 35px;">
-                            <img ng-if="item == 'BODY'" src="img/Body-Care.png" style="height: 35px;">
-                            <img ng-if="item == 'HAIR'" src="img/Hair.png" style="height: 35px;">
-                            <img ng-if="item == 'HANDS & FEETS'" src="img/Hands-feet.png" style="height: 35px;">
-                            <img ng-if="item == 'HAIR REMOVAL'" src="img/Waxing.png" style="height: 35px;">
-                            <img ng-if="item == 'NAILS'" src="img/nail.png" style="height: 35px;">
-                            <img ng-if="item == 'PACKAGES'" src="img/packege.png" style="height: 35px;">
-                            <img ng-if="item == 'SPA & MASSAGES'" src="img/spa.png" style="height: 35px;">
-                            <img ng-if="item == 'FITNESS'" src="img/fitness.png" style="height: 35px;">
-                            <img ng-if="item == 'WEDDING & PARTY'" src="img/wedNparty.png" style="height: 35px;">
-                            <img ng-if="item == 'TATTOO'" src="img/tatoo.png" style="height: 35px;">
-                            <p>{{item}}</p>
-                        </div> <!-- .tab -->
-                    </div>
-                </div><!-- #container -->
-            </ion-scroll>
-            <div class="moreButton icon ion-chevron-right" ng-if="catName.length>3" ng-click="scrollToRight($event)"></div>
-        </div> <!-- #scroll-tabs -->
-        <div class="row padding" id="slideBox">
-            <ion-slide-box style="width:100%!important; background-color: #FFF;" class="slideBox" on-slide-changed="slideHasChanged($index)" show-pager="false" delegate-handle="my-handle">
-                <ion-slide ng-repeat="data in menu">
+            <div class="services-n-fab">
+                <div class="services" ng-click="selectGender(1)">MALE</div>
+                <div class="fab" ng-click="selectGender(2)"></div>
+                <div class="fab-book" ng-click="selectGender(2)">FEMALE</div>
+            </div>
+            <div id="scroll-tabs" class="row">
+                <ion-scroll id="scrollTabs" direction="x" delegate-handle="myhandel">
+                    <div id="container">
+                        <div style="width:1800px;">
+                            <div
+                                    class="tab"
+                                    ng-class="$index == 0 ? 'active':''"
+                                    ng-repeat="item in catName"
+                                    ng-click="tabHasChanged($index)">
+                                <img ng-if="item == 'FACE'" src="img/Face.png" style="height: 35px;">
+                                <img ng-if="item == 'BODY'" src="img/Body-Care.png" style="height: 35px;">
+                                <img ng-if="item == 'HAIR'" src="img/Hair.png" style="height: 35px;">
+                                <img ng-if="item == 'HANDS & FEETS'" src="img/Hands-feet.png" style="height: 35px;">
+                                <img ng-if="item == 'HAIR REMOVAL'" src="img/Waxing.png" style="height: 35px;">
+                                <img ng-if="item == 'NAILS'" src="img/nail.png" style="height: 35px;">
+                                <img ng-if="item == 'PACKAGES'" src="img/packege.png" style="height: 35px;">
+                                <img ng-if="item == 'SPA & MASSAGES'" src="img/spa.png" style="height: 35px;">
+                                <img ng-if="item == 'FITNESS'" src="img/fitness.png" style="height: 35px;">
+                                <img ng-if="item == 'WEDDING & PARTY'" src="img/wedNparty.png" style="height: 35px;">
+                                <img ng-if="item == 'TATTOO'" src="img/tatoo.png" style="height: 35px;">
+                                <p>{{item}}</p>
+                            </div> <!-- .tab -->
+                        </div>
+                    </div><!-- #container -->
+                </ion-scroll>
+                <div class="moreButton icon ion-chevron-right" ng-if="catName.length>3"
+                     ng-click="scrollToRight($event)"></div>
+            </div> <!-- #scroll-tabs -->
+            <div class="row padding" id="slideBox">
+                <ion-slide-box style="width:100%!important; background-color: #FFF;"
+                               class="slideBox" on-slide-changed="slideHasChanged($index)"
+                               show-pager="false" delegate-handle="my-handle">
+                    <ion-slide ng-repeat="data in menu">
                     <span ng-if="currSlide == $index">
-                    <div class="col" ng-repeat="(key, value) in data " style="width: 100%;margin:auto;">
+                    <div class="col" ng-repeat="(key, value) in data " style="width: 100%;margin:auto;"
+                         ng-hide="Selected">
                         <div class="item item-text-wrap list-heading"
                              ng-repeat="(key1, value1) in services"
                              ng-if="key == key1">{{value1.serviceName}}</div>
-                        <div id= "y.id " class="item item-text-wrap row"
+                        <div id="y.id " class="item item-text-wrap row"
                              id="custom-servicelist" ng-repeat="y in value"
                              ng-click="selectItem($index, y.menuItemName,y)">
-                            <div ng-show="selectedServices[y.menuItemName]" style="background-color:#0dd1d1; width:20px;">
+                            <div ng-show="selectedServices[y.menuItemName]"
+                                 style="background-color:#0dd1d1; width:20px;">
                             </div>
                             <div class="col col-50 item-text-wrap p-15">
                                 <span style="font-size: 0.9em;">{{y.menuItemName}}</span>
                             </div>
-                            <div class="col col-33 p-15" style="text-align:right;font-color:black;" ng-if="y.vendorPrice != y.fab2uPrice">
+                            <div class="col col-33 p-15" style="text-align:right;font-color:black;"
+                                 ng-if="y.vendorPrice != y.fab2uPrice">
                                 <strike>
-                                    <span class="striked-text" style="font-size: 0.9em;">&#x20B9;{{y.vendorPrice}} </span>
-                                    <span class="line-arrow right" style="position:relative;bottom:1px ;left:4px;"></span>
+                                    <span class="striked-text"
+                                          style="font-size: 0.9em;">&#x20B9;{{y.vendorPrice}} </span>
+                                    <span class="line-arrow right"
+                                          style="position:relative;bottom:1px ;left:4px;"></span>
                                 </strike>
                                 <span style="font-size: 0.9em;">
                                   &nbsp &#x20B9; {{y.fab2uPrice}}
                                 </span>
                             </div>
-                            <div class="col col-33 p-15" style="text-align:right;font-color:black;" ng-if="y.vendorPrice == y.fab2uPrice">
+                            <div class="col col-33 p-15" style="text-align:right;font-color:black;"
+                                 ng-if="y.vendorPrice == y.fab2uPrice">
+                                <span style="font-size: 0.9em;">
+                                  &nbsp &#x20B9; {{y.vendorPrice}}
+                                 </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col" ng-repeat="(key, value) in data" style="width: 100%;margin:auto;"
+                             ng-show="Selected == 1">
+                        <div class="item item-text-wrap list-heading"
+                             ng-repeat="(key1, value1) in services"
+                             ng-if="key == key1">{{value1.serviceName}}</div>
+                        <div id="y.id " class="item item-text-wrap row"
+                             id="custom-servicelist" ng-repeat="y in value"
+                             ng-click="selectItem($index, y.menuItemName,y)"
+                             ng-if="(y.male == true)||(y.unisex == true)">
+                            <div ng-show="selectedServices[y.menuItemName]"
+                                 style="background-color:#0dd1d1; width:20px;">
+                            </div>
+                            <div class="col col-50 item-text-wrap p-15">
+                                <span style="font-size: 0.9em;">{{y.menuItemName}}</span>
+                            </div>
+                            <div class="col col-33 p-15" style="text-align:right;font-color:black;"
+                                 ng-if="y.vendorPrice != y.fab2uPrice">
+                                <strike>
+                                    <span class="striked-text"
+                                          style="font-size: 0.9em;">&#x20B9;{{y.vendorPrice}} </span>
+                                    <span class="line-arrow right"
+                                          style="position:relative;bottom:1px ;left:4px;"></span>
+                                </strike>
+                                <span style="font-size: 0.9em;">
+                                  &nbsp &#x20B9; {{y.fab2uPrice}}
+                                </span>
+                            </div>
+                            <div class="col col-33 p-15" style="text-align:right;font-color:black;"
+                                 ng-if="y.vendorPrice == y.fab2uPrice">
+                                <span style="font-size: 0.9em;">
+                                  &nbsp &#x20B9; {{y.vendorPrice}}
+                                 </span>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col" ng-repeat="(key, value) in data" style="width: 100%;margin:auto;"
+                             ng-show="Selected == 2">
+                        <div class="item item-text-wrap list-heading"
+                             ng-repeat="(key1, value1) in services"
+                             ng-if="key == key1">{{value1.serviceName}}</div>
+                        <div id="y.id " class="item item-text-wrap row"
+                             id="custom-servicelist" ng-repeat="y in value"
+                             ng-click="selectItem($index, y.menuItemName,y)"
+                             ng-if="(y.female == true)||(y.unisex == true)">
+                            <div ng-show="selectedServices[y.menuItemName]"
+                                 style="background-color:#0dd1d1; width:20px;">
+                            </div>
+                            <div class="col col-50 item-text-wrap p-15">
+                                <span style="font-size: 0.9em;">{{y.menuItemName}}</span>
+                            </div>
+                            <div class="col col-33 p-15" style="text-align:right;font-color:black;"
+                                 ng-if="y.vendorPrice != y.fab2uPrice">
+                                <strike>
+                                    <span class="striked-text"
+                                          style="font-size: 0.9em;">&#x20B9;{{y.vendorPrice}} </span>
+                                    <span class="line-arrow right"
+                                          style="position:relative;bottom:1px ;left:4px;"></span>
+                                </strike>
+                                <span style="font-size: 0.9em;">
+                                  &nbsp &#x20B9; {{y.fab2uPrice}}
+                                </span>
+                            </div>
+                            <div class="col col-33 p-15" style="text-align:right;font-color:black;"
+                                 ng-if="y.vendorPrice == y.fab2uPrice">
                                 <span style="font-size: 0.9em;">
                                   &nbsp &#x20B9; {{y.vendorPrice}}
                                  </span>
@@ -71,10 +156,10 @@
                         </div>
                     </div>
                         </span>
-                </ion-slide>
-             </ion-slide-box>
+                    </ion-slide>
+                </ion-slide-box>
+            </div>
         </div>
-    </div>
     </ion-content>
     <ion-footer-bar class="footer">
         <div class="cartValue" ng-click="proceedButton()">

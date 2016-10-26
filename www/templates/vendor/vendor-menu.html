@@ -72,24 +72,21 @@
                                 </span>
                             </div>
                             <div class="col col-33 p-15" style="text-align:right;font-color:black;"
-                                 ng-if="y.vendorPrice != y.fab2uPrice">
+                                 ng-if="y.vendorPrice != y.customerPrice">
                                 <strike>
                                     <span class="striked-text"
                                           style="font-size: 0.9em;">&#x20B9;{{y.vendorPrice}} </span>
                                     <span class="line-arrow right"
                                           style="position:relative;bottom:1px ;left:4px;"></span>
                                 </strike>
-                                <!--<span style="font-size: 0.9em;">-->
-                                  <!--&#x20B9; {{y.fab2uPrice}}-->
-                                <!--</span>-->
                                  <span style="font-size: 0.9em;">
-                                   &#x20B9; {{y.vendorPrice}}
+                                   &#x20B9; {{y.customerPrice}}
                                  </span>
                             </div>
                             <div class="col col-33 p-15" style="text-align:right;font-color:black;"
-                                 ng-if="y.vendorPrice == y.fab2uPrice">
+                                 ng-if="y.vendorPrice == y.customerPrice">
                                 <span style="font-size: 0.9em;">
-                                   &#x20B9; {{y.vendorPrice}}
+                                   &#x20B9; {{y.customerPrice}}
                                  </span>
                             </div>
                         </div>

@@ -16,30 +16,49 @@ app.controller('LoginCtrl',
             window.localStorage.setItem("uid", response.uid);
             if(response.uid){
                 db.ref("users/data/"+response.uid).on("value", function(snapshot){
-                    window.localStorage.setItem("name", snapshot.val().name);
-                    window.localStorage.setItem("mobileNumber", snapshot.val().mobile.mobileNum);
-                    window.localStorage.setItem("referralCode", snapshot.val().referralCode);
+                    if(snapshot.val()){
+                        window.localStorage.setItem("name", snapshot.val().name);
+                        window.localStorage.setItem("mobileNumber", snapshot.val().mobile.mobileNum);
+                        window.localStorage.setItem("referralCode", snapshot.val().referralCode);
+                        if(localStorage.getItem('confirmation') == 'true'){
+                            localStorage.setItem('confirmation', '');
+                            $cordovaToast
+                                .show('Logged in successfully!', 'long', 'center')
+                                .then(function(success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                            $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
+                            $state.go('confirmation');
+                        }
+                        else{
+                            $cordovaToast
+                                .show('Logged in successfully!', 'long', 'center')
+                                .then(function(success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                            $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
+                            $state.go('app.home');
+                        }
+                        $timeout( function() {
+                            $ionicLoading.hide();
+                        },300);
+                    }
+                    else{
+                        $cordovaToast
+                            .show('Sorry, no user found.Please try with another credentials.', 'long', 'center')
+                            .then(function(success) {
+                                // success.
+                            }, function (error) {
+                                // error
+                            });
+                    }
                 });
-                if(localStorage.getItem('confirmation') == 'true'){
-                    localStorage.setItem('confirmation', '');
-                    alert("Logged in successfully!");
-                    $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-                    $state.go('confirmation');
-                }
-                else{
-                    $cordovaToast
-                        .show('Logged in successfully!', 'long', 'center')
-                        .then(function(success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
-                    $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-                    $state.go('app.home');
-                }
-                $timeout( function() {
-                    $ionicLoading.hide();
-                },300);
+
+
             }
         })
             .catch(function(error) {
@@ -58,12 +77,7 @@ app.controller('LoginCtrl',
                     });
                 // ...
         });
-   }
-	$scope.loginGmail = function(){
-		console.log("gmail login button clicked");
-		AuthenticationService.LoginGmail();
-	};
-
+   };
 
 	$scope.showPopup = function() {
       $scope.data = {}

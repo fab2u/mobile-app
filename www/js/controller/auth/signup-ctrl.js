@@ -12,6 +12,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
 
     /////////////////////////////// To check apply referral code valid or not ////////////////
     $scope.apply_promoCode = function (referralCode) {
+     var newCode =  referralCode.toUpperCase();
         if (referralCode) {
             firebase.database().ref('referralCode/' + referralCode)
                 .once('value', function (response) {
@@ -101,7 +102,9 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
         if (fnameLength > 4) {
             refchar = fname.substring(0, 4);
             refnum = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
-            $scope.myReferral = refchar + refnum;
+
+            var my_referral = refchar + refnum;
+            $scope.myReferral = my_referral.toUpperCase();
         } else {
             if(fnameLength < 4){
                 refchar = fname.substring(0, fnameLength) + lname.substring(0, (4 - fnameLength));
@@ -109,12 +112,15 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                 console.log("x",x)
                 for(x, y = "", i = 0; i < x; ++i, y += Math.floor(Math.random()*9));
                 refnum = parseInt(y);
-                $scope.myReferral = refchar + refnum;
+                var my_referral = refchar + refnum;
+                $scope.myReferral = my_referral.toUpperCase();
+
             }
             else{
                 refchar = fname.substring(0, fnameLength) + lname.substring(0, (4 - fnameLength));
                 refnum = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
-                $scope.myReferral = refchar + refnum;
+                var my_referral = refchar + refnum;
+                $scope.myReferral = my_referral.toUpperCase();
             }
         }
 

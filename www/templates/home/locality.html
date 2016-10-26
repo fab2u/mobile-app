@@ -4,9 +4,12 @@
         <i class="icon ion-close close_icon" ng-click="close_location()"></i>
     </ion-header-bar>
     <ion-content class="padding">
-        <ion-list ng-repeat="location in location_detail">
+        <ion-list ng-repeat="location in location_detail" ng-show="location_detail">
             <ion-radio ng-model="isChecked" ng-value="location"
                        ng-click="location_selected(location)">{{location.cityName}} - {{location.locationName}}</ion-radio>
+        </ion-list>
+        <ion-list ng-hide="location_detail">
+            No,Locality found.
         </ion-list>
     </ion-content>
 </ion-modal-view>

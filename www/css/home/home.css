@@ -63,7 +63,7 @@
 #home-page .fab-book {
     width: 50%;
     /* float: right; */
-    position: absolute;
+    position: fixed;
     right: 0px;
     margin-top: 14px;
     text-align: center;

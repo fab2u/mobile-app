@@ -48,6 +48,9 @@ app.controller('LoginCtrl',
                         },300);
                     }
                     else{
+                        $timeout( function() {
+                            $ionicLoading.hide();
+                        },300);
                         $cordovaToast
                             .show('Sorry, no user found.Please try with another credentials.', 'long', 'center')
                             .then(function(success) {

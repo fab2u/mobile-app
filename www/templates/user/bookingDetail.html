@@ -25,7 +25,13 @@
                     <div class = "custom-border  padding class" ng-show="bookingInformation.walletAmount"><b>Paid From Wallet</b>: ₹{{bookingInformation.walletAmount}}</div>
                     <div class = "custom-border padding class"><b>Time</b>: {{bookingInformation.appointmentTime | date:"h:mma"}}</div>
                     <div class = "custom-border padding class"><b>Date</b>: {{bookingInformation.appointmentTime| date:'dd-MM-yyyy'}}</div>
-                    <div class = "custom-border padding class"><b>Status</b>: {{bookingInformation.userStatus}}</div>
+                    <div class = "custom-border padding class">
+                        <b ng-show="bookingInformation.userStatus == 'cancelled'">Status: Cancelled</b>
+                        <b ng-show="bookingInformation.userStatus == 'upComing'">Status: Upcoming</b>
+                        <b ng-show="bookingInformation.userStatus == 'notAvailed'">Status: Not Availed</b>
+                        <b ng-show="bookingInformation.userStatus == 'availed'">Status: Availed</b>
+
+                    </div>
                 </div>
             </div>
             <div align = "center" id = "smile"><img src = "img/happy.png" height="14%" width="14%">

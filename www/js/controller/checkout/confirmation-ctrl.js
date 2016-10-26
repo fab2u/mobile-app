@@ -86,13 +86,12 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
         $scope.amountPayable = 0;
         $scope.fab2uPayableAmount = 0;
         $scope.promoCodeApplied = false;
-        $scope.amount;
+        $scope.amount = 0;
 
 	    $scope.getWalletAmount = function() {
 	        if ($scope.amount > 0) {
 	            if ($scope.customer_price > $scope.amount) {
 	                var amount1 = parseInt($scope.customer_price/ 2);
-	                console.log(amount1);
 	                var amount2 = $scope.amount;
 	                var balance = 0;
 	                if (amount1 < amount2) {
@@ -107,7 +106,6 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	                }
 	            } else {
 	                var amount1 = parseInt($scope.customer_price / 2);
-	                console.log(amount1);
 	                var amount2 = $scope.amount;
 	                var balance = 0;
 	                if (amount1 < amount2) {

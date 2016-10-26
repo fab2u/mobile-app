@@ -16,15 +16,16 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
     };
 
     $scope.selected_city = function(city){
-        	var selectedLocation = JSON.parse(window.localStorage['selectedLocation'] || '{}');
-        	selectedLocation.cityId = city.cityId;
-        	selectedLocation.cityName	= city.cityName;
-        	selectedLocation.latitude = city.latitude;
-        	selectedLocation.longitude = city.longitude;
-        	selectedLocation.state = city.state;
-        	selectedLocation.country = city.country;
-        	window.localStorage['selectedLocation'] = JSON.stringify(selectedLocation);
-		  $rootScope.$broadcast('location', { message: 'location changed' });
+    	$scope.cityId = city.cityId;
+            // var selectedLocation = JSON.parse(window.localStorage['selectedLocation'] || '{}');
+            // selectedLocation.cityId = city.cityId;
+            // selectedLocation.cityName	= city.cityName;
+            // selectedLocation.latitude = city.latitude;
+            // selectedLocation.longitude = city.longitude;
+            // selectedLocation.state = city.state;
+            // selectedLocation.country = city.country;
+            // window.localStorage['selectedLocation'] = JSON.stringify(selectedLocation);
+		    // $rootScope.$broadcast('location', { message: 'location changed' });
         	$timeout( function() {
 				$scope.open_location();
         	}, 500);
@@ -53,12 +54,11 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 	});
 	$scope.open_location = function() {
 		$ionicLoading.show();
-		firebase.database().ref('location/' + JSON.parse(window.localStorage['selectedLocation']).cityId).once('value', function (response) {
+		firebase.database().ref('location/' + $scope.cityId).once('value', function (response) {
 			$scope.location_detail = response.val();
 			$scope.location.show();
 			$ionicLoading.hide();
 		});
-
 	};
 	$scope.close_location = function() {
 		$scope.location.hide();

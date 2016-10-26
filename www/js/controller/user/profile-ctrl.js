@@ -68,7 +68,7 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '
                var image = document.getElementById('profile-pic');
                image.src = imageURI;
                $scope.url = imageURI;
-               alert(JSON.stringify(imageURI)+ 'line number 283, imageURI');
+               // alert(JSON.stringify(imageURI)+ 'line number 283, imageURI');
                cropImage(imageURI);
                // resizeImage(imageURI);
             }, function(err) {
@@ -104,40 +104,39 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '
                circle: true
             }).then(function (resp) {
                $ionicLoading.hide();
-               alert('test');
+               // alert('test');
                // alert(JSON.stringify(resp));
                $http.post("http://139.162.3.205/api/testupload", {path: resp})
                .success(function(response){
-                  alert("success "+JSON.stringify(response));
+                  // alert("success "+JSON.stringify(response));
 
                   var updates1 = {};
-                  alert($scope.uid + " " + response.Message);
+                  // alert($scope.uid + " " + response.Message);
                   updates1["/users/data/"+$scope.uid+"/photoUrl"] = response.Message;
                   window.localStorage.setItem("userPhoto", response.Message);
                   db.ref().update(updates1).then(function(){
-                     alert("updated in users obj")
+                     // alert("updated in users obj")
                      user.updateProfile({
                         photoURL: response.Message
                      }).then(function(){
-                        alert("photo updated in firebase object");
+                        alert("Photo updated successfully");
                         $scope.modal.hide();
                      });
                   });
 
                })
                .error(function(response){
-                  alert(JSON.stringify(response));
+                  alert('Please try again, something went wrong');
                });
             });
          }
 
          function resizeImage(source){
-            alert('resizeImage called')
             var canvas = document.createElement("canvas");
             var ctx = canvas.getContext("2d");
 
             img = new Image();
-            alert('img '+ img);
+            // alert('img '+ img);
             img.onload = function () {
                // alert("onload called javascript");
                canvas.height = canvas.width * (img.height / img.width);
@@ -152,31 +151,31 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '
                ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5, 0, 0, canvas.width, canvas.height);
                // alert(canvas.width+" "+canvas.height+" "+img.width+" "+img.height);
                var dataURL = canvas.toDataURL("image/jpeg");
-               alert('dataURL ' + dataURL);
+               // alert('dataURL ' + dataURL);
 
                $http.post("http://139.162.3.205/api/testupload", {path: dataURL})
                .success(function(response){
-                  alert("success "+JSON.stringify(response));
+                  // alert("success "+JSON.stringify(response));
 
                   var updates1 = {};
-                  alert($scope.uid + " " + response.Message);
+                  // alert($scope.uid + " " + response.Message);
                   updates1["/users/data/"+$scope.uid+"/photoUrl"] = response.Message;
                   window.localStorage.setItem("userPhoto", response.Message);
                   db.ref().update(updates1).then(function(){
-                     alert("updated in users obj")
+                     // alert("updated in users obj")
                      user.updateProfile({
                         photoURL: response.Message
                      }).then(function(){
-                        alert("photo updated in firebase object");
+                        alert("Photo uploaded successfully");
                      });
                   });
 
                })
                .error(function(response){
-                  alert(JSON.stringify(response));
+                  alert('Plaese try again, something went wrong!');
                });
             }
-            alert('source '+ source);
+            // alert('source '+ source);
             img.src = source;
          }
       }

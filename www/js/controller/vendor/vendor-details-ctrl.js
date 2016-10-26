@@ -337,9 +337,9 @@ app.controller('VendorDetailsCtrl',
                         'ReviewRating':$scope.custReview.rating,
                         'VendorId':$stateParams.ven_id,
                         'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
-                        'ReviewDate':new Date().getTime(),
-                        'name':'',
-                        'image':''
+                        'ReviewDate':new Date().getTime()
+                        // 'name':'',
+                        // 'image':''
                     };
                     var userReviewData = {
                         'VendorId':$stateParams.ven_id,

@@ -108,11 +108,9 @@ app
         var mySubArray = _.uniq($scope.selected_cat, function (name) {
             return name;
         });
-        console.log("mySubArray",mySubArray);
-
         if(mySubArray.length>0) {
             firebase.database().ref('menu/' + $stateParams.vendor_id).once('value', function (response) {
-                console.log("data",JSON.stringify(response.val()))
+                console.log("data",JSON.stringify(response.val(),null,2))
                 if (response.val()) {
                     $scope.menuInfo = response.val().services;
                     window.localStorage.setItem("vendorName", response.val().vendorName);

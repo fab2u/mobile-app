@@ -7,6 +7,7 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 	$scope.allBookings = [];
 	$scope.activeBookingId = '';
 
+	$scope.activeDate = new Date().getTime();
 	// All the booking id for cancelled booking and active booking and their detail
 
 	$scope.bookingInfo = function() {

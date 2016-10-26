@@ -18,6 +18,52 @@
     top: 0;
 }
 
+.fab-book-header-img{
+	width:20px;
+	height:20px;
+	margin: 5px 0 0;
+}
+
+.fabFeed .feeds .row:nth-child(1){
+	padding:20px 0 0;
+
+}
+
+.fabFeed .feeds .row .col-55{
+	padding-bottom:0px;
+
+}
+
+.fabFeed .ion-ios-home:before{
+	font-size: 26px !important;
+    line-height: 26px !important;
+}
+
+.follow-wrap{
+	text-align: center;
+}
+.feed-city{
+	color:#777;
+	margin:0px;
+}
+.feed-city .ion-location{
+	color: #FF8386;
+	font-size: 14px;
+}	
+
+.fabFeed .upper-row .row:nth-child(1) .col-20{
+	text-align: center;
+}
+
+.fabFeed .upper-row1 .col{
+	text-align: center;
+}
+
+.fabFeed .upper-row1 .col-offset-20 i, .fabFeed .upper-row1 .comment-btn{
+	text-align: center;
+	color:#5a5a5a;
+
+}
 /* Fix modal backdrop for smaller devices */
 @media (max-width: 679px) {
   .fabFeed.active .modal-backdrop-bg {
@@ -46,7 +92,7 @@
 }
 
 .fabFeed .upper-row{
-	padding: 10px 10px 0px 10px;
+	padding: 10px 0px 0px 0px;
 }
 .fabFeed .upper-row1{
 	padding: 0px 10px;
@@ -69,8 +115,9 @@
 }
 
 .fabFeed .profile-pic{
-	border: 4px solid #FF8386;
+	border: 2px solid #8e8e8e;
 	border-radius: 50%;
+
 }
 
 .fabFeed .user-info{
@@ -79,16 +126,17 @@
 
 .fabFeed .user-name{
 	margin-top: 5px;
-	font-size: 1.5em;
-	text-transform: uppercase;
+	font-size: 18px;
+	text-transform: capitalize;
   margin-bottom: 10px;
+  color:#777;
 }
 .fabFeed .user-details{
-	/*margin-top: 10px;*/
-	font-size: 1.5em;
+
+	font-size: 16px;
 }
 .fabFeed .col-border{
-  border-right: solid 2px #606060;
+  border-right: dashed 1px #a5a5a5;
 }
 
 .fabFeed .user-details span{
@@ -181,9 +229,17 @@
 }
 
 .fabFeed .likenum{
-	color: #FF8386;
-	/*line-height: 41px;*/
+	line-height: 30px;
 }
+
+.fabFeed .likenum i{
+	color: #FF8386;
+}
+
+.fabFeed .likenum span{
+	color: #525252;
+}
+
 
 .fabFeed .feedend{
 	color: #FF8386;
@@ -191,12 +247,9 @@
 }
 
 .fabFeed .user_icon {
-	margin: 0 auto;
-	display: block;
+
 	border-radius: 50%;
-	border: 3px solid #FF8285;
-	float:left;
-	margin-right:10px;
+	border: 1px solid #a0a0a0;
 }
 
 .new-feed, .new-feed form{

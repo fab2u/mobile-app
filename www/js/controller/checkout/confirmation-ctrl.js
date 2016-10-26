@@ -14,17 +14,21 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 		function referralDetail() {
 			if(window.localStorage.getItem("referralCode")){
 				db.ref('referralCode/'+window.localStorage.getItem("referralCode")).on("value", function(response){
-					if(response.val().uid){
+					if(response.val()){
 						db.ref("users/data/"+response.val().uid).on("value", function(snapshot){
 							$scope.referralName = snapshot.val().name;
 							$scope.referralContact = snapshot.val().mobile.mobileNum;
 						});
 					}
+					else{
+						$scope.referralContact = '';
+						$scope.referralName = '';
+					}
 				});
 			}
 			else{
-				$scope.referralContact = '',
-				$scope.referralName = ''
+				$scope.referralContact = '';
+				$scope.referralName = '';
 			}
 		}
 		referralDetail();

@@ -72,7 +72,7 @@ app.controller('LoginCtrl',
                     $ionicLoading.hide();
                 },300);
                 $cordovaToast
-                    .show(errorMessage, 'long', 'center')
+                    .show('Invalid user name or password', 'long', 'center')
                     .then(function(success) {
                         // success
                     }, function (error) {

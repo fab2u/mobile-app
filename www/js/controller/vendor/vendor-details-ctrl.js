@@ -1,5 +1,5 @@
 app.controller('VendorDetailsCtrl',
-    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,
+    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,$timeout,
              $ionicPopup,$ionicLoading,$rootScope,$cordovaDevice,$cordovaInAppBrowser,$cordovaToast){
 
 
@@ -12,6 +12,9 @@ app.controller('VendorDetailsCtrl',
         $scope.begItems = {};
         $scope.menu_button = true;
         $scope.review_info = [];
+        $scope.reviews = '';
+
+        $scope.currSlide = 0;
 
 
         if(window.localStorage.getItem("selectedTab")=='true'){
@@ -124,6 +127,7 @@ app.controller('VendorDetailsCtrl',
             $scope.review_info = [];
             $ionicLoading.show();
             firebase.database().ref('reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id+'/Reviews').once('value',function(response){
+            $timeout(function () {
                 $scope.reviews = response.val();
                 if(response.val()){
                     angular.forEach(response.val(), function(value, key) {
@@ -133,14 +137,16 @@ app.controller('VendorDetailsCtrl',
                             value.image = response.val().photoUrl;
                             $scope.review_info.push(value);
                         })
-                     });
+                    });
                 }
                 else if(response.val() == null){
-                    $scope.msg = 'No,reviews found!'
+                    $scope.msg = 'No,reviews found!';
                     $ionicLoading.hide();
                 }
-                console.log("reviews",$scope.review_info)
+            },50)
             });
+            console.log("reviews",$scope.review_info)
+
         };
         $rootScope.$on('reviewList', function (event, args) {
             $scope.message = args.message;
@@ -148,6 +154,7 @@ app.controller('VendorDetailsCtrl',
         });
     $scope.slideHasChanged = function(value){
       console.log(value);
+        $scope.currSlide = value;
         if(value == 2){
             $scope.reviewList();
         }

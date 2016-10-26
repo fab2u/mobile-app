@@ -246,7 +246,7 @@ app.controller('VendorListCtrl',
 
                                 }
                                 $ionicLoading.hide();
-                                console.log(JSON.stringify($scope.vendorList, null, 2));
+                                console.log(JSON.stringify($scope.vendorList));
                             });
                     }
                     else if (serviceId) {

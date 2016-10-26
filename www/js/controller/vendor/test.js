@@ -21,9 +21,20 @@ app
             $scope.cart_price = {};
             $scope.Selected = '';
 
-
         $scope.selectGender = function(val){
                 if(val == 1){
+                    // angular.forEach($scope.menu,function (value,key) {
+                    //     angular.forEach(value,function (value,key) {
+                    //         angular.forEach(value,function (value,key) {
+                    //             console.log("value",value)
+                    //             if(value.male == true){
+                    //                 $scope.newMenu.push(value);
+                    //             }
+                    //             console.log("key",key)
+                    //         })
+                    //     })
+                    // })
+                    // console.log("ssssssssssssss", $scope.newMenu)
                     console.log("1",JSON.stringify($scope.menu,null,2))
                     $scope.Selected = val;
                 } else {

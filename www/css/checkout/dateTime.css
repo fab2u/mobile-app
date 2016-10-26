@@ -4,10 +4,11 @@
 	background-color: #404040 !important;
 }
 .appointment .footer_text{
-	font-size: 16px;
-	line-height: 35px;
+	font-size: 16px !important;
+	line-height: 35px !important;
 	text-align: center;
 	color: #FFFFFF;
+	margin-top: 5px;
 }
 .appointment .custom-title {
 	background-color: #404040 !important;

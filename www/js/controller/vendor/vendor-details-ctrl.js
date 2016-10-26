@@ -1,5 +1,5 @@
 app.controller('VendorDetailsCtrl',
-    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,$timeout,
+    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,
              $ionicPopup,$ionicLoading,$rootScope,$cordovaDevice,$cordovaInAppBrowser,$cordovaToast){
 
 
@@ -11,11 +11,6 @@ app.controller('VendorDetailsCtrl',
         $scope.selectedServices = {};
         $scope.begItems = {};
         $scope.menu_button = true;
-        $scope.review_info = [];
-        $scope.reviews = '';
-
-        $scope.currSlide = 0;
-
 
         if(window.localStorage.getItem("selectedTab")=='true'){
             $scope.menu_button = false;
@@ -40,6 +35,7 @@ app.controller('VendorDetailsCtrl',
         firebase.database().ref('vendors/' + JSON.parse(window.localStorage['selectedLocation']).cityId + '/' + $stateParams.ven_id).once('value', function (response) {
            if(response.val()){
                $scope.vendor_detail = response.val();
+               console.log(JSON.stringify($scope.vendor_detail,null,2))
                $ionicLoading.hide();
                angular.forEach(response.val().images.gallery, function (value, key) {
                    $scope.images.push({id: key, src: value.url})
@@ -123,11 +119,10 @@ app.controller('VendorDetailsCtrl',
         }
 
 /// To get review for a particular vendor ///////
+        $scope.review_info = [];
         $scope.reviewList = function(){
-            $scope.review_info = [];
             $ionicLoading.show();
             firebase.database().ref('reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id+'/Reviews').once('value',function(response){
-            $timeout(function () {
                 $scope.reviews = response.val();
                 if(response.val()){
                     angular.forEach(response.val(), function(value, key) {
@@ -137,24 +132,18 @@ app.controller('VendorDetailsCtrl',
                             value.image = response.val().photoUrl;
                             $scope.review_info.push(value);
                         })
-                    });
+                     });
                 }
                 else if(response.val() == null){
-                    $scope.msg = 'No,reviews found!';
+                    $scope.msg = 'No,reviews found!'
                     $ionicLoading.hide();
                 }
-            },50)
+                console.log("reviews",JSON.stringify($scope.reviews))
             });
-            console.log("reviews",$scope.review_info)
-
         };
-        $rootScope.$on('reviewList', function (event, args) {
-            $scope.message = args.message;
-            $scope.reviewList();
-        });
+
     $scope.slideHasChanged = function(value){
       console.log(value);
-        $scope.currSlide = value;
         if(value == 2){
             $scope.reviewList();
         }
@@ -348,7 +337,9 @@ app.controller('VendorDetailsCtrl',
                         'ReviewRating':$scope.custReview.rating,
                         'VendorId':$stateParams.ven_id,
                         'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
-                        'ReviewDate':new Date().getTime()
+                        'ReviewDate':new Date().getTime(),
+                        'name':'',
+                        'image':''
                     };
                     var userReviewData = {
                         'VendorId':$stateParams.ven_id,

@@ -45,7 +45,6 @@
 		</div>
 		<ion-slide-box on-slide-changed="slideHasChanged($index)" id="tabsSlider" delegate-handle="vendorMainDetails">
 			<ion-slide>
-				<span ng-if="currSlide == 0">
 			    <div class="mapImg">
 			    	<img src ="img/mapImage.jpg">
 			    	<div class="row addressNmap">
@@ -99,15 +98,14 @@
 			    		<ion-item ng-repeat="item in days" class="timingDetail capitalize">
 			    			<span class="align-left">{{item.name}}</span>
 			    			<span class="align-right" ng-repeat="slots in item.Times">
-									{{slots.start | date:"h:mma"}} - {{slots.end | date:"h:mma"}}&nbsp;&nbsp;
+									{{slots.start | date:"h:mma"}} - {{slots.end | date:"h:mma"}},&nbsp;
 							</span>
 			    		</ion-item>
 			    	</ion-list>
 			    </div>
-			</span>
 			</ion-slide>
 			<ion-slide>
-			    <div class="gallery" ng-if="currSlide == 1">
+			    <div class="gallery">
 			    	<div class="row allImages" ng-repeat="image in images" ng-if="$index % 2 === 0">
 				        <div class="col col-50" ng-if="$index < images.length" ng-click="goToSlide($index)">
 				            <img ng-src="{{images[$index].src}}" width="100%" />
@@ -122,9 +120,8 @@
 			    </div>
 			</ion-slide>
 			<ion-slide>
-			    <div class="Reviews" ng-if="currSlide == 2">
-			    	<div class="card ratingCard" ng-repeat="review in review_info| orderBy :'ReviewDate'"
-						 ng-show="review_info">
+			    <div class="Reviews">
+			    	<div class="card ratingCard" ng-repeat="review in review_info| orderBy: 'ReviewDate'" ng-show="reviews">
 			    		<div class="row">
 				    		<div class="col col-20 imgNname">
 				    			<img ng-src="{{review.image}}" class="profilePic">
@@ -141,7 +138,7 @@
 				    		</div>
 			    		</div>
 			    	</div>
-					<div class="card ratingCard" ng-hide="review_info">
+					<div class="card ratingCard" ng-hide="reviews">
 						No,review found
 					</div>
 			    </div>

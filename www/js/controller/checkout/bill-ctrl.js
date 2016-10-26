@@ -144,7 +144,8 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$i
                 'ReviewText':$scope.custReview.review,
                 'ReviewRating':$scope.custReview.rating,
                 'VendorId':$scope.bookingInformation.vendorId,
-                'cityName':locationInfo.cityName
+                'cityName':locationInfo.cityName,
+                'ReviewDate':new Date().getTime()
             };
             var userReviewData = {
                 'VendorId':$scope.bookingInformation.vendorId,

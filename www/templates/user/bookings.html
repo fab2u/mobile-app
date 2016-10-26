@@ -14,10 +14,10 @@
         <div ng-show="allBookings" ng-repeat ="booking in allBookings | orderBy : '-appointmentTime'">
           <div class="main-cont">
             <div class="first-cont">
-            <b ng-show="booking.userStatus == 'cancelled'">Status: Cancelled</b>
-            <b ng-show="booking.userStatus == 'upComing'">Status: Upcoming</b>
-            <b ng-show="booking.userStatus == 'notAvailed'">Status: Not Availed</b>
-            <b ng-show="booking.userStatus == 'availed'">Status: Availed</b>
+            <b ng-show="booking.userStatus == 'cancelled'">Cancelled</b>
+            <b ng-show="booking.userStatus == 'upComing'">Upcoming</b>
+            <b ng-show="booking.userStatus == 'notAvailed'">Not Availed</b>
+            <b ng-show="booking.userStatus == 'availed'">Availed</b>
             </div>
             <div class="second-cont">
                  <div id = "salon">{{booking.salonName}} </div>

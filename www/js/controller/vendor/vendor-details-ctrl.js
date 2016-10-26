@@ -340,7 +340,8 @@ app.controller('VendorDetailsCtrl',
                         'ReviewText':$scope.custReview.review,
                         'ReviewRating':$scope.custReview.rating,
                         'VendorId':$stateParams.ven_id,
-                        'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName
+                        'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
+                        'ReviewDate':new Date().getTime()
                     };
                     var userReviewData = {
                         'VendorId':$stateParams.ven_id,

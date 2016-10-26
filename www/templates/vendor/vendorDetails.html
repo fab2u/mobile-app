@@ -121,7 +121,7 @@
 			</ion-slide>
 			<ion-slide>
 			    <div class="Reviews">
-			    	<div class="card ratingCard" ng-repeat="review in review_info" ng-show="reviews">
+			    	<div class="card ratingCard" ng-repeat="review in review_info| orderBy :'ReviewDate'" ng-show="reviews">
 			    		<div class="row">
 				    		<div class="col col-20 imgNname">
 				    			<img ng-src="{{review.image}}" class="profilePic">

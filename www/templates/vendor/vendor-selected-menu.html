@@ -29,7 +29,15 @@
                         <div ng-show="selectedServices[y.menuItemName]" style="background-color:#0dd1d1; width:20px;">
                         </div>
                         <div class="col col-50 item-text-wrap p-15">
-                            <span style="font-size: 0.9em;">{{y.menuItemName}}</span>
+                            <span style="font-size: 0.9em;" ng-show="y.male == true && y.female==undefined">
+                                    {{y.menuItemName}}(Male)
+                             </span>
+                            <span style="font-size: 0.9em;" ng-show="y.female == true &&y.male==undefined">
+                                    {{y.menuItemName}}(Female)
+                                </span>
+                            <span style="font-size: 0.9em;" ng-show="y.female == true&&y.male ==true">
+                                    {{y.menuItemName}}(Unisex)
+                             </span>
                         </div>
                         <div class="col col-33 p-15" style="text-align:right;font-color:black;"
                              ng-if="y.vendorPrice != y.fab2uPrice">

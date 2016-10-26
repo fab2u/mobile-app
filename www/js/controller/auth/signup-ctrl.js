@@ -170,9 +170,9 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
       password:''
    };
 
-        $scope.loginPage = function(){
+     $scope.loginPage = function(){
         $state.go('login');
-   };
+      };
 
         $scope.showMobileVerify = false;
         $scope.showOTPfield = false;

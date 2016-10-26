@@ -196,13 +196,6 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$i
             delete window.localStorage.activeBooking;
             $state.go('app.home');
             $ionicLoading.hide();
-            $cordovaToast
-                .show('Your review has been submitted successfully!', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
             $rootScope.$broadcast('booking', { message: 'booking changed' });
 
 

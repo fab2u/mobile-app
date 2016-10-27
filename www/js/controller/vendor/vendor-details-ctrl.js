@@ -37,9 +37,20 @@ app.controller('VendorDetailsCtrl',
                $scope.vendor_detail = response.val();
                console.log(JSON.stringify($scope.vendor_detail,null,2))
                $ionicLoading.hide();
-               angular.forEach(response.val().images.gallery, function (value, key) {
-                   $scope.images.push({id: key, src: value.url})
-               });
+               if(response.val().images){
+                   if(response.val().images.gallery){
+                       angular.forEach(response.val().images.gallery, function (value, key) {
+                           $scope.images.push({id: key, src: value.url})
+                       });
+                   }
+                   else{
+                       $scope.images.push({id: 'dummy', src: 'http://ionicframework.com/img/ionic-logo-blog.png'})
+                   }
+
+               }
+               else{
+                   $scope.images.push({id: 'dummy', src: 'http://ionicframework.com/img/ionic-logo-blog.png'})
+               }
            }
            else{
                $scope.msg1 = 'No,menu found for this vendor!'
@@ -146,6 +157,9 @@ app.controller('VendorDetailsCtrl',
       console.log(value);
         if(value == 2){
             $scope.reviewList();
+        }
+        else{
+            $scope.review_info = [];
         }
       $scope.currentValue = value;
     };

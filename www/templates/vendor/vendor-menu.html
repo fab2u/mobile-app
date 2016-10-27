@@ -11,17 +11,11 @@
     </ion-header-bar>
     <ion-content delegate-handle="mainScroll">
         <div ng-show="menuInfo">
-            <!--<div class="services-n-fab">-->
-                <!--<div class="services" ng-click="selectGender(1)">MALE</div>-->
-                <!--<div class="fab" ng-click="selectGender(2)"></div>-->
-                <!--<div class="fab-book" ng-click="selectGender(2)">FEMALE</div>-->
-            <!--</div>-->
             <div id="scroll-tabs" class="row">
                 <ion-scroll id="scrollTabs" direction="x" delegate-handle="myhandel">
                     <div id="container">
                         <div style="width:1800px;">
-                            <div
-                                    class="tab"
+                            <div class="tab"
                                     ng-class="$index == 0 ? 'active':''"
                                     ng-repeat="item in catName"
                                     ng-click="tabHasChanged($index)">
@@ -37,13 +31,13 @@
                                 <img ng-if="item == 'WEDDING & PARTY'" src="img/wedNparty.png" style="height: 35px;">
                                 <img ng-if="item == 'TATTOO'" src="img/tatoo.png" style="height: 35px;">
                                 <p>{{item}}</p>
-                            </div> <!-- .tab -->
+                            </div>
                         </div>
-                    </div><!-- #container -->
+                    </div>
                 </ion-scroll>
                 <div class="moreButton icon ion-chevron-right" ng-if="catName.length>3"
                      ng-click="scrollToRight($event)"></div>
-            </div> <!-- #scroll-tabs -->
+            </div>
             <div class="row padding" id="slideBox">
                 <ion-slide-box style="width:100%!important; background-color: #FFF;"
                                class="slideBox" on-slide-changed="slideHasChanged($index)"

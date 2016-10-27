@@ -108,19 +108,43 @@ app
         var mySubArray = _.uniq($scope.selected_cat, function (name) {
             return name;
         });
+        $scope.menu1 = {};
+        console.log("mySubArray",mySubArray)
         if(mySubArray.length>0) {
             firebase.database().ref('menu/' + $stateParams.vendor_id).once('value', function (response) {
-                console.log("data",JSON.stringify(response.val(),null,2))
+
+                // if (response.val()) {
+                //     $scope.menuInfo = response.val().services;
+                //     window.localStorage.setItem("vendorName", response.val().vendorName);
+                //     for(var j = 0; j< mySubArray.length;j++){
+                //         angular.forEach($scope.menuInfo, function (value, key) {
+                //             if(key == mySubArray[j]) {
+                //                 $scope.menu.push(value);
+                //             }
+                //         })
+                //     }
+                //     console.log("menu",JSON.stringify($scope.menu,null,2))
+                //     $scope.vendorDetail();
+                // }
                 if (response.val()) {
                     $scope.menuInfo = response.val().services;
                     window.localStorage.setItem("vendorName", response.val().vendorName);
                     for(var j = 0; j< mySubArray.length;j++){
                         angular.forEach($scope.menuInfo, function (value, key) {
-                            if(key == mySubArray[j]){
-                                $scope.menu.push(value);
+                            if(key == mySubArray[j]) {
+                                for (var k = 0; k < sorted_id.length; k++){
+                                    angular.forEach(value, function (value1, key1) {
+                                        if(key1 == sorted_id[k]){
+                                            console.log("value1",value1)
+                                            $scope.menu1[key1]=value1;
+
+                                        }
+                                    })
+                                }
                             }
                         })
                     }
+                    console.log("menu",JSON.stringify($scope.menu1,null,2))
                     $scope.vendorDetail();
                 }
                 else{

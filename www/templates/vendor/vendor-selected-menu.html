@@ -16,49 +16,91 @@
                 <div class="fab" ng-class="fabSelected? 'with-border':'no-border'" ng-click="selectMain(2)"></div>
                 <div class="fab-book" ng-click="selectMain(2)">FULL MENU</div>
             </div>
-            <div class="row padding">
-                <div ng-repeat="data in menu" style="width: 100%">
-                <div class="col" ng-repeat="(key, value) in data" style="width: 100%;margin: auto; ">
-                    <div class="item item-text-wrap list-heading" ng-repeat="(key1, value1) in selected_items"
-                         ng-if="key == value1.id">{{value1.name}}
+            <div class=" padding" ng-repeat="(key,value) in menu1" style="width: 100%">
+                <div class="row item item-text-wrap list-heading"
+                     ng-repeat="(key1, value1) in selected_items"
+                     ng-if="key == value1.id" style="width:45%">{{value1.name}}
+                </div>
+                <div id="y.id " class="item item-text-wrap row"
+                     id="custom-servicelist" ng-repeat="y in value"
+                     ng-click="selectItem($index, y.menuItemName,y)">
+                    <div ng-show="selectedServices[y.menuItemName]"
+                         style="background-color:#0dd1d1; width:20px;">
                     </div>
-                    <div ng-repeat="(key1, value1) in selected_items">
-                      <div id="y.id " class="item item-text-wrap row" id="custom-servicelist" ng-repeat="(key3,y) in value"
-                         ng-click="selectItem($index, y.menuItemName,y)" ng-if="key == value1.id">
-                        <div ng-show="selectedServices[y.menuItemName]" style="background-color:#0dd1d1; width:20px;">
-                        </div>
-                        <div class="col col-50 item-text-wrap p-15">
-                            <span style="font-size: 0.9em;" ng-show="y.male == true && y.female==undefined">
+                    <div class="col col-50 item-text-wrap p-15">
+                                <span style="font-size: 0.9em;" ng-show="y.male == true && y.female==undefined">
                                     {{y.menuItemName}}(Male)
-                             </span>
-                            <span style="font-size: 0.9em;" ng-show="y.female == true &&y.male==undefined">
+                                </span>
+                        <span style="font-size: 0.9em;" ng-show="y.female == true &&y.male==undefined">
                                     {{y.menuItemName}}(Female)
                                 </span>
-                            <span style="font-size: 0.9em;" ng-show="y.female == true&&y.male ==true">
+                        <span style="font-size: 0.9em;" ng-show="y.female == true&&y.male ==true">
                                     {{y.menuItemName}}(Unisex)
-                             </span>
-                        </div>
-                        <div class="col col-33 p-15" style="text-align:right;font-color:black;"
-                             ng-if="y.vendorPrice != y.fab2uPrice">
-                            <strike>
-                                <span class="striked-text" style="font-size: 0.9em;">&#x20B9;{{y.vendorPrice}} </span>
-                                <span class="line-arrow right" style="position:relative;bottom:1px ;left:4px;"></span>
-                            </strike>
-                            <span style="font-size: 0.9em;">
-                                    &nbsp &#x20B9; {{y.fab2uPrice}}
-                            </span>
-                        </div>
-                        <div class="col col-33 p-15" style="text-align:right;font-color:black;"
-                             ng-if="y.vendorPrice == y.fab2uPrice">
-                             <span style="font-size: 0.9em;">
-                               &nbsp &#x20B9; {{y.vendorPrice}}
-                             </span>
-                        </div>
-                       </div>
+                                </span>
+                    </div>
+                    <div class="col col-33 p-15" style="text-align:right;font-color:black;"
+                         ng-if="y.vendorPrice != y.customerPrice">
+                        <strike>
+                                    <span class="striked-text"
+                                          style="font-size: 0.9em;">&#x20B9;{{y.vendorPrice}} </span>
+                            <span class="line-arrow right"
+                                  style="position:relative;bottom:1px ;left:4px;"></span>
+                        </strike>
+                        <span style="font-size: 0.9em;">
+                                   &#x20B9; {{y.customerPrice}}
+                                 </span>
+                    </div>
+                    <div class="col col-33 p-15" style="text-align:right;font-color:black;"
+                         ng-if="y.vendorPrice == y.customerPrice">
+                                <span style="font-size: 0.9em;">
+                                   &#x20B9; {{y.customerPrice}}
+                                 </span>
                     </div>
                 </div>
-                </div>
             </div>
+            <!--<div class="row padding">-->
+                <!--<div ng-repeat="data in menu" style="width: 100%">-->
+                <!--<div class="col" ng-repeat="(key, value) in data" style="width: 100%;margin: auto; ">-->
+                    <!--<div class="item item-text-wrap list-heading" ng-repeat="(key1, value1) in selected_items"-->
+                         <!--ng-if="key == value1.id">{{value1.name}}-->
+                    <!--</div>-->
+                    <!--<div ng-repeat="(key1, value1) in selected_items">-->
+                      <!--<div id="y.id " class="item item-text-wrap row" id="custom-servicelist" ng-repeat="(key3,y) in value"-->
+                         <!--ng-click="selectItem($index, y.menuItemName,y)" ng-if="key == value1.id">-->
+                        <!--<div ng-show="selectedServices[y.menuItemName]" style="background-color:#0dd1d1; width:20px;">-->
+                        <!--</div>-->
+                        <!--<div class="col col-50 item-text-wrap p-15">-->
+                            <!--<span style="font-size: 0.9em;" ng-show="y.male == true && y.female==undefined">-->
+                                    <!--{{y.menuItemName}}(Male)-->
+                             <!--</span>-->
+                            <!--<span style="font-size: 0.9em;" ng-show="y.female == true &&y.male==undefined">-->
+                                    <!--{{y.menuItemName}}(Female)-->
+                                <!--</span>-->
+                            <!--<span style="font-size: 0.9em;" ng-show="y.female == true&&y.male ==true">-->
+                                    <!--{{y.menuItemName}}(Unisex)-->
+                             <!--</span>-->
+                        <!--</div>-->
+                        <!--<div class="col col-33 p-15" style="text-align:right;font-color:black;"-->
+                             <!--ng-if="y.vendorPrice != y.fab2uPrice">-->
+                            <!--<strike>-->
+                                <!--<span class="striked-text" style="font-size: 0.9em;">&#x20B9;{{y.vendorPrice}} </span>-->
+                                <!--<span class="line-arrow right" style="position:relative;bottom:1px ;left:4px;"></span>-->
+                            <!--</strike>-->
+                            <!--<span style="font-size: 0.9em;">-->
+                                    <!--&nbsp &#x20B9; {{y.fab2uPrice}}-->
+                            <!--</span>-->
+                        <!--</div>-->
+                        <!--<div class="col col-33 p-15" style="text-align:right;font-color:black;"-->
+                             <!--ng-if="y.vendorPrice == y.fab2uPrice">-->
+                             <!--<span style="font-size: 0.9em;">-->
+                               <!--&nbsp &#x20B9; {{y.vendorPrice}}-->
+                             <!--</span>-->
+                        <!--</div>-->
+                       <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </ion-content>
 

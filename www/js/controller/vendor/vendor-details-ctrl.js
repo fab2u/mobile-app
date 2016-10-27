@@ -350,8 +350,23 @@ app.controller('VendorDetailsCtrl',
                     updates['reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id+'/Reviews/'+reviewData.ReviewId] = reviewData;
                     updates['userReviews/'+localStorage.getItem('uid')+'/'+reviewData.ReviewId] = userReviewData;
                     db.ref().update(updates).then(function () {
-                        $scope.custReview ={};
-                        location.reload();
+                        $scope.custReview ={
+                            review:'',
+                            rating: 0
+                        };
+                        $scope.ratingsObject = {
+                            iconOn: 'ion-ios-star',
+                            iconOff: 'ion-ios-star-outline',
+                            iconOnColor: '#ffd11a',
+                            iconOffColor: '#b38f00',
+                            rating: 0,
+                            minRating: 0,
+                            readOnly:false,
+                            callback: function(rating) {
+                                $scope.ratingsCallback(rating);
+                            }
+                        };
+                       location.reload();
                         $ionicLoading.hide();
                         $rootScope.$broadcast('reviewList', { message: 'review list changed' });
                         $cordovaToast

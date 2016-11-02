@@ -1,8 +1,6 @@
 app.controller('VendorDetailsCtrl',
-    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state,
-             $ionicPopup,$ionicLoading,$rootScope,$cordovaDevice,$cordovaInAppBrowser,$cordovaToast){
-
-
+    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state
+        ,$ionicLoading,$rootScope,$cordovaToast){
 
         $scope.images =[];
         $scope.reviewerName = '';
@@ -11,6 +9,19 @@ app.controller('VendorDetailsCtrl',
         $scope.selectedServices = {};
         $scope.begItems = {};
         $scope.menu_button = true;
+        $scope.more = false;
+        $scope.days = [];
+        var d = new Date();
+        var weekday = new Array(7);
+        weekday[0]=  "sunday";
+        weekday[1] = "monday";
+        weekday[2] = "tuesday";
+        weekday[3] = "wednesday";
+        weekday[4] = "thursday";
+        weekday[5] = "friday";
+        weekday[6] = "saturday";
+
+        var n = weekday[d.getDay()];
 
         if(window.localStorage.getItem("selectedTab")=='true'){
             $scope.menu_button = false;
@@ -35,7 +46,6 @@ app.controller('VendorDetailsCtrl',
         firebase.database().ref('vendors/' + JSON.parse(window.localStorage['selectedLocation']).cityId + '/' + $stateParams.ven_id).once('value', function (response) {
            if(response.val()){
                $scope.vendor_detail = response.val();
-               console.log(JSON.stringify($scope.vendor_detail,null,2))
                $ionicLoading.hide();
                if(response.val().images){
                    if(response.val().images.gallery){
@@ -144,15 +154,13 @@ app.controller('VendorDetailsCtrl',
                     });
                 }
                 else if(response.val() == null){
-                    $scope.msg = 'No,reviews found!'
+                    $scope.msg = 'No,reviews found!';
                     $ionicLoading.hide();
                 }
-                console.log("reviews",JSON.stringify($scope.reviews))
             });
         };
 
     $scope.slideHasChanged = function(value){
-      console.log(value);
         if(value == 2){
             $scope.reviewList();
         }
@@ -162,21 +170,11 @@ app.controller('VendorDetailsCtrl',
       $scope.currentValue = value;
     };
 
-    $scope.more = false;
+        $rootScope.$on('reviewList', function (event, args) {
+            $scope.reviewList();
+        });
 
 
-        $scope.days = [];
-        var d = new Date();
-        var weekday = new Array(7);
-        weekday[0]=  "sunday";
-        weekday[1] = "monday";
-        weekday[2] = "tuesday";
-        weekday[3] = "wednesday";
-        weekday[4] = "thursday";
-        weekday[5] = "friday";
-        weekday[6] = "saturday";
-
-        var n = weekday[d.getDay()];
 
     $scope.showVendorTiming = function(time_info){
         angular.forEach(time_info, function(value, key) {
@@ -280,6 +278,7 @@ app.controller('VendorDetailsCtrl',
 
 
         $scope.ratingsCallback = function(rating) {
+            console.log("rating",rating)
             $scope.custReview.rating = rating;
         };
         $scope.ratingsObject = {
@@ -313,6 +312,18 @@ app.controller('VendorDetailsCtrl',
                 review:'',
                 rating: 0
             };
+            $scope.ratingsObject = {
+                iconOn: 'ion-ios-star',
+                iconOff: 'ion-ios-star-outline',
+                iconOnColor: '#ffd11a',
+                iconOffColor: '#b38f00',
+                rating: 0,
+                minRating: 0,
+                readOnly:false,
+                callback: function(rating) {
+                    $scope.ratingsCallback(rating);
+                }
+            };
             $scope.rate_vendor.show();
         };
 
@@ -329,77 +340,71 @@ app.controller('VendorDetailsCtrl',
                 }
                 else{
                     var updates = {};
-                    var reviewData = {};
                     var reviewId = firebase.database().ref('reviews/'+
                         JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+
                         $stateParams.ven_id+'/Reviews').push().key;
                     firebase.database().ref('users/data/'+localStorage.getItem('uid')).once('value',function(response) {
                         if(response.val()){
-                           reviewData = {
-                                'ReviewId':reviewId,
-                                'BookingId':'',
-                                'userId':localStorage.getItem('uid'),
-                                'ReviewText':$scope.custReview.review,
-                                'ReviewRating':$scope.custReview.rating,
+                            if(response.val().photoUrl){
+                                $scope.reviewData = {
+                                    'ReviewId':reviewId,
+                                    'BookingId':'',
+                                    'userId':localStorage.getItem('uid'),
+                                    'ReviewText':$scope.custReview.review,
+                                    'ReviewRating':$scope.custReview.rating,
+                                    'VendorId':$stateParams.ven_id,
+                                    'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
+                                    'ReviewDate':new Date().getTime(),
+                                    'name':response.val().name,
+                                    'image':response.val().photoUrl
+                                };
+                            }
+                            else{
+                                $scope.reviewData = {
+                                    'ReviewId':reviewId,
+                                    'BookingId':'',
+                                    'userId':localStorage.getItem('uid'),
+                                    'ReviewText':$scope.custReview.review,
+                                    'ReviewRating':$scope.custReview.rating,
+                                    'VendorId':$stateParams.ven_id,
+                                    'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
+                                    'ReviewDate':new Date().getTime(),
+                                    'name':response.val().name,
+                                    'image':''
+                                };
+                            }
+
+                            var userReviewData = {
                                 'VendorId':$stateParams.ven_id,
-                                'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
-                                'ReviewDate':new Date().getTime(),
-                                'name':response.val().name,
-                                'image':response.val()
-                            };
+                                'cityId':JSON.parse(window.localStorage['selectedLocation']).cityId,
+                                'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName
+
+                            }
+                            updates['reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+
+                            $stateParams.ven_id+'/Reviews/'+$scope.reviewData.ReviewId] = $scope.reviewData;
+                            updates['userReviews/'+localStorage.getItem('uid')+'/'+$scope.reviewData.ReviewId] = userReviewData;
+                            db.ref().update(updates).then(function () {
+                                $scope.custReview ={
+                                    review:'',
+                                    rating: 0
+                                };
+                                $state.reload();
+                                $ionicLoading.hide();
+                                $rootScope.$broadcast('reviewList', { message: 'review list changed' });
+                                $cordovaToast
+                                .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
+                                .then(function(success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                                $scope.rate_vendor.hide();
+                            });
                         }
                         else{
-                           reviewData = {
-                                'ReviewId':reviewId,
-                                'BookingId':'',
-                                'userId':localStorage.getItem('uid'),
-                                'ReviewText':$scope.custReview.review,
-                                'ReviewRating':$scope.custReview.rating,
-                                'VendorId':$stateParams.ven_id,
-                                'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
-                                'ReviewDate':new Date().getTime(),
-                                'name':'',
-                                'image':''
-                            };
+                           alert('Something went wrong!')
                         }
                     })
-                    var userReviewData = {
-                        'VendorId':$stateParams.ven_id,
-                        'cityId':JSON.parse(window.localStorage['selectedLocation']).cityId,
-                        'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName
-
-                    }
-                    updates['reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id+'/Reviews/'+reviewData.ReviewId] = reviewData;
-                    updates['userReviews/'+localStorage.getItem('uid')+'/'+reviewData.ReviewId] = userReviewData;
-                    db.ref().update(updates).then(function () {
-                        $scope.custReview ={
-                            review:'',
-                            rating: 0
-                        };
-                        $scope.ratingsObject = {
-                            iconOn: 'ion-ios-star',
-                            iconOff: 'ion-ios-star-outline',
-                            iconOnColor: '#ffd11a',
-                            iconOffColor: '#b38f00',
-                            rating: 0,
-                            minRating: 0,
-                            readOnly:false,
-                            callback: function(rating) {
-                                $scope.ratingsCallback(rating);
-                            }
-                        };
-                       location.reload();
-                        $ionicLoading.hide();
-                        $rootScope.$broadcast('reviewList', { message: 'review list changed' });
-                        // $cordovaToast
-                            // .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
-                            // .then(function(success) {
-                            //     // success
-                            // }, function (error) {
-                            //     // error
-                            // });
-                        $scope.rate_vendor.hide();
-                    });
                 }
             }
             else{
@@ -411,6 +416,11 @@ app.controller('VendorDetailsCtrl',
                         // error
                     });
             }
+        };
+
+        $scope.close_modal = function () {
+            $scope.rate_vendor.hide();
+
         };
 
 

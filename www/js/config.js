@@ -288,52 +288,6 @@ app
 
 	 $urlRouterProvider.otherwise('/app-start');
 
-	// All the booking id for active booking and their detail
-
-	// function bookingInfo() {
-	// 	var activeBookingId = [];
-	// 	var activeBookings = [];
-	// 	firebase.database().ref('userBookings/'+localStorage.getItem('uid')).once('value', function (response) {
-	// 		if(response.val()){
-	// 			angular.forEach(response.val(), function (value, key) {
-	// 				if(value == 'active'){
-	// 					activeBookingId.push(key);
-	// 				}
-	// 			});
-	// 			for (var i = 0; i < activeBookingId.length; i++) {
-	// 				firebase.database().ref('bookings/' + activeBookingId[i]).once('value', function (response) {
-	// 					if (response.val()) {
-	// 						activeBookings.push(response.val())
-	// 						window.localStorage['activeBooking'] = JSON.stringify(activeBookings);
-	// 					}
-	// 				});
-	// 			}
-	// 		}
-	// 	})
-	// };
-	// if(localStorage.getItem('uid')){
-	// 	bookingInfo();
-	// }
-	// var hasActiveBookings = checkLocalStorage('activeBooking');
-	// if(hasActiveBookings) {
-	// 	var activeBookingInformation = JSON.parse(window.localStorage['activeBooking']);
-	// 	var sortedActiveBookings = _.sortBy(activeBookingInformation, function(o) { return o.appointmentTime; })
-	// 	if(sortedActiveBookings[0].appointmentTime < new Date().getTime()){
-	// 		window.localStorage['currentBooking'] = JSON.stringify(sortedActiveBookings[0]);
-	// 		// $state.go('bill');
-    //
-	// 	}
-	// }
-	// var hasCurrentBooking = checkLocalStorage('currentBooking');
-	// console.log("hasCurrentBooking",hasCurrentBooking)
-	// if(hasCurrentBooking == true){
-	// 	console.log("sonam")
-	// 	$urlRouterProvider.otherwise("/bill");
-	// }
-	// else{
-	// 	$urlRouterProvider.otherwise("/app-start");
-	// }
-
 	// var hasCurrentBooking = checkLocalStorage('currentBooking');
 	// if(hasCurrentBooking == true){
 	// 	$urlRouterProvider.otherwise("/bill");

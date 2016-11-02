@@ -1,6 +1,6 @@
 app.controller('VendorListCtrl',
-    function ($scope, $ionicHistory, $state, $stateParams, $ionicLoading, $http,$rootScope,
-              $cordovaGeolocation,$ionicModal,$ionicPopover,$rootScope,$cordovaToast) {
+    function ($scope, $ionicHistory, $state, $stateParams, $ionicLoading, $http,$rootScope
+        ,$ionicModal,$ionicPopover,$rootScope,$cordovaToast) {
 
         $scope.gender = '';
         $scope.vendorList = '';
@@ -166,7 +166,7 @@ app.controller('VendorListCtrl',
                     if ($scope.serviceIds.length > 0) {
                         var serviceIdList = $scope.serviceIds.join();
                         $http.post("http://139.162.31.204/search_services?services=" + $scope.serviceIds +
-                            "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender='1'&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
+                            "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender=1&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                             .then(function (response) {
                                 $scope.vendorList = response.data.results;
                                 if($scope.vendorList.length == 0){
@@ -185,7 +185,7 @@ app.controller('VendorListCtrl',
                     }
                     else if (serviceId) {
                         $http.post("http://139.162.31.204/search_services?services=" + serviceId +
-                            "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender='1'&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
+                            "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender=1&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                             .then(function (response) {
                                 $scope.vendorList = response.data.results;
                                 if($scope.vendorList.length == 0){
@@ -205,7 +205,7 @@ app.controller('VendorListCtrl',
                     }
                     else {
                         $http.post("http://139.162.31.204/get_vendors?user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId +
-                            "&user_gender='1'&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
+                            "&user_gender=1&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                             .then(function (response) {
                                 $scope.vendorList = response.data.results;
                                 if($scope.vendorList.length == 0){
@@ -232,7 +232,7 @@ app.controller('VendorListCtrl',
                     if ($scope.serviceIds.length > 0) {
                         var serviceIdList = $scope.serviceIds.join();
                         $http.post("http://139.162.31.204/search_services?services=" + $scope.serviceIds +
-                            "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender='2'&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
+                            "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender=2&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                             .then(function (response) {
                                 $scope.vendorList = response.data.results;
                                 if($scope.vendorList.length == 0){
@@ -251,7 +251,7 @@ app.controller('VendorListCtrl',
                     }
                     else if (serviceId) {
                         $http.post("http://139.162.31.204/search_services?services=" + serviceId +
-                            "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender='2'&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
+                            "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender=2&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                             .then(function (response) {
                                 $scope.vendorList = response.data.results;
                                 if($scope.vendorList.length == 0){
@@ -270,7 +270,7 @@ app.controller('VendorListCtrl',
                     }
                     else {
                         $http.post("http://139.162.31.204/get_vendors?user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId +
-                            "&user_gender='2'&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
+                            "&user_gender=2&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                             .then(function (response) {
                                 $scope.vendorList = response.data.results;
                                 if($scope.vendorList.length == 0){

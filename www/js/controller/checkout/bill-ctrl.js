@@ -136,22 +136,43 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$i
         }
         else{
             var updates = {};
-            var reviewId = firebase.database().ref('reviews/'+$scope.bookingInformation.cityId+'/'+$scope.bookingInformation.vendorId+'/Reviews').push().key;
-            var reviewData = {
-                'ReviewId':reviewId,
-                'BookingId':$scope.bookingInformation.bookingId,
-                'userId':localStorage.getItem('uid'),
-                'ReviewText':$scope.custReview.review,
-                'ReviewRating':$scope.custReview.rating,
-                'VendorId':$scope.bookingInformation.vendorId,
-                'cityName':locationInfo.cityName,
-                'ReviewDate':new Date().getTime()
-            };
+            var reviewData = {};
+            var reviewId = firebase.database().ref('reviews/'+$scope.bookingInformation.cityId+'/'+
+                $scope.bookingInformation.vendorId+'/Reviews').push().key;
+            firebase.database().ref('users/data/'+localStorage.getItem('uid')).once('value',function(response) {
+                if(response.val()){
+                    reviewData = {
+                        'ReviewId':reviewId,
+                        'BookingId':$scope.bookingInformation.bookingId,
+                        'userId':localStorage.getItem('uid'),
+                        'ReviewText':$scope.custReview.review,
+                        'ReviewRating':$scope.custReview.rating,
+                        'VendorId':$scope.bookingInformation.vendorId,
+                        'cityName':locationInfo.cityName,
+                        'ReviewDate':new Date().getTime(),
+                        'name':response.val().name,
+                        'image':response.val()
+                    };
+                }
+                else{
+                    reviewData = {
+                        'ReviewId':reviewId,
+                        'BookingId':$scope.bookingInformation.bookingId,
+                        'userId':localStorage.getItem('uid'),
+                        'ReviewText':$scope.custReview.review,
+                        'ReviewRating':$scope.custReview.rating,
+                        'VendorId':$scope.bookingInformation.vendorId,
+                        'cityName':locationInfo.cityName,
+                        'ReviewDate':new Date().getTime(),
+                        'name':'',
+                        'image':''
+                    };
+                }
+            })
             var userReviewData = {
                 'VendorId':$scope.bookingInformation.vendorId,
                 'cityId':$scope.bookingInformation.cityId,
                 'cityName':locationInfo.cityName
-
             }
             updates['reviews/'+$scope.bookingInformation.cityId+'/'+$scope.bookingInformation.vendorId+'/Reviews/'+reviewData.ReviewId] = reviewData;
             updates['userReviews/'+localStorage.getItem('uid')+'/'+reviewData.ReviewId] = userReviewData;
@@ -197,8 +218,6 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$i
             $state.go('app.home');
             $ionicLoading.hide();
             $rootScope.$broadcast('booking', { message: 'booking changed' });
-
-
         });
     };
 

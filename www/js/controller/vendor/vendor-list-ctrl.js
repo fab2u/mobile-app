@@ -81,7 +81,6 @@ app.controller('VendorListCtrl',
                                     });
 
                             }
-                            console.log("list", JSON.stringify($scope.vendorList, null, 2))
                             $ionicLoading.hide();
                         });
                 }
@@ -119,8 +118,6 @@ app.controller('VendorListCtrl',
                                     });
 
                             }
-
-                            console.log("discover salons", JSON.stringify($scope.vendorList, null, 2))
                             $ionicLoading.hide();
                         });
                 }
@@ -180,7 +177,6 @@ app.controller('VendorListCtrl',
 
                                 }
                                 $ionicLoading.hide();
-                                console.log(JSON.stringify($scope.vendorList, null, 2));
                             });
                     }
                     else if (serviceId) {
@@ -199,8 +195,6 @@ app.controller('VendorListCtrl',
 
                                 }
                                 $ionicLoading.hide();
-                                console.log(JSON.stringify($scope.vendorList, null, 2));
-
                             });
                     }
                     else {
@@ -219,8 +213,6 @@ app.controller('VendorListCtrl',
 
                                 }
                                 $ionicLoading.hide();
-                                console.log(JSON.stringify($scope.vendorList, null, 2));
-
                             });
                     }
 
@@ -246,7 +238,6 @@ app.controller('VendorListCtrl',
 
                                 }
                                 $ionicLoading.hide();
-                                console.log(JSON.stringify($scope.vendorList));
                             });
                     }
                     else if (serviceId) {
@@ -265,7 +256,6 @@ app.controller('VendorListCtrl',
 
                                 }
                                 $ionicLoading.hide();
-                                console.log(JSON.stringify($scope.vendorList, null, 2));
                             });
                     }
                     else {
@@ -284,8 +274,6 @@ app.controller('VendorListCtrl',
 
                                 }
                                 $ionicLoading.hide();
-                                console.log(JSON.stringify($scope.vendorList, null, 2));
-
                             });
                     }
                 }
@@ -343,7 +331,6 @@ app.controller('VendorListCtrl',
 
                             }
                             $ionicLoading.hide();
-                            console.log(JSON.stringify($scope.vendorList, null, 2));
                         });
                 }
                 else{
@@ -361,7 +348,6 @@ app.controller('VendorListCtrl',
 
                             }
                             $ionicLoading.hide();
-                            console.log(JSON.stringify($scope.vendorList, null, 2));
                         });
                 }
 
@@ -412,7 +398,6 @@ app.controller('VendorListCtrl',
                 else {
                     $scope.selectedLocation[val] = true;
                 }
-                console.log("selected Location options :",$scope.selectedLocation);
             };
 
             $scope.ratingsObject = {
@@ -465,7 +450,6 @@ app.controller('VendorListCtrl',
                 $ionicLoading.show();
                 firebase.database().ref('location/' + JSON.parse(window.localStorage['selectedLocation']).cityId).once('value', function (response) {
                     $scope.location_detail = response.val();
-                    console.log("location",JSON.stringify($scope.location_detail,null,2))
                     $scope.location.show();
                     $ionicLoading.hide();
                 });
@@ -510,7 +494,6 @@ app.controller('VendorListCtrl',
                     'location':Object.keys($scope.selectedLocation).join(),
                     'rating':$scope.custReview.rating
                 };
-                console.log(final_query);
                 $http.post("http://139.162.31.204/filter_results?user_id="+$scope.uid+
                     "&vendor_type="+final_query.service_type+
                     "&price_range_min="+final_query.min_price+
@@ -528,7 +511,6 @@ app.controller('VendorListCtrl',
                                 });
                             $ionicLoading.hide();
                         }
-                        console.log("list",JSON.stringify($scope.vendorList,null,2));
                         $scope.filter_screen.hide();
                         $ionicLoading.hide();
                     });

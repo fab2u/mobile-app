@@ -133,17 +133,15 @@ app.controller('VendorDetailsCtrl',
         $scope.review_info = [];
         $scope.reviewList = function(){
             $ionicLoading.show();
-            firebase.database().ref('reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id+'/Reviews').once('value',function(response){
+            firebase.database().ref('reviews/'+
+                JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+
+                $stateParams.ven_id+'/Reviews').once('value',function(response){
                 $scope.reviews = response.val();
                 if(response.val()){
                     angular.forEach(response.val(), function(value, key) {
-                        firebase.database().ref('users/data/'+value.userId).once('value',function(response) {
-                            $ionicLoading.hide();
-                            value.name = response.val().name;
-                            value.image = response.val().photoUrl;
-                            $scope.review_info.push(value);
-                        })
-                     });
+                        $scope.review_info.push(value);
+                        $ionicLoading.hide();
+                    });
                 }
                 else if(response.val() == null){
                     $scope.msg = 'No,reviews found!'
@@ -233,17 +231,6 @@ app.controller('VendorDetailsCtrl',
 
         };
 
-    $scope.aImages = [{
-        'src' : 'http://ionicframework.com/img/ionic-logo-blog.png', 
-        'msg' : 'Swipe me to the left. Tap/click to close'
-      }, {
-        'src' : 'http://ionicframework.com/img/ionic-logo-blog.png', 
-        'msg' : ''
-      }, { 
-        'src' : 'http://ionicframework.com/img/ionic-logo-blog.png', 
-        'msg' : ''
-    }];
-  
     $ionicModal.fromTemplateUrl('templates/vendor/image.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -342,19 +329,40 @@ app.controller('VendorDetailsCtrl',
                 }
                 else{
                     var updates = {};
-                    var reviewId = firebase.database().ref('reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+$stateParams.ven_id+'/Reviews').push().key;
-                    var reviewData = {
-                        'ReviewId':reviewId,
-                        'BookingId':'',
-                        'userId':localStorage.getItem('uid'),
-                        'ReviewText':$scope.custReview.review,
-                        'ReviewRating':$scope.custReview.rating,
-                        'VendorId':$stateParams.ven_id,
-                        'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
-                        'ReviewDate':new Date().getTime()
-                        // 'name':'',
-                        // 'image':''
-                    };
+                    var reviewData = {};
+                    var reviewId = firebase.database().ref('reviews/'+
+                        JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+
+                        $stateParams.ven_id+'/Reviews').push().key;
+                    firebase.database().ref('users/data/'+localStorage.getItem('uid')).once('value',function(response) {
+                        if(response.val()){
+                           reviewData = {
+                                'ReviewId':reviewId,
+                                'BookingId':'',
+                                'userId':localStorage.getItem('uid'),
+                                'ReviewText':$scope.custReview.review,
+                                'ReviewRating':$scope.custReview.rating,
+                                'VendorId':$stateParams.ven_id,
+                                'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
+                                'ReviewDate':new Date().getTime(),
+                                'name':response.val().name,
+                                'image':response.val()
+                            };
+                        }
+                        else{
+                           reviewData = {
+                                'ReviewId':reviewId,
+                                'BookingId':'',
+                                'userId':localStorage.getItem('uid'),
+                                'ReviewText':$scope.custReview.review,
+                                'ReviewRating':$scope.custReview.rating,
+                                'VendorId':$stateParams.ven_id,
+                                'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
+                                'ReviewDate':new Date().getTime(),
+                                'name':'',
+                                'image':''
+                            };
+                        }
+                    })
                     var userReviewData = {
                         'VendorId':$stateParams.ven_id,
                         'cityId':JSON.parse(window.localStorage['selectedLocation']).cityId,
@@ -383,13 +391,13 @@ app.controller('VendorDetailsCtrl',
                        location.reload();
                         $ionicLoading.hide();
                         $rootScope.$broadcast('reviewList', { message: 'review list changed' });
-                        $cordovaToast
-                            .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
-                            .then(function(success) {
-                                // success
-                            }, function (error) {
-                                // error
-                            });
+                        // $cordovaToast
+                            // .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
+                            // .then(function(success) {
+                            //     // success
+                            // }, function (error) {
+                            //     // error
+                            // });
                         $scope.rate_vendor.hide();
                     });
                 }

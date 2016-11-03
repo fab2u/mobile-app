@@ -29,7 +29,7 @@ app.directive('expandingTextarea', function () {
     };
 });
 
-app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cordovaCamera', '$ionicLoading', function($scope, $http, $location, $timeout, $cordovaCamera, $ionicLoading){
+app.controller("newFeedCtrl",function($scope, $http, $location, $timeout, $cordovaCamera, $ionicLoading){
    $ionicLoading.show();
 
    uid = localStorage.getItem("uid");
@@ -77,7 +77,6 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
          tagsValue.push(hashTag[1]);
       }
       console.log(tagsValue);
-      // alert('1');
       // blog object update without tags, functional
       var updateBlog = {};
       updateBlog['/blogs/' + newBlogKey] = blogData;
@@ -100,7 +99,6 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
          console.log(updates);
          db.ref().update(updates);
       }
-      // alert('3');
       // user object update, functional
       var authUpdate = {};
       authUpdate['/users/data/'+ blogData.user.user_id+ '/blogs/' + newBlogKey] = true;
@@ -111,7 +109,7 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
             $location.path("/feed");
          }, 0);
       });
-   }
+   };
 
    $scope.galleryUpload = function() {
       var options = {
@@ -145,7 +143,6 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
          var image = document.getElementById('myImage');
          image.src = imageURI;
          $scope.url = imageURI;
-         // alert(JSON.stringify(imageURI)+ 'line number 283, imageURI');
          resizeImage(imageURI);
       }, function(err) {
          console.log(err);
@@ -153,12 +150,10 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
    };
 
    function resizeImage(source){
-      // alert('resizeImage called')
       var canvas = document.createElement("canvas");
       var ctx = canvas.getContext("2d");
 
       img = new Image();
-      // alert('img '+ img);
       img.onload = function () {
          alert("onload called javascript");
          canvas.width = img.width;
@@ -167,27 +162,19 @@ app.controller("newFeedCtrl", ['$scope', '$http', '$location', '$timeout', '$cor
          ctx.drawImage(img, 0, 0);
          alert(canvas.width+" "+canvas.height+" "+img.width+" "+img.height);
          var dataURL = canvas.toDataURL("image/jpeg");
-         // alert('before api 1');
-         // alert('dataURL ' + dataURL);
-         // alert('before api 2');
-         // change api for fab2u
+
          $http.post("http://139.162.3.205/api/testupload", {path: dataURL})
          .success(function(response){
             alert('success: ' + response);
-            // alert('success');
-            // alert(JSON.stringify(response.Message));
             $scope.image_url = response.Message;
-            // alert($scope.image_url);
             $(".upload").css("display", 'none');
 
          })
          .error(function(response){
             alert("error: " + response);
-            // alert('error');
          });
       }
-      // alert('source '+ source);
       img.src = source;
       $(".upload").css("display", 'none');
    }
-}]);
+});

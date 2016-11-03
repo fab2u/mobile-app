@@ -1,4 +1,5 @@
-app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', '$cordovaSocialSharing', '$ionicPopup', '$ionicModal', function($scope, $timeout, $location, $ionicLoading, $cordovaSocialSharing, $ionicPopup, $ionicModal){
+app.controller('FeedCtrl', function($scope, $timeout, $location, $ionicLoading, $cordovaSocialSharing,
+									$ionicPopup, $ionicModal){
 
 	$ionicLoading.show();
 
@@ -26,20 +27,15 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 	$scope.showImage = function(source) {
 		$scope.imageSrc = source;
 		$scope.openModal();
-	}
+	};
 	// ----------------------------------------------------------------------
-
-	console.log('test');
 	$scope.uid = window.localStorage.getItem("uid");
 	db.ref("users/data/"+$scope.uid+"/name").once("value", function(snapshot){
 		console.log(snapshot.val());
 		$scope.userName = snapshot.val();
 		$ionicLoading.hide();
 	});
-	console.log(JSON.parse(window.localStorage.getItem('selectedLocation')));
 	$scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
-	console.log($scope.cityId);
-	console.log($scope.uid);
 	$scope.events2 = [];
 	$scope.moreMessagesScroll = true;
 	$scope.moreMessagesRefresh = true;
@@ -485,4 +481,4 @@ app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', 
 	$scope.$on('$stateChangeSuccess', function() {
 		$scope.loadMore();
 	});
-}]);
+});

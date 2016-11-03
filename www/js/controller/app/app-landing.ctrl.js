@@ -8,6 +8,38 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     var appInfo = {};
     var location = {};
 
+
+    // var appInfo = {
+    //
+    //     'trackingIdStatusFlag': '',
+    //     'customerid': '',
+    //     'trackingId': '',
+    //     'custInfo': {
+    //         'dob': '',
+    //         'name': '',
+    //         'weight': '',
+    //         'location': '',
+    //         'mobile': '',
+    //         'gender': '',
+    //         'Height': '',
+    //         'email': '',
+    //         'address': '',
+    //         'anniversaryDate': ''
+    //     },
+    //     'deviceInfo': {
+    //         'udid': '',
+    //         'uuid': '',
+    //         'os': '',
+    //         'platform': '',
+    //         'version': '',
+    //         'model': '',
+    //         'manufacture': '',
+    //         'deviceToken': ''
+    //     },
+    //     'instanceId': ''
+    //
+    // };
+
     checkAppInfo();
 
     function checkAppInfo() {
@@ -20,23 +52,31 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     }
 
     function checkAppStatus() {
-        var checkNewUser = checkLocalStorage('appStatus');
+        var checkNewUser = checkLocalStorage('appInfo');
         if (checkNewUser) {
-            firebase.database().ref('appStatus').once('value', function(snapshot) {
-                var newStatus = snapshot.val();
-                var currentStatus = JSON.parse(window.localStorage['appStatus']);
-                if (newStatus.live == true) {
-                    if (newStatus.version > currentStatus.version) {
-                        $ionicLoading.hide();
-                        $state.go('app-update');
-                    } else {
-                        checkLoginStatus();
-                    }
-                } else {
-                    $ionicLoading.hide();
-                    $state.go('under-construction');
-                }
-            });
+            var oldUserInfo = JSON.parse(window.localStorage['appInfo']);
+
+
+
+
+            // firebase.database().ref('appStatus').once('value', function(snapshot) {
+            //     var newStatus = snapshot.val();
+            //     var currentStatus = JSON.parse(window.localStorage['appInfo']);
+            //     if (newStatus.live == true) {
+            //         console.log("1")
+            //         if (newStatus.version > currentStatus.version) {
+            //             $ionicLoading.hide();
+            //             console.log("2")
+            //             $state.go('app-update');
+            //         } else {
+            //             checkLoginStatus();
+            //         }
+            //     } else {
+            //         console.log("3")
+            //         $ionicLoading.hide();
+            //         $state.go('under-construction');
+            //     }
+            // });
         } else {
             firebase.database().ref('appStatus').once('value', function(snapshot) {
                 var newStatus = snapshot.val();

@@ -14,11 +14,13 @@
 					</div>
 					<div class="col col-55">
 						<p class="feed-name"><a href="#/user/{{feed.user.user_id}}">{{feed.user.user_name}}</a> | {{feed.created_time | date:'d MMM yy'}}</p>
-						<p class="feed-name"><i class="ion ion-location"></i> Gurgaon</p>
+						<p class="feed-name"><i class="ion ion-location"></i>Gurgaon</p>
 					</div>
 					<div class="col col-25">
-						<span class="follow-btn {{feed.user.user_id}}-follow" ng-click="followUser(feed.user.user_id)">Follow</span>
-            <span class="unfollow-btn {{feed.user.user_id}}-unfollow" style="display: none" ng-click="unfollowUser(feed.user.user_id)">Unfollow</span>
+						<span class="follow-btn {{feed.user.user_id}}-follow"
+							  ng-click="followUser(feed.user.user_id)">Follow</span>
+            <span class="unfollow-btn {{feed.user.user_id}}-unfollow" style="display: none"
+				  ng-click="unfollowUser(feed.user.user_id)">Unfollow</span>
           </div>
 				</div>
 				<div class="row">

@@ -1,5 +1,5 @@
-// Edit By Deepank
-app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '$cordovaCamera', '$ionicModal', function($scope, $timeout, $ionicLoading, $http, $cordovaCamera, $ionicModal){
+app.controller("profileCtrl",function($scope, $timeout,$location, $ionicLoading, $http,
+                                      $cordovaCamera, $ionicModal){
    $scope.uid = window.localStorage.uid;
    console.log($scope.uid);
    $scope.email = window.localStorage.email;
@@ -184,4 +184,4 @@ app.controller("profileCtrl", ['$scope', '$timeout', '$ionicLoading', '$http', '
          $location.path("#/login");
       }
    });
-}]);
+});

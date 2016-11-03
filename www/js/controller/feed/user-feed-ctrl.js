@@ -1,6 +1,14 @@
-app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location', '$ionicLoading', '$ionicModal', '$ionicPopup', function($scope, $timeout, $stateParams, $location, $ionicLoading, $ionicModal, $ionicPopup){
+app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaCamera,$http,
+                                        $location, $ionicLoading, $ionicModal, $ionicPopup){
 
 	$ionicLoading.show();
+
+
+    $scope.myBlogIds = [];
+    $scope.myFollowingBlogIds = [];
+    $scope.followingIds ='';
+    $scope.count1 = 0;
+    $scope.count2 = 0;
 
   function showAlert(){
     $ionicLoading.hide();
@@ -80,6 +88,12 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 
   db.ref("users/data/"+uid).on("value", function(snapshot){
     $scope.totalLikes = 0;
+      $scope.following = Object.keys(snapshot.val().following).length;
+      $scope.userDetails = snapshot.val();
+      $scope.email = snapshot.val().email.userEmail;
+      $scope.userPhoto = snapshot.val().photoUrl;
+      $scope.numFeeds = Object.keys(snapshot.val().blogs).length;
+      $scope.followers = Object.keys(snapshot.val().myFollowers).length;
     for(var i in snapshot.val().blogs){
       db.ref("blogs/"+i).on("value", function(snap){
         if(snap.val().likedBy){
@@ -87,12 +101,6 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
         }
       });
     }
-		$scope.following = Object.keys(snapshot.val().following).length;
-		$scope.userDetails = snapshot.val();
-		$scope.email = snapshot.val().email.userEmail;
-		$scope.userPhoto = snapshot.val().photoUrl;
-		$scope.numFeeds = Object.keys(snapshot.val().blogs).length;
-		$scope.followers = Object.keys(snapshot.val().myFollowers).length;
 	});
 
 	$scope.commentToggle = function(feedId) {
@@ -243,7 +251,49 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
         console.log(snap.numChildren());
       });
     }
-	}
+	};
+
+
+	////////////////// following blogs id ////////////////
+
+    $scope.storedIds = [];
+    var blogsNum= 0;
+    var blogCount = 0;
+    var count12 = 0;
+    var followingNum = 0;
+
+    function allBlogIds(myBlogIds,followingIds) {
+     var finalBlogIds = _.union(myBlogIds,followingIds);
+        if(finalBlogIds){
+            for(var i = 0; i<finalBlogIds.length;i++){
+                	blogAlgo(finalBlogIds[i]);
+            }
+        }
+    }
+
+    function getBlogIds(id) {
+        db.ref("users/data/"+id+"/blogs").once('value', function(snapshot){
+            blogsNum += Object.keys(snapshot.val()).length;
+            count12++;
+            for(var blogId in snapshot.val()){
+                blogCount++;
+                $scope.storedIds.push(blogId);
+                if(blogsNum == blogCount && followingNum == count12) {
+                    allBlogIds($scope.myBlogIds,$scope.storedIds)
+                }
+            }
+        })
+    }
+
+    function myFollowing(followingId){
+        for(var id in followingId){
+            getBlogIds(id);
+        }
+    }
+
+
+
+
 
 	$scope.loadMore = function(){
 		console.log('loadmore');
@@ -272,20 +322,38 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 		else if(Object.keys($scope.blogIdList).length == 0){
 			db.ref("users/data/"+uid +"/blogs").limitToLast(25).once("value", function(snapshot){
 				$scope.blogIdList = snapshot.val();
-				console.log($scope.blogIdList);
-				if($scope.blogIdList !== null){
-					$scope.bottomKey = Object.keys($scope.blogIdList)[0];
-				}
-				$scope.blogArr = [];
-				for(var i in snapshot.val()){
-					blogAlgo(i);
-				}
+                if($scope.blogIdList !== null){
+                	$scope.bottomKey = Object.keys($scope.blogIdList)[0];
+                }
+                $scope.blogArr = [];
+                for(var i in snapshot.val()){
+                    $scope.myBlogIds.push(i);
+                	// blogAlgo(i);
+                }
+                db.ref("users/data/"+uid+"/following").once("value",function (response) {
+                    if(response.val()){
+                        $scope.followingIds = response.val();
+                    }
+                })
+                if($scope.followingIds){
+                    followingNum = Object.keys($scope.followingIds).length;
+                    myFollowing($scope.followingIds);
+                }
+				// if($scope.blogIdList !== null){
+				// 	$scope.bottomKey = Object.keys($scope.blogIdList)[0];
+				// }
+				// $scope.blogArr = [];
+				// for(var i in snapshot.val()){
+				//     console.log("i",i)
+				// 	blogAlgo(i);
+				// }
+
 				$ionicLoading.hide();
 				$timeout(function () {
 				}, 0);
 			});
 		}
-	}
+	};
 
 	$scope.$on('$stateChangeSuccess', function() {
 		$scope.loadMore();
@@ -323,11 +391,187 @@ app.controller("userFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location
 					}, 1000);
 				}
 			}
-			// console.log($scope.blogArr);
+			console.log($scope.blogArr);
 			$scope.blogArr.push(single_blog);
 		});
 		if(callback){
 			callback();
 		}
 	}
-}]);
+
+
+	//////////////////// image upload //////////////////////
+
+    $scope.uid = window.localStorage.uid;
+    $scope.email = window.localStorage.email;
+
+    var basic;
+    $ionicModal.fromTemplateUrl('templates/user/image-crop.html', {
+        scope: $scope
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+
+    $scope.testData = 'asdsdfb';
+
+
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in.
+            console.log(user);
+
+            db.ref("users/data/"+$scope.uid).on("value", function(snapshot){
+                $ionicLoading.hide();
+                console.log(snapshot.val());
+                $scope.userDetails = snapshot.val();
+            });
+
+            $scope.galleryUpload = function() {
+                var options = {
+                    destinationType : Camera.DestinationType.FILE_URI,
+                    sourceType :	Camera.PictureSourceType.PHOTOLIBRARY, //, Camera.PictureSourceType.CAMERA,
+                    allowEdit : false,
+                    encodingType: Camera.EncodingType.JPEG,
+                    popoverOptions: CameraPopoverOptions,
+                };
+                $cordovaCamera.getPicture(options).then(function(imageURI) {
+                    var image = document.getElementById('profile-pic');
+                    // image.src = imageURI;
+                    $scope.url = imageURI;
+                    cropImage(imageURI);
+                    // resizeImage(imageURI);
+                }, function(err) {
+                    console.log(err);
+                });
+            };
+
+            $scope.cameraUpload = function() {
+                var options = {
+                    destinationType : Camera.DestinationType.FILE_URI,
+                    sourceType :	Camera.PictureSourceType.CAMERA,
+                    allowEdit : false,
+                    encodingType: Camera.EncodingType.JPEG,
+                    popoverOptions: CameraPopoverOptions,
+                };
+                $cordovaCamera.getPicture(options).then(function(imageURI) {
+                    var image = document.getElementById('profile-pic');
+                    image.src = imageURI;
+                    $scope.url = imageURI;
+                    // alert(JSON.stringify(imageURI)+ 'line number 283, imageURI');
+                    cropImage(imageURI);
+                    // resizeImage(imageURI);
+                }, function(err) {
+                    console.log(err);
+                });
+            };
+
+            $scope.testFunc = function(){
+                $scope.modal.show();
+            }
+
+            function cropImage(source){
+                $scope.modal.show();
+                basic = $('.demo').croppie({
+                    viewport: {
+                        width: 200,
+                        height: 200,
+                        type: 'circle'
+                    }
+                });
+                basic.croppie('bind', {
+                    url: source
+                });
+            }
+
+            $scope.cropClick = function(){
+                $ionicLoading.show({
+                    template: 'Loading! Please wait...'
+                });
+                basic.croppie('result', {
+                    type: 'canvas',
+                    format: 'jpeg',
+                    circle: true
+                }).then(function (resp) {
+                    $ionicLoading.hide();
+                    // alert('test');
+                    // alert(JSON.stringify(resp));
+                    $http.post("http://139.162.3.205/api/testupload", {path: resp})
+                        .success(function(response){
+                            // alert("success "+JSON.stringify(response));
+
+                            var updates1 = {};
+                            // alert($scope.uid + " " + response.Message);
+                            updates1["/users/data/"+$scope.uid+"/photoUrl"] = response.Message;
+                            window.localStorage.setItem("userPhoto", response.Message);
+                            db.ref().update(updates1).then(function(){
+                                // alert("updated in users obj")
+                                user.updateProfile({
+                                    photoURL: response.Message
+                                }).then(function(){
+                                    alert("Photo updated successfully");
+                                    $scope.modal.hide();
+                                });
+                            });
+
+                        })
+                        .error(function(response){
+                            alert('Please try again, something went wrong');
+                        });
+                });
+            }
+
+            function resizeImage(source){
+                var canvas = document.createElement("canvas");
+                var ctx = canvas.getContext("2d");
+
+                img = new Image();
+                // alert('img '+ img);
+                img.onload = function () {
+                    // alert("onload called javascript");
+                    canvas.height = canvas.width * (img.height / img.width);
+                    /// step 1
+                    var oc = document.createElement('canvas');
+                    var octx = oc.getContext('2d');
+                    oc.width = img.width * 0.5;
+                    oc.height = img.height * 0.5;
+                    octx.drawImage(img, 0, 0, oc.width, oc.height);
+                    /// step 2
+                    octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
+                    ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5, 0, 0, canvas.width, canvas.height);
+                    // alert(canvas.width+" "+canvas.height+" "+img.width+" "+img.height);
+                    var dataURL = canvas.toDataURL("image/jpeg");
+                    // alert('dataURL ' + dataURL);
+
+                    $http.post("http://139.162.3.205/api/testupload", {path: dataURL})
+                        .success(function(response){
+                            // alert("success "+JSON.stringify(response));
+
+                            var updates1 = {};
+                            // alert($scope.uid + " " + response.Message);
+                            updates1["/users/data/"+$scope.uid+"/photoUrl"] = response.Message;
+                            window.localStorage.setItem("userPhoto", response.Message);
+                            db.ref().update(updates1).then(function(){
+                                // alert("updated in users obj")
+                                user.updateProfile({
+                                    photoURL: response.Message
+                                }).then(function(){
+                                    alert("Photo uploaded successfully");
+                                });
+                            });
+
+                        })
+                        .error(function(response){
+                            alert('Plaese try again, something went wrong!');
+                        });
+                }
+                // alert('source '+ source);
+                img.src = source;
+            }
+        }
+        else{
+            $ionicLoading.hide();
+            $location.path("#/login");
+        }
+    });
+
+});

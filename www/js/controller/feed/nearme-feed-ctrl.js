@@ -1,4 +1,5 @@
-app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$location', '$ionicLoading', '$ionicModal', '$ionicPopup', function($scope, $timeout, $stateParams, $location, $ionicLoading, $ionicModal, $ionicPopup){
+app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $location, $ionicLoading,
+                                          $ionicModal, $ionicPopup){
 
    $ionicLoading.show();
 
@@ -389,4 +390,4 @@ app.controller("nearmeFeedCtrl", ['$scope', '$timeout', '$stateParams', '$locati
          callback();
       }
    }
-}]);
+});

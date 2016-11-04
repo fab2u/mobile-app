@@ -391,7 +391,6 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 					}, 1000);
 				}
 			}
-			console.log($scope.blogArr);
 			$scope.blogArr.push(single_blog);
 		});
 		if(callback){

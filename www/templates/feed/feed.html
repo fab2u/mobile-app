@@ -18,7 +18,7 @@
 		 </a>
       </div>
 		<ion-refresher pulling-text="Loading New Feed" on-refresh="doRefresh()"></ion-refresher>
-		<div class="feeds" ng-repeat="feed in events2 | orderBy:'-created_time'">
+		<div class="feeds" ng-repeat="feed in blogArr | orderBy:'-created_time'">
 			<div class="upper-row">
 				<div class="row">
 					<div class="col col-20">
@@ -52,18 +52,16 @@
 				</div>
 				<div class="col col-40 likenum" ng-click="commentToggle(feed.blog_id)">
 					<i class="icon ion-ios-chatbubble"></i>
-				<span>	{{feed.commentCount || 0}} comments </span>
+				  <span>{{feed.commentCount || 0}} comments</span>
 				</div>
 				<div class="col col-10 col-offset-20">
 					<i class="like-btn icon ion-heart" id="{{feed.blog_id}}-likeFeed"
 					   ng-click="likeThisFeed(feed.blog_id)"></i>
 				</div>
 				<div class="col col-10">
-					<i class="comment-btn icon ion-ios-chatbubble" ng-click="showPopup(feed.blog_id)"></i>
+					<i class="comment-btn icon ion-ios-chatbubble"
+					   ng-click="showPopup(feed.blog_id)"></i>
 				</div>
-			<!-- 	<div class="col col-10">
-					<i class="share-btn icon ion-android-share-alt" ng-click="otherShare()"></i>
-				</div> -->
 			</div>
 			<div id="{{feed.blog_id}}-commentsBlock" class="initiallyHidden">
 				<div class="row padding-left" ng-repeat="comment in feed.commentsArr">

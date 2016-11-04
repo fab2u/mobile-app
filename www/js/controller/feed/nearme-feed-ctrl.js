@@ -219,42 +219,6 @@ app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $locat
     }
   }
 
-	// $scope.likeThisFeed = function(feedId){
-    // if(!$scope.uid){
-     //  showAlertLike();
-    // }
-    // else{
-     //  if($("#"+feedId+"-likeFeed").hasClass('clicked')){
-     //    console.log('inside remove');
-     //    var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
-     //    console.log(result);
-     //    result[0].numLikes -= 1;
-     //    db.ref("blogs/"+feedId+"/likedBy/"+$scope.uid).remove().then(function(){
-     //      console.log('removed successfully');
-     //      $("#"+feedId+"-likeFeed").removeClass("clicked");
-     //    });
-     //  }
-     //  else {
-     //    console.log(feedId, $scope.uid);
-     //    var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
-     //    console.log(result);
-     //    if(result[0].numLikes == undefined){
-     //      result[0].numLikes = 0;
-     //    }
-     //    result[0].numLikes += 1;
-     //    var updates = {};
-     //    updates["blogs/"+feedId+"/likedBy/"+$scope.uid] = true;
-     //    db.ref().update(updates).then(function(){
-     //      console.log('success');
-     //      $("#"+feedId+"-likeFeed").addClass("clicked");
-     //    });
-     //  }
-     //  db.ref("blogs/"+feedId+"/likedBy").on("value", function(snap){
-     //    console.log(snap.numChildren());
-     //  });
-	//   }
-	// }
-
     $scope.likeThisFeed = function(feed){
         console.log("feed",feed)
         if(!$scope.uid){
@@ -365,9 +329,13 @@ app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $locat
       blogData.once("value", function(snap){ //access individual blog
          // console.log(i, snap.val());
          single_blog = snap.val();
-         single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+         // single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+         var temp = single_blog.introduction.replace(/\s/g, '');
 
-         // start: comment system code
+          single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+
+
+          // start: comment system code
          if(single_blog.comments){
             single_blog['commentCount'] = Object.keys(single_blog.comments).length;
          }
@@ -382,9 +350,7 @@ app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $locat
 
          // If you want to run asynchronous functions inside a loop, but still want to keep the index or other variables after a callback gets executed you can wrap your code in an IIFE (immediately-invoked function expression).
 			(function(single_blog){
-            console.log(single_blog.user.user_id, $scope.uid);
    			if(single_blog.user.user_id == $scope.uid){
-   				console.log('both equal');
    				$timeout(function () {
    					$('.'+single_blog.user.user_id+'-follow').hide();
    				}, 0);

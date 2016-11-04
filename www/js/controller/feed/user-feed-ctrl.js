@@ -212,46 +212,6 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
       });
     }
 	};
-    //
-	// $scope.likeThisFeed = function(feedId){
-    // if(!myUid){
-     //  showAlertLike();
-    // }
-    // else {
-     //  if ($("#" + feedId + "-likeFeed").hasClass('clicked')) {
-     //    console.log('inside remove');
-     //    var result = $.grep($scope.blogArr, function (e) {
-     //      return e.blog_id == feedId;
-     //    });
-     //    console.log(result);
-     //    result[0].numLikes -= 1;
-     //    db.ref("blogs/" + feedId + "/likedBy/" + myUid).remove().then(function () {
-     //      console.log('removed successfully');
-     //      $("#" + feedId + "-likeFeed").removeClass("clicked");
-     //    });
-     //  }
-     //  else {
-     //    console.log(feedId, myUid);
-     //    var result = $.grep($scope.blogArr, function (e) {
-     //      return e.blog_id == feedId;
-     //    });
-     //    console.log(result);
-     //    if (result[0].numLikes == undefined) {
-     //      result[0].numLikes = 0;
-     //    }
-     //    result[0].numLikes += 1;
-     //    var updates = {};
-     //    updates["blogs/" + feedId + "/likedBy/" + myUid] = true;
-     //    db.ref().update(updates).then(function () {
-     //      console.log('success');
-     //      $("#" + feedId + "-likeFeed").addClass("clicked");
-     //    });
-     //  }
-     //  db.ref("blogs/" + feedId + "/likedBy").on("value", function (snap) {
-     //    console.log(snap.numChildren());
-     //  });
-    // }
-	// };
 
     $scope.likeThisFeed = function(feed){
         console.log("feed",feed)
@@ -397,7 +357,10 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 		blogData.once("value", function(snap){ //access individual blog
 			// console.log(snap.val());
 			single_blog = snap.val();
-			single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+            var temp = single_blog.introduction.replace(/\s/g, '');
+
+            single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+			// single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 			single_blog.profilePic = $scope.userPhoto;
 
 			// start: comment system code
@@ -593,7 +556,7 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 
                         })
                         .error(function(response){
-                            alert('Plaese try again, something went wrong!');
+                            alert('Please try again, something went wrong!');
                         });
                 }
                 // alert('source '+ source);

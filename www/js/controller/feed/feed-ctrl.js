@@ -819,7 +819,10 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 		blogData.once("value", function(snap){ //access individual blog
 			// console.log(i, snap.val());
 			single_blog = snap.val();
-			single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+			var temp = single_blog.introduction.replace(/\s/g, '');
+
+			single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+			// single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
 
 			// start: comment system code
 			if(single_blog.comments){

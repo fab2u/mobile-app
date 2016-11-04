@@ -54,9 +54,9 @@
 					<i class="icon ion-ios-chatbubble"></i>
 					<span>{{feed.commentCount || 0}} comments</span>
 				</div>
-				<div class="col col-10 col-offset-20">
+				<div class="col col-10">
 					<i class="like-btn icon ion-heart" id="{{feed.blog_id}}-likeFeed"
-					   ng-click="likeThisFeed(feed.blog_id)"></i>
+					   ng-click="likeThisFeed(feed)"></i>
 				</div>
 				<div class="col col-10">
 					<i class="comment-btn icon ion-ios-chatbubble"

@@ -496,7 +496,6 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 	$scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
 
 	$scope.uid = window.localStorage.getItem("uid");
-	console.log($scope.uid);
 	db.ref("users/data/"+$scope.uid+"/name").once("value", function(snapshot){
 		console.log(snapshot.val());
 		$scope.userName = snapshot.val();
@@ -506,7 +505,6 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 	$scope.moreMessagesScroll = true;
 	$scope.moreMessagesRefresh = true;
 	// $scope.cityId = $stateParams.cityId;
-	console.log($scope.cityId);
 	$scope.blogIdList = {};
 
 	$scope.goBack = function(){
@@ -711,38 +709,35 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 		}
 	}
 
-	$scope.likeThisFeed = function(feedId){
+	$scope.likeThisFeed = function(feed){
+		console.log("feed",feed)
 		if(!$scope.uid){
 			showAlertLike();
 		}
 		else{
-			if($("#"+feedId+"-likeFeed").hasClass('clicked')){
-				console.log('inside remove');
-				var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
-				console.log(result);
-				result[0].numLikes -= 1;
-				db.ref("blogs/"+feedId+"/likedBy/"+$scope.uid).remove().then(function(){
-					console.log('removed successfully');
-					$("#"+feedId+"-likeFeed").removeClass("clicked");
+			if($("#"+feed.blog_id+"-likeFeed").hasClass('clicked')){
+				feed.numLikes -= 1;
+				db.ref("blogs/"+feed.blog_id+"/likedBy/"+$scope.uid).remove().then(function(){
+					$("#"+feed.blog_id+"-likeFeed").removeClass("clicked");
 				});
+				console.log("after remove",feed);
 			}
 			else {
-				console.log(feedId, $scope.uid);
-				var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
-				console.log(result);
-				if(result[0].numLikes == undefined){
-					result[0].numLikes = 0;
+				if (feed.numLikes == undefined) {
+					feed.numLikes = 0;
 				}
-				result[0].numLikes += 1;
+				feed.numLikes += 1;
 				var updates = {};
-				updates["blogs/"+feedId+"/likedBy/"+$scope.uid] = true;
-				db.ref().update(updates).then(function(){
+				updates["blogs/" + feed.blog_id + "/likedBy/" + $scope.uid] = true;
+				db.ref().update(updates).then(function () {
 					console.log('success');
-					$("#"+feedId+"-likeFeed").addClass("clicked");
+					$("#" + feed.blog_id + "-likeFeed").addClass("clicked");
 				});
+				console.log("after add", feed);
 			}
-			db.ref("blogs/"+feedId+"/likedBy").on("value", function(snap){
+			db.ref("blogs/"+feed.blog_id+"/likedBy").on("value", function(snap){
 				console.log(snap.numChildren());
+				feed.numLikes = snap.numChildren();
 			});
 		}
 	}
@@ -841,9 +836,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 
 			// If you want to run asynchronous functions inside a loop, but still want to keep the index or other variables after a callback gets executed you can wrap your code in an IIFE (immediately-invoked function expression).
 			(function(single_blog){
-				console.log(single_blog.user.user_id, $scope.uid);
 				if(single_blog.user.user_id == $scope.uid){
-					console.log('both equal');
 					$timeout(function () {
 						$('.'+single_blog.user.user_id+'-follow').hide();
 					}, 0);
@@ -866,8 +859,6 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 			})(single_blog);
 			if(single_blog.likedBy){
 				count = Object.keys(single_blog.likedBy).length;
-				// console.log(single_blog.likedBy);
-				// console.log($scope.uid);
 				single_blog['numLikes'] = count;
 				if($scope.uid in single_blog.likedBy){
 					$timeout(function () {
@@ -876,7 +867,6 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 				}
 			}
 			$scope.blogArr.push(single_blog);
-			// console.log($scope.blogArr);
 		});
 		if (callback) {
 			callback();

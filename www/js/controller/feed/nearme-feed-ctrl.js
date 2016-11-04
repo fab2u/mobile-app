@@ -219,41 +219,74 @@ app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $locat
     }
   }
 
-	$scope.likeThisFeed = function(feedId){
-    if(!$scope.uid){
-      showAlertLike();
-    }
-    else{
-      if($("#"+feedId+"-likeFeed").hasClass('clicked')){
-        console.log('inside remove');
-        var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
-        console.log(result);
-        result[0].numLikes -= 1;
-        db.ref("blogs/"+feedId+"/likedBy/"+$scope.uid).remove().then(function(){
-          console.log('removed successfully');
-          $("#"+feedId+"-likeFeed").removeClass("clicked");
-        });
-      }
-      else {
-        console.log(feedId, $scope.uid);
-        var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
-        console.log(result);
-        if(result[0].numLikes == undefined){
-          result[0].numLikes = 0;
+	// $scope.likeThisFeed = function(feedId){
+    // if(!$scope.uid){
+     //  showAlertLike();
+    // }
+    // else{
+     //  if($("#"+feedId+"-likeFeed").hasClass('clicked')){
+     //    console.log('inside remove');
+     //    var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
+     //    console.log(result);
+     //    result[0].numLikes -= 1;
+     //    db.ref("blogs/"+feedId+"/likedBy/"+$scope.uid).remove().then(function(){
+     //      console.log('removed successfully');
+     //      $("#"+feedId+"-likeFeed").removeClass("clicked");
+     //    });
+     //  }
+     //  else {
+     //    console.log(feedId, $scope.uid);
+     //    var result = $.grep($scope.blogArr, function(e){ return e.blog_id == feedId; });
+     //    console.log(result);
+     //    if(result[0].numLikes == undefined){
+     //      result[0].numLikes = 0;
+     //    }
+     //    result[0].numLikes += 1;
+     //    var updates = {};
+     //    updates["blogs/"+feedId+"/likedBy/"+$scope.uid] = true;
+     //    db.ref().update(updates).then(function(){
+     //      console.log('success');
+     //      $("#"+feedId+"-likeFeed").addClass("clicked");
+     //    });
+     //  }
+     //  db.ref("blogs/"+feedId+"/likedBy").on("value", function(snap){
+     //    console.log(snap.numChildren());
+     //  });
+	//   }
+	// }
+
+    $scope.likeThisFeed = function(feed){
+        console.log("feed",feed)
+        if(!$scope.uid){
+            showAlertLike();
         }
-        result[0].numLikes += 1;
-        var updates = {};
-        updates["blogs/"+feedId+"/likedBy/"+$scope.uid] = true;
-        db.ref().update(updates).then(function(){
-          console.log('success');
-          $("#"+feedId+"-likeFeed").addClass("clicked");
-        });
-      }
-      db.ref("blogs/"+feedId+"/likedBy").on("value", function(snap){
-        console.log(snap.numChildren());
-      });
-	  }
-	}
+        else{
+            if($("#"+feed.blog_id+"-likeFeed").hasClass('clicked')){
+                feed.numLikes -= 1;
+                db.ref("blogs/"+feed.blog_id+"/likedBy/"+$scope.uid).remove().then(function(){
+                    $("#"+feed.blog_id+"-likeFeed").removeClass("clicked");
+                });
+                console.log("after remove",feed);
+            }
+            else {
+                if (feed.numLikes == undefined) {
+                    feed.numLikes = 0;
+                }
+                feed.numLikes += 1;
+                var updates = {};
+                updates["blogs/" + feed.blog_id + "/likedBy/" + $scope.uid] = true;
+                db.ref().update(updates).then(function () {
+                    console.log('success');
+                    $("#" + feed.blog_id + "-likeFeed").addClass("clicked");
+                });
+                console.log("after add", feed);
+            }
+            db.ref("blogs/"+feed.blog_id+"/likedBy").on("value", function(snap){
+                console.log(snap.numChildren());
+                feed.numLikes = snap.numChildren();
+            });
+        }
+    }
 
    $scope.doRefresh = function(){
 		console.log('pull to refresh');

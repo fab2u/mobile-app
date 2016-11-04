@@ -341,7 +341,6 @@ app.controller('FeedCtrl', function($scope, $timeout, $location, $ionicLoading, 
 	}
 
 	$scope.loadMore = function(){
-
 		if($scope.events2.length > 0){
 			console.log($scope.bottomKey);
 			db.ref("blogs").orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){

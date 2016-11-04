@@ -308,7 +308,7 @@ app
                     "serviceid": "1004"
                 },
                 "1005":{
-                    "serviceName": "Hair Cut",
+                    "serviceName": "Hair Cut & Styling",
                     "serviceid": "1005"
                 },
                 "1006":{

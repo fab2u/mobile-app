@@ -33,7 +33,9 @@
       </div>
       <form name="newFeed" novalidate="true">
          <label class="item item-input feed-comment">
-            <textarea rows="5" expanding-textarea placeholder="Adding hashtags to your comment increases the reach of your post" ng-model="feed.introduction"></textarea>
+            <textarea rows="5" expanding-textarea
+                      placeholder="Adding hashtags to your comment increases the reach of your post"
+                      ng-model="feed.introduction"></textarea>
          </label>
          <div class="padding">
             <button class="button button-block activated pink-bg" type="submit" ng-click="submitFeed()">Create</button>

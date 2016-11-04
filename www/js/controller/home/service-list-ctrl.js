@@ -110,7 +110,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                     id:'1004'
                 },
                 {
-                    name:'Hair Cut',
+                    name:'Hair Cut & Styling',
                     id:'1005'
                 },
                 {

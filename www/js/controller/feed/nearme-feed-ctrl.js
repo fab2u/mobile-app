@@ -1,5 +1,5 @@
 app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $location, $ionicLoading,
-                                          $ionicModal, $ionicPopup){
+                                          $ionicModal, $ionicPopup,$state){
 
    $ionicLoading.show();
 
@@ -199,6 +199,8 @@ app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $locat
         console.log('success');
         $('.' + id + '-follow').hide();
         $("."+id+'-unfollow').css("display", "block");
+          $state.go('nearmeFeed',{cityId:$stateParams.cityId})
+
       });
     }
 	}
@@ -215,6 +217,7 @@ app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $locat
         console.log('success');
         $('.'+id+'-follow').show();
         $("."+id+'-unfollow').css("display", "none");
+          $state.go('nearmeFeed',{cityId:$stateParams.cityId})
       });
     }
   }

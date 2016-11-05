@@ -5,10 +5,7 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 
 
     $scope.myBlogIds = [];
-    $scope.myFollowingBlogIds = [];
     $scope.followingIds ='';
-    $scope.count1 = 0;
-    $scope.count2 = 0;
 
   function showAlert(){
     $ionicLoading.hide();

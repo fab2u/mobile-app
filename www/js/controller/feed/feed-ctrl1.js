@@ -1,9 +1,14 @@
-app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading', '$cordovaSocialSharing', '$ionicPopup', '$ionicModal', function($scope, $timeout, $location, $ionicLoading, $cordovaSocialSharing, $ionicPopup, $ionicModal){
+app.controller('FeedCtrl', ['$scope', '$timeout', '$location', '$ionicLoading',
+	'$cordovaSocialSharing', '$ionicPopup', '$ionicModal',
+	function($scope, $timeout, $location, $ionicLoading, $cordovaSocialSharing,
+			 $ionicPopup, $ionicModal){
 
 	// duplicate file, contains code for comment photo, due to some other things breaking not used for now.
 	// DO NOT DELETE - Deepank
 
 	$ionicLoading.show();
+
+
 
 	// ----------------------------------------------------------------------
 	$ionicModal.fromTemplateUrl('templates/feed/image-modal.html', {

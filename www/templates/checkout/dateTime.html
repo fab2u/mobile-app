@@ -5,21 +5,31 @@
 	</div>
 	<ion-content scroll = "false" class="has-footer">
 		<div class="row custom-row">
-			<div class = "col col-33 custom-col">
-				<div class = "arrow-left" ng-click = "leftArrowClicked()">
-				</div>
+			<div class="col col-33 custom-col" ng-click = "leftArrowClicked()">
+				<i class="icon ion-ios-arrow-back">
+					<span>Prev</span>
+				</i>
 			</div>
-			<div class="col col-33">
+			<!--<div class = "col col-33 custom-col">-->
+				<!--<div class = "arrow-left" ng-click = "leftArrowClicked()">-->
+				<!--</div>-->
+			<!--</div>-->
+			<div class="col-33">
 				<div class = "card custom-card">
 					<div class = "date">{{date}}</div>
 					<div class = "month">{{currentMonth}}</div>
 					<div style = "font-size: 12px;">{{day}}</div>
 				</div>
 			</div>
-			<div class = "col col-33 custom-col">
-				<div class = "arrow-right" ng-click = "rightArrowClicked()">
-				</div>
+			<div class="col col-33 custom-col" ng-click = "rightArrowClicked()">
+               <i class="icon ion-ios-arrow-forward">
+				   <span>Next</span>
+			   </i>
 			</div>
+			<!--<div class = "col-33 custom-col">-->
+				<!--<div class = "arrow-right" ng-click = "rightArrowClicked()">-->
+				<!--</div>-->
+			<!--</div>-->
 		</div>
 		<ion-item class= "custom-divider" ng-class="active_slot_1?'selected_slot':'not_selected_slot'">
 			<i class="icon ion-android-sunny custom-icon"></i>
@@ -38,11 +48,14 @@
 			<span class = "time-interval" ng-class="active_slot_4?'selected_slot':'not_selected_slot'">6PM-9PM</span>
 		</ion-item>
 
-		<ion-scroll has-bouncing="false" direction="y" scrollbar-y="false" ng-style="{height: getItemHeight()}"  style = "width: 25%;float:left;">
+		<ion-scroll has-bouncing="false" direction="y" scrollbar-y="false"
+					ng-style="{height: getItemHeight()}"  class="scroll-view">
 		 	<div class = "fix-bar"> <!-- width depend upon number of items -->
 		 		<ion-list>
-		 			<ion-item id = "timeitem" ng-repeat = "time in timeSlots9To12" class = "custom-item" >
-		 				<div id="{{time.id}}" class="time-button button" ng-disabled ="isDisabled"
+		 			<ion-item id = "timeitem" ng-repeat = "time in timeSlots9To12"
+							  class = "custom-item" >
+		 				<div id="{{time.id}}" class="time-button button" ng-disabled ="time.isDisabled"
+							 ng-class="time.isDisabled?'time-disabled':'time-enabled'"
 							 ng-click="timeSelected($index,time.id)" ng-model="time.selected">
 			 				{{time.time}}
 			 			</div>
@@ -51,12 +64,13 @@
 			</div>
 		</ion-scroll>
 
-		<ion-scroll has-bouncing = "false" direction = "y" scrollbar-y="false" ng-style="{height: getItemHeight()}"
-					style = "width: 25%;float:left;">
+		<ion-scroll has-bouncing = "false" direction = "y" scrollbar-y="false"
+					ng-style="{height: getItemHeight()}" class="scroll-view">
 			<div class = "fix-bar">
 				<ion-list>
 		 			<ion-item ng-repeat = "time in timeSlots12To3" class = "custom-item" >
-		 				<div id="{{time.id}}" ng-disabled ="isDisabled" class="time-button button"
+		 				<div id="{{time.id}}" ng-disabled ="time.isDisabled"
+							 ng-class="time.isDisabled?'time-disabled':'time-enabled'" class="time-button button"
 							 ng-click="timeSelected($index,time.id)" ng-model="time.selected">
 			 				{{time.time}}
 			 			</div>
@@ -65,11 +79,13 @@
 			</div>
 		</ion-scroll>
 
-		<ion-scroll has-bouncing = "false" direction = "y" scrollbar-y="false" ng-style="{height: getItemHeight()}" style = "width: 25%;float:left;">
+		<ion-scroll has-bouncing = "false" direction = "y" scrollbar-y="false" class="scroll-view"
+					ng-style="{height: getItemHeight()}">
 		    <div class = "fix-bar">
 	 			<ion-list>
 		 			<ion-item ng-repeat = "time in timeSlots3To6" class = "custom-item" >
-		 				<div id="{{time.id}}" class="time-button button" ng-disabled ="isDisabled"
+		 				<div id="{{time.id}}" class="time-button button" ng-disabled ="time.isDisabled"
+							 ng-class="time.isDisabled?'time-disabled':'time-enabled'"
 							 ng-click="timeSelected($index, time.id)" ng-model="time.selected">
 			 				{{time.time}}
 			 			</div>
@@ -78,30 +94,27 @@
 		    </div>
 		</ion-scroll>
 
-		<ion-scroll has-bouncing = "false" direction = "y" scrollbar-y="false" ng-style="{height: getItemHeight()}" style = "width: 25%;float:left;">
+		<ion-scroll has-bouncing = "false" direction = "y" scrollbar-y="false" class="scroll-view"
+					ng-style="{height: getItemHeight()}">
 		    <div class = "fix-bar">
 				<ion-list>
 		 			<ion-item ng-repeat = "time in timeSlots6To9" class = "custom-item" >
-		 				<div id="{{time.id}}" class="time-button button" ng-disabled ="isDisabled"
-							 ng-click="timeSelected($index,time.id)">
+		 				<div id="{{time.id}}" class="time-button button" ng-disabled ="time.isDisabled"
+							 ng-click="timeSelected($index,time.id)" ng-class="time.isDisabled?'time-disabled':'time-enabled'">
 			 				{{time.time}}
 			 			</div>
 		 			</ion-item>
 				</ion-list>
 		    </div>
-		</ion-scroll> 
-	</ion-content>
-	<!--<ion-footer-bar class="bar bar-stable" id="customfooter" ng-click="confirmation()">-->
-		<!--<center>-->
-			<!--<h1 id="striketextcolor" class="button_title">CONTINUE TO CHECKOUT</h1>-->
-		<!--</center>-->
-	<!--</ion-footer-bar>-->
+		</ion-scroll>
 
+		<div class="bottom-widget">
+			<span>Scroll down for more timings</span>
+		</div>
+	</ion-content>
 	<ion-footer-bar class ="bar custom-footer" align-title="center" ng-click="confirmation()">
-		<center>
-		<h1 class ="title footer_text" id="striketextcolor">
+		<span class ="title footer_text" id="striketextcolor">
 			CONTINUE TO CHECKOUT
-		</h1>
-		</center>
+		</span>
 	</ion-footer-bar>
 </ion-view>

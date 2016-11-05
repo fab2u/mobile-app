@@ -14,7 +14,7 @@
             <div class="services-n-fab">
                 <div class="services" ng-class="fabSelected? 'no-border':'with-border'" ng-click="selectMain(1)">SELECTED SERVICES</div>
                 <div class="fab" ng-class="fabSelected? 'with-border':'no-border'" ng-click="selectMain(2)"></div>
-                <div class="fab-book" ng-click="selectMain(2)">FULL MENU</div>
+                <div class="fab-book" ng-click="selectMain(2)">FULL CATALOGUE</div>
             </div>
             <div class=" padding" ng-repeat="(key,value) in menu1" style="width: 100%">
                 <div class="row item item-text-wrap list-heading"
@@ -29,13 +29,13 @@
                     </div>
                     <div class="col col-50 item-text-wrap p-15">
                                 <span style="font-size: 0.9em;" ng-show="y.male == true && y.female==undefined">
-                                    {{y.menuItemName}}(Male)
+                                    {{y.menuItemName}}&nbsp;(Male)
                                 </span>
                         <span style="font-size: 0.9em;" ng-show="y.female == true &&y.male==undefined">
-                                    {{y.menuItemName}}(Female)
+                                    {{y.menuItemName}}&nbsp;(Female)
                                 </span>
                         <span style="font-size: 0.9em;" ng-show="y.female == true&&y.male ==true">
-                                    {{y.menuItemName}}(Unisex)
+                                    {{y.menuItemName}}&nbsp;(Unisex)
                                 </span>
                     </div>
                     <div class="col col-33 p-15" style="text-align:right;font-color:black;"

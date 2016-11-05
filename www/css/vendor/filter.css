@@ -15,6 +15,11 @@
     text-decoration: #EEEEEE;
     color: #EEEEEE;
 }
+
+.vendorList .m-navColor a.button:before {
+   font-size: 24px !important;
+    line-height: 28px !important;
+}
 .vendorList #toggleButton {
     position: absolute;
     right: 0;

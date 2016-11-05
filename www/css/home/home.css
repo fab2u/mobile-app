@@ -72,7 +72,7 @@
 
 #home-page .offerList {
     /*border-bottom:1px solid #000;*/
-    margin-top:10px;
+    margin-top:2px;
 }
 
 #home-page .slider{
@@ -82,6 +82,7 @@
 #home-page .offer-img {
    /* width: 96%;
     margin: 1% 2%;*/
+    height: 150px;
     width:100%;
 
 }
@@ -100,7 +101,7 @@
     /*width:96%;*/
     /*margin:2%;*/
     /*height:12em;*/
-    width:96%;
+    /*width:96%;*/
     margin:1%;
     /*height:12em;*/
     background-repeat: no-repeat;

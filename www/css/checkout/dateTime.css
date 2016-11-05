@@ -24,6 +24,7 @@
 	padding-top:10px;
 	padding-bottom: 10px;
 	background-color: #ffffff !important;
+	text-align: center;
 }
 
 .appointment .arrow-right {
@@ -46,9 +47,12 @@
 }
 
 .appointment .custom-col {
-	padding-top: 55px;	
+	padding-top: 55px;
 }
-
+.appointment .custom-col i{
+	font-size: 30px;
+	color: #FFFFFF;
+}
 .appointment .scroll-bar-indicator {
 	display: none;
 }
@@ -73,18 +77,15 @@
 }
 
 .appointment .custom-footer {
-	margin-left: 5px;
-	width: calc(100% - 10px);
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
+
 	background-color: #FF8385;
-	border: 5px #FF8385;
+
 }
 
 .appointment .custom-row {
 	margin-top:45px;
 	margin-bottom: -10px;
-	background-color: #444444;
+	background-color: rgb(128,128,128);
 }
 
 .appointment .custom-divider {
@@ -161,4 +162,34 @@
 
 .appointment {
 	background-color:#F5F5F5;
+}
+
+
+.time-disabled{
+	color:#ccc;
+}
+
+.time-enabled{
+	color:#000;
+}
+
+.scroll-view{
+	width: 25%;
+	float:left;
+}
+
+.bottom-widget{
+	position: fixed;
+	bottom: 44px;
+	text-align: center;
+	width:100%;
+	background: #ccc;
+}
+.scroll-view .list {
+	position: relative;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	padding-left: 0;
+	margin-bottom: 20px;
+	padding-bottom: 100px;
 }

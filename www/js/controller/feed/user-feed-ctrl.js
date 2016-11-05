@@ -5,7 +5,10 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 
 
     $scope.myBlogIds = [];
+    $scope.myFollowingBlogIds = [];
     $scope.followingIds ='';
+    $scope.count1 = 0;
+    $scope.count2 = 0;
 
   function showAlert(){
     $ionicLoading.hide();
@@ -418,6 +421,21 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
                 $scope.userDetails = snapshot.val();
             });
 
+            function cropImage(source){
+                alert("inside crop image:")
+                $scope.modal.show();
+                basic = $('.demo').croppie({
+                    viewport: {
+                        width: 200,
+                        height: 200,
+                        type: 'circle'
+                    }
+                });
+                basic.croppie('bind', {
+                    url: source
+                });
+            }
+
             $scope.galleryUpload = function() {
                 var options = {
                     destinationType : Camera.DestinationType.FILE_URI,
@@ -430,7 +448,9 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
                     var image = document.getElementById('profile-pic');
                     // image.src = imageURI;
                     $scope.url = imageURI;
-                    cropImage(imageURI);
+                    if($scope.url){
+                        cropImage($scope.url);
+                    }
                     // resizeImage(imageURI);
                 }, function(err) {
                     console.log(err);
@@ -450,7 +470,10 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
                     image.src = imageURI;
                     $scope.url = imageURI;
                     // alert(JSON.stringify(imageURI)+ 'line number 283, imageURI');
-                    cropImage(imageURI);
+                    if($scope.url){
+                        alert("if image")
+                        cropImage($scope.url);
+                    }
                     // resizeImage(imageURI);
                 }, function(err) {
                     console.log(err);
@@ -461,19 +484,7 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
                 $scope.modal.show();
             }
 
-            function cropImage(source){
-                $scope.modal.show();
-                basic = $('.demo').croppie({
-                    viewport: {
-                        width: 200,
-                        height: 200,
-                        type: 'circle'
-                    }
-                });
-                basic.croppie('bind', {
-                    url: source
-                });
-            }
+
 
             $scope.cropClick = function(){
                 $ionicLoading.show({
@@ -489,7 +500,7 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
                     // alert(JSON.stringify(resp));
                     $http.post("http://139.162.3.205/api/testupload", {path: resp})
                         .success(function(response){
-                            // alert("success "+JSON.stringify(response));
+                            alert("success  uploaded on server"+JSON.stringify(response));
 
                             var updates1 = {};
                             // alert($scope.uid + " " + response.Message);
@@ -510,54 +521,6 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
                             alert('Please try again, something went wrong');
                         });
                 });
-            }
-
-            function resizeImage(source){
-                var canvas = document.createElement("canvas");
-                var ctx = canvas.getContext("2d");
-
-                img = new Image();
-                // alert('img '+ img);
-                img.onload = function () {
-                    // alert("onload called javascript");
-                    canvas.height = canvas.width * (img.height / img.width);
-                    /// step 1
-                    var oc = document.createElement('canvas');
-                    var octx = oc.getContext('2d');
-                    oc.width = img.width * 0.5;
-                    oc.height = img.height * 0.5;
-                    octx.drawImage(img, 0, 0, oc.width, oc.height);
-                    /// step 2
-                    octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
-                    ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5, 0, 0, canvas.width, canvas.height);
-                    // alert(canvas.width+" "+canvas.height+" "+img.width+" "+img.height);
-                    var dataURL = canvas.toDataURL("image/jpeg");
-                    // alert('dataURL ' + dataURL);
-
-                    $http.post("http://139.162.3.205/api/testupload", {path: dataURL})
-                        .success(function(response){
-                            // alert("success "+JSON.stringify(response));
-
-                            var updates1 = {};
-                            // alert($scope.uid + " " + response.Message);
-                            updates1["/users/data/"+$scope.uid+"/photoUrl"] = response.Message;
-                            window.localStorage.setItem("userPhoto", response.Message);
-                            db.ref().update(updates1).then(function(){
-                                // alert("updated in users obj")
-                                user.updateProfile({
-                                    photoURL: response.Message
-                                }).then(function(){
-                                    alert("Photo uploaded successfully");
-                                });
-                            });
-
-                        })
-                        .error(function(response){
-                            alert('Please try again, something went wrong!');
-                        });
-                }
-                // alert('source '+ source);
-                img.src = source;
             }
         }
         else{

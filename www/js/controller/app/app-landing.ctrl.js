@@ -277,9 +277,13 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
 
     function checkAppInfo() {
         var hasAppInfo = checkLocalStorage("appInfo");
+        var userSelectedLocation = checkLocalStorage("selectedLocation");
+
         if (!hasAppInfo) {
             initialiseAppInfo();
-            initialiseLocation();
+            if(!userSelectedLocation){
+                initialiseLocation();
+            }
         }
         checkAppStatus();
     }

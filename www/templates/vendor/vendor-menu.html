@@ -1,13 +1,19 @@
 <ion-view id="vendor-services">
     <ion-header-bar class="m-navColor">
+        <div class="row">
+            <div class="col-10">
         <a href="" class="button icon-left ion-chevron-left button-clear" ng-click="backButton()"></a>
-        <h1 class="title">{{vendor_detail.vendorName}}</h1>
-        <div class="col">
-            <div class="row cart-price" style="margin-top: -5px;">
+            </div>
+            <div class="col-67">
+                <h1 class="title">{{vendor_detail.vendorName}}</h1>
+                </div>
+        <div class="col-20">
+            <div class="row cart-price">
                 <div class="col currency">&#x20B9;</div>
                 <div class="col price">{{total_customer}}</div>
             </div>
         </div>
+            </div>
     </ion-header-bar>
     <ion-content delegate-handle="mainScroll">
         <div ng-show="menuInfo">
@@ -51,21 +57,23 @@
                         <div id="y.id " class="item item-text-wrap row"
                              id="custom-servicelist" ng-repeat="y in value"
                              ng-click="selectItem($index, y.menuItemName,y)">
-                            <div ng-show="selectedServices[y.menuItemName]"
-                                 style="background-color:#0dd1d1; width:20px;">
+
+                            <div class="col col-60 item-text-wrap p-15">
+                                  <div ng-show="selectedServices[y.menuItemName]"
+                                       class="selected-bar">
                             </div>
-                            <div class="col col-50 item-text-wrap p-15">
-                                <span style="font-size: 0.9em;" ng-show="y.male == true && y.female==undefined">
-                                    {{y.menuItemName}}(Male)
+                                <span class="serviceList-gender" ng-show="y.male == true && y.female==undefined">
+
+                                    {{y.menuItemName}}&nbsp; <span>(Male)</span>
                                 </span>
-                                  <span style="font-size: 0.9em;" ng-show="y.female == true &&y.male==undefined">
-                                    {{y.menuItemName}}(Female)
-                                </span>
-                                <span style="font-size: 0.9em;" ng-show="y.female == true&&y.male ==true">
-                                    {{y.menuItemName}}(Unisex)
+                                  <div class="serviceList-gender" ng-show="y.female == true &&y.male==undefined">
+                                    {{y.menuItemName}}&nbsp; <span>(Female) </span>
+                                </div>
+                                <span class="serviceList-gender" ng-show="y.female == true&&y.male ==true">
+                                    {{y.menuItemName}}&nbsp;<span>(Unisex)</span>
                                 </span>
                             </div>
-                            <div class="col col-33 p-15" style="text-align:right;font-color:black;"
+                            <div class="col col-40 p-15" style="text-align:right;font-color:black;"
                                  ng-if="y.vendorPrice != y.customerPrice">
                                 <strike>
                                     <span class="striked-text"
@@ -98,7 +106,7 @@
         </div>
         <div class="row newFooter">
             <div class="col col-33" id="overview" ng-click="overviewButton()">OVERVIEW</div>
-            <div class="col col-66" id="proceed" ng-click="proceedButton()">SELECT DATE AND TIME</div>
+            <div class="col col-66" id="proceed" ng-click="proceedButton()">REVIEW SELECTED SERVICES</div>
         </div>
     </ion-footer-bar>
 </ion-view>

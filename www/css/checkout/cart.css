@@ -25,108 +25,46 @@
 }
 #cartview .cartdetails
 {
-    position:absolute;
-    left:3%;
-    display:block;
-    width:200px;
     word-wrap:break-word;
     font-size: 15px;
 }
 #cartview .list_view{
-    height: 60px;
-    border-bottom: thin #444;
+    border-bottom: 1px #b9b9b9;
     border-style: solid;
     margin-bottom: 10px;
+    padding: 10px 2px;
 }
 
-#cartview #cartoriginal
-{
-    color:black;
-    position:absolute;
-    right:30%;
-}
-#cartview #fab2uPrice
-{
-    position:absolute;
-    right:17%;
-}
-#cartview .cancelcartitem
-{
-    position:absolute;
-    right:1%;
-    top:1%;
-}
+
+
 #cartview #totalcart
 {
     background-color:rgb(211,211,211);
-    margin-top: -20px;
+
     color: #444;
 }
 
-#cartview #totalfab2u
-{
-    position:absolute;
-    right:30%;
-}
+
 #cartview #carttotalprice
 {
     color:#444;
-    position:absolute;
-    right:17%;
+
 }
 #cartview #customfooter
 {
-    margin-left:5px;
-    width:calc(100% - 10px);
-    border-top-left-radius:10px;
-    border-top-right-radius:10px;
+    margin-left: 2%;
+    width: 96%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     background-color: #FF8385;
-    border:5px #FF8385;
-}
-#cartview .diagonal {
-    /*border-top: 60px solid #3C3C3C;*/
-    border-top: 60px solid #D3D3D3;
-    border-left: 60px solid rgba(0, 0, 0, 0);
-    display: block;
-    height: 0;
-    width:5%;
-    float: right;
-    margin:-6px;
-}
-#cartview #closeiconcolor
-{
-    color: #ff8385;
-    font-size: 20px;
-}
-
-/*#cartview.triangle-top-right {*/
-    /*display: block;*/
-    /*width: 0;*/
-    /*height: 0;*/
-    /*border-style: solid;*/
-    /*border-width: 0 200px 200px 0;*/
-    /*border-color: transparent #6980fe transparent transparent;*/
-/*}*/
-
-#cartview .reviews{
-    margin-top: 28px;
-}
-#cartview .reviews div{
-    display: inline-block;
-    positon: absolute;
-    left: 260px;
-//left: 156px;
-}
-#cartview .socials div{
-    display: inline-block;
+    border: 5px #FF8385;
+    text-align: center;
 }
 
 
-#cartview .c1
-{
-    background-color: #EEEEEE;
-    color:black;
-}
+
+
+
 
 #cartview .line-arrow {
     display: inline-block;
@@ -152,30 +90,58 @@
 
 #cartview .striked-text {
     color: #444 !important;
-}
-#cartview table, th, td {
-    border: 1px solid white;
-    border-collapse: collapse;
-}
-#cartview th, td {
-    padding: 5px;
-    text-align: left;
-}
-#cartview th
-{
-    background-color: #3C3C3C;
-    color:white;
-}
-#cartview td
-{
-    background-color: #464646;
-    color:white;
+
 }
 #cartview #customfooter #striketextcolor.button_title{
     font-size: 16px;
     line-height: 35px;
     text-align: center;
+    width: 100%;
 }
 #cartview #customfooter center{
     width:100%;
+}
+
+.cart-heading{
+    font-size: 16px;
+    padding: 10px 10px;
+    background: #737373;
+    color: #fff;
+    margin: 0 0 10px;
+    font-weight: 700;
+}
+
+.cart-heading .col-20{
+    text-align: center;
+}
+
+#cartview .list_view .col-10 i{
+    font-size: 20px;
+    color:#404040;
+}
+
+#cartview .list_view .col-20{
+   text-align: center;
+    font-size:14px;
+    color:#404040;
+}
+
+#cartview .cartoriginal span{
+    text-decoration: line-through;
+}
+
+.cart-footer{
+    font-size: 16px;
+    padding: 14px 10px !important;
+    background: #737373;
+    color: #fff;
+    font-weight: 700;
+}
+
+.cart-footer .col-20{
+    text-align: center;
+}
+.cart-footer .price-original{
+    text-decoration: line-through;
+    color:#ccc;
 }

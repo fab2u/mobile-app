@@ -23,8 +23,14 @@
         </div>
         <div class="row list_view aa" ng-repeat="data in cartItems">
             <div class="col col-50">
-                    <span class="cartdetails">
-                      {{data.menuItemName}}
+                    <span class="cartdetails" ng-show="data.male == true && data.female==undefined">
+                      {{data.menuItemName}}&nbsp; <span>(Male)</span>
+                    </span>
+                    <span class="cartdetails" ng-show="data.male == undefined && data.female==true">
+                      {{data.menuItemName}}&nbsp; <span>(Female)</span>
+                    </span>
+                    <span class="cartdetails" ng-show="data.male == true && data.female==true">
+                      {{data.menuItemName}}&nbsp; <span>(Unisex)</span>
                     </span>
             </div>
             <div class="col col-20">

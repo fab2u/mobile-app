@@ -1,32 +1,41 @@
 <ion-view class="vendorList">
         <div class="tabs tabs-icon-top col">
-            <a class="tab-item" style="border-radius: 10px 0px 0px 0px;" ng-click="open_filter()">
+            <a class="tab-item first" ng-click="open_filter()">
                 <i class="icon ion-funnel"></i>
                 FILTER
             </a>
-            <a class="tab-item" style="border-radius: 0px 0px 0px 10px" ng-click="popover.show($event)">
+            <a class="tab-item second" ng-click="popover.show($event)">
                 <i class="icon ion-stats-bars"></i>
                 SORT BY
             </a>
         </div>
         <ion-header-bar class="m-navColor">
-            <a href="" class="button icon-left ion-chevron-left button-clear" ng-click="backButton()"></a>
+            <a href="" class="button icon-left ion-chevron-left button-clear"
+               ng-click="backButton()"></a>
             <h1 class="title">Select Vendors</h1>
-            <div id="toggleButton">
-                <label class="toggle">
-                    <div class="track row">
-                        <button class="col col-50" id="female" ng-model="gender"
-                                ng-click="toggleColor()"><i class="icon ion-woman"></i>
-                        </button>
-                        <button class="col col-50" id="male" ng-click="toggleColor()">
-                            <i class="icon ion-man"></i>
-                        </button>
-                    </div>
-                </label>
-            </div>
+            <!--<div id="toggleButton">-->
+                <!--<label class="toggle">-->
+                    <!--<div class="track row">-->
+                        <!--<button class="col col-50" id="female" ng-model="gender"-->
+                                <!--ng-click="toggleColor()"><i class="icon ion-woman"></i>-->
+                        <!--</button>-->
+                        <!--<button class="col col-50" id="male" ng-click="toggleColor()">-->
+                            <!--<i class="icon ion-man"></i>-->
+                        <!--</button>-->
+                    <!--</div>-->
+                <!--</label>-->
+            <!--</div>-->
         </ion-header-bar>
         <ion-content>
-            <div class="card m-5 fab_card" ng-show="packages.length !='0'" ng-repeat="vendor in vendorList">
+            <div class="male-female">
+                <div class="female" ng-class="genSelected? 'no-border':'with-border'"
+                     ng-click="toggleColor(2)">FEMALE</div>
+                <div class="fab" ng-class="genSelected? 'with-border':'no-border'"
+                     ng-click="toggleColor(1)"></div>
+                <div class="fab-book" ng-click="toggleColor(1)">MALE</div>
+            </div>
+            <div class="card m-5 fab_card" ng-show="packages.length !='0'"
+                 ng-repeat="vendor in vendorList">
                 <div class="row">
                     <div class="col-33 image_display_1" ng-click="vendor_menu(vendor.vendor_id)">
                         <img ng-src="{{vendor.image_url || 'img/vendorImage.jpeg'}}" class="pkg-img">
@@ -44,10 +53,11 @@
                                 <div class="col-50" ng-click="vendor_menu(vendor.vendor_id)">
                                     <p id="vendor_type">{{vendor.vendor_type }}</p>
                                     <div id="rating">
-                                        <i class="icon ion-star active"
-                                           ng-repeat="counter in starRating(vendor.vendor_rating) track by $index"></i>
-                                        <i class="icon ion-star"
-                                           ng-repeat="counter in starRating(5-vendor.vendor_rating) track by $index"></i>
+                                        Rating:&nbsp;{{vendor.vendor_rating| number : 1}}
+                                        <!--<i class="icon ion-star active"-->
+                                           <!--ng-repeat="counter in starRating(vendor.vendor_rating) track by $index"></i>-->
+                                        <!--<i class="icon ion-star"-->
+                                           <!--ng-repeat="counter in starRating(5-vendor.vendor_rating) track by $index"></i>-->
                                     </div>
                                 </div>
                             </div>
@@ -60,14 +70,14 @@
                         <div class="col vendor-price" ng-click="vendor_menu(vendor.vendor_id)">
                            
                                 <span id="one" class="left-price badge price-strike" ng-if="(vendor.min_price_vendor != vendor.min_price_customer)
-                            &&(vendor.max_price_vendor != vendor.max_price_customer)" style="text-decoration: line-through;">
+                            &&(vendor.max_price_vendor != vendor.max_price_customer)">
                                     (<i>&#x20B9;</i>
                                        {{vendor.min_price_vendor}} 
                                     </span>
                                     <span ng-if="(vendor.min_price_vendor != vendor.min_price_customer)
                             &&(vendor.max_price_vendor != vendor.max_price_customer)"> - </span>
                                 <span id="two" class="badge price-strike " ng-if="(vendor.min_price_vendor != vendor.min_price_customer)
-                            &&(vendor.max_price_vendor != vendor.max_price_customer)" style="text-decoration: line-through;">
+                            &&(vendor.max_price_vendor != vendor.max_price_customer)">
                                         <i>&#x20B9;</i>
                                       {{vendor.max_price_vendor}})
                                 </span>

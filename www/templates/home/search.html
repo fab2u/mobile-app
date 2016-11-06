@@ -1,9 +1,10 @@
 <ion-view class="searchservices">
    <div class="bar bar-header search-services-header" >
-      <i style="color:white; padding-left: 5px; padding-right: 10px; padding-top: 5px;"  class="icon ion-chevron-left pull-left" ng-click="home()"></i>
+      <i class="icon ion-chevron-left pull-left" ng-click="home()"></i>
       <label class="item item-input search-input ">
          <i  class="input-icons icon ion-search placeholder-icon"></i>
-         <input  type="text" placeholder="Search Salons or Services" ng-model="searchQuery" ng-change="searchServices()"/>
+         <input  type="text" placeholder="Search Salons or Services" ng-model="searchQuery"
+                 ng-change="searchServices()"/>
          <button class="button button-clear button-dark input-icons">
          X
          </button>

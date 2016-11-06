@@ -12,6 +12,19 @@
 
   width:98%;
 }*/
+
+.searchservices .search-services-header i{
+    color:white;
+    padding-left: 5px;
+    padding-right: 10px;
+    padding-top:5px;
+    font-size: 25px;
+}
+.searchservices .search-services-header h1{
+    color: white;
+    margin-left: 30px;
+}
+
 .searchservices .vendororservice{
   float:right;
   border-radius: 5px!important;

@@ -29,11 +29,9 @@
             </div>
           </div>
           <div class = "button-bar myButtonsDiv">
-              <button class ="button" id="cancel" ng-click="bookingCancel(booking.bookingId)"
-                      ng-disabled="(booking.userStatus !='upComing')||(booking.appointmentTime<activeDate)" style=" min-height: 44px !important;
-                          max-height: 44px !important;">CANCEL</button>
-              <button class ="button" id="details" ng-click="bookingDetail(booking.bookingId)" style=" min-height: 44px !important;
-                          max-height: 44px !important;">VIEW DETAILS</button>
+              <button class ="button button1" id="cancel" ng-click="bookingCancel(booking.bookingId)"
+                      ng-disabled="(booking.userStatus !='upComing')||(booking.appointmentTime<activeDate)">CANCEL</button>
+              <button class ="button button2" id="details" ng-click="bookingDetail(booking.bookingId)">VIEW DETAILS</button>
           </div>
         </div>
  

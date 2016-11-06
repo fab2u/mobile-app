@@ -8,8 +8,9 @@
             <div id="image"> <img src="img/wallet.png"></div>
             <div id="totalAmount">
                 TOTAL AMOUNT &nbsp;
-                <span style="color:#444;text-decoration:line-through" ng-if="customer_price != total_original">
-                    <span style='color:#444'>₹({{total_original}})</span>
+                <span class="cus-price"
+                      ng-if="customer_price != total_original">
+                    <span class="tot-price">₹({{total_original}})</span>
                 </span>
                 ₹{{customer_price}}
             </div>
@@ -25,8 +26,8 @@
         </div>
         <br>
         <div id="havePromo" ng-hide="promoCodeApplied">
-            <div align="center" ng-click="isOpen=!isOpen" id="haveCode">
-                <p style="padding-top: 5px;">HAVE PROMO CODE?</p>
+            <div class="code-text" align="center" ng-click="isOpen=!isOpen" id="haveCode">
+                <p>HAVE PROMO CODE?</p>
             </div>
             <div ng-hide="!isOpen" id="applyCode" class="row">
                 <div id="applyCodeDiv" class="col col-67">
@@ -46,9 +47,7 @@
             <p>&nbsp; PAY FROM WALLET &nbsp; ₹{{walletAmount}}</p></ion-checkbox>
         </div>
          </ion-content>
-    <div style="text-align: center;">
         <ion-footer-bar class='bar bar-assertive custom-footer' ng-click="confirmedBooking()">
             <div id="footerContent">CONFIRM APPOINTMENT</div>
         </ion-footer-bar>
-    </div>
 </ion-view>

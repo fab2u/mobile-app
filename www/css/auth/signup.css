@@ -16,6 +16,13 @@
 	margin-right:7%;
 
 }
+#signupform #detailsform .create{
+	margin-top:15px
+}
+
+#signupform .promo_code{
+	margin-top: 10px;
+}
 
 #signupform .c1 {
 	background-color:#EDEDED;

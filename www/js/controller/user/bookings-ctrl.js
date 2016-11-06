@@ -49,7 +49,7 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 	$scope.bookingCancel = function(b_id){
 		var confirmPopup = $ionicPopup.confirm({
 			title: 'Note',
-			template: '* Wallet amount only refundable, if booking is cancelled before 2 hour of appointment time.'
+			template: 'Wallet Money is refundable only if booking is cancelled 2 hour prior to Appointment Time'
 		});
 
 		confirmPopup.then(function(res) {

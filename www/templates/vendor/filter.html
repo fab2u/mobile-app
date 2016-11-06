@@ -20,7 +20,7 @@
             </center>
         </div>
         <div class="filter_row">
-           <spna style="margin-right: 160px;">Price</spna>
+           <span class="price-text">Price</span>
             <span class="rightText" ng-click="open_price()">&#2352; 0 to &#2352; 200000
             <i class="icon ion-chevron-right"></i></span>
         </div>
@@ -43,9 +43,11 @@
         </div>
         <div class="filter_row2">
             <div class="loc" ng-click="open_location()">
-               <b class="pull-left" style="margin-left: 20px;font-size: 15px;">Locations</b>
-                <i class="icon ion-chevron-right" style="font-size: 20px;margin-left: 260px;"></i>
-               <p style="margin-left: 20px;">All Locations</p>
+                <p class="pull-left text-bold">Locations
+                    <i class="icon ion-chevron-right"></i>
+                </p>
+
+                <p>All Locations</p>
             </div>
         </div>
         <div class="filter_row">
@@ -56,7 +58,7 @@
                 <div class="row amenities">
                     <div class="col col-25" ng-repeat="amenity in amenities" ng-model="ame_type" ng-click="amenity_list(amenity)"
                          ng-class="amenity.selected?'selected_amenity':'not_selected_amenity'">
-                        <i class="icon {{amenity.icon}}" style="font-size: 30px;" ></i>
+                        <i class="icon {{amenity.icon}}"></i>
                         <p>{{amenity.name}}</p>
                     </div>
                 </div>

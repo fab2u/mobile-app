@@ -71,6 +71,9 @@
 	font-color: #000000;
 	margin:-5px
 }
+.appointment .day{
+	font-size: 12px;
+}
 
 .appointment .col.col-33 {
 	text-align: center

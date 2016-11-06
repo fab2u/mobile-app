@@ -3,6 +3,7 @@ app.controller('VendorListCtrl',
         ,$ionicModal,$ionicPopover,$rootScope,$cordovaToast) {
 
         $scope.gender = '';
+        $scope.genSelected = false;
         $scope.vendorList = '';
         var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
         $scope.lat = locationInfo.latitude;
@@ -145,19 +146,22 @@ app.controller('VendorListCtrl',
             };
 
             // $scope.rating = 3;
-            function defaultColor() {
-                male.classList.add('is-active');
-                female.classList.remove('is-active');
-            }
-
-            defaultColor();
-            $scope.toggleColor = function () {
+            // function defaultColor() {
+            //     male.classList.add('is-active');
+            //     female.classList.remove('is-active');
+            // }
+            //
+            // defaultColor();
+            // if(val == 1){
+            //     $scope.fabSelected = false;
+            // } else {
+            //     $scope.fabSelected = true;
+            //     $location.path("/feed");
+            // }
+            $scope.toggleColor = function (val) {
                 $ionicLoading.show();
-                var female = document.getElementById('female');
-                var male = document.getElementById('male');
-                if (male.classList.contains('is-active')) {
-                    male.classList.remove('is-active');
-                    female.classList.add('is-active');
+                if (val == 1) {
+                    $scope.genSelected = true;
                     $scope.gender = 'male';
 
                     if ($scope.serviceIds.length > 0) {
@@ -218,9 +222,11 @@ app.controller('VendorListCtrl',
 
                 }
                 else {
-                    male.classList.add('is-active');
-                    female.classList.remove('is-active');
-                    $scope.gender = 'female';
+                    // male.classList.add('is-active');
+                    // female.classList.remove('is-active');
+                    // $scope.gender = 'female';
+                    $scope.genSelected = false;
+
                     if ($scope.serviceIds.length > 0) {
                         var serviceIdList = $scope.serviceIds.join();
                         $http.post("http://139.162.31.204/search_services?services=" + $scope.serviceIds +

@@ -86,6 +86,14 @@
 	color: #444;
 }
 
+.confirmation #totalAmount .cus-price{
+	color:#444;
+	text-decoration:line-through
+}
+.confirmation #totalAmount .tot-price{
+	color:#444;
+}
+
 .confirmation #walletPayable{
     width: 80%;
     margin: 5px auto;
@@ -146,7 +154,9 @@
 .confirmation #havePromo {
 	margin-bottom:5px;
 }
-
+.confirmation #havePromo .code-text p{
+	padding-top: 5px;
+}
 .confirmation #haveCode {
     background-color: rgb(211,211,211);
     width: 80%;

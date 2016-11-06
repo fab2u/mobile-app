@@ -35,6 +35,9 @@
     border-bottom:1px solid #d6d6d6; line-height:40px;
     padding:0 20px; font-size:17px;
 }
+.filter_row .price-text{
+    margin-right: 160px;
+}
 .filter_row2{
     padding: 15px 0;
 }
@@ -60,11 +63,30 @@ div.stars {
     width:100%;
     text-indent:20px;
 }
+.text-bold{
+    margin-left: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+.loc p{
+    margin-left: 20px;
+}
+.loc i{
+    font-size: 20px;
+    /*margin-left: 260px;*/
+    float: right;
+}
+
 .filter .amenities{
     float: none;
     padding: 0;
     display: inline-block;
     width: auto;
+}
+
+.amenities i{
+    font-size: 30px;
 }
 .vendorList .custom-footer {
     margin-left: 5px;

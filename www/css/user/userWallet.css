@@ -88,11 +88,15 @@
 }
 
 .userWallet .detail p{
-	margin: 0px 0px -2px 0px;
+	margin: 0px 0px -2px 20px;
 }
 
 .userWallet .allTransactions{
 	border-bottom: 1px solid white;
+}
+.userWallet .scroll_view{
+	height:160px;
+	width: 100%
 }
 
 .userWallet .headings .col-40 {

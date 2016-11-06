@@ -36,6 +36,12 @@
     font-color: red !important;
 }
 
+.bill #thankYou h4{
+    color: #D24248
+}
+.bill #thankYou h5{
+    color:solid #444
+}
 .bill #myBill {
     width: 74%;
     height: auto;
@@ -113,4 +119,7 @@
 #rateNow {
     text-align:center;
     background-color:#ebebe0;
+}
+.bill .bottom-text p {
+    color: #D24248
 }

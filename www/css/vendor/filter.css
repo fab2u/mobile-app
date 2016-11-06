@@ -102,3 +102,24 @@ div.stars {
     text-align: center;
     color: #FFFFFF;
 }
+
+.second_modal{
+    width: 60%;
+    float: right;
+    position: absolute;right:0;top:0;
+}
+
+.locality_icon{
+    font-size: 20px;
+    color: #FF8385;
+    float: right;
+    position: absolute;
+    top:5px;
+    right: 5px;
+}
+
+.third_modal{
+    width: 70%;
+    float: right;
+    position: absolute;right:0;top:0;
+}

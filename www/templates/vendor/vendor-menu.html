@@ -25,17 +25,17 @@
                                     ng-class="$index == 0 ? 'active':''"
                                     ng-repeat="item in catName"
                                     ng-click="tabHasChanged($index)">
-                                <img ng-if="item == 'FACE'" src="img/Face.png" style="height: 35px;">
-                                <img ng-if="item == 'BODY'" src="img/Body-Care.png" style="height: 35px;">
-                                <img ng-if="item == 'HAIR'" src="img/Hair.png" style="height: 35px;">
-                                <img ng-if="item == 'HANDS & FEETS'" src="img/Hands-feet.png" style="height: 35px;">
-                                <img ng-if="item == 'HAIR REMOVAL'" src="img/Waxing.png" style="height: 35px;">
-                                <img ng-if="item == 'NAILS'" src="img/nail.png" style="height: 35px;">
-                                <img ng-if="item == 'PACKAGES'" src="img/packege.png" style="height: 35px;">
-                                <img ng-if="item == 'SPA & MASSAGES'" src="img/spa.png" style="height: 35px;">
-                                <img ng-if="item == 'FITNESS'" src="img/fitness.png" style="height: 35px;">
-                                <img ng-if="item == 'WEDDING & PARTY'" src="img/wedNparty.png" style="height: 35px;">
-                                <img ng-if="item == 'TATTOO'" src="img/tatoo.png" style="height: 35px;">
+                                <img ng-if="item == 'FACE'" src="img/Face.png">
+                                <img ng-if="item == 'BODY'" src="img/Body-Care.png">
+                                <img ng-if="item == 'HAIR'" src="img/Hair.png">
+                                <img ng-if="item == 'HANDS & FEETS'" src="img/Hands-feet.png">
+                                <img ng-if="item == 'HAIR REMOVAL'" src="img/Waxing.png">
+                                <img ng-if="item == 'NAILS'" src="img/nail.png">
+                                <img ng-if="item == 'PACKAGES'" src="img/packege.png">
+                                <img ng-if="item == 'SPA & MASSAGES'" src="img/spa.png">
+                                <img ng-if="item == 'FITNESS'" src="img/fitness.png">
+                                <img ng-if="item == 'WEDDING & PARTY'" src="img/wedNparty.png">
+                                <img ng-if="item == 'TATTOO'" src="img/tatoo.png">
                                 <p>{{item}}</p>
                             </div>
                         </div>
@@ -45,8 +45,8 @@
                      ng-click="scrollToRight($event)"></div>
             </div>
             <div class="row padding" id="slideBox">
-                <ion-slide-box style="width:100%!important; background-color: #FFF;"
-                               class="slideBox" on-slide-changed="slideHasChanged($index)"
+                <ion-slide-box class="slideBox slide-box-view"
+                               on-slide-changed="slideHasChanged($index)"
                                show-pager="false" delegate-handle="my-handle">
                     <ion-slide ng-repeat="data in menu">
                     <span ng-if="currSlide == $index">
@@ -73,21 +73,15 @@
                                     {{y.menuItemName}}&nbsp;<span>(Unisex)</span>
                                 </span>
                             </div>
-                            <div class="col col-40 p-15" style="text-align:right;font-color:black;"
+                            <div class="col col-40 p-15 price-view"
                                  ng-if="y.vendorPrice != y.customerPrice">
-                                <strike>
-                                    <span class="striked-text"
-                                          style="font-size: 0.9em;">&#x20B9;{{y.vendorPrice}} </span>
-                                    <span class="line-arrow right"
-                                          style="position:relative;bottom:1px ;left:4px;"></span>
-                                </strike>
-                                 <span style="font-size: 0.9em;">
+                                    <span class="striked-text">&#x20B9;{{y.vendorPrice}} </span>
+                                    <span>
                                    &#x20B9; {{y.customerPrice}}
-                                 </span>
+                                    </span>
                             </div>
-                            <div class="col col-33 p-15" style="text-align:right;font-color:black;"
-                                 ng-if="y.vendorPrice == y.customerPrice">
-                                <span style="font-size: 0.9em;">
+                            <div class="col col-33 p-15 price-view" ng-if="y.vendorPrice == y.customerPrice">
+                                <span>
                                    &#x20B9; {{y.customerPrice}}
                                  </span>
                             </div>
@@ -101,7 +95,7 @@
     </ion-content>
     <ion-footer-bar class="footer">
         <div class="cartValue" ng-click="proceedButton()">
-            <i class="icon ion-ios-cart" style="font-size: 30px;"></i>
+            <i class="icon ion-ios-cart"></i>
             <p>{{cart_item}}</p>
         </div>
         <div class="row newFooter">

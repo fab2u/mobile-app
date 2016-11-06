@@ -18,7 +18,9 @@
     <ion-content>
         <div ng-show="menuInfo">
             <div class="services-n-fab">
-                <div class="services" ng-class="fabSelected? 'no-border':'with-border'" ng-click="selectMain(1)">SELECTED SERVICES</div>
+                <div class="services" ng-class="fabSelected? 'no-border':'with-border'" ng-click="selectMain(1)">
+                    SELECTED SERVICES
+                </div>
                 <div class="fab" ng-class="fabSelected? 'with-border':'no-border'" ng-click="selectMain(2)"></div>
                 <div class="fab-book" ng-click="selectMain(2)">FULL CATALOGUE</div>
             </div>
@@ -34,8 +36,8 @@
                         <div ng-show="selectedServices[y.menuItemName]"
                              class="selected-bar">
                         </div>
-                                <span class="serviceList-gender"
-                                      ng-show="y.male == true && y.female==undefined">
+                        <span class="serviceList-gender"
+                              ng-show="y.male == true && y.female==undefined">
                                     {{y.menuItemName}}&nbsp;<span>(Male)</span>
                                 </span>
                         <span class="serviceList-gender" ng-show="y.female == true &&y.male==undefined">
@@ -45,21 +47,17 @@
                                     {{y.menuItemName}}&nbsp;<span>(Unisex)</span>
                                 </span>
                     </div>
-                    <div class="col col-40 p-15" style="text-align:right;font-color:black;"
+                    <div class="col col-40 p-15 price-view"
                          ng-if="y.vendorPrice != y.customerPrice">
-                        <strike>
-                                    <span class="striked-text"
-                                          style="font-size: 0.9em;">&#x20B9;{{y.vendorPrice}} </span>
-                            <span class="line-arrow right"
-                                  style="position:relative;bottom:1px ;left:4px;"></span>
-                        </strike>
-                        <span style="font-size: 0.9em;">
+                        <span class="striked-text">&#x20B9;{{y.vendorPrice}} </span>
+
+                        <span>
                                    &#x20B9; {{y.customerPrice}}
                                  </span>
                     </div>
-                    <div class="col col-40 p-15" style="text-align:right;font-color:black;"
+                    <div class="col col-40 p-15 price-view"
                          ng-if="y.vendorPrice == y.customerPrice">
-                                <span style="font-size: 0.9em;">
+                                <span>
                                    &#x20B9; {{y.customerPrice}}
                                  </span>
                     </div>

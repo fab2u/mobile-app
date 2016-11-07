@@ -233,11 +233,13 @@
 }
 
 .fabFeed .likenum i{
-	color: #FF8386;
+	/*color: #FF8386;*/
 }
 
 .fabFeed .likenum span{
 	color: #525252;
+	position: absolute;
+	padding-left: 10px;
 }
 
 

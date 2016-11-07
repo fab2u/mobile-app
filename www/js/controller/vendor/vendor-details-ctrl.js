@@ -43,9 +43,14 @@ app.controller('VendorDetailsCtrl',
 
     $scope.vendorDetail = function() {
         $ionicLoading.show();
-        firebase.database().ref('vendors/' + JSON.parse(window.localStorage['selectedLocation']).cityId + '/' + $stateParams.ven_id).once('value', function (response) {
-           if(response.val()){
+        firebase.database().ref('vendors/' +
+            JSON.parse(window.localStorage['selectedLocation']).cityId + '/' +
+            $stateParams.ven_id).once('value', function (response) {
+            console.log("main image url:",response.val())
+
+            if(response.val()){
                $scope.vendor_detail = response.val();
+
                $ionicLoading.hide();
                if(response.val().images){
                    if(response.val().images.gallery){

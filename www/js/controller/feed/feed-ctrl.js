@@ -229,7 +229,9 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 			if($("#"+feed.blog_id+"-likeFeed").hasClass('clicked')){
 				feed.numLikes -= 1;
 				db.ref("blogs/"+feed.blog_id+"/likedBy/"+$scope.uid).remove().then(function(){
-					$("#"+feed.blog_id+"-likeFeed").removeClass("clicked");
+					db.ref("users/data/"+$scope.uid+"/likedBlogs/"+feed.blog_id).remove().then(function () {
+						$("#"+feed.blog_id+"-likeFeed").removeClass("clicked");
+					})
 				});
 				console.log("after remove",feed);
 			}
@@ -240,6 +242,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 				feed.numLikes += 1;
 				var updates = {};
 				updates["blogs/" + feed.blog_id + "/likedBy/" + $scope.uid] = true;
+				updates["users/data/"+$scope.uid+"/likedBlogs/"+feed.blog_id] = true;
 				db.ref().update(updates).then(function () {
 					console.log('success');
 					$("#" + feed.blog_id + "-likeFeed").addClass("clicked");

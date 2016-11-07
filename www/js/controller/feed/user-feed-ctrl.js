@@ -84,24 +84,31 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
   if(!myUid){
     showAlert();
   }
-
+    $scope.likeBlogIds = '';
+    $scope.totalLikes = 0;
 
   db.ref("users/data/"+uid).on("value", function(snapshot){
-    $scope.totalLikes = 0;
       $scope.following = Object.keys(snapshot.val().following).length;
       $scope.userDetails = snapshot.val();
       $scope.email = snapshot.val().email.userEmail;
       $scope.userPhoto = snapshot.val().photoUrl;
       $scope.numFeeds = Object.keys(snapshot.val().blogs).length;
-      $scope.followers = Object.keys(snapshot.val().myFollowers).length;
-    for(var i in snapshot.val().blogs){
-      db.ref("blogs/"+i).on("value", function(snap){
-        if(snap.val().likedBy){
-          $scope.totalLikes += Object.keys(snap.val().likedBy).length;
-        }
-      });
-    }
+      if(snapshot.val().myFollowers){
+          $scope.followers = Object.keys(snapshot.val().myFollowers).length;
+      }
+      if(snapshot.val().likedBlogs){
+          $scope.totalLikes = Object.keys(snapshot.val().likedBlogs).length;
+          $scope.likeBlogIds = snapshot.val().likedBlogs;
+      }
+    // for(var i in snapshot.val().blogs){
+    //   db.ref("blogs/"+i).on("value", function(snap){
+    //     if(snap.val().likedBy){
+    //       $scope.totalLikes += Object.keys(snap.val().likedBy).length;
+    //     }
+    //   });
+    // }
 	});
+
 
 	$scope.commentToggle = function(feedId) {
 		$("#"+feedId+"-commentsBlock").toggle();
@@ -528,5 +535,57 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
             $location.path("#/login");
         }
     });
+
+    function blogInfo(i,callback) {
+        $scope.blogArr = [];
+        var blogData = db.ref().child("blogs").child(i);
+        blogData.once("value", function(snap){ //access individual blog
+            // console.log(snap.val());
+            single_blog = snap.val();
+            var temp = single_blog.introduction.replace(/\s/g, '');
+
+            single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+            // single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+            single_blog.profilePic = $scope.userPhoto;
+
+            // start: comment system code
+            if(single_blog.comments){
+                single_blog['commentCount'] = Object.keys(single_blog.comments).length;
+            }
+
+            // start convert comments object to array
+            single_blog['commentsArr'] = $.map(single_blog.comments, function(value, index) {
+                return [value];
+            });
+            // console.log(value.commentsArr);
+            // end convert comments object to array
+            // end: comment system code
+            if(single_blog.likedBy){
+                count = Object.keys(single_blog.likedBy).length;
+               console.log(single_blog.likedBy);
+                // console.log(count);
+                single_blog['numLikes'] = count;
+                if(myUid in single_blog.likedBy){
+                    $timeout(function () {
+                        $("#"+i+"-likeFeed").addClass("clicked");
+                    }, 1000);
+                }
+            }
+            $scope.blogArr.push(single_blog);
+        });
+        if(callback){
+            callback();
+        }
+        console.log("testing:", $scope.blogArr)
+    }
+
+    $scope.likeFeeds = function(){
+        console.log("liked ids :",$scope.likeBlogIds);
+        angular.forEach($scope.likeBlogIds,function (value,key) {
+            console.log("key",key);
+            blogInfo(key);
+        })
+    };
+
 
 });

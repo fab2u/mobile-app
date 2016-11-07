@@ -1,6 +1,5 @@
-app.controller("tagFeedCtrl", function($scope, $stateParams, $timeout,
-                                                            $state,$location, $ionicLoading,
-                                           $ionicModal, $ionicPopup){
+app.controller("tagFeedCtrl", function($scope, $stateParams, $timeout,$sce, $state,$location,
+                                       $ionicLoading, $ionicModal, $ionicPopup){
 
 	$ionicLoading.show();
 
@@ -184,7 +183,9 @@ app.controller("tagFeedCtrl", function($scope, $stateParams, $timeout,
       });
     }
 	};
-
+    $scope.toTrustedHTML = function( html ){
+        return $sce.trustAsHtml( html );
+    }
 	$scope.followUser = function(id){
     if(!$scope.uid){
       showAlertFollow();
@@ -312,15 +313,19 @@ app.controller("tagFeedCtrl", function($scope, $stateParams, $timeout,
 				$ionicLoading.hide();
 				$scope.blogIdList = snapshot.val();
 				console.log($scope.blogIdList);
-				$scope.bottomKey = Object.keys($scope.blogIdList)[0];
-				console.log(Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1]);
-				$scope.topKey = Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1];
-				console.log($scope.bottomKey);
-				$scope.blogArr = [];
-				for(var i in $scope.blogIdList){
-					console.log(i); // i is the key of blogs object or the id of each blog
-					blogAlgo(i);
-				}
+                if(snapshot.val()){
+                    $scope.bottomKey = Object.keys($scope.blogIdList)[0];
+                    $scope.topKey = Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1];
+                    console.log($scope.bottomKey);
+                    $scope.blogArr = [];
+                    for(var i in $scope.blogIdList){
+                        console.log(i); // i is the key of blogs object or the id of each blog
+                        blogAlgo(i);
+                    }
+                }
+                else{
+                    alert('This feed no more available!')
+                }
 				$timeout(function () {
 				}, 0);
 			})

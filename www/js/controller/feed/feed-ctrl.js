@@ -1,5 +1,5 @@
 app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $ionicLoading,
-										  $ionicModal, $ionicPopup,$state){
+										  $ionicModal, $ionicPopup,$state,$sce){
 
 	$ionicLoading.show();
 	$scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
@@ -327,7 +327,9 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 	$scope.$on('$stateChangeSuccess', function() {
 		$scope.loadMore();
 	});
-
+	$scope.toTrustedHTML = function( html ){
+		return $sce.trustAsHtml( html );
+	}
 	function blogAlgo(i, callback){
 		var blogData = db.ref().child("blogs").child(i);
 		blogData.once("value", function(snap){ //access individual blog

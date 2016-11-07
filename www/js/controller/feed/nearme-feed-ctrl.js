@@ -1,5 +1,5 @@
 app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $location, $ionicLoading,
-                                          $ionicModal, $ionicPopup,$state){
+                                          $ionicModal, $ionicPopup,$state,$sce){
 
    $ionicLoading.show();
 
@@ -183,6 +183,10 @@ app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $locat
       });
     }
    };
+
+    $scope.toTrustedHTML = function( html ){
+        return $sce.trustAsHtml( html );
+    }
 
   $scope.followUser = function(id) {
     if (!$scope.uid) {

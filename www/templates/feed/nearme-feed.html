@@ -34,13 +34,13 @@
 						<span class="follow-btn {{feed.user.user_id}}-follow"
 							  ng-click="followUser(feed.user.user_id)">Follow</span>
 						<span class="unfollow-btn {{feed.user.user_id}}-unfollow"
-							  style="display: none" ng-click="unfollowUser(feed.user.user_id)">Unfollow</span>
+							   ng-click="unfollowUser(feed.user.user_id)">Unfollow</span>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col col-20"></div>
 					<div class="col col-80">
-						<p ng-bind-html="feed.introduction" class="feed-introduction" ellipsis></p>
+						<p ng-bind-html="toTrustedHTML(feed.introduction)" class="feed-introduction"></p>
 					</div>
 				</div>
 			</div>

@@ -29,7 +29,8 @@ app.directive('expandingTextarea', function () {
     };
 });
 
-app.controller("newFeedCtrl",function($scope, $http, $location, $timeout, $cordovaCamera, $ionicLoading){
+app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,
+                                      $cordovaCamera, $ionicLoading){
    $ionicLoading.show();
 
    uid = localStorage.getItem("uid");

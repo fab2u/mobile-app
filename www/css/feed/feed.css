@@ -136,7 +136,9 @@
 	font-size: 16px;
 }
 .fabFeed .col-border{
-  border-right: dashed 1px #a5a5a5;
+  /*border-right: dashed 1px #a5a5a5;*/
+  border-right: 2px solid #444;
+
 }
 
 .fabFeed .user-details span{
@@ -145,6 +147,7 @@
 
 .fabFeed a{
 	text-decoration: none;
+	font-size: 15px;
 }
 
 .fabFeed .follow-btn{
@@ -159,7 +162,8 @@
   border-radius: 5px;
   color: #bcbcbc;
   padding: 1px 5px;
-  font-size: 12px
+  font-size: 12px;
+	display: none
 }
 
 .fabFeed .follow-btn1{

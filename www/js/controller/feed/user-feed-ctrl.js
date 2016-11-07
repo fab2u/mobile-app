@@ -1,5 +1,5 @@
 app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaCamera,$http,
-                                        $location, $ionicLoading, $ionicModal, $ionicPopup){
+                                        $location, $ionicLoading,$sce, $ionicModal, $ionicPopup){
 
 	$ionicLoading.show();
 
@@ -9,6 +9,8 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
     $scope.followingIds ='';
     $scope.count1 = 0;
     $scope.count2 = 0;
+
+    $scope.IfollowingUserDetail = [];
 
   function showAlert(){
     $ionicLoading.hide();
@@ -358,7 +360,9 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 	$scope.$on('$stateChangeSuccess', function() {
 		$scope.loadMore();
 	});
-
+    $scope.toTrustedHTML = function( html ){
+        return $sce.trustAsHtml( html );
+    }
 	function blogAlgo(i, callback){
 		var blogData = db.ref().child("blogs").child(i);
 		blogData.once("value", function(snap){ //access individual blog
@@ -494,9 +498,9 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 
 
             $scope.cropClick = function(){
-                $ionicLoading.show({
-                    template: 'Loading! Please wait...'
-                });
+                $timeout(function () {
+                    $ionicLoading.hide();
+                }, 400);
                 basic.croppie('result', {
                     type: 'canvas',
                     format: 'jpeg',
@@ -520,6 +524,7 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
                                 }).then(function(){
                                     alert("Photo updated successfully");
                                     $scope.modal.hide();
+                                    $scope.loadMore();
                                 });
                             });
 
@@ -580,12 +585,33 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
     }
 
     $scope.likeFeeds = function(){
+        $timeout(function () {
+            $ionicLoading.hide();
+        }, 400);
         console.log("liked ids :",$scope.likeBlogIds);
         angular.forEach($scope.likeBlogIds,function (value,key) {
             console.log("key",key);
-            blogInfo(key);
+          blogInfo(key);
         })
     };
 
-
+    function iFollowingDetail(info) {
+        angular.forEach(info, function (value, key) {
+            console.log("key", key);
+            db.ref("users/data/" + key).once("value", function (response) {
+                if (response.val()) {
+                    $scope.IfollowingUserDetail.push(response.val());
+                }
+            })
+        })
+        console.log("detail",$scope.IfollowingUserDetail)
+    }
+    $scope.followDetail = function () {
+        db.ref("users/data/"+uid+"/following").once("value",function (response) {
+            if(response.val()){
+                $scope.iFollowingIds = response.val();
+                iFollowingDetail($scope.iFollowingIds);
+            }
+        })
+    };
 });

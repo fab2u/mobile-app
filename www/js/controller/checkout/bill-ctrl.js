@@ -1,5 +1,8 @@
-app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$ionicModal,$rootScope){
+app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,
+                                    $ionicModal,$rootScope,$ionicHistory){
     $ionicLoading.show();
+    $ionicHistory.clearHistory();
+    $ionicHistory.clearCache();
     $scope.cancelButton = false;
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
     $scope.vendorAddress = '';

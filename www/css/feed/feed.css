@@ -2,6 +2,9 @@
 .fabFeed.transparent {
   background: transparent !important;
 }
+.fabFeed .list_item span{
+float:right;
+}
 
 .fabFeed .image-modal .fullscreen-image {
 	display: block;

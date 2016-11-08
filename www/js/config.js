@@ -257,21 +257,37 @@ app
 	$stateProvider
 		.state('feed', {
 			url: '/feed',
+			cache:false,
 			templateUrl: 'templates/feed/feed.html',
 			controller: 'FeedCtrl'
 		})
+		.state('follow', {
+			url: '/follow/:uid',
+			cache:false,
+			templateUrl: 'templates/feed/follow.html',
+			controller: 'followCtrl'
+		})
+		.state('followPosts', {
+			url: '/followPosts/:followId',
+			cache:false,
+			templateUrl: 'templates/feed/followPosts.html',
+			controller: 'followPostsCtrl'
+		})
 		.state('tagFeed', {
 			url: '/tag/:tag',
+			cache:false,
 			templateUrl: 'templates/feed/tag-feed.html',
 			controller: 'tagFeedCtrl'
 		})
 		.state('userFeed', {
 			url: '/user/:user_id',
+			cache:false,
 			templateUrl: 'templates/feed/user-feed.html',
 			controller: 'userFeedCtrl'
 		})
 		.state('newFeed', {
 			url: '/new-feed',
+			cache:false,
 			templateUrl: 'templates/feed/new-feed.html',
 			controller: 'newFeedCtrl',
 			resolve: {
@@ -282,6 +298,7 @@ app
 		})
 		.state('nearmeFeed', {
 			url: '/nearme/:cityId',
+			cache:false,
 			templateUrl: 'templates/feed/nearme-feed.html',
 			controller: 'nearmeFeedCtrl'
 		});

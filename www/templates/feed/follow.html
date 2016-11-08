@@ -1,0 +1,16 @@
+<ion-view class="fabFeed" cache-view="false">
+    <ion-header-bar align-title="center" class="bar-dark" title="FOLLOW">
+        <a class="button icon ion-chevron-left button-clear" ng-click="goBack()"></a>
+        <h1 class="title">FOLLOW</h1>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list">
+            <a class="item item-avatar list_item " ng-repeat="followDetail in IfollowingUserDetail">
+                <img ng-src="{{followDetail.photoUrl ||'img/person.jpg'}}">
+                <span ng-click="viewPosts(followDetail.userId)">View Posts</span>
+                <h2>{{followDetail.name}}</h2>
+                <p>Email:{{followDetail.email.userEmail}}</p>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

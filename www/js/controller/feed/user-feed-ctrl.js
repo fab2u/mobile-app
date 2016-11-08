@@ -1,4 +1,4 @@
-app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaCamera,$http,
+app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaCamera,$http,$state,
                                         $location, $ionicLoading,$sce, $ionicModal, $ionicPopup){
 
 	$ionicLoading.show();
@@ -7,8 +7,6 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
     $scope.myBlogIds = [];
     $scope.myFollowingBlogIds = [];
     $scope.followingIds ='';
-    $scope.count1 = 0;
-    $scope.count2 = 0;
 
     $scope.IfollowingUserDetail = [];
 
@@ -595,22 +593,12 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
         })
     };
 
-    function iFollowingDetail(info) {
-        angular.forEach(info, function (value, key) {
-            console.log("key", key);
-            db.ref("users/data/" + key).once("value", function (response) {
-                if (response.val()) {
-                    $scope.IfollowingUserDetail.push(response.val());
-                }
-            })
-        })
-        console.log("detail",$scope.IfollowingUserDetail)
-    }
     $scope.followDetail = function () {
         db.ref("users/data/"+uid+"/following").once("value",function (response) {
             if(response.val()){
-                $scope.iFollowingIds = response.val();
-                iFollowingDetail($scope.iFollowingIds);
+                window.localStorage['iFollowingIds'] = JSON.stringify(response.val());
+                $state.go('follow',{uid:uid});
+                // iFollowingDetail($scope.iFollowingIds);
             }
         })
     };

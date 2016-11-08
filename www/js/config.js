@@ -267,6 +267,12 @@ app
 			templateUrl: 'templates/feed/follow.html',
 			controller: 'followCtrl'
 		})
+		.state('follower', {
+			url: '/follower/:uid',
+			cache:false,
+			templateUrl: 'templates/feed/follower.html',
+			controller: 'followerCtrl'
+		})
 		.state('followPosts', {
 			url: '/followPosts/:followId',
 			cache:false,

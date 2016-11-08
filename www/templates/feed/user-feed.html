@@ -44,17 +44,17 @@
                     </div>
                 </div>
                 <div class="col col-border">
-                    <div class="center user-details det-border">
+                    <div class="center user-details det-border" ng-click="loadMore()">
                         {{numFeeds || 0}}<br><span>Posts</span>
                     </div>
                 </div>
                 <div class="col col-border">
-                    <div class="center user-details det-border">
+                    <div class="center user-details det-border" ng-click="myFollowers(followers)">
                         {{followers || 0}}<br><span>Followers</span>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="center user-details" ng-click="followDetail()">
+                    <div class="center user-details" ng-click="followDetail(following)">
                         {{following || 0}}<br><span>Follow</span>
                     </div>
                 </div>

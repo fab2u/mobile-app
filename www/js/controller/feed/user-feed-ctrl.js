@@ -10,7 +10,12 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 
     $scope.IfollowingUserDetail = [];
 
-  function showAlert(){
+    delete window.localStorage.iFollowingIds;
+    delete window.localStorage.myFollowers;
+    delete window.localStorage.follower;
+
+
+    function showAlert(){
     $ionicLoading.hide();
     var alertPopup = $ionicPopup.alert({
       title: 'Sign up for Fabbook',
@@ -88,7 +93,9 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
     $scope.totalLikes = 0;
 
   db.ref("users/data/"+uid).on("value", function(snapshot){
-      $scope.following = Object.keys(snapshot.val().following).length;
+      if(snapshot.val().following){
+          $scope.following = Object.keys(snapshot.val().following).length;
+      }
       $scope.userDetails = snapshot.val();
       $scope.email = snapshot.val().email.userEmail;
       $scope.userPhoto = snapshot.val().photoUrl;
@@ -339,6 +346,11 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
                     followingNum = Object.keys($scope.followingIds).length;
                     myFollowing($scope.followingIds);
                 }
+                else{
+                    for(var i in snapshot.val()){
+                        	blogAlgo(i);
+                        }
+                }
 				// if($scope.blogIdList !== null){
 				// 	$scope.bottomKey = Object.keys($scope.blogIdList)[0];
 				// }
@@ -402,7 +414,6 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 			callback();
 		}
 	}
-
 
 	//////////////////// image upload //////////////////////
 
@@ -593,13 +604,33 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
         })
     };
 
-    $scope.followDetail = function () {
-        db.ref("users/data/"+uid+"/following").once("value",function (response) {
-            if(response.val()){
-                window.localStorage['iFollowingIds'] = JSON.stringify(response.val());
-                $state.go('follow',{uid:uid});
-                // iFollowingDetail($scope.iFollowingIds);
-            }
-        })
+    $scope.followDetail = function (val) {
+        if(val){
+            db.ref("users/data/"+uid+"/following").once("value",function (response) {
+                if(response.val()){
+                    window.localStorage['iFollowingIds'] = JSON.stringify(response.val());
+                    $state.go('follow',{uid:uid});
+                }
+            })
+        }
+        else{
+            alert('No follow found!')
+        }
+
     };
+
+
+    $scope.myFollowers = function(val){
+        if(val){
+            db.ref("users/data/"+uid+"/myFollowers").once("value",function (response) {
+                if(response.val()){
+                    window.localStorage['myFollowers'] = JSON.stringify(response.val());
+                    $state.go('follower',{uid:uid});
+                }
+            })
+        }
+        else{
+            alert('No followers found!')
+        }
+    }
 });

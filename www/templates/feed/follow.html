@@ -7,9 +7,9 @@
         <div class="list">
             <a class="item item-avatar list_item " ng-repeat="followDetail in IfollowingUserDetail">
                 <img ng-src="{{followDetail.photoUrl ||'img/person.jpg'}}">
-                <span ng-click="viewPosts(followDetail.userId)">View Posts</span>
+                <span ng-if="followDetail.postNum>0" ng-click="viewPosts(followDetail.userId)">View Posts</span>
                 <h2>{{followDetail.name}}</h2>
-                <p>Email:{{followDetail.email.userEmail}}</p>
+                <p>Post:{{followDetail.postNum || 0}}</p>
             </a>
         </div>
     </ion-content>

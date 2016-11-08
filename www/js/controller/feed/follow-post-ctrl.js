@@ -11,7 +11,12 @@ app.controller("followPostsCtrl", function($scope,$stateParams,$state,$timeout,$
 
 
     $scope.goBack = function(){
-        $state.go('follow',{uid:myUid})
+        if(window.localStorage.getItem("follower")=='true') {
+            $state.go('follower', {uid: myUid});
+        }
+        else{
+            $state.go('follow',{uid:myUid})
+        }
     };
     $timeout(function () {
         $ionicLoading.hide();

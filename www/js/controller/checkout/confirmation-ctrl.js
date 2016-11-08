@@ -405,7 +405,9 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	            }
 	        } else {
 	        	console.log($scope.amountPayable, $scope.walletAmount, $scope.discountAmount);
-	        	$scope.amount = $scope.amount;
+	        	// $scope.amount = $scope.amount;  first it was
+	        	$scope.amount = $scope.amount + $scope.walletAmount;
+	        	// $scope.amount = $scope.walletAmount;
 	            $scope.paidFromWallet = 0;
 	            $scope.amountPayable = $scope.customer_price -$scope.discountAmount;
 				$scope.fab2uPayableAmount = $scope.discountAmount;

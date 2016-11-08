@@ -1,6 +1,7 @@
 app
     .controller('VendorSelectedServicesListCtrl',function($scope,$stateParams,$rootScope,$state,
-                                                          $ionicLoading,$ionicPopup,$cordovaToast) {
+                                                          $ionicLoading,$ionicPopup,$cordovaToast,
+                                                          $timeout){
 
         $scope.total_fabtu=0;
         $scope.total_original=0;
@@ -13,7 +14,9 @@ app
         $scope.cart_price = {};
 
         $scope.fabSelected = false;
-
+        $timeout(function () {
+            $ionicLoading.hide();
+        }, 10000);
 
         $scope.selectMain = function(val){
             if(val == 1){
@@ -171,12 +174,17 @@ app
 
         $scope.vendorDetail = function() {
             $ionicLoading.show();
-            firebase.database().ref('vendors/' + JSON.parse(window.localStorage['selectedLocation']).cityId + '/' + $stateParams.vendor_id).once('value', function (response) {
-                $scope.vendor_detail = response.val();
-                window.localStorage.setItem("vendorMobile",$scope.vendor_detail.contactDetails.phone);
-                window.localStorage.setItem("vendorLandline",$scope.vendor_detail.contactDetails.landline);
+            firebase.database().ref('vendors/' + JSON.parse(window.localStorage['selectedLocation']).cityId + '/vendors/' + $stateParams.vendor_id).once('value', function (response) {
+               if(response.val()){
+                   $scope.vendor_detail = response.val();
+                   window.localStorage.setItem("vendorMobile",$scope.vendor_detail.contactDetails.phone);
+                   window.localStorage.setItem("vendorLandline",$scope.vendor_detail.contactDetails.landline);
+                   $ionicLoading.hide();
+               }
+               else{
+                   $ionicLoading.hide();
+               }
 
-                $ionicLoading.hide();
             });
         };
 

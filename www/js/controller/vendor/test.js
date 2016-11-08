@@ -14,7 +14,9 @@ app
             $scope.show = function() {
                 $ionicLoading.show();
             };
-
+        $timeout(function () {
+            $ionicLoading.hide();
+        }, 10000);
             $scope.show();
             $scope.menu = [];
             $scope.catName = [];
@@ -26,11 +28,16 @@ app
         $scope.vendorDetail = function() {
             $ionicLoading.show();
             firebase.database().ref('vendors/' + JSON.parse(window.localStorage['selectedLocation']).cityId +
-                '/' + $stateParams.vendor_id).once('value', function (response) {
-                $scope.vendor_detail = response.val();
-                window.localStorage.setItem("vendorMobile",$scope.vendor_detail.contactDetails.phone);
-                window.localStorage.setItem("vendorLandline",$scope.vendor_detail.contactDetails.landline);
-                $ionicLoading.hide();
+                '/vendors/' + $stateParams.vendor_id).once('value', function (response) {
+                    if(response.val()){
+                        $scope.vendor_detail = response.val();
+                        window.localStorage.setItem("vendorMobile",$scope.vendor_detail.contactDetails.phone);
+                        window.localStorage.setItem("vendorLandline",$scope.vendor_detail.contactDetails.landline);
+                        $ionicLoading.hide();
+                    }
+                    else{
+                        $ionicLoading.hide();
+                    }
             });
         };
 

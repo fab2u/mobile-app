@@ -375,19 +375,23 @@
 }
 
 .vendorDetails .ratingCard {
-	background-color:#e6e6e6;
+	background-color:#fbfbfb;
+	box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3);
 }
 
 .vendorDetails .rating1{
 	height: 25px;
-    padding-left: 21%;
+
     width: 100%;
-    margin-left: 0%;
-    border-bottom: 1px solid black;
+
+}
+
+.vendorDetails .imgNname{
+	text-align: center;
 }
 
 .vendorDetails .review {
-	margin: 0px 15px;
+	margin: 0px 15px 0 0;
 }
 .vendorDetails .review i {
 	float: right;

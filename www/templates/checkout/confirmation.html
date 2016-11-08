@@ -1,12 +1,12 @@
 <ion-view class="confirmation" cache-view="false">
     <ion-content>
-        <div id="bg"><img src="img/background.jpg" alt=""></div>
         <button class="button button-dark button-small icon ion-chevron-left" id="backbutton"
                 ng-click="goBack()"></button>
         <div class="card myCard">
-            <br>
             <div id="image"> <img src="img/wallet.png"></div>
-            <div id="totalAmount">
+            <div class="row">
+               <div class="col-80 col-offset-10">
+            <div id="totalAmount" class="amount">
                 TOTAL AMOUNT &nbsp;
                 <span class="cus-price"
                       ng-if="customer_price != total_original">
@@ -14,27 +14,29 @@
                 </span>
                 ₹{{customer_price}}
             </div>
-            <div id="walletMoney" ng-show="paidFromWallet">
+            <div  ng-show="paidFromWallet" class="amount">
                 <p>PAID FROM WALLET &nbsp; ₹{{paidFromWallet}}</p>
             </div>
-            <div id="walletMoney" ng-show="discountAmount">
+            <div  ng-show="discountAmount" class="amount">
                 <p>DISCOUNT &nbsp; ₹{{discountAmount}}</p>
             </div>
-            <div id="amountToPay" align="center">
+            <div class="amount amount-payable">
                 <p>AMOUNT PAYABLE &nbsp; ₹{{amountPayable}}</p>
             </div>
+                   </div>
         </div>
-        <br>
-        <div id="havePromo" ng-hide="promoCodeApplied">
-            <div class="code-text" align="center" ng-click="isOpen=!isOpen" id="haveCode">
-                <p>HAVE PROMO CODE?</p>
+        </div>
+        <div ng-hide="promoCodeApplied" class="promo-code">
+            <div  align="center" ng-click="isOpen=!isOpen">
+                <p>Have a promo code? click here</p>
             </div>
-            <div ng-hide="!isOpen" id="applyCode" class="row">
-                <div id="applyCodeDiv" class="col col-67">
-                    <input type="text" ng-model="couponCode" placeholder="ENTER PROMO CODE">
+            <div ng-hide="!isOpen" class="row" align="center">
+                <div class="col col-offset-10">
+                    <input type="text" ng-model="couponCode" placeholder="Enter promo code">
+
                 </div>
-                <div id="applyCodeButton" class="col col-33">
-                    <button class="button button-dark" ng-click="addCoupon(couponCode)">APPLY</button>
+                <div class="col">
+                    <button class="button button-dark" ng-click="addCoupon(couponCode)">Apply</button>
                 </div>
                 <br>
             </div>

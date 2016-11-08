@@ -1,6 +1,6 @@
 app.controller('VendorDetailsCtrl',
     function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state
-        ,$ionicLoading,$rootScope,$cordovaToast){
+        ,$ionicLoading,$rootScope,$cordovaToast,$timeout){
 
         $scope.images =[];
         $scope.reviewerName = '';
@@ -23,7 +23,9 @@ app.controller('VendorDetailsCtrl',
         if(localStorage.getItem('uid')){
             $scope.myUid = localStorage.getItem('uid');
         }
-
+        $timeout(function () {
+            $ionicLoading.hide();
+        }, 10000);
         var n = weekday[d.getDay()];
 
         if(window.localStorage.getItem("selectedTab")=='true'){

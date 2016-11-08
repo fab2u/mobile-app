@@ -47,20 +47,15 @@
 			<img ng-src="{{feed.photoUrl}}" class="feed-img" ng-click="showImage(feed.photoUrl)">
 			<div class="row upper-row1">
 				<div class="col col-20 likenum">
-					<i class="icon ion-heart"></i>
+					<i class="like-btn icon ion-heart" id="{{feed.blog_id}}-likeFeed"
+					   ng-click="likeThisFeed(feed)"></i>
+
 					<span>{{feed.numLikes || 0}} likes</span>
 				</div>
 				<div class="col col-40 likenum" ng-click="commentToggle(feed.blog_id)">
-					<i class="icon ion-ios-chatbubble"></i>
-					<span>{{feed.commentCount || 0}} comments</span>
-				</div>
-				<div class="col col-10">
-					<i class="like-btn icon ion-heart" id="{{feed.blog_id}}-likeFeed"
-					   ng-click="likeThisFeed(feed)"></i>
-				</div>
-				<div class="col col-10">
 					<i class="comment-btn icon ion-ios-chatbubble"
 					   ng-click="showPopup(feed.blog_id)"></i>
+					<span>{{feed.commentCount || 0}} comments</span>
 				</div>
 			</div>
 			<div id="{{feed.blog_id}}-commentsBlock" class="initiallyHidden">

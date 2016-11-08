@@ -2,6 +2,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 										  $ionicModal, $ionicPopup,$state,$sce){
 
 	$ionicLoading.show();
+	$scope.blogLength = 0;
 	$scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
 
 	$scope.uid = window.localStorage.getItem("uid");
@@ -315,6 +316,8 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 				$scope.topKey = Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1];
 				// console.log($scope.bottomKey);
 				$scope.blogArr = [];
+				$scope.blogLength = Object.keys($scope.blogIdList).length;
+
 				for(var i in $scope.blogIdList){
 					// console.log(i); // i is the key of blogs object or the id of each blog
 					blogAlgo(i);
@@ -330,7 +333,9 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 	$scope.toTrustedHTML = function( html ){
 		return $sce.trustAsHtml( html );
 	}
+	var cd = 0;
 	function blogAlgo(i, callback){
+		cd++;
 		var blogData = db.ref().child("blogs").child(i);
 		blogData.once("value", function(snap){ //access individual blog
 			// console.log(i, snap.val());
@@ -389,6 +394,9 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 		});
 		if (callback) {
 			callback();
+		}
+		if(cd == $scope.blogLength){
+			$scope.moreMessagesScroll = true;
 		}
 	}
 });

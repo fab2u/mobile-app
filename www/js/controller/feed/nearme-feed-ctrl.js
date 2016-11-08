@@ -4,8 +4,6 @@ app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $locat
    $ionicLoading.show();
     $scope.blogLength = 0;
 
-    $scope.x = 0;
-    $scope.y = 10;
 
 	$scope.uid = window.localStorage.getItem("uid");
    console.log($scope.uid);
@@ -288,7 +286,6 @@ app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $locat
 	}
 
 	$scope.loadMore = function(){
-
 		console.log(Object.keys($scope.blogIdList).length);
 		if(Object.keys($scope.blogIdList).length > 0){
 		    console.log("isssss")

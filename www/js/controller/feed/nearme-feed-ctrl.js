@@ -4,6 +4,9 @@ app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $locat
    $ionicLoading.show();
     $scope.blogLength = 0;
 
+    $scope.x = 0;
+    $scope.y = 10;
+
 	$scope.uid = window.localStorage.getItem("uid");
    console.log($scope.uid);
    db.ref("users/data/"+$scope.uid+"/name").once("value", function(snapshot){
@@ -288,6 +291,7 @@ app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $locat
 
 		console.log(Object.keys($scope.blogIdList).length);
 		if(Object.keys($scope.blogIdList).length > 0){
+		    console.log("isssss")
 			db.ref("cityBlogs/"+$scope.cityId+"/blogs").orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){
 				// console.log(snap.val());
 				if(snap.numChildren() == 1){
@@ -402,10 +406,10 @@ app.controller("nearmeFeedCtrl", function($scope, $timeout, $stateParams, $locat
       if (callback) {
          callback();
       }
-      // if(cd == $scope.blogLength){
-      //     $scope.moreMessagesScroll = true;
-      //
-      // }
+      if(cd == $scope.blogLength){
+          $scope.moreMessagesScroll = true;
+
+      }
    }
 
 });

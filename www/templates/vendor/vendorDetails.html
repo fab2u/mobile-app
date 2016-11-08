@@ -126,6 +126,9 @@
 								</div>
 								<div class="review">
 									<p>{{review.ReviewText}}</p>
+									<i ng-if="myUid == review.userId" class="icon ion-edit"
+									ng-click="editReview(review)"></i>
+
 								</div>
 				    		</div>
 			    		</div>

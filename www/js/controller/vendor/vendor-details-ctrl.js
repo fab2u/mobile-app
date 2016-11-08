@@ -20,6 +20,9 @@ app.controller('VendorDetailsCtrl',
         weekday[4] = "thursday";
         weekday[5] = "friday";
         weekday[6] = "saturday";
+        if(localStorage.getItem('uid')){
+            $scope.myUid = localStorage.getItem('uid');
+        }
 
         var n = weekday[d.getDay()];
 
@@ -44,13 +47,12 @@ app.controller('VendorDetailsCtrl',
     $scope.vendorDetail = function() {
         $ionicLoading.show();
         firebase.database().ref('vendors/' +
-            JSON.parse(window.localStorage['selectedLocation']).cityId + '/' +
+            JSON.parse(window.localStorage['selectedLocation']).cityId + '/vendors/' +
             $stateParams.ven_id).once('value', function (response) {
             console.log("main image url:",response.val())
 
             if(response.val()){
                $scope.vendor_detail = response.val();
-
                $ionicLoading.hide();
                if(response.val().images){
                    if(response.val().images.gallery){
@@ -305,6 +307,18 @@ app.controller('VendorDetailsCtrl',
             review:'',
             rating: 0
         };
+
+        $ionicModal.fromTemplateUrl('templates/vendor/editReview.html',{
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.edit_rate_vendor = modal;
+        });
+
+        $scope.close_edit_modal = function(){
+            $scope.edit_rate_vendor.hide();
+        };
+
         $ionicModal.fromTemplateUrl('templates/checkout/review.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -428,5 +442,103 @@ app.controller('VendorDetailsCtrl',
 
         };
 
+
+        $scope.editReview = function (editReviewInfo) {
+            console.log("editReviewInfo",editReviewInfo);
+
+            $scope.editData = editReviewInfo;
+            $scope.edit_rate_vendor.show();
+        };
+
+
+        $scope.storeEditReview = function(data){
+            console.log("data",data);
+            if(localStorage.getItem('uid')){
+                if($scope.custReview.rating == 0){
+                    $cordovaToast
+                        .show('Please, select rating', 'long', 'center')
+                        .then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
+                else{
+                    var updates = {};
+                    var reviewId = data.ReviewId;
+                    firebase.database().ref('users/data/'+localStorage.getItem('uid')).once('value',function(response) {
+                        if(response.val()){
+                            if(response.val().photoUrl){
+                                $scope.reviewData = {
+                                    'ReviewId':reviewId,
+                                    'BookingId':'',
+                                    'userId':localStorage.getItem('uid'),
+                                    'ReviewText':$scope.custReview.review,
+                                    'ReviewRating':$scope.custReview.rating,
+                                    'VendorId':$stateParams.ven_id,
+                                    'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
+                                    'ReviewDate':new Date().getTime(),
+                                    'name':response.val().name,
+                                    'image':response.val().photoUrl
+                                };
+                            }
+                            else{
+                                $scope.reviewData = {
+                                    'ReviewId':reviewId,
+                                    'BookingId':'',
+                                    'userId':localStorage.getItem('uid'),
+                                    'ReviewText':$scope.custReview.review,
+                                    'ReviewRating':$scope.custReview.rating,
+                                    'VendorId':$stateParams.ven_id,
+                                    'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
+                                    'ReviewDate':new Date().getTime(),
+                                    'name':response.val().name,
+                                    'image':''
+                                };
+                            }
+
+                            var userReviewData = {
+                                'VendorId':$stateParams.ven_id,
+                                'cityId':JSON.parse(window.localStorage['selectedLocation']).cityId,
+                                'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName
+
+                            }
+                            updates['reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+
+                            $stateParams.ven_id+'/Reviews/'+$scope.reviewData.ReviewId] = $scope.reviewData;
+                            updates['userReviews/'+localStorage.getItem('uid')+'/'+$scope.reviewData.ReviewId] = userReviewData;
+                            db.ref().update(updates).then(function () {
+                                $scope.custReview ={
+                                    review:'',
+                                    rating: 0
+                                };
+                                $state.reload();
+                                $ionicLoading.hide();
+                                $rootScope.$broadcast('reviewList', { message: 'review list changed' });
+                                $cordovaToast
+                                    .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
+                                    .then(function(success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+                                $scope.edit_rate_vendor.hide();
+                            });
+                        }
+                        else{
+                            alert('Something went wrong!')
+                        }
+                    })
+                }
+            }
+            else{
+                $cordovaToast
+                    .show('Please login first!', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
+        }
 
 });

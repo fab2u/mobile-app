@@ -76,7 +76,8 @@
 			</div>
 		</div>
 		<div ng-hide="moreMessagesScroll" class="feedend">You are at the end of the feed</div>
-		<ion-infinite-scroll ng-if="moreMessagesScroll" immediate-check="false" on-infinite="loadMore()"
+		<ion-infinite-scroll ng-if="moreMessagesScroll" immediate-check="false"
+							 on-infinite="loadMore()"
 							 distance="1%"> </ion-infinite-scroll>
 	</ion-content>
 </ion-view>

@@ -389,7 +389,10 @@
 .vendorDetails .review {
 	margin: 0px 15px;
 }
-
+.vendorDetails .review i {
+	float: right;
+	font-size: 20px;
+}
 .vendorDetails .rateNow {
 	position: fixed !important;
     bottom: 100px;

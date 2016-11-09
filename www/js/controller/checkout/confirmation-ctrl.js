@@ -456,6 +456,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
                 'vendorName': window.localStorage.getItem("vendorName"),
 				'vendorMobile':window.localStorage.getItem("vendorMobile"),
 			    'vendorLandline':window.localStorage.getItem("vendorLandline"),
+			    'vendorLandmark':window.localStorage.getItem("vendorLandmark"),
 			    'vendorAmount': $scope.total_original,
                 'serviceInfo': newCart,
                 'createdDate': new Date().getTime(),

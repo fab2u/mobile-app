@@ -3,21 +3,20 @@ app
                                                   $timeout,$stateParams,$rootScope,$state,$ionicLoading,
                                                   $ionicHistory,$cordovaToast) {
 
+
+        $scope.show = function() {
+            $ionicLoading.show();
+        };
+        $scope.show();
+
         $scope.total_fabtu=0;
         $scope.total_original=0;
         $scope.total_customer = 0;
 
-        $scope.demo = 'cat-08';
-        $scope.newMenu = [];
 
-
-            $scope.show = function() {
-                $ionicLoading.show();
-            };
         $timeout(function () {
             $ionicLoading.hide();
         }, 10000);
-            $scope.show();
             $scope.menu = [];
             $scope.catName = [];
             $scope.cart_item = 0;
@@ -33,6 +32,7 @@ app
                         $scope.vendor_detail = response.val();
                         window.localStorage.setItem("vendorMobile",$scope.vendor_detail.contactDetails.phone);
                         window.localStorage.setItem("vendorLandline",$scope.vendor_detail.contactDetails.landline);
+                        window.localStorage.setItem("vendorLandmark",$scope.vendor_detail.address.landmark);
                         $ionicLoading.hide();
                     }
                     else{

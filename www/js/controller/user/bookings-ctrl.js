@@ -1,5 +1,14 @@
-app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,$rootScope,$cordovaToast){
+app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,$rootScope,
+										$cordovaToast,$timeout){
 
+
+	$scope.show = function() {
+		$ionicLoading.show();
+	};
+	$scope.show();
+	$timeout(function () {
+		$ionicLoading.hide();
+	}, 10000);
 
 	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
 
@@ -7,28 +16,37 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 	$scope.allBookings = [];
 	$scope.activeBookingId = '';
 
+	var count1 = 0;
+	var count2 = 0;
+
 	$scope.activeDate = new Date().getTime();
 	// All the booking id for cancelled booking and active booking and their detail
+
+	function allBookingsDetail(bookingIds) {
+		for (var i = 0; i <bookingIds.length; i++) {
+			firebase.database().ref('bookings/' + bookingIds[i]).once('value', function (response) {
+				if (response.val()) {
+					$scope.allBookings.push(response.val());
+					$ionicLoading.hide();
+				}
+			});
+		}
+	}
 
 	$scope.bookingInfo = function() {
 		$ionicLoading.show();
 		firebase.database().ref('userBookings/'+localStorage.getItem('uid')).once('value', function (response) {
 			if(response.val()){
+				count1 = Object.keys(response.val()).length;
+
+				console.log("count1",count1)
 				angular.forEach(response.val(), function (value, key) {
+					count2++;
 					$scope.bookingIds.push(key)
 				});
-				for (var i = 0; i < $scope.bookingIds.length; i++) {
-					firebase.database().ref('bookings/' + $scope.bookingIds[i]).once('value', function (response) {
-						if (response.val()) {
-							$scope.allBookings.push(response.val())
-							$ionicLoading.hide();
-							firebase.database().ref('vendors/' + locationInfo.cityId + '/' +response.val().vendorId).once
-							('value', function (response) {
-								$scope.bookingAddress = response.val().address;
-								$ionicLoading.hide();
-							});
-						}
-					});
+				if(count1 == count2){
+					allBookingsDetail($scope.bookingIds)
+					$ionicLoading.hide();
 				}
 			}
 			else{

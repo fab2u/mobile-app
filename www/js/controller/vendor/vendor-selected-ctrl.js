@@ -3,6 +3,12 @@ app
                                                           $ionicLoading,$ionicPopup,$cordovaToast,
                                                           $timeout){
 
+
+        $scope.show = function() {
+            $ionicLoading.show();
+        };
+        $scope.show();
+
         $scope.total_fabtu=0;
         $scope.total_original=0;
         $scope.total_customer = 0;
@@ -12,6 +18,7 @@ app
         $scope.menu = [];
         $scope.cart_item = 0;
         $scope.cart_price = {};
+
 
         $scope.fabSelected = false;
         $timeout(function () {
@@ -58,8 +65,6 @@ app
         var sorted_id = _.sortBy($scope.selected_ids, function(num){
             return num;
         });
-
-        console.log("sorted_id",sorted_id)
 
         for(var i=0;i<sorted_id.length;i++){
             if(sorted_id[i]<='1013' && sorted_id[i]>='1001'){
@@ -115,20 +120,6 @@ app
         console.log("mySubArray",mySubArray)
         if(mySubArray.length>0) {
             firebase.database().ref('menu/' + $stateParams.vendor_id).once('value', function (response) {
-
-                // if (response.val()) {
-                //     $scope.menuInfo = response.val().services;
-                //     window.localStorage.setItem("vendorName", response.val().vendorName);
-                //     for(var j = 0; j< mySubArray.length;j++){
-                //         angular.forEach($scope.menuInfo, function (value, key) {
-                //             if(key == mySubArray[j]) {
-                //                 $scope.menu.push(value);
-                //             }
-                //         })
-                //     }
-                //     console.log("menu",JSON.stringify($scope.menu,null,2))
-                //     $scope.vendorDetail();
-                // }
                 if (response.val()) {
                     $scope.menuInfo = response.val().services;
                     window.localStorage.setItem("vendorName", response.val().vendorName);
@@ -147,7 +138,6 @@ app
                             }
                         })
                     }
-                    console.log("menu",JSON.stringify($scope.menu1,null,2))
                     $scope.vendorDetail();
                 }
                 else{
@@ -166,10 +156,7 @@ app
 
 
 
-        $scope.show = function() {
-            $ionicLoading.show();
-        };
-        $scope.show();
+
 
 
         $scope.vendorDetail = function() {
@@ -179,6 +166,8 @@ app
                    $scope.vendor_detail = response.val();
                    window.localStorage.setItem("vendorMobile",$scope.vendor_detail.contactDetails.phone);
                    window.localStorage.setItem("vendorLandline",$scope.vendor_detail.contactDetails.landline);
+                   window.localStorage.setItem("vendorLandmark",$scope.vendor_detail.address.landmark);
+
                    $ionicLoading.hide();
                }
                else{

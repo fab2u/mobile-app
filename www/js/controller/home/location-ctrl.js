@@ -1,4 +1,5 @@
-app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ionicModal,$ionicLoading) {
+app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ionicHistory,
+										$ionicModal,$ionicLoading) {
 
 	function location() {
 		$ionicLoading.show();
@@ -11,21 +12,18 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 	}
 	location();
 
+	$scope.backButtonValue = false;
+
+	if($ionicHistory.backView().stateName == 'app.home'){
+		$scope.backButtonValue = true;
+	}
+
     $scope.backButton = function(){
         $state.go('app.home');
     };
 
     $scope.selected_city = function(city){
     	$scope.cityId = city.cityId;
-            // var selectedLocation = JSON.parse(window.localStorage['selectedLocation'] || '{}');
-            // selectedLocation.cityId = city.cityId;
-            // selectedLocation.cityName	= city.cityName;
-            // selectedLocation.latitude = city.latitude;
-            // selectedLocation.longitude = city.longitude;
-            // selectedLocation.state = city.state;
-            // selectedLocation.country = city.country;
-            // window.localStorage['selectedLocation'] = JSON.stringify(selectedLocation);
-		    // $rootScope.$broadcast('location', { message: 'location changed' });
         	$timeout( function() {
 				$scope.open_location();
         	}, 500);

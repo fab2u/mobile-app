@@ -29,4 +29,14 @@ app.controller('FavouriteCtrl', function($state,$ionicLoading,$cordovaToast, $sc
         $state.go('vendorMenu',{vendor_id:id});
     };
 
+
+    $scope.open_map = function (latitude, longitude, line1, line2, vendorName) {
+        $state.go('map', {
+            'lat': latitude,
+            'lng': longitude,
+            'add1': line1,
+            'add2': line2,
+            'name': vendorName
+        });
+    };
 });

@@ -28,6 +28,8 @@ app.controller('VendorDetailsCtrl',
         }, 10000);
         var n = weekday[d.getDay()];
 
+        $scope.location = JSON.parse(window.localStorage['selectedLocation'])
+
         if(window.localStorage.getItem("selectedTab")=='true'){
             $scope.menu_button = false;
         }
@@ -51,8 +53,6 @@ app.controller('VendorDetailsCtrl',
         firebase.database().ref('vendors/' +
             JSON.parse(window.localStorage['selectedLocation']).cityId + '/vendors/' +
             $stateParams.ven_id).once('value', function (response) {
-            console.log("main image url:",response.val())
-
             if(response.val()){
                $scope.vendor_detail = response.val();
                $ionicLoading.hide();
@@ -72,7 +72,7 @@ app.controller('VendorDetailsCtrl',
                }
            }
            else{
-               $scope.msg1 = 'No,menu found for this vendor!'
+               $scope.msg1 = 'No,menu found for this vendor!';
                $ionicLoading.hide();
 
            }
@@ -87,10 +87,7 @@ app.controller('VendorDetailsCtrl',
       var key = db.ref('favourites/'+localStorage.getItem('uid')).push().key;
       var favouriteData = {
           vendorId:$stateParams.ven_id,
-          cityId:$scope.vendor_detail.address.cityId,
-          vendorName:$scope.vendor_detail.vendorName,
-          vendorLandmark:$scope.vendor_detail.address.landmark,
-          vendorImg:$scope.vendor_detail.images.main.url
+          vendorDetail:$scope.vendor_detail
       };
       if(localStorage.getItem('uid') && key){
           firebase.database().ref('favourites/'+localStorage.getItem('uid')+'/'+key)

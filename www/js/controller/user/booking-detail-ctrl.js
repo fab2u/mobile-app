@@ -4,6 +4,7 @@ app.controller('BookingDetailCtrl', function($scope,$state,$ionicLoading,$stateP
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
 
     $scope.bookingInformation = '';
+    $scope.bookingAddress = '';
 
     $scope.show = function() {
         $ionicLoading.show();
@@ -22,8 +23,13 @@ app.controller('BookingDetailCtrl', function($scope,$state,$ionicLoading,$stateP
                         $scope.bookingInformation = response.val();
                         firebase.database().ref('vendors/' + locationInfo.cityId + '/vendors/' +response.val().vendorId).once
                         ('value', function (response) {
-                            $scope.bookingAddress = response.val();
-                            $ionicLoading.hide();
+                            if(response.val()){
+                                $scope.bookingAddress = response.val();
+                                $ionicLoading.hide();
+                            }
+                          else{
+                                $ionicLoading.hide();
+                            }
                         });
                     }
                     else{

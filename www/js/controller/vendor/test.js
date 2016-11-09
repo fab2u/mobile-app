@@ -343,7 +343,7 @@ app
                     "serviceid": "1011"
                 },
                 "1012":{
-                    "serviceName": "Straightening",
+                    "serviceName": "Straightening/Perming",
                     "serviceid": "1012"
                 },
                 "1013":{

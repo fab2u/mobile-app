@@ -123,9 +123,8 @@ blockquote p:before{
     color:#FF8385 ;
 }
 .rating_view{
-    margin-top: 70px;
     margin-bottom: 150px;
-    min-height: 60% !important;
+    min-height: 45% !important;
     min-width: 70% !important;
     background-color: rgb(169,169,169)
 }

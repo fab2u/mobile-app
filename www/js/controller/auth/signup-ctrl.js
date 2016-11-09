@@ -2,22 +2,45 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                                       $timeout,$rootScope,$cordovaToast){
     $scope.generatedCode = '';
     $scope.myReferral = '';
-    $scope.validReferralcode = [];
     $scope.walletMoney = 0;
     $scope.updates = {};
     $scope.apply_code = false;
     $scope.referralName = '';
     $scope.referralContact = '';
+    $scope.user_device_register = false;
 
+
+    ////////////////   To check device is registered or not    /////////////////
+
+    function deviceRegistered(){
+        if((ionic.Platform.isIOS() == true)|| (ionic.Platform.isIPad() == true)||(ionic.Platform.isAndroid() ==true)){
+            firebase.database().ref('deviceInformation/Registered/'+$cordovaDevice.getDevice().uuid).once('value',function(response){
+                console.log("device_list",JSON.stringify(response.val()));
+                if(response.val()){
+                    alert("registered")
+                    $scope.user_device_register = true;
+                }
+                else{
+                    alert("not registered")
+                    $scope.user_device_register = false;
+                }
+            });
+        }
+        else{
+            console.log("else")
+        }
+    }
+   deviceRegistered();
 
     /////////////////////////////// To check apply referral code valid or not ////////////////
     $scope.apply_promoCode = function (referralCode) {
      var newCode =  referralCode.toUpperCase();
         if (referralCode) {
-            firebase.database().ref('referralCode/' + referralCode)
+            firebase.database().ref('referralCode/' + newCode)
                 .once('value', function (response) {
                     console.log("response for all valid codes", JSON.stringify(response.val()))
                     if (response.val()) {
+                            $scope.user.referral_code = newCode;
                         $cordovaToast
                             .show('Congratulation,you will get 25 rs. in your wallet', 'long', 'center')
                             .then(function(success) {
@@ -27,6 +50,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                             });
                     }
                     else {
+                        $scope.user.referral_code = '';
                         $cordovaToast
                             .show('Please, enter a valid code', 'long', 'center')
                             .then(function(success) {
@@ -53,7 +77,6 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
     $scope.checkValidCode = function(referralCode){
         firebase.database().ref('referralCode/'+referralCode)
             .once('value', function (response) {
-                console.log("response for all valid codes", JSON.stringify(response.val()))
                 if(response.val()){
                     var walletTransactionId = db.ref('userWallet/' + $scope.uid+'/credit').push().key;
                     var transactionDetail = {
@@ -63,8 +86,6 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                         'creditDate': new Date().getTime(),
                         'type':'userJoined'
                     };
-                    firebase.database().ref('referralCode/'+referralCode)
-                        .once('value', function (response) {
                             $scope.referredByUid = response.val().uid;
                             firebase.database().ref('users/data/' + $scope.referredByUid)
                                 .once('value', function (response) {
@@ -81,7 +102,6 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                                 }, function (response) {
                                     console.log("uid pushed for used code :")
                                 })
-                        })
                     $scope.updates['userWallet/' + $scope.uid+'/credit/'+walletTransactionId] = transactionDetail;                }
             })
     };
@@ -146,20 +166,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
 
     //////////////// end my referral code generation function /////////////
 
-    if((ionic.Platform.isIOS() == true)|| (ionic.Platform.isIPad() == true)||(ionic.Platform.isAndroid() ==true)){
-        firebase.database().ref('deviceInformation/Registered/'+$cordovaDevice.getDevice().uuid).once('value',function(response){
-            console.log("device_list",JSON.stringify(response.val().registeredUsers));
-            if(response.val().registeredUsers){
-                $scope.user_device_register = true;
-            }
-            else{
-                $scope.user_device_register = false;
-            }
-        });
-    }
-    else{
-        console.log("else")
-    }
+
 
    $scope.user = {
       name: '',

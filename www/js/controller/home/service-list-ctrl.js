@@ -138,7 +138,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                     id:'1011'
                 },
                 {
-                    name:'Straightening',
+                    name:'Straightening/Perming',
                     id:'1012'
                 },
                 {

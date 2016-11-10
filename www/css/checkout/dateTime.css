@@ -27,31 +27,18 @@
 	text-align: center;
 }
 
-.appointment .arrow-right {
-  width: 0; 
-  height: 0; 
-  border-top: 17px solid transparent;
-  border-bottom: 18px solid transparent;
-  border-left: 17px solid #38E1ED;
-  border-radius: 2px;
-}
-
-.appointment .arrow-left {
-  width: 0; 
-  height: 0; 
-  border-top: 17px solid transparent;
-  border-bottom: 18px solid transparent;  
-  border-right:17px solid #38E1ED;
-  border-radius: 2px;
-  float: right; 
-}
-
 .appointment .custom-col {
 	padding-top: 55px;
 }
 .appointment .custom-col i{
-	font-size: 30px;
+	font-size: 25px;
 	color: #FFFFFF;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.appointment .custom-col p{
+	font-size: 16px;
+	color: #ffffff;
 }
 .appointment .scroll-bar-indicator {
 	display: none;

@@ -1,10 +1,12 @@
-app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,
+app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$timeout,
                                     $ionicModal,$rootScope,$ionicHistory){
     $ionicLoading.show();
     $ionicHistory.clearHistory();
     $ionicHistory.clearCache();
+    $timeout(function () {
+        $ionicLoading.hide();
+    }, 10000);
     $scope.cancelButton = false;
-    var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
     $scope.vendorAddress = '';
     $scope.bookingInformation = {};
 
@@ -14,8 +16,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,
     if(hasCurrentBooking){
         $scope.bookingInformation = JSON.parse(window.localStorage['currentBooking']);
         $scope.vendorId = $scope.bookingInformation.vendorId;
-        // $ionicLoading.hide();
-        db.ref('vendors/'+locationInfo.cityId+'/'+$scope.vendorId).once('value', function(response){
+        db.ref('vendors/'+locationInfo.cityId+'/vendors/'+$scope.vendorId).once('value', function(response){
             if(response.val()){
                 $scope.bookingInformation.venue = response.val().vendorName;
                 $scope.bookingInformation.address1 = response.val().address.address1;
@@ -48,7 +49,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,
            if (response.val()) {
                $scope.bookingInformation = response.val();
                $scope.vendorId = response.val().vendorId;
-               db.ref('vendors/'+locationInfo.cityId+'/'+$scope.vendorId).once('value', function(response){
+               db.ref('vendors/'+locationInfo.cityId+'/vendors/'+$scope.vendorId).once('value', function(response){
                    if(response.val()){
                        $scope.bookingInformation.venue = response.val().vendorName;
                        $scope.bookingInformation.address1 = response.val().address.address1;

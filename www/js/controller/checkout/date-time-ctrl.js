@@ -1,6 +1,12 @@
-app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$cordovaToast) {
+app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$cordovaToast,
+                                        $ionicLoading,$timeout) {
 
   $scope.chosenTime = ''; // will store the time selected by the user*/
+
+  $ionicLoading.show();
+  $timeout(function () {
+    $ionicLoading.hide();
+  }, 5000);
 
   $scope.monthName = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
   $scope.active_slot_1 = false;

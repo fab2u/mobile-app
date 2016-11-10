@@ -78,7 +78,6 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 
 	var myUid = window.localStorage.getItem("uid");
 	db.ref("users/data/"+myUid+"/name").on('value', function(snapshot){
-		console.log(snapshot.val());
 		$scope.myName = snapshot.val();
 	});
 
@@ -303,7 +302,6 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 
 
 	$scope.loadMore = function(){
-		console.log('loadmore');
 		console.log(Object.keys($scope.blogIdList).length);
 		if(Object.keys($scope.blogIdList).length > 0){
 			console.log($scope.bottomKey);

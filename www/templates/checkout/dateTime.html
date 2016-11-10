@@ -1,19 +1,13 @@
 <ion-view class="appointment view-background">
 	<div class="bar bar-header bar-dark custom-bar">
-	<button class = "button button-clear icon ion-ios-arrow-left" ng-click="back()"></button>
+	<button class ="button button-clear icon ion-ios-arrow-left" ng-click="back()"></button>
 	    <h1 class="title custom-title">APPOINTMENT</h1>
 	</div>
-	<ion-content scroll = "false" class="has-footer">
+	<ion-content scroll ="false" class="has-footer">
 		<div class="row custom-row">
-			<div class="col col-33 custom-col" ng-click = "leftArrowClicked()">
-				<i class="icon ion-ios-arrow-back">
-					<span>Prev</span>
-				</i>
+			<div class="col col-33 custom-col" ng-click="leftArrowClicked()">
+				<p>Prev<i class="icon ion-ios-arrow-back"></i></p>
 			</div>
-			<!--<div class = "col col-33 custom-col">-->
-				<!--<div class = "arrow-left" ng-click = "leftArrowClicked()">-->
-				<!--</div>-->
-			<!--</div>-->
 			<div class="col-33">
 				<div class = "card custom-card">
 					<div class = "date">{{date}}</div>
@@ -22,14 +16,8 @@
 				</div>
 			</div>
 			<div class="col col-33 custom-col" ng-click = "rightArrowClicked()">
-               <i class="icon ion-ios-arrow-forward">
-				   <span>Next</span>
-			   </i>
+				<p><i class="icon ion-ios-arrow-forward"></i>Next</p>
 			</div>
-			<!--<div class = "col-33 custom-col">-->
-				<!--<div class = "arrow-right" ng-click = "rightArrowClicked()">-->
-				<!--</div>-->
-			<!--</div>-->
 		</div>
 		<ion-item class= "custom-divider" ng-class="active_slot_1?'selected_slot':'not_selected_slot'">
 			<i class="icon ion-android-sunny custom-icon"></i>
@@ -50,9 +38,9 @@
 
 		<ion-scroll has-bouncing="false" direction="y" scrollbar-y="false"
 					ng-style="{height: getItemHeight()}"  class="scroll-view">
-		 	<div class = "fix-bar"> <!-- width depend upon number of items -->
+		 	<div class ="fix-bar">
 		 		<ion-list>
-		 			<ion-item id = "timeitem" ng-repeat = "time in timeSlots9To12"
+		 			<ion-item id = "timeitem" ng-repeat="time in timeSlots9To12"
 							  class = "custom-item" >
 		 				<div id="{{time.id}}" class="time-button button" ng-disabled ="time.isDisabled"
 							 ng-class="time.isDisabled?'time-disabled':'time-enabled'"
@@ -109,7 +97,7 @@
 		</ion-scroll>
 
 		<div class="bottom-widget">
-			<span>Scroll down for more timings</span>
+			<span>Scroll down for more slots</span>
 		</div>
 	</ion-content>
 	<ion-footer-bar class ="bar custom-footer" align-title="center" ng-click="confirmation()">

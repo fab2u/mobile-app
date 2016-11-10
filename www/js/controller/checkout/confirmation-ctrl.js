@@ -1,6 +1,9 @@
 app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $timeout,$ionicPopup,
 											$rootScope,$cordovaToast) {
 	$ionicLoading.show();
+	$timeout(function () {
+		$ionicLoading.hide();
+	}, 10000);
 	var loggedIn = checkLocalStorage('uid');
 	$scope.appointmentTime = '';
 	$scope.goBack = function(){

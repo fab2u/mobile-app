@@ -3,12 +3,19 @@
     background-color: #3C3C3C;
     border:2px  #3C3C3C;
 }
-
+#cartview #customheader a{
+    font-size: 25px;
+    color: #ffffff;
+    margin-top: 5px;
+}
 #cartview #striketextcolor
 {
     color:white;
 }
 
+#cartview #customheader .edit_icon{
+    margin-left: 15px;
+}
 
 
 #cartview .badge_color

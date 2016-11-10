@@ -6,6 +6,8 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 	$scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
 
 	$scope.uid = window.localStorage.getItem("uid");
+	console.log($scope.uid)
+
 	db.ref("users/data/"+$scope.uid+"/name").once("value", function(snapshot){
 		console.log(snapshot.val());
 		$scope.userName = snapshot.val();
@@ -282,7 +284,6 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 	}
 
 	$scope.loadMore = function(){
-		console.log(Object.keys($scope.blogIdList).length);
 		if(Object.keys($scope.blogIdList).length > 0){
 			db.ref("blogs").orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){
 				// console.log(snap.val());
@@ -360,26 +361,29 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 
 			// If you want to run asynchronous functions inside a loop, but still want to keep the index or other variables after a callback gets executed you can wrap your code in an IIFE (immediately-invoked function expression).
 			(function(single_blog){
-				if(single_blog.user.user_id == $scope.uid){
-					$timeout(function () {
-						$('.'+single_blog.user.user_id+'-follow').hide();
-					}, 0);
-				}
-				db.ref("users/data/"+single_blog.user.user_id).once("value", function(snap){
-					// console.log(single_blog.user.user_id, snap.val());
-					if(snap.val().photoUrl){
-						single_blog.profilePic = snap.val().photoUrl;
+				if(single_blog.user){
+					if(single_blog.user.user_id == $scope.uid){
+						$timeout(function () {
+							$('.'+single_blog.user.user_id+'-follow').hide();
+						}, 0);
 					}
-					if(snap.val().myFollowers){
-						// console.log(snap.val().myFollowers);
-						if ($scope.uid in snap.val().myFollowers){
-							$timeout(function () {
-								$('.'+single_blog.user.user_id+'-follow').hide();
-								$("."+single_blog.user.user_id+'-unfollow').css("display", "block");
-							}, 0);
+					db.ref("users/data/"+single_blog.user.user_id).once("value", function(snap){
+						// console.log(single_blog.user.user_id, snap.val());
+						if(snap.val().photoUrl){
+							single_blog.profilePic = snap.val().photoUrl;
 						}
-					}
-				});
+						if(snap.val().myFollowers){
+							// console.log(snap.val().myFollowers);
+							if ($scope.uid in snap.val().myFollowers){
+								$timeout(function () {
+									$('.'+single_blog.user.user_id+'-follow').hide();
+									$("."+single_blog.user.user_id+'-unfollow').css("display", "block");
+								}, 0);
+							}
+						}
+					});
+				}
+
 			})(single_blog);
 			if(single_blog.likedBy){
 				count = Object.keys(single_blog.likedBy).length;

@@ -1,28 +1,32 @@
-app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$cordovaToast,$state){
-  $scope.total_original=0;
-  $scope.total_fabtu=0;
+app.controller("CartCtrl", function ($scope, $rootScope, $stateParams, $cordovaToast, $state,
+                                     $ionicLoading,$timeout) {
+    $ionicLoading.show();
+    $scope.total_original = 0;
+    $scope.total_fabtu = 0;
     $scope.total_customer = 0;
+    $scope.cartItems = {};
+    $scope.cart_item = 0;
+    $scope.selectedServices = {};
+    $timeout(function () {
+        $ionicLoading.hide();
+    }, 5000);
 
     window.localStorage.setItem("vendorId", $stateParams.ven_id);
 
-    $scope.cartItems = {};
-    $scope.cart_item = 0;
-
     $scope.calPrice = function (item_list) {
-        $scope.total_fabtu=0;
-        $scope.total_original=0;
+        $scope.total_fabtu = 0;
+        $scope.total_original = 0;
         $scope.total_customer = 0;
-        angular.forEach(item_list, function(value, key) {
+        angular.forEach(item_list, function (value, key) {
             $scope.total_fabtu += value.fab2uPrice;
             $scope.total_original += value.vendorPrice;
             $scope.total_customer += value.customerPrice;
         })
     };
-    if(localStorage.getItem('BegItems') != null){
+    if (localStorage.getItem('BegItems') != null) {
         $scope.cartItems = JSON.parse(localStorage.getItem('BegItems'));
         $scope.calPrice($scope.cartItems);
     }
-    $scope.selectedServices = {};
 
     // Get selected services if previously stored in localstorage
     if (localStorage.getItem("slectedItem") != null) {
@@ -36,50 +40,50 @@ app.controller("CartCtrl",function($scope,$rootScope,$stateParams,$cordovaToast,
         $scope.cart_item = _.size($scope.selectedServices);
     });
 
-    $scope.list_changed = function (serv_id,serviceName) {
-        if(($scope.cartItems[serviceName]) && ($scope.selectedServices[serviceName])){
+    $scope.list_changed = function (serv_id, serviceName) {
+        if (($scope.cartItems[serviceName]) && ($scope.selectedServices[serviceName])) {
             delete $scope.cartItems[serviceName];
             delete $scope.selectedServices[serviceName];
         }
         localStorage.setItem('BegItems', JSON.stringify($scope.cartItems));
         localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
         $scope.calPrice(JSON.parse(localStorage.getItem('BegItems')));
-        $rootScope.$broadcast('cart', { message: 'cart length changed' });
+        $rootScope.$broadcast('cart', {message: 'cart length changed'});
     };
 
-    $scope.edit_cart = function(){
-        if(window.localStorage.getItem("selectedTab")=='true'){
-            $state.go('vendorSelectedMenu',{vendor_id:$stateParams.ven_id});
+    $scope.edit_cart = function () {
+        if (window.localStorage.getItem("selectedTab") == 'true') {
+            $state.go('vendorSelectedMenu', {vendor_id: $stateParams.ven_id});
         }
-        else{
-            $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id});
+        else {
+            $state.go('vendorMenu', {'vendor_id': $stateParams.ven_id});
         }
     };
 
     $scope.backButton = function () {
-        //later on back trake history will be here////////
-        if(window.localStorage.getItem("selectedTab")=='true'){
-            $state.go('vendorSelectedMenu',{vendor_id:$stateParams.ven_id});
+        //later on back history will be here////////
+        if (window.localStorage.getItem("selectedTab") == 'true') {
+            $state.go('vendorSelectedMenu', {vendor_id: $stateParams.ven_id});
         }
-        else{
-            $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id});
+        else {
+            $state.go('vendorMenu', {'vendor_id': $stateParams.ven_id});
         }
 
     };
 
-$scope.select_time = function(){
-    if(_.size($scope.selectedServices)>0){
-        $state.go('dateTime');
-    }
-    else{
-        $cordovaToast
-            .show('Please, select some service!', 'long', 'center')
-            .then(function(success) {
-                // success
-            }, function (error) {
-                // error
-            });
-    }
-};
+    $scope.select_time = function () {
+        if (_.size($scope.selectedServices) > 0) {
+            $state.go('dateTime');
+        }
+        else {
+            $cordovaToast
+                .show('Please, select some service!', 'long', 'center')
+                .then(function (success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
+        }
+    };
 
 });

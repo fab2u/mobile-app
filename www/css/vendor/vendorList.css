@@ -31,16 +31,16 @@
     font-weight:500;
 }
 
-.vendorList .female{
-    line-height:30px;
-    width:51%;
-    height:90%;
-    margin-top:4px;
+.vendorList .female {
+    line-height: 35px;
+    width: 51%;
+    height: 90%;
+    margin-top: 4px;
     background: #f2f2f2;
-    float:left;
+    float: left;
     text-align: center;
     font-size: 15px;
-    font-weight:500;
+    font-weight: 500;
 }
 
 .vendorList .fab{

@@ -1,14 +1,14 @@
 <ion-view>
 
     <ion-header-bar align-title="center" class="bar-dark">
-        <div class="buttons button-clear">
-            <a class="button button-clear icon ion-arrow-left-c" ui-sref="app.home"></a>
+        <div class="buttons">
+            <a class="button icon-left ion-chevron-left button-clear" ui-sref="app.home"></a>
         </div>
         <h2 class="title">Contact Us</h2>
     </ion-header-bar>
     <ion-content>
 
-    <h3 class="header_view">For any queries,send us a message.</h3>
+    <h4 class="header_view">For any queries,send us a message.</h4>
    <form name="contactForm">
 
     <div class="list list-inset">
@@ -27,8 +27,8 @@
                 <option ng-repeat="item in location_list">{{item.cityName}}</option>
             </select>
         </label>
-        <label class = "item item-input item-select">
-            <div class = "input-label">
+        <label class ="item item-input item-select">
+            <div class ="input-label">
                 Query Type
             </div>
             <select ng-model="user.queryType" required>
@@ -41,7 +41,7 @@
             <textarea placeholder="Message" row="7" cols="50" ng-model="user.message" required></textarea>
         </label>
 
-        <button class="button button-block button-positive" ng-click="submit_query()" ng-disabled="contactForm.$invalid">
+        <button class="button button-block button_color" ng-click="submit_query()" ng-disabled="contactForm.$invalid">
             SUBMIT
         </button>
     </div>

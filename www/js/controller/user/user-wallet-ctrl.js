@@ -1,10 +1,18 @@
-app.controller('UserWalletCtrl',function($scope,$state,$ionicLoading){
+app.controller('UserWalletCtrl',function($scope,$state,$ionicLoading,$timeout){
+
+	$scope.show = function() {
+		$ionicLoading.show();
+	};
+	$scope.show();
+	$timeout(function () {
+		$ionicLoading.hide();
+	}, 10000);
 
 	$scope.amount = 0;
 	$scope.walletHistory = [];
 	// To get user wallet information for wallet money and transactions
 
-	$scope.getWalletInfo = function () {
+	function getWalletInfo() {
 		$ionicLoading.show();
 		firebase.database().ref('userWallet/' + localStorage.getItem('uid')).once('value', function(response) {
 			var debitAmount = 0;
@@ -23,20 +31,15 @@ app.controller('UserWalletCtrl',function($scope,$state,$ionicLoading){
 					})
 				}
 				$scope.amount = creditAmount - debitAmount;
-				if($scope.amount > 0){
-					$ionicLoading.hide();
-
-					$scope.hasWalletBalance = true;
-				} else {
-					$ionicLoading.hide();
-				}
-			} else {
+				$ionicLoading.hide();
+			}
+			else {
 				$scope.msg = 'No history found';
 				$ionicLoading.hide();
 			}
 		})
-	};
-	$scope.getWalletInfo();
+	}
+	getWalletInfo();
 
 	$scope.go_home = function () {
 		$state.go('app.home')

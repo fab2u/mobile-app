@@ -1,5 +1,11 @@
 /* Empty. Add your own CSS if you like */
+.confirmation{
+	background: url(../../img/background.jpg) 100% 100%;
 
+}
+.confirmation .card{
+background-color: transparent
+}
 .confirmation #backbutton {
 	height: 48px;
     margin-top: 20px;
@@ -16,7 +22,6 @@
 	line-height: 40px;
 	font-weight: 600;
 	margin:10px 0 0;
-
 }
 
 .confirmation .amount .cus-price{

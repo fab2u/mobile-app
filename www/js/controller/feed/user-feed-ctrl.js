@@ -302,7 +302,8 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 
 
 	$scope.loadMore = function(){
-		console.log(Object.keys($scope.blogIdList).length);
+
+		console.log("called");
 		if(Object.keys($scope.blogIdList).length > 0){
 			console.log($scope.bottomKey);
 			db.ref("users/data/"+uid+"/blogs").orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){
@@ -368,6 +369,10 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 	$scope.$on('$stateChangeSuccess', function() {
 		$scope.loadMore();
 	});
+
+    $scope.postInfo = function () {
+        location.reload();
+    };
     $scope.toTrustedHTML = function( html ){
         return $sce.trustAsHtml( html );
     }

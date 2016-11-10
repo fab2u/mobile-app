@@ -7,15 +7,20 @@ app.controller('ReferCtrl',function($scope, $state,$cordovaSocialSharing,$ionicL
 	$scope.show();
 	$timeout(function () {
 		$ionicLoading.hide();
-	}, 10000);
-	$scope.myReferral = function() {
+	}, 5000);
+	 function myReferral() {
 		$ionicLoading.show();
 		firebase.database().ref('/users/data/' + window.localStorage.getItem('uid')).once('value', function (response) {
-			$scope.myReferralCode = response.val().myReferralCode;
-			$ionicLoading.hide();
+			if(response.val()){
+				$scope.myReferralCode = response.val().myReferralCode;
+				$ionicLoading.hide();
+			}
+			else{
+				$ionicLoading.hide();
+			}
 		});
-	};
-	$scope.myReferral();
+	 }
+    myReferral();
 
 	$scope.showReferDetails = function(){
 		$state.go('referralDetails');

@@ -170,13 +170,6 @@ app
 		controller: 'verifyEmailCtrl'
 	});
 
-	//State for wallet
-	$stateProvider.state('wallet', {
-		url: '/wallet',
-		templateUrl: 'templates/user/wallet.html',
-		controller: 'WalletCtrl'
-	});
-
 	//State for vendorList
 	$stateProvider.state('vendorList', {
 		url: '/vendorList',

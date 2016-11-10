@@ -3,9 +3,6 @@ app.controller("profileCtrl",function($scope, $timeout,$location, $ionicLoading,
    $scope.uid = window.localStorage.uid;
    console.log($scope.uid);
    $scope.email = window.localStorage.email;
-   // $scope.img_hash = md5($scope.uid);
-   // jdenticon.update("#identicon", $scope.img_hash);
-
    var basic;
 
    $scope.goBack = function(){

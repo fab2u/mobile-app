@@ -94,7 +94,7 @@
 .userWallet .allTransactions{
 	border-bottom: 1px solid white;
 }
-.userWallet .scroll_view{
+.userWallet .scroll_view_wallet{
 	height:160px;
 	width: 100%
 }

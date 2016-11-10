@@ -38,8 +38,6 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 		firebase.database().ref('userBookings/'+localStorage.getItem('uid')).once('value', function (response) {
 			if(response.val()){
 				count1 = Object.keys(response.val()).length;
-
-				console.log("count1",count1)
 				angular.forEach(response.val(), function (value, key) {
 					count2++;
 					$scope.bookingIds.push(key)

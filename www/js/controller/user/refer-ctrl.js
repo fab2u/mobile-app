@@ -1,5 +1,13 @@
-app.controller('ReferCtrl',function($scope, $state,$cordovaSocialSharing,$ionicLoading){
+app.controller('ReferCtrl',function($scope, $state,$cordovaSocialSharing,$ionicLoading,$timeout){
 
+
+	$scope.show = function() {
+		$ionicLoading.show();
+	};
+	$scope.show();
+	$timeout(function () {
+		$ionicLoading.hide();
+	}, 10000);
 	$scope.myReferral = function() {
 		$ionicLoading.show();
 		firebase.database().ref('/users/data/' + window.localStorage.getItem('uid')).once('value', function (response) {
@@ -21,7 +29,6 @@ app.controller('ReferCtrl',function($scope, $state,$cordovaSocialSharing,$ionicL
 			.then(function (result) {
 				// Success!
 			}, function (err) {
-				// An error occurred. Show a message to the user
 			});
 	};
 

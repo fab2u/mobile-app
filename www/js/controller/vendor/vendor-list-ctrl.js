@@ -2,6 +2,8 @@ app.controller('VendorListCtrl',
     function ($scope, $ionicHistory, $state, $stateParams, $ionicLoading, $http
         ,$ionicModal,$ionicPopover,$rootScope,$cordovaToast) {
 
+
+
         $scope.gender = '';
         $scope.genSelected = false;
         $scope.vendorList = '';
@@ -49,6 +51,8 @@ app.controller('VendorListCtrl',
                 max_price:200000
             }
         ];
+
+
         $scope.vendor_info = function(){
             $scope.serviceIds = [];
             var serviceId = window.localStorage.getItem("serviceId");
@@ -496,35 +500,44 @@ app.controller('VendorListCtrl',
                         $scope.final_amenity.push($scope.amenities[i].name);
                     }
                 }
-                var final_query = {
-                    'min_price':$scope.min_price,
-                    'max_price':$scope.max_price,
-                    'amenities': $scope.final_amenity.join(),
-                    'service_type': $scope.type,
-                    'location':Object.keys($scope.selectedLocation).join(),
-                    'rating':$scope.custReview.rating
-                };
-                console.log("filter object",final_query)
-                $http.post("http://139.162.31.204/filter_results?user_id="+$scope.uid+
-                    "&vendor_type="+final_query.service_type+
-                    "&price_range_min="+final_query.min_price+
-                    "&price_range_max="+final_query.max_price+"&rating="+final_query.rating+
-                    "&locations="+final_query.location+"&facilities="+final_query.amenities)
-                    .then(function (response) {
-                        $scope.vendorList = response.data.filtered_results;
-                        if($scope.vendorList.length == 0){
-                            $cordovaToast
-                                .show('No vendors available for selected services. Please select again.', 'long', 'center')
-                                .then(function(success) {
-                                    // success
-                                }, function (error) {
-                                    // error
-                                });
-                            $ionicLoading.hide();
-                        }
-                        $scope.filter_screen.hide();
-                        $ionicLoading.hide();
-                    });
+                var filters = {
+                    price:{
+                        min:$scope.min_price,
+                        max:$scope.max_price
+                    },
+                    type: $scope.type,
+                    amenities: $scope.final_amenity,
+                    location: Object.keys($scope.selectedLocation)
+                }
+                // var final_query = {
+                //     'min_price':$scope.min_price,
+                //     'max_price':$scope.max_price,
+                //     'amenities': $scope.final_amenity.join(),
+                //     'service_type': $scope.type,
+                //     'location':Object.keys($scope.selectedLocation).join(),
+                //     'rating':$scope.custReview.rating
+                // };
+                console.log("filter object",JSON.stringify(filters))
+                // $http.post("http://139.162.31.204/filter_results?user_id="+$scope.uid+
+                //     "&vendor_type="+final_query.service_type+
+                //     "&price_range_min="+final_query.min_price+
+                //     "&price_range_max="+final_query.max_price+"&rating="+final_query.rating+
+                //     "&locations="+final_query.location+"&facilities="+final_query.amenities)
+                //     .then(function (response) {
+                //         $scope.vendorList = response.data.filtered_results;
+                //         if($scope.vendorList.length == 0){
+                //             $cordovaToast
+                //                 .show('No vendors available for selected services. Please select again.', 'long', 'center')
+                //                 .then(function(success) {
+                //                     // success
+                //                 }, function (error) {
+                //                     // error
+                //                 });
+                //             $ionicLoading.hide();
+                //         }
+                //         $scope.filter_screen.hide();
+                //         $ionicLoading.hide();
+                //     });
             };
             $scope.refresh = function(){
                 $ionicLoading.show();

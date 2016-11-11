@@ -66,7 +66,9 @@
 	background-color: #FF8386;
 	margin-top: 5px;
 }
-
+.bill b{
+    font-size: 14px;
+}
 .bill .custom-border {
   text-align: center;
   border-left-width: 0px;
@@ -76,6 +78,7 @@
   border-bottom-width: 0.1px;
   border-color: #444;
   padding: 8px;
+  font-size: 15px;
 }
 
 .bill .container {

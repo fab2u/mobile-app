@@ -160,10 +160,7 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 
   $scope.showPopup = function(id) {
 		// id ==> feedId
-    if(!myUid){
-      showAlertComment();
-    }
-    else {
+  if($scope.uid){
       $scope.data = {}
       var myPopup = $ionicPopup.show({
         template: '<input type="text" ng-model="data.comment">',
@@ -224,14 +221,13 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
         console.log('Tapped!', res, id);
       });
     }
+    else{
+        alert('Please login/SignUp for comment this post.')
+  }
 	};
 
     $scope.likeThisFeed = function(feed){
-        console.log("feed",feed)
-        if(!$scope.uid){
-            showAlertLike();
-        }
-        else{
+        if($scope.uid){
             if($("#"+feed.blog_id+"-likeFeed").hasClass('clicked')){
                 feed.numLikes -= 1;
                 db.ref("blogs/"+feed.blog_id+"/likedBy/"+$scope.uid).remove().then(function(){
@@ -256,6 +252,9 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
                 console.log(snap.numChildren());
                 feed.numLikes = snap.numChildren();
             });
+        }
+        else{
+            alert('Please login/SignUp for like this feed')
         }
     }
 
@@ -460,6 +459,9 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
             }
 
             $scope.galleryUpload = function() {
+                $timeout(function () {
+                    $ionicLoading.show();
+                }, 2000);
                 var options = {
                     destinationType : Camera.DestinationType.FILE_URI,
                     sourceType :	Camera.PictureSourceType.PHOTOLIBRARY, //, Camera.PictureSourceType.CAMERA,
@@ -467,6 +469,7 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
                     encodingType: Camera.EncodingType.JPEG,
                     popoverOptions: CameraPopoverOptions,
                 };
+                $ionicLoading.hide()
                 $cordovaCamera.getPicture(options).then(function(imageURI) {
                     var image = document.getElementById('profile-pic');
                     // image.src = imageURI;
@@ -481,6 +484,9 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
             };
 
             $scope.cameraUpload = function() {
+                $timeout(function () {
+                    $ionicLoading.show();
+                }, 2000);
                 var options = {
                     destinationType : Camera.DestinationType.FILE_URI,
                     sourceType :	Camera.PictureSourceType.CAMERA,
@@ -488,13 +494,13 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
                     encodingType: Camera.EncodingType.JPEG,
                     popoverOptions: CameraPopoverOptions,
                 };
+                $ionicLoading.hide();
                 $cordovaCamera.getPicture(options).then(function(imageURI) {
                     var image = document.getElementById('profile-pic');
                     image.src = imageURI;
                     $scope.url = imageURI;
                     // alert(JSON.stringify(imageURI)+ 'line number 283, imageURI');
                     if($scope.url){
-                        alert("if image")
                         cropImage($scope.url);
                     }
                     // resizeImage(imageURI);
@@ -511,8 +517,8 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 
             $scope.cropClick = function(){
                 $timeout(function () {
-                    $ionicLoading.hide();
-                }, 400);
+                    $ionicLoading.show();
+                }, 4000);
                 basic.croppie('result', {
                     type: 'canvas',
                     format: 'jpeg',
@@ -523,8 +529,6 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
                     // alert(JSON.stringify(resp));
                     $http.post("http://139.162.3.205/api/testupload", {path: resp})
                         .success(function(response){
-                            alert("success  uploaded on server"+JSON.stringify(response));
-
                             var updates1 = {};
                             // alert($scope.uid + " " + response.Message);
                             updates1["/users/data/"+$scope.uid+"/photoUrl"] = response.Message;

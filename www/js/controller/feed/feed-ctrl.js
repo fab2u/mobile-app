@@ -120,10 +120,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 	};
 
 	$scope.showPopup = function(id) {
-		if(!$scope.uid){
-			showAlertComment();
-		}
-		else {
+		if($scope.uid){
 			$scope.data = {}
 			var myPopup = $ionicPopup.show({
 				template: '<input type="text" ng-model="data.comment">',
@@ -184,6 +181,9 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 				console.log('Tapped!', res, id);
 			});
 		}
+		else{
+			alert('Please login/signUp for comment.')
+		}
 	};
 
 	$scope.followUser = function(id) {
@@ -225,10 +225,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 
 	$scope.likeThisFeed = function(feed){
 		console.log("feed",feed)
-		if(!$scope.uid){
-			showAlertLike();
-		}
-		else{
+		if($scope.uid){
 			if($("#"+feed.blog_id+"-likeFeed").hasClass('clicked')){
 				feed.numLikes -= 1;
 				db.ref("blogs/"+feed.blog_id+"/likedBy/"+$scope.uid).remove().then(function(){
@@ -257,6 +254,9 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 				feed.numLikes = snap.numChildren();
 			});
 		}
+		else{
+			alert('Please login/signUp for like')
+		}
 	}
 
 	$scope.doRefresh = function(){
@@ -281,7 +281,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 			}
 			$scope.$broadcast('scroll.refreshComplete');
 		})
-	}
+	};
 
 	$scope.loadMore = function(){
 		if(Object.keys($scope.blogIdList).length > 0){

@@ -52,10 +52,10 @@
 
 					<span>{{feed.numLikes || 0}} likes</span>
 				</div>
-				<div class="col col-40 likenum" ng-click="commentToggle(feed.blog_id)">
+				<div class="col col-40 likenum">
 					<i class="comment-btn icon ion-ios-chatbubble"
 					   ng-click="showPopup(feed.blog_id)"></i>
-					<span>{{feed.commentCount || 0}} comments</span>
+					<span ng-click="commentToggle(feed.blog_id)">{{feed.commentCount || 0}} comments</span>
 				</div>
 			</div>
 			<div id="{{feed.blog_id}}-commentsBlock" class="initiallyHidden">

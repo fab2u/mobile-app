@@ -50,6 +50,9 @@ app.controller("profileCtrl",function($scope, $timeout,$location, $ionicLoading,
          }
 
          $scope.galleryUpload = function() {
+            $timeout(function () {
+               $ionicLoading.show();
+            }, 2000);
             var options = {
                destinationType : Camera.DestinationType.FILE_URI,
                sourceType :	Camera.PictureSourceType.PHOTOLIBRARY, //, Camera.PictureSourceType.CAMERA,
@@ -57,6 +60,7 @@ app.controller("profileCtrl",function($scope, $timeout,$location, $ionicLoading,
                encodingType: Camera.EncodingType.JPEG,
                popoverOptions: CameraPopoverOptions,
             };
+            $ionicLoading.hide();
             $cordovaCamera.getPicture(options).then(function(imageURI) {
                var image = document.getElementById('profile-pic');
                // image.src = imageURI;
@@ -71,6 +75,9 @@ app.controller("profileCtrl",function($scope, $timeout,$location, $ionicLoading,
          };
 
          $scope.cameraUpload = function() {
+            $timeout(function () {
+               $ionicLoading.show();
+            }, 2000);
             var options = {
                destinationType : Camera.DestinationType.FILE_URI,
                sourceType :	Camera.PictureSourceType.CAMERA,
@@ -78,6 +85,8 @@ app.controller("profileCtrl",function($scope, $timeout,$location, $ionicLoading,
                encodingType: Camera.EncodingType.JPEG,
                popoverOptions: CameraPopoverOptions,
             };
+            $ionicLoading.hide();
+
             $cordovaCamera.getPicture(options).then(function(imageURI) {
                var image = document.getElementById('profile-pic');
                image.src = imageURI;
@@ -99,9 +108,12 @@ app.controller("profileCtrl",function($scope, $timeout,$location, $ionicLoading,
 
 
          $scope.cropClick = function(){
-            $ionicLoading.show({
-               template: 'Loading! Please wait...'
-            });
+            $timeout(function () {
+               $ionicLoading.show({
+                  template: 'Loading! Please wait...'
+               });
+            }, 4000);
+
             basic.croppie('result', {
                type: 'canvas',
                format: 'jpeg',

@@ -9,6 +9,10 @@ app.controller('LoginCtrl',
       user_password: ''
     };
 
+    $scope.back = function () {
+        history.back();
+    };
+
 	$scope.loginEmail = function(){
         $ionicLoading.show();
         firebase.auth().signInWithEmailAndPassword($scope.user.user_email, $scope.user.user_password).then(function(response){

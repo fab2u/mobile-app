@@ -136,25 +136,33 @@ app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,
    };
 
    $scope.galleryUpload = function() {
-      var options = {
+       $timeout(function () {
+           $ionicLoading.show();
+       }, 2000);
+       var options = {
          destinationType : Camera.DestinationType.FILE_URI,
          sourceType :   Camera.PictureSourceType.PHOTOLIBRARY, //, Camera.PictureSourceType.CAMERA,
          allowEdit : false,
          encodingType: Camera.EncodingType.JPEG,
          popoverOptions: CameraPopoverOptions,
       };
-
+       $ionicLoading.hide();
       $cordovaCamera.getPicture(options).then(function(imageURI) {
          var image = document.getElementById('myImage');
          image.src = imageURI;
          $scope.url = imageURI;
-         resizeImage(imageURI);
+          if(imageURI){
+              resizeImage(imageURI);
+          }
       }, function(err) {
          console.log(err);
       });
    };
 
    $scope.cameraUpload = function() {
+       $timeout(function () {
+           $ionicLoading.show();
+       }, 2000);
       var options = {
          destinationType : Camera.DestinationType.FILE_URI,
          sourceType :   Camera.PictureSourceType.CAMERA,
@@ -162,12 +170,15 @@ app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,
          encodingType: Camera.EncodingType.JPEG,
          popoverOptions: CameraPopoverOptions,
       };
+       $ionicLoading.hide();
 
       $cordovaCamera.getPicture(options).then(function(imageURI) {
          var image = document.getElementById('myImage');
          image.src = imageURI;
          $scope.url = imageURI;
-         resizeImage(imageURI);
+          if(imageURI){
+              resizeImage(imageURI);
+          }
       }, function(err) {
          console.log(err);
       });
@@ -179,17 +190,17 @@ app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,
 
       img = new Image();
       img.onload = function () {
-         alert("onload called javascript");
+         // alert("onload called javascript");
          canvas.width = img.width;
          canvas.height = img.height;
          var ctx = canvas.getContext("2d");
          ctx.drawImage(img, 0, 0);
-         alert(canvas.width+" "+canvas.height+" "+img.width+" "+img.height);
+         // alert(canvas.width+" "+canvas.height+" "+img.width+" "+img.height);
          var dataURL = canvas.toDataURL("image/jpeg");
 
          $http.post("http://139.162.3.205/api/testupload", {path: dataURL})
          .success(function(response){
-            alert('success: ' + response);
+            // alert('success: ' + response);
             $scope.image_url = response.Message;
             $(".upload").css("display", 'none');
 

@@ -142,10 +142,8 @@ app.controller("followPostsCtrl", function($scope,$stateParams,$state,$timeout,$
 
     $scope.showPopup = function(id) {
         // id ==> feedId
-        if(!myUid){
-            showAlertComment();
-        }
-        else {
+
+       if(myUid){
             $scope.data = {}
             var myPopup = $ionicPopup.show({
                 template: '<input type="text" ng-model="data.comment">',
@@ -206,16 +204,16 @@ app.controller("followPostsCtrl", function($scope,$stateParams,$state,$timeout,$
                 console.log('Tapped!', res, id);
             });
         }
+        else{
+            alert('Login/SignUp for comment this post.')
+       }
     };
 
     $scope.likeThisFeed = function(feed){
-        if(!$scope.uid){
-            showAlertLike();
-        }
-        else{
+        if(myUid){
             if($("#"+feed.blog_id+"-likeFeed").hasClass('clicked')){
                 feed.numLikes -= 1;
-                db.ref("blogs/"+feed.blog_id+"/likedBy/"+$scope.uid).remove().then(function(){
+                db.ref("blogs/"+feed.blog_id+"/likedBy/"+myUid).remove().then(function(){
                     $("#"+feed.blog_id+"-likeFeed").removeClass("clicked");
                 });
                 console.log("after remove",feed);
@@ -226,7 +224,7 @@ app.controller("followPostsCtrl", function($scope,$stateParams,$state,$timeout,$
                 }
                 feed.numLikes += 1;
                 var updates = {};
-                updates["blogs/" + feed.blog_id + "/likedBy/" + $scope.uid] = true;
+                updates["blogs/" + feed.blog_id + "/likedBy/" + myUid] = true;
                 db.ref().update(updates).then(function () {
                     console.log('success');
                     $("#" + feed.blog_id + "-likeFeed").addClass("clicked");
@@ -237,6 +235,9 @@ app.controller("followPostsCtrl", function($scope,$stateParams,$state,$timeout,$
                 console.log(snap.numChildren());
                 feed.numLikes = snap.numChildren();
             });
+        }
+        else{
+            alert('Please login/SignUp for like this post.')
         }
     }
 

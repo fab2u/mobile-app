@@ -18,6 +18,7 @@ app.controller('SearchCtrl', function($state, $scope,$http,$ionicLoading) {
                 $scope.searchQuery)
                 .then(function (response) {
                     if(response){
+                        console.log("response",response)
                         $scope.suggestedServices = response.data.suggestions;
                         $ionicLoading.hide();
                     }

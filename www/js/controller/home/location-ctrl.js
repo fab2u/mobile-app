@@ -3,7 +3,8 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 
 	function location() {
 		$ionicLoading.show();
-		firebase.database().ref('city').once('value',function(response){
+		firebase.database().ref('city')
+			.orderByChild('active').equalTo(true).once('value',function(response){
 			$scope.location_list = response.val();
 			if($scope.location_list){
 				$ionicLoading.hide();

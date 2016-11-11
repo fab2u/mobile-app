@@ -1,5 +1,5 @@
 app.controller('VendorListCtrl',
-    function ($scope, $ionicHistory, $state, $stateParams, $ionicLoading, $http,$rootScope
+    function ($scope, $ionicHistory, $state, $stateParams, $ionicLoading, $http
         ,$ionicModal,$ionicPopover,$rootScope,$cordovaToast) {
 
         $scope.gender = '';
@@ -69,9 +69,11 @@ app.controller('VendorListCtrl',
                 if ($scope.serviceIds.length > 0) {
                     var serviceIdList = $scope.serviceIds.join();
                     $http.post("http://139.162.31.204/search_services?services=" + $scope.serviceIds +
-                        "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender=2&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
+                        "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId +
+                        "&user_gender=2&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                         .then(function (response) {
                             $scope.vendorList = response.data.results;
+                            console.log("result",$scope.vendorList)
                             if($scope.vendorList.length == 0){
                                 $cordovaToast
                                     .show('No vendors available for selected services. Please select again.', 'long', 'center')
@@ -90,6 +92,8 @@ app.controller('VendorListCtrl',
                         "&user_id=" + $scope.uid + "&user_city=" + locationInfo.cityId + "&user_gender=2&user_lat=" + $scope.lat + "&user_lon=" + $scope.long)
                         .then(function (response) {
                             $scope.vendorList = response.data.results;
+                            console.log("result",JSON.stringify($scope.vendorList,null,2))
+
                             if($scope.vendorList.length == 0){
                                 $cordovaToast
                                     .show('No vendors available for selected services. Please select again.', 'long', 'center')

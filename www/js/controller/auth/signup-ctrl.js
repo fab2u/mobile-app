@@ -30,7 +30,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
             console.log("else")
         }
     }
-   deviceRegistered();
+   // deviceRegistered();
 
     /////////////////////////////// To check apply referral code valid or not ////////////////
     $scope.apply_promoCode = function (referralCode) {

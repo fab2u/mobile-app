@@ -9,6 +9,9 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
     $scope.referralContact = '';
     $scope.user_device_register = false;
 
+    var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+
+
 
     ////////////////   To check device is registered or not    /////////////////
 
@@ -385,6 +388,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                                     referralContact:$scope.referralContact,
                                     userId:$scope.uid,
                                     gender: $scope.user.gender,
+                                    userLocation:locationInfo
                                 };
 
                         var referralData = {

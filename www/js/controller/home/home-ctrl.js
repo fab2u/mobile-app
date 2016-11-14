@@ -16,55 +16,6 @@ app
 		}
 	};
 
-	$scope.vendorIds = [];
-	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
-
-	firebase.database().ref('vendorList/'+locationInfo.cityId).once('value',function(response){
-		console.log(response.val())
-		var count1 = Object.keys(response.val()).length;
-		var count = 0;
-		angular.forEach(response.val(),function(value,key){
-			count++;
-			$scope.vendorIds.push(key);
-			console.log("key",key)
-			console.log("value",value)
-		})
-		if(count1 == count){
-			window.localStorage['vendorIds'] = JSON.stringify($scope.vendorIds)
-			console.log("vendor Ids:",window.localStorage['vendorIds'])
-		}
-	});
-
-	// firebase.database().ref("vendors").once('value', function(response){
-	// 	console.log(response.val());
-	// 	angular.forEach(response.val(), function(value,key){
-	// 		$scope.finalObject[key] = {}
-	// 		if(value.active){
-	// 			angular.forEach(value.vendors, function(value1, key1){
-	// 				$scope.finalObject[key][key1]  = {};
-	// 				angular.forEach(value1.menu, function(value2, key2){
-	// 					angular.forEach(value2, function(value3, key3){
-	// 						// console.log(value3, key3);
-	// 						$scope.finalObject[key][key1][key3] = true;
-	// 					})
-	// 				})
-	// 			})
-	// 		}
-	// 	})
-
-		// function pushData(){
-		// 	console.log($scope.finalObject);
-		// 	var updates = {};
-		// 	updates['vendorServices'] = $scope.finalObject;
-		// 	firebase.database().ref().set(updates).then(function(){
-		// 		alert('completed');
-		// 	})
-		// }
-	// })
-
-
-
-
 	$scope.get_banners = function(){
 		$ionicLoading.show();
 		firebase.database().ref('banners/'+JSON.parse(window.localStorage['selectedLocation']).cityId).once('value',function(response){

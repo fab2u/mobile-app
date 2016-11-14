@@ -21,11 +21,7 @@ app.controller('SearchCtrl', function($state, $scope,$http,$timeout,$ionicLoadin
 
     var hasVendorList = checkLocalStorage('vendorsName');
 
-
-    // locationInfo.cityId
-
     function vendorList() {
-        console.log("called.")
         firebase.database().ref('vendorList/'+locationInfo.cityId).once('value',function(response){
             var vendors = response.val();
             var version = response.val().version;
@@ -48,14 +44,12 @@ app.controller('SearchCtrl', function($state, $scope,$http,$timeout,$ionicLoadin
               var newVersion = res.val()
               if(window.localStorage['vendorsListVersion']<newVersion){
                   vendorList();
-                  console.log("if")
               }
               else {
-                  console.log("else")
                   $scope.vendorNames = JSON.parse(window.localStorage['vendorsName'])
               }
           })
-        }
+    }
 
     $scope.home = function(){
         $state.go('app.home');

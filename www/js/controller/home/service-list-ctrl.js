@@ -1,5 +1,5 @@
-app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate,$timeout,$ionicScrollDelegate,
-                                           $rootScope,$cordovaToast) {
+app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate,$timeout,
+                                           $ionicScrollDelegate, $rootScope,$cordovaToast,$ionicLoading) {
 
     $scope.selectedServices = {}; // Stores selected services
 
@@ -7,7 +7,41 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
 
     $scope.index_number = 0;
 
-   var locationInfo = JSON.parse(window.localStorage['selectedLocation'])
+    var locationInfo = JSON.parse(window.localStorage['selectedLocation'])
+    $scope.vendorNames = [];
+
+    $timeout(function () {
+        $ionicLoading.hide();
+    }, 5000);
+    var hasVendorList = checkLocalStorage('vendorsName');
+
+    function vendorList() {
+        $ionicLoading.show();
+        firebase.database().ref('vendorList/'+locationInfo.cityId).once('value',function(response){
+            var vendors = response.val();
+            var version = response.val().version;
+            for(key in vendors){
+                var venObj={
+                    vid: key,
+                    vName: vendors[key]
+                }
+                $scope.vendorNames.push(venObj);
+            }
+            window.localStorage['vendorsName'] = JSON.stringify($scope.vendorNames)
+            window.localStorage['vendorsListVersion'] = version;
+        });
+    }
+    if(!hasVendorList){
+        vendorList();
+    }
+    else{
+        firebase.database().ref('vendorList/'+locationInfo.cityId+'/version').once('value',function(res) {
+            var newVersion = res.val()
+            if(window.localStorage['vendorsListVersion']<newVersion){
+                vendorList();
+            }
+        })
+    }
 
 
 

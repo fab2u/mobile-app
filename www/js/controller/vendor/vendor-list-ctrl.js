@@ -11,7 +11,8 @@ app.controller('VendorListCtrl',
         $scope.lat = locationInfo.latitude;
         $scope.long = locationInfo.longitude;
 
-        $scope.vendorIds = JSON.parse(window.localStorage['vendorIds']);
+        $scope.vendorNames = JSON.parse(window.localStorage['vendorsName']);
+
 
         function load_vendors(cityId,vender_id) {
             firebase.database().ref('vendors/' + cityId + '/vendors/'+vender_id)
@@ -26,10 +27,14 @@ app.controller('VendorListCtrl',
             });
         }
 
-        for(var i =0; i<$scope.vendorIds.length;i++){
-            console.log($scope.vendorIds[i])
-            load_vendors(cityId,$scope.vendorIds[i])
+        for(key in $scope.vendorNames){
+            console.log("val",$scope.vendorNames[key])
         }
+
+        // for(var i =0; i<$scope.vendorIds.length;i++){
+        //     console.log($scope.vendorIds[i])
+        //     load_vendors(cityId,$scope.vendorIds[i])
+        // }
 
         var filters = {}
         function get_distance(latitude1,longitude1,latitude2,longitude2,units) {

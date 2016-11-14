@@ -15,7 +15,17 @@ app.controller('VendorListCtrl',
         $scope.lat = locationInfo.latitude;
         $scope.long = locationInfo.longitude;
 
+        var hasVendorFilter = checkLocalStorage('vendorsFilter');
+
+        if (hasVendorFilter) {
+            $scope.vendorsDetail = JSON.parse(window.localStorage['vendorsFilter'])
+        }
+
         $scope.vendorIds = [];
+        console.log($scope.vendorsDetail);
+        function vendorDetailForServiceId(vId){
+            return $scope.vendorsDetail[vId];
+        }
 
         if($stateParams.vendorPage == 'discoverSalons'){
             $scope.vendorNames = JSON.parse(window.localStorage['vendorsName']);
@@ -24,6 +34,14 @@ app.controller('VendorListCtrl',
         if($stateParams.vendorPage == 'serviceList'){
             $scope.VendorServiceListIds = JSON.parse(window.localStorage['VendorServiceListIds']);
             window.localStorage['pageName'] = 'serviceList'
+        }
+
+        var vendorList1 = [];
+        if($scope.VendorServiceListIds){
+            for (index in $scope.VendorServiceListIds){
+                vendorList1.push(vendorDetailForServiceId($scope.VendorServiceListIds[index]));
+            }
+            $scope.vendorsDetail1 = vendorList1;
         }
 
 
@@ -44,11 +62,7 @@ app.controller('VendorListCtrl',
             $scope.popover.hide();
         };
 
-        var hasVendorFilter = checkLocalStorage('vendorsFilter');
 
-        if (hasVendorFilter) {
-            $scope.vendorsDetail = JSON.parse(window.localStorage['vendorsFilter'])
-        }
 
         function load_vendors(vendorId) {
             for (key in $scope.vendorsDetail) {
@@ -95,7 +109,8 @@ app.controller('VendorListCtrl',
         }
         if($scope.VendorServiceListIds){
             for (key in $scope.VendorServiceListIds) {
-                load_vendors($scope.VendorServiceListIds[key])
+                var id = $scope.VendorServiceListIds[key]
+                load_vendors(id)
             }
         }
 
@@ -115,10 +130,22 @@ app.controller('VendorListCtrl',
 
         function start_filtering(filters) {
             if ($scope.vendorsDetail.length == 0) {
-                alert("No Vendors");
-            } else {
+                $cordovaToast
+                    .show('No,vendor found for selected criteria.', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+                  }
+                else {
                 $scope.vendorList = [];
-                var response = $scope.vendorsDetail;
+                if($scope.vendorsDetail1){
+                    var response = $scope.vendorsDetail1;
+                }
+                else if(!$scope.vendorsDetail1){
+                    var response = $scope.vendorsDetail;
+                }
                 var allVendorKeys = Object.keys(response);
                 var obtainedVendorIds = $scope.vendorIds;
                 for (key in obtainedVendorIds) {

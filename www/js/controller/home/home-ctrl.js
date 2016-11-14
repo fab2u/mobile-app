@@ -16,9 +16,13 @@ app
 		}
 	};
 
+	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+
+
+
 	$scope.get_banners = function(){
 		$ionicLoading.show();
-		firebase.database().ref('banners/'+JSON.parse(window.localStorage['selectedLocation']).cityId).once('value',function(response){
+		firebase.database().ref('banners/'+locationInfo.cityId).once('value',function(response){
 			if(response.val()){
 				$ionicLoading.hide();
 				$scope.banners = response.val();

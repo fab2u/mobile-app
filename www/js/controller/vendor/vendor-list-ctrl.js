@@ -13,28 +13,54 @@ app.controller('VendorListCtrl',
 
         $scope.vendorNames = JSON.parse(window.localStorage['vendorsName']);
 
+        var hasVendorFilter = checkLocalStorage('vendorsFilter');
 
-        function load_vendors(cityId,vender_id) {
-            firebase.database().ref('vendors/' + cityId + '/vendors/'+vender_id)
-                .once('value').then(function(snapshot) {
-                var result = snapshot.val();
-                if(result){
-                    var distance = get_distance($scope.lat,$scope.long,result.address.latitude,result.address.longitude)
-                    console.log("distance",distance)
-                    result.distance = distance
-                    $scope.vendorList.push(result)
+        if(hasVendorFilter) {
+          $scope.vendorsDetail = JSON.parse(window.localStorage['vendorsFilter'])
+        }
+
+        function load_vendors(vendorId) {
+            for(key in $scope.vendorsDetail){
+                console.log("key",key)
+                if((key == vendorId) && (key!='version')){
+                 $scope.vendorList.push($scope.vendorsDetail[key]);
                 }
-            });
+           }
+        }
+        console.log("testts",$scope.vendorList)
+
+        function getAllVendors() {
+            console.log("called")
+            firebase.database().ref('vendorFilters/'+locationInfo.cityId).once('value').then(function (res) {
+                var vendorDetail = res.val();
+                var version = res.val().version;
+
+                for(key in vendorDetail){
+                    if(key!='version'){
+                        var distance = get_distance($scope.lat,$scope.long,vendorDetail[key].address.latitude,vendorDetail[key].address.longitude)
+                        vendorDetail[key].distance = distance;
+                    }
+                }
+                window.localStorage['vendorsFilter'] = JSON.stringify(vendorDetail)
+                window.localStorage['vendorsListFilter'] = version;
+                $scope.vendorsDetail = JSON.parse(window.localStorage['vendorsFilter'])
+            })
         }
 
+        if(!hasVendorFilter){
+            getAllVendors()
+        }
+        else{
+            firebase.database().ref('vendorFilters/'+locationInfo.cityId+'/version').once('value',function(res) {
+                var newVersion = res.val()
+                if(window.localStorage['vendorsListFilter']<newVersion){
+                    getAllVendors()
+                }
+            })
+        }
         for(key in $scope.vendorNames){
-            console.log("val",$scope.vendorNames[key])
+            load_vendors($scope.vendorNames[key].vid)
         }
-
-        // for(var i =0; i<$scope.vendorIds.length;i++){
-        //     console.log($scope.vendorIds[i])
-        //     load_vendors(cityId,$scope.vendorIds[i])
-        // }
 
         var filters = {}
         function get_distance(latitude1,longitude1,latitude2,longitude2,units) {
@@ -52,7 +78,7 @@ app.controller('VendorListCtrl',
 
 
         function start_filtering(filters){
-            if($scope.vendorIds.length==0){
+            if($scope.vendorList.length==0){
                 alert("No Vendors");
             }else{
                 // load_vendors(cityId).then(function(response) {
@@ -109,15 +135,14 @@ app.controller('VendorListCtrl',
                     }
                     for (key in response) {
                         $scope.vendorList = [];
+
+                        console.log("response",response)
                         if (response[key].show) {
-                            console.log("gddddddddddfffff")
-                           var distance = get_distance($scope.lat,$scope.long,response[key].address.latitude,response[key].address.longitude)
-                            console.log("distance",distance)
-                            response[key].distance = distance
+                            console.log("inside show")
                             $scope.vendorList.push(response[key])
                             console.log(response[key],$scope.vendorList);
                         }else{
-                            console.log("kkkkk");
+                            console.log("inside else");
                         }
                     }
                 // }, function(error){

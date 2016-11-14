@@ -207,7 +207,7 @@ app
 		controller: 'mapCtrl'
 	});
 	$stateProvider.state('mapMultiple', {
-		url: '/mapMultiple',
+		url: '/mapMultiple/:vendorPage',
 		cache:false,
 		templateUrl: 'templates/vendor/mapMultiple.html',
 		controller: 'multipleMapCtrl'

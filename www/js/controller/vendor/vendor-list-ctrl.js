@@ -2,18 +2,23 @@ app.controller('VendorListCtrl',
     function ($scope, $q, $timeout, $ionicHistory, $state, $stateParams, $ionicLoading, $http
         , $ionicModal, $ionicPopover, $rootScope, $cordovaToast) {
 
-        $scope.gender = 'female';
+        delete window.localStorage.mapStorage;
+        $scope.active_button1 = false;
+        $scope.active_button2 = false;
+        $scope.active_button3 = false;
+        $scope.gender = '';
         $scope.genSelected = false;
         $scope.serviceIds = [];
         $scope.vendorList = [];
         $scope.isDisabled = false;
         $scope.limit= 7;
-
         $scope.sortValue = 'distance';
         var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
         var cityId = locationInfo.cityId;
         $scope.lat = locationInfo.latitude;
         $scope.long = locationInfo.longitude;
+        var filters = {};
+
 
         var hasVendorFilter = checkLocalStorage('vendorsFilter');
 
@@ -61,8 +66,6 @@ app.controller('VendorListCtrl',
         $scope.closePopover = function () {
             $scope.popover.hide();
         };
-
-
 
         function load_vendors(vendorId) {
             for (key in $scope.vendorsDetail) {
@@ -114,7 +117,6 @@ app.controller('VendorListCtrl',
             }
         }
 
-        var filters = {}
 
         function get_distance(latitude1, longitude1, latitude2, longitude2, units) {
             var p = 0.017453292519943295;    //This is  Math.PI / 180
@@ -154,6 +156,7 @@ app.controller('VendorListCtrl',
                     }
                 }
                 if (filters.type) {
+                    console.log("inside type")
                     for (key in response) {
                         if (response[key].vendorType === filters.type) {
                             response[key].show = true;
@@ -163,6 +166,7 @@ app.controller('VendorListCtrl',
                     }
                 }
                 if (filters.gender) {
+                    console.log("inside gender")
                     for (key in response) {
                         if ((response[key].gender == filters.gender) || (response[key].gender == 'unisex')) {
                             response[key].show = true;
@@ -170,6 +174,7 @@ app.controller('VendorListCtrl',
                             response[key].show = false;
                         }
                     }
+                    console.log("response",response)
 
                 }
                 if (filters.amenities.length > 0) {
@@ -208,10 +213,14 @@ app.controller('VendorListCtrl',
                         console.log("inside else");
                     }
                 }
+                console.log("final value:", $scope.vendorList)
             }
-            console.log("final list", $scope.vendorList)
-
         }
+
+        window.localStorage['mapStorage'] = JSON.stringify($scope.vendorList)
+
+        console.log("final value:", $scope.vendorList)
+
 
         //////      Map for a particular vendor   //////////////////
 
@@ -231,12 +240,27 @@ app.controller('VendorListCtrl',
         };
 
         $scope.multipleAddressMapView = function () {
-            $state.go('mapMultiple')
+            $state.go('mapMultiple',{vendorPage:$stateParams.vendorPage})
         };
 
 
         $scope.typeFn = function (val) {
             $scope.type = val;
+            if(val =='silver'){
+                $scope.active_button1 = true;
+                $scope.active_button2 = false;
+                $scope.active_button3 = false;
+            }
+            else if(val == 'gold'){
+                $scope.active_button1 = false;
+                $scope.active_button2 = true;
+                $scope.active_button3 = false;
+            }
+            else if(val == 'platinum'){
+                $scope.active_button1 = false;
+                $scope.active_button2 = false;
+                $scope.active_button3 = true;
+            }
         };
 
         $ionicModal.fromTemplateUrl('templates/vendor/filter.html', {

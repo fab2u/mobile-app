@@ -13,26 +13,15 @@
         <div class="filter_row2">
             <center>
                 <div class="colmn">
-                    <input type="button" class="type_btn" value="SILVER" ng-model="type" ng-click="typeFn('silver')">
-                    <input type="button" class="type_btn" value="GOLD" ng-model="type" ng-click="typeFn('gold')">
-                    <input type="button" class="type_btn" value="PLATINUM" ng-model="type" ng-click="typeFn('platinum')">
+                    <input type="button" class="type_btn" value="SILVER" ng-model="type"
+                          ng-class="active_button1?'activeButton':'not_activeButton'" ng-click="typeFn('silver')">
+                    <input type="button" class="type_btn" value="GOLD" ng-model="type"
+                           ng-class="active_button2?'activeButton':'not_activeButton'" ng-click="typeFn('gold')">
+                    <input type="button" class="type_btn" value="PLATINUM" ng-model="type"
+                           ng-class="active_button3?'activeButton':'not_activeButton'" ng-click="typeFn('platinum')">
                 </div>
             </center>
         </div>
-        <!--<div class="item range">-->
-            <!--<span class="rightText">&#2352; {{price_range}}</span>-->
-                <!--<input type="range" ng-model="range" min="1" max="200000" ng-change="smFn(range)">-->
-            <!--<span> &#2352; 200000</span>-->
-        <!--</div>-->
-        <!--<div class="filter_row">-->
-            <!--<spna style="margin-right: 190px;">Star Rating</spna>-->
-            <!--<span class="rightText">All Stars</span>-->
-        <!--</div>-->
-        <!--<div class="filter_row2">-->
-                <!--<div class="padding" style="font-size:40px;">-->
-                    <!--<ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>-->
-                <!--</div>-->
-        <!--</div>-->
         <div class="filter_row">
             Advanced Filter
         </div>

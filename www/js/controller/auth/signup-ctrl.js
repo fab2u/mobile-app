@@ -17,11 +17,9 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
             firebase.database().ref('deviceInformation/Registered/'+$cordovaDevice.getDevice().uuid).once('value',function(response){
                 console.log("device_list",JSON.stringify(response.val()));
                 if(response.val()){
-                    alert("registered")
                     $scope.user_device_register = true;
                 }
                 else{
-                    alert("not registered")
                     $scope.user_device_register = false;
                 }
             });
@@ -30,7 +28,7 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
             console.log("else")
         }
     }
-   // deviceRegistered();
+   deviceRegistered();
 
     /////////////////////////////// To check apply referral code valid or not ////////////////
     $scope.apply_promoCode = function (referralCode) {
@@ -102,7 +100,8 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                                 }, function (response) {
                                     console.log("uid pushed for used code :")
                                 })
-                    $scope.updates['userWallet/' + $scope.uid+'/credit/'+walletTransactionId] = transactionDetail;                }
+                    $scope.updates['userWallet/' + $scope.uid+'/credit/'+walletTransactionId] = transactionDetail;
+                }
             })
     };
 
@@ -243,7 +242,8 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
         $scope.generateVerificationCode();
         $ionicLoading.show();
         $http({
-            url: 'http://139.162.27.64/api/send-otp?otp='+$scope.generatedCode+'&mobile='+$scope.user.mobile_num,
+            url: 'http://139.162.27.64/api/send-otp?otp='+$scope.generatedCode+'&mobile='+
+            $scope.user.mobile_num,
             method: 'POST',
             "async": true,
             "crossDomain": true
@@ -284,7 +284,8 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
         $ionicLoading.show();
         $http({
             method: 'POST',
-            url:'http://139.162.27.64/api/send-otp?otp='+$scope.generatedCode+'&mobile='+$scope.user.mobile_num
+            url:'http://139.162.27.64/api/send-otp?otp='+$scope.generatedCode+'&mobile='+
+            $scope.user.mobile_num
         }) .success(function (data, status, headers, config) {
             if(status == 200){
                 $timeout( function() {

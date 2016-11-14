@@ -7,6 +7,8 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
 
     $scope.index_number = 0;
 
+   var locationInfo = JSON.parse(window.localStorage['selectedLocation'])
+
 
 
 
@@ -323,7 +325,44 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
             // alert('Please, select some services!')
         }
         else{
-          $state.go('vendorList');
+            $scope.serviceIds = [];
+            if (localStorage.getItem('catItems')) {
+                var items = JSON.parse(localStorage.getItem('catItems'))
+                for(key in items){
+                    $scope.serviceIds.push(items[key].id);
+                }
+                // angular.forEach(JSON.parse(localStorage.getItem('catItems')), function (value, key) {
+                //     $scope.serviceIds.push(value.id);
+                // })
+            }
+            console.log("services id",$scope.serviceIds)
+            $scope.finalServiceIds = _.uniq($scope.serviceIds)
+            $scope.vendorIds = [];
+
+            db.ref('vendorServices/'+locationInfo.cityId)
+                .once('value').then(function(snapshot) {
+                    var vendorIds = snapshot.val();
+
+                for(vId in vendorIds){
+                    var finalIds = _.intersection(Object.keys(vendorIds[vId]),$scope.finalServiceIds);
+                    if(finalIds.length == $scope.finalServiceIds.length){
+                        console.log(key);
+                        $scope.vendorIds.push(key);
+                    }
+                }
+                // angular.forEach(snapshot.val(),function (val,key) {
+                //     var finalIds = _.intersection(Object.keys(val),$scope.finalServiceIds);
+                //     if(finalIds.length == $scope.finalServiceIds.length){
+                //         console.log(key);
+                //         $scope.vendorIds.push(key);
+                //     }
+                // })
+                console.log("vendor id",$scope.vendorIds)
+            });
+
+
+
+            // $state.go('vendorList');
         }
     };
 

@@ -3,7 +3,7 @@
       <i class="icon ion-chevron-left pull-left" ng-click="home()"></i>
       <label class="item item-input search-input ">
          <i  class="input-icons icon ion-search placeholder-icon"></i>
-         <input  type="text" placeholder="Search Salons or Services" ng-model="searchQuery"
+         <input  type="text" placeholder="Search Salons" ng-model="searchQuery"
                  ng-change="searchServices()"/>
          <button class="button button-clear button-dark input-icons">
          X
@@ -11,16 +11,13 @@
       </label>
    </div>
    <ion-content>
-      <ion-list class="servicelist" ng-show="suggestedServices">
-         <ion-item ng-repeat="service in suggestedServices" class="vendorservicelist"
-                   ng-click="vendorList(service)">
-            {{service.value.service_name || service.value.vendor_name}}
-            <div class="vendororservice" >
-               {{service.type}}
-            </div>
+      <ion-list class="servicelist" ng-show="vendorList">
+         <ion-item ng-repeat="name in vendorNames|filter:searchQuery" class="vendorservicelist"
+                   ng-click="vendorMenu(key)">
+           {{name}}
          </ion-item>
       </ion-list>
-      <ion-list class="servicelist" ng-hide="suggestedServices.length>0">
+      <ion-list class="servicelist" ng-hide="vendorList">
          <ion-item class="vendorservicelist">
            No, results yet!
          </ion-item>

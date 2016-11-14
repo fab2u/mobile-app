@@ -29,7 +29,7 @@ app.directive('expandingTextarea', function () {
     };
 });
 
-app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,
+app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,$cordovaToast,
                                       $cordovaCamera, $ionicLoading){
    $ionicLoading.show();
 
@@ -52,14 +52,32 @@ app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,
    $scope.submitFeed = function(){
        if(uid){
            if(!$scope.feed.introduction && !$scope.image_url){
-               alert('Please add an image and description.');
+               $cordovaToast
+                   .show('Please add an image and description.', 'long', 'center')
+                   .then(function(success) {
+                       // success
+                   }, function (error) {
+                       // error
+                   });
            }
            else if($scope.feed.introduction && !$scope.image_url){
-               alert('Please add an image')
+               $cordovaToast
+                   .show('Please add an image', 'long', 'center')
+                   .then(function(success) {
+                       // success
+                   }, function (error) {
+                       // error
+                   });
 
            }
            else if(!$scope.feed.introduction && $scope.image_url){
-               alert('Please add description.')
+               $cordovaToast
+                   .show('Please add description.', 'long', 'center')
+                   .then(function(success) {
+                       // success
+                   }, function (error) {
+                       // error
+                   });
 
            }
            else if($scope.feed.introduction && $scope.image_url){
@@ -126,12 +144,24 @@ app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,
                    });
                }
                else{
-                   alert('Please add # in your description.')
+                   $cordovaToast
+                       .show('Please add # in your description.', 'long', 'center')
+                       .then(function(success) {
+                           // success
+                       }, function (error) {
+                           // error
+                       });
                }
            }
        }
        else{
-           alert('Please login/SignUp for create post.')
+           $cordovaToast
+               .show('Please login/SignUp for create post.', 'long', 'center')
+               .then(function(success) {
+                   // success
+               }, function (error) {
+                   // error
+               });
        }
    };
 
@@ -185,6 +215,9 @@ app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,
    };
 
    function resizeImage(source){
+       $timeout(function () {
+           $ionicLoading.show();
+       }, 4000);
       var canvas = document.createElement("canvas");
       var ctx = canvas.getContext("2d");
 
@@ -204,9 +237,20 @@ app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,
             $scope.image_url = response.Message;
             $(".upload").css("display", 'none');
 
+             $ionicLoading.hide();
+
          })
          .error(function(response){
-            alert("error: " + response);
+             $cordovaToast
+                 .show('Please try after some time', 'long', 'center')
+                 .then(function(success) {
+                     // success
+                 }, function (error) {
+                     // error
+                 });
+            // alert("error: " + response);
+             $ionicLoading.hide();
+
          });
       }
       img.src = source;

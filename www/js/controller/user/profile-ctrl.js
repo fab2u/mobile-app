@@ -1,5 +1,5 @@
 app.controller("profileCtrl",function($scope, $timeout,$location, $ionicLoading, $http,
-                                      $cordovaCamera, $ionicModal){
+                                      $cordovaCamera, $ionicModal,$cordovaToast){
    $scope.uid = window.localStorage.uid;
    console.log($scope.uid);
    $scope.email = window.localStorage.email;
@@ -35,7 +35,9 @@ app.controller("profileCtrl",function($scope, $timeout,$location, $ionicLoading,
          });
 
          function cropImage(source){
-            alert("inside crop image:")
+            $timeout(function () {
+               $ionicLoading.show();
+            }, 4000);
             $scope.modal.show();
             basic = $('.demo').croppie({
                viewport: {
@@ -119,12 +121,13 @@ app.controller("profileCtrl",function($scope, $timeout,$location, $ionicLoading,
                format: 'jpeg',
                circle: true
             }).then(function (resp) {
-               $ionicLoading.hide();
                // alert('test');
                // alert(JSON.stringify(resp));
                $http.post("http://139.162.3.205/api/testupload", {path: resp})
                .success(function(response){
-                alert("success  uploaded on server"+JSON.stringify(response));
+                  $ionicLoading.hide();
+
+                  // alert("success  uploaded on server"+JSON.stringify(response));
 
                   var updates1 = {};
                   // alert($scope.uid + " " + response.Message);
@@ -135,14 +138,27 @@ app.controller("profileCtrl",function($scope, $timeout,$location, $ionicLoading,
                      user.updateProfile({
                         photoURL: response.Message
                      }).then(function(){
-                        alert("Photo updated successfully");
+                        $cordovaToast
+                            .show('Photo updated successfully', 'long', 'center')
+                            .then(function(success) {
+                               // success
+                            }, function (error) {
+                               // error
+                            });
                         $scope.modal.hide();
                      });
                   });
 
                })
                .error(function(response){
-                  alert('Please try again, something went wrong');
+                  $ionicLoading.hide();
+                  $cordovaToast
+                      .show('Please try again, something went wrong', 'long', 'center')
+                      .then(function(success) {
+                         // success
+                      }, function (error) {
+                         // error
+                      });
                });
             });
          }

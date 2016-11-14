@@ -33,6 +33,11 @@ app.controller('multipleMapCtrl', function($scope, $ionicPlatform, $state, $time
     else{
         $scope.uid = localStorage.getItem('uid');
     }
+    var hasVendorFilter = checkLocalStorage('vendorsFilter');
+
+    if (hasVendorFilter) {
+        $scope.vendorsDetail = JSON.parse(window.localStorage['vendorsFilter'])
+    }
 
 
     $scope.vendorList = function(){
@@ -59,26 +64,22 @@ app.controller('multipleMapCtrl', function($scope, $ionicPlatform, $state, $time
                 });
         }
         else{
-            $http.post("http://139.162.31.204/search_services?services="+serviceId+
-                "&user_id="+$scope.uid+"&user_city="+$scope.centerLocation.cityId+"&user_gender=''&user_lat=''&user_lon=''")
-                .then(function (response) {
-                    $scope.vendorList = response.data.results;
                     var loc = [];
-                    angular.forEach($scope.vendorList,function(value,key){
-                        loc.push(value.vendor_name);
-                        loc.push(value.address.address1);
-                        loc.push(value.address.latitude);
-                        loc.push(value.address.longitude);
-                        loc.push(value.vendor_id);
-                        $scope.locations.push(loc)
-                        loc = [];
-                        var htm= "<a href=\"javascript:google.maps.event.trigger(gmarkers['"+value.vendor_name+"'],'click');\" class=\"button3\"></a>"
-                        $('#locations').append(htm);
+                    angular.forEach( $scope.vendorsDetail,function(value,key){
+                        if(key != 'version'){
+                            loc.push(value.vendorName);
+                            loc.push(value.address.address1);
+                            loc.push(value.address.latitude);
+                            loc.push(value.address.longitude);
+                            loc.push(value.vendorId);
+                            $scope.locations.push(loc)
+                            loc = [];
+                            var htm= "<a href=\"javascript:google.maps.event.trigger(gmarkers['"+value.vendor_name+"'],'click');\" class=\"button3\"></a>"
+                            $('#locations').append(htm);
+                        }
                     })
                     mapInt($scope.locations);
                     $ionicLoading.hide();
-                });
-
         }
 
     }

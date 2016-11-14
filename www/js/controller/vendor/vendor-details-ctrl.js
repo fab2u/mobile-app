@@ -25,7 +25,7 @@ app.controller('VendorDetailsCtrl',
         }
         $timeout(function () {
             $ionicLoading.hide();
-        }, 10000);
+        }, 4000);
         var n = weekday[d.getDay()];
 
         $scope.location = JSON.parse(window.localStorage['selectedLocation'])

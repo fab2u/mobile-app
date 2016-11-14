@@ -21,6 +21,9 @@ app
 		delete window.localStorage.vendorsFilter;
 		delete window.localStorage.vendorsListVersion;
 		delete window.localStorage.vendorsListFilter;
+		delete window.localStorage.VendorServiceListVersion;
+		delete window.localStorage.VendorServiceList;
+		delete window.localStorage.pageName;
 		$scope.location_info = JSON.parse(window.localStorage['selectedLocation']);
 	});
 

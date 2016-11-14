@@ -63,12 +63,12 @@ app.controller('VendorDetailsCtrl',
                        });
                    }
                    else{
-                       $scope.images.push({id: 'dummy', src: 'http://ionicframework.com/img/ionic-logo-blog.png'})
+                       $scope.images.push({id: 'dummy', src: 'img/vendorMain.jpg'})
                    }
 
                }
                else{
-                   $scope.images.push({id: 'dummy', src: 'http://ionicframework.com/img/ionic-logo-blog.png'})
+                   $scope.images.push({id: 'dummy', src: 'img/vendorMain.jpg'})
                }
            }
            else{
@@ -271,7 +271,9 @@ app.controller('VendorDetailsCtrl',
         }
     };
 
-    $scope.vendorMenu = function(){
+
+
+        $scope.vendorMenu = function(){
         if(window.localStorage.getItem("selectedTab")=='true'){
             $state.go('vendorSelectedMenu',{vendor_id:$stateParams.ven_id});
         }

@@ -98,7 +98,7 @@
 			</ion-slide>
 			<ion-slide>
 			    <div class="gallery">
-			    	<div class="row allImages" ng-repeat="image in images" ng-if="$index % 2 === 0">
+			    	<div class="row allImages" ng-repeat="image in images|limitTo:4" ng-if="$index % 2 === 0">
 				        <div class="col col-50" ng-if="$index < images.length" ng-click="goToSlide($index)">
 				            <img ng-src="{{images[$index].src}}" width="100%" />
 				        </div>

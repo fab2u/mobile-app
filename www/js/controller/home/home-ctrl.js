@@ -77,4 +77,27 @@ app
 			$state.go('vendorList');
 		}
 	};
+
+	var VendorServiceList = checkLocalStorage('VendorServiceList');
+
+
+	function getVendorServiceList(){
+		firebase.database().ref('vendorServiceList/'+locationInfo.cityId).once('value',function(response){
+            var result = response.val()
+			var version = response.val().version;
+			window.localStorage['VendorServiceList'] = JSON.stringify(result);
+			window.localStorage['VendorServiceListVersion'] = version;
+		});
+	}
+	if(!VendorServiceList){
+		getVendorServiceList()
+	}
+	else{
+		firebase.database().ref('vendorServiceList/'+locationInfo.cityId+'/version').once('value',function(res) {
+			var newVersion = res.val()
+			if(window.localStorage['VendorServiceListVersion']<newVersion){
+				getVendorServiceList()
+			}
+		})
+	}
 });

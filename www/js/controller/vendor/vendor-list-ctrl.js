@@ -17,7 +17,14 @@ app.controller('VendorListCtrl',
 
         $scope.vendorIds = [];
 
-        $scope.vendorNames = JSON.parse(window.localStorage['vendorsName']);
+        if($stateParams.vendorPage == 'discoverSalons'){
+            $scope.vendorNames = JSON.parse(window.localStorage['vendorsName']);
+            window.localStorage['pageName'] = 'discoverSalons'
+        }
+        if($stateParams.vendorPage == 'serviceList'){
+            $scope.VendorServiceListIds = JSON.parse(window.localStorage['VendorServiceListIds']);
+            window.localStorage['pageName'] = 'serviceList'
+        }
 
 
 
@@ -54,7 +61,6 @@ app.controller('VendorListCtrl',
 
 
         function getAllVendors() {
-            console.log("called!!!!!!!!!!!!")
             firebase.database().ref('vendorFilters/' + locationInfo.cityId).once('value').then(function (res) {
                 var vendorDetail = res.val();
                 var version = res.val().version;
@@ -82,8 +88,15 @@ app.controller('VendorListCtrl',
                 }
             })
         }
-        for (key in $scope.vendorNames) {
-            load_vendors($scope.vendorNames[key].vid)
+        if($scope.vendorNames){
+            for (key in $scope.vendorNames) {
+                load_vendors($scope.vendorNames[key].vid)
+            }
+        }
+        if($scope.VendorServiceListIds){
+            for (key in $scope.VendorServiceListIds) {
+                load_vendors($scope.VendorServiceListIds[key])
+            }
         }
 
         var filters = {}

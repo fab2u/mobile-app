@@ -15,6 +15,8 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
     }, 2000);
     var hasVendorList = checkLocalStorage('vendorsName');
 
+    var VendorServiceList  = JSON.parse(window.localStorage['VendorServiceList']);
+
     function vendorList() {
         $ionicLoading.show();
         firebase.database().ref('vendorList/'+locationInfo.cityId).once('value',function(response){
@@ -72,7 +74,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
     $scope.tabActive = false;
 
     $scope.searchButton = function () {
-        $state.go('vendorList');
+        $state.go('vendorList',{vendorPage:'discoverSalons'});
     };
 
     $scope.nextSlide = function() {
@@ -365,38 +367,38 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                 for(key in items){
                     $scope.serviceIds.push(items[key].id);
                 }
-                // angular.forEach(JSON.parse(localStorage.getItem('catItems')), function (value, key) {
-                //     $scope.serviceIds.push(value.id);
-                // })
             }
-            console.log("services id",$scope.serviceIds)
+            // console.log("services id",$scope.serviceIds)
             $scope.finalServiceIds = _.uniq($scope.serviceIds)
             $scope.vendorIds = [];
-
-            db.ref('vendorServices/'+locationInfo.cityId)
-                .once('value').then(function(snapshot) {
-                    var vendorIds = snapshot.val();
-
-                for(vId in vendorIds){
-                    var finalIds = _.intersection(Object.keys(vendorIds[vId]),$scope.finalServiceIds);
-                    if(finalIds.length == $scope.finalServiceIds.length){
-                        console.log(key);
-                        $scope.vendorIds.push(key);
-                    }
+             // console.log($scope.finalServiceIds)
+            var count = 0;
+            var vendorsIds = [];
+            var finalVendorIds =[];
+            for(key in $scope.finalServiceIds){
+                vendorsIds[count] = VendorServiceList[$scope.finalServiceIds[key]].split(',');
+                if(count != 0) {
+                    finalVendorIds = _.intersection(vendorsIds[count], t)
                 }
-                // angular.forEach(snapshot.val(),function (val,key) {
-                //     var finalIds = _.intersection(Object.keys(val),$scope.finalServiceIds);
-                //     if(finalIds.length == $scope.finalServiceIds.length){
-                //         console.log(key);
-                //         $scope.vendorIds.push(key);
-                //     }
-                // })
-                console.log("vendor id",$scope.vendorIds)
-            });
-
-
-
-            // $state.go('vendorList');
+                else{
+                    finalVendorIds = vendorsIds[count];
+                }
+                count++;
+            }
+            window.localStorage['VendorServiceListIds'] = JSON.stringify(finalVendorIds);
+            console.log(finalVendorIds);
+            if(finalVendorIds){
+                $state.go('vendorList',{vendorPage:'serviceList'});
+            }
+            else{
+                $cordovaToast
+                    .show('No,vendor found for selected services.', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
         }
     };
 

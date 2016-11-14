@@ -268,7 +268,9 @@ app
                 }
                 else{
                     console.log("else");
-                    $state.go('vendorList');
+                    // history.back();
+
+                    $state.go('vendorList',{vendorPage:window.localStorage['pageName']});
                 }
                 // TODO
             };

@@ -243,9 +243,10 @@ app
                 localStorage.setItem('service_type', '');
                 $state.go('app.home');
             }
-
             else{
-                $state.go('vendorList');
+                // history.back();
+                // $state.go('vendorList');
+                $state.go('vendorList',{vendorPage:window.localStorage['pageName']});
             }
             // TODO
         };

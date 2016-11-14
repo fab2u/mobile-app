@@ -26,7 +26,7 @@
                  ng-repeat="vendor in vendorList| orderBy : 'distance'">
                 <div class="row">
                     <div class="col-33 image_display_1" ng-click="vendor_menu(vendor.vendorId)">
-                        <img ng-src="{{vendor.image_url || 'img/vendorImage.jpeg'}}" class="pkg-img">
+                        <img ng-src="{{vendor.mainImage || 'img/vendorImage.jpeg'}}" class="pkg-img">
                     </div>
                     <div id="part2" class="col-67">
                             <div class="row">
@@ -92,10 +92,7 @@
                         Distance
                     </div>
                     <div class="item" ng-click="sortVendors('asc')">
-                        Price: Low to High
-                    </div>
-                    <div class="item" ng-click="sortVendors('des')">
-                        Price: High to Low
+                       Name
                     </div>
                 </div>
             </ion-content>

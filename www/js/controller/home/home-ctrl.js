@@ -16,8 +16,9 @@ app
 		}
 	};
 
-	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+	// amenities
 
+	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
 
 
 	$scope.get_banners = function(){

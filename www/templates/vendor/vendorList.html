@@ -24,7 +24,7 @@
             <div class="fab-book" ng-click="toggleColor(1)">MALE</div>
         </div>
         <div class="card m-5 fab_card" ng-show="vendorList.length !='0'"
-             ng-repeat="vendor in vendorList| orderBy : sortValue">
+             ng-repeat="vendor in vendorList| orderBy : sortValue |limitTo:limit">
             <div class="row">
                 <div class="col-33 image_display_1" ng-click="vendor_menu(vendor.vendorId)">
                     <img ng-src="{{vendor.mainImage || 'img/vendorImage.jpeg'}}" class="pkg-img">
@@ -52,11 +52,10 @@
                 </div>
             </div>
         </div>
-        <div>
-            <button class="button button-block button-positive" ng-click="loadMore()">
-                Load More
-            </button>
-        </div>
+        <div ng-hide="!isDisabled" class="feedend">You are at the end of the vendor List</div>
+
+        <ion-infinite-scroll on-infinite="loadMore()" distance="1%" ng-if="!isDisabled">
+        </ion-infinite-scroll>
     </ion-content>
     <button class="button button-assertive fab-button" ng-click="multipleAddressMapView()">
         <i class="icon ion-ios-location"></i>

@@ -6,6 +6,8 @@ app.controller('VendorListCtrl',
         $scope.genSelected = false;
         $scope.serviceIds = [];
         $scope.vendorList = [];
+        $scope.isDisabled = false;
+        $scope.limit= 7;
 
         $scope.sortValue = 'distance';
         var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
@@ -286,7 +288,6 @@ app.controller('VendorListCtrl',
             }
             start_filtering(filters);
             $scope.filter_screen.hide();
-            console.log("filters", filters)
         }
         $scope.refresh = function () {
             $ionicLoading.show();
@@ -338,13 +339,19 @@ app.controller('VendorListCtrl',
             $scope.sortValue = val;
         }
 
-        $scope.loadMore = function(val){
-            console.log("val",val)
-        }
+        $scope.loadMore = function(){
+            $scope.limit = $scope.limit+7;
+            var vendorListLength = $scope.vendorList.length;
+            if(vendorListLength<$scope.limit){
+                $scope.isDisabled = true;
+            }
+            else{
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            }
+        };
 
         $scope.vendor_menu = function (id) {
                     delete window.localStorage.slectedItems;
-                    // delete window.localStorage.catItems;
                     delete window.localStorage.BegItems;
                     if (localStorage.getItem('catItems')) {
                         $state.go('vendorSelectedMenu', {vendor_id: id});
@@ -353,4 +360,6 @@ app.controller('VendorListCtrl',
                         $state.go('vendorMenu', {vendor_id: id});
                     }
         };
+
+
     });

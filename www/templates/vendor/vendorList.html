@@ -24,7 +24,7 @@
             <div class="fab-book" ng-click="toggleColor(1)">MALE</div>
         </div>
         <div class="card m-5 fab_card" ng-show="vendorList.length !='0'"
-             ng-repeat="vendor in vendorList| orderBy : 'distance'">
+             ng-repeat="vendor in vendorList| orderBy : sortValue">
             <div class="row">
                 <div class="col-33 image_display_1" ng-click="vendor_menu(vendor.vendorId)">
                     <img ng-src="{{vendor.mainImage || 'img/vendorImage.jpeg'}}" class="pkg-img">
@@ -64,7 +64,7 @@
                     <div class="item" ng-click="sortVendors('distance')">
                         Distance
                     </div>
-                    <div class="item" ng-click="sortVendors('name')">
+                    <div class="item" ng-click="sortVendors('vendorName')">
                         Name
                     </div>
                 </div>

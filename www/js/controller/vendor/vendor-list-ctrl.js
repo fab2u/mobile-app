@@ -6,6 +6,8 @@ app.controller('VendorListCtrl',
         $scope.genSelected = false;
         $scope.serviceIds = [];
         $scope.vendorList = [];
+
+        $scope.sortValue = 'distance';
         var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
         var cityId = locationInfo.cityId;
         $scope.lat = locationInfo.latitude;
@@ -337,6 +339,7 @@ app.controller('VendorListCtrl',
 
         $scope.sortVendors = function (val) {
             console.log("val", val)
+            $scope.sortValue = val;
         }
 
     });

@@ -9,10 +9,10 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
 
     var locationInfo = JSON.parse(window.localStorage['selectedLocation'])
     $scope.vendorNames = [];
-
+    $ionicLoading.show();
     $timeout(function () {
         $ionicLoading.hide();
-    }, 5000);
+    }, 2000);
     var hasVendorList = checkLocalStorage('vendorsName');
 
     function vendorList() {

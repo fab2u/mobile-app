@@ -228,7 +228,9 @@ app.controller('VendorListCtrl',
                 $scope.location.show();
                 $ionicLoading.hide();
             });
-
+            $timeout(function () {
+                $ionicLoading.hide();
+            }, 200);
         };
         $scope.close_location = function () {
             $scope.location.hide();
@@ -304,9 +306,11 @@ app.controller('VendorListCtrl',
 
 
         $scope.toggleColor = function (val) {
+            $ionicLoading.show();
+
             $timeout(function () {
-                $ionicLoading.show();
-            }, 2000);
+                $ionicLoading.hide();
+            }, 200);
             if (val == 1) {
                 $scope.genSelected = true;
                 $scope.gender = 'male';

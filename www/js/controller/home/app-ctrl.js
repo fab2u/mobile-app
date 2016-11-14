@@ -17,6 +17,7 @@ app
 
 	$rootScope.$on('location', function (event, args) {
 		$scope.message = args.message;
+		delete window.localStorage.vendorsName;
 		$scope.location_info = JSON.parse(window.localStorage['selectedLocation']);
 	});
 

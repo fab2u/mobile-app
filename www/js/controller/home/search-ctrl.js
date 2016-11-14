@@ -1,7 +1,6 @@
 app.controller('SearchCtrl', function($state, $scope,$http,$timeout,$ionicLoading) {
 
     $scope.searchQuery = '';
-    $scope.serviceIds = [];
 
     delete window.localStorage.slectedItems;
     delete window.localStorage.catItems;
@@ -10,50 +9,65 @@ app.controller('SearchCtrl', function($state, $scope,$http,$timeout,$ionicLoadin
     window.localStorage.setItem("serviceId",'');
 
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
-    $scope.vendorList = [];
-    $scope.vendorIds = [];
+
     $scope.vendorNames = []
     var tempList = {};
-    firebase.database().ref('vendorList/'+locationInfo.cityId).once('value',function(response){
-        var count1 = Object.keys(response.val()).length;
-        var count = 0;
-        $scope.vendorNames = _.uniq(_.toArray(response.val()));
-        angular.forEach(response.val(),function(value,key){
-            tempList[key] = value;
-            $scope.vendorIds.push(key);
-            count ++
-            console.log("key",key)
-            console.log("value",value)
-        })
-        if(count == count1){
-            $scope.vendorList.push(tempList)
-            console.log("dummy",$scope.vendorList)
+
+    $ionicLoading.show();
+
+    $timeout(function () {
+        $ionicLoading.hide();
+    }, 5000);
+
+    var hasVendorList = checkLocalStorage('vendorsName');
+
+
+    // locationInfo.cityId
+
+    function vendorList() {
+        console.log("called.")
+        firebase.database().ref('vendorList/'+locationInfo.cityId).once('value',function(response){
+            var vendors = response.val();
+            var version = response.val().version;
+            for(key in vendors){
+                var venObj={
+                    vid: key,
+                    vName: vendors[key]
+                }
+                $scope.vendorNames.push(venObj);
+            }
+            window.localStorage['vendorsName'] = JSON.stringify($scope.vendorNames)
+            window.localStorage['vendorsListVersion'] = version;
+        });
+    }
+    if(!hasVendorList){
+        vendorList();
+    }
+    else{
+          firebase.database().ref('vendorList/'+locationInfo.cityId+'/version').once('value',function(res) {
+              var newVersion = res.val()
+              if(window.localStorage['vendorsListVersion']<newVersion){
+                  vendorList();
+                  console.log("if")
+              }
+              else {
+                  console.log("else")
+                  $scope.vendorNames = JSON.parse(window.localStorage['vendorsName'])
+              }
+          })
         }
-    });
-
-    $scope.searchServices = function(){
-        // $ionicLoading.show();
-
-        if($scope.searchQuery != ''){
-
-            console.log($scope.searchQuery);
-        }
-
-    };
-
 
     $scope.home = function(){
         $state.go('app.home');
     };
 
     $scope.vendorMenu = function(vendorId){
-     console.log("gdvdv",vendorId)
             delete window.localStorage.slectedItems;
             delete window.localStorage.BegItems;
             window.localStorage.setItem("service_type",'vendor');
-            // $state.go('vendorMenu',{vendor_id:vendorId});
-
+            $state.go('vendorMenu',{vendor_id:vendorId});
     }
 
 
 });
+

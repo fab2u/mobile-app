@@ -2,7 +2,7 @@ app.controller('VendorListCtrl',
     function ($scope,$q,$timeout, $ionicHistory, $state, $stateParams, $ionicLoading, $http
         ,$ionicModal,$ionicPopover,$rootScope,$cordovaToast) {
 
-        $scope.gender = '';
+        $scope.gender = 'female';
         $scope.genSelected = false;
         $scope.serviceIds = [];
         $scope.vendorList = [];
@@ -116,6 +116,17 @@ app.controller('VendorListCtrl',
                             }
                         }
                     }
+                if(filters.gender){
+                    console.log("inside gender filter")
+                    for (key in response) {
+                        if ((response[key].gender == filters.gender)||(response[key].gender == 'unisex')) {
+                            response[key].show = true;
+                        } else {
+                            response[key].show = false;
+                        }
+                    }
+
+                }
                     if (filters.amenities.length>0) {
                         console.log("inside amenities")
                         for (key in response) {
@@ -224,7 +235,7 @@ app.controller('VendorListCtrl',
             };
 
             $scope.final_amenity = [];
-        $scope.amenities = [
+            $scope.amenities = [
                     {
                         'name':'card',
                         'selected':false,
@@ -272,7 +283,8 @@ app.controller('VendorListCtrl',
                 var filters = {
                     type: $scope.type,
                     amenities: $scope.final_amenity,
-                    location: Object.keys($scope.selectedLocation)
+                    location: Object.keys($scope.selectedLocation),
+                    gender:$scope.gender
                 }
                 start_filtering(filters);
                 $scope.filter_screen.hide();
@@ -291,5 +303,37 @@ app.controller('VendorListCtrl',
                     location.reload()
                 });
 
+
+        $scope.toggleColor = function (val) {
+            $timeout(function () {
+                $ionicLoading.show();
+            }, 2000);
+                    if (val == 1) {
+                        $scope.genSelected = true;
+                        $scope.gender = 'male';
+                        var filters = {
+                            type: $scope.type,
+                            amenities: $scope.final_amenity,
+                            location: Object.keys($scope.selectedLocation),
+                            gender:$scope.gender
+                        }
+                        start_filtering(filters);
+                        $ionicLoading.hide();
+                    }
+                    else {
+                        $scope.genSelected = false;
+                        $scope.gender = 'female';
+
+                        var filters = {
+                            type: $scope.type,
+                            amenities: $scope.final_amenity,
+                            location: Object.keys($scope.selectedLocation),
+                            gender:$scope.gender
+                        }
+                        start_filtering(filters);
+                        $ionicLoading.hide();
+
+                    }
+        };
 
     });

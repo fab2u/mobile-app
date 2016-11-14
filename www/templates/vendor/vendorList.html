@@ -40,7 +40,7 @@
                             &nbsp;
                         </div>
                         <div class="col-50" ng-click="vendor_menu(vendor.vendorId)">
-                            <p id="vendor_type">{{vendor.vendorType }}</p>
+                            <p id="vendor_type">{{vendor.vendorType}}</p>
                         </div>
                     </div>
                     <div class="row" id="m_t" ng-click="vendor_menu(vendor.vendorId)">
@@ -52,8 +52,12 @@
                 </div>
             </div>
         </div>
+        <div>
+            <button class="button button-block button-positive" ng-click="loadMore()">
+                Load More
+            </button>
+        </div>
     </ion-content>
-
     <button class="button button-assertive fab-button" ng-click="multipleAddressMapView()">
         <i class="icon ion-ios-location"></i>
     </button>

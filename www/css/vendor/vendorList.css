@@ -61,7 +61,7 @@
 
 .vendorList .fab-book {
     width: 50%;
-    /* float: right; */
+     float: right;
     position: fixed;
     right: 0px;
     margin-top: 14px;
@@ -810,5 +810,5 @@
 }
 
 .popover{
-    height:175px !important;
+    height:120px !important;
 }

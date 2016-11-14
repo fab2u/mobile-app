@@ -17,6 +17,8 @@ app.controller('VendorListCtrl',
 
         $scope.vendorNames = JSON.parse(window.localStorage['vendorsName']);
 
+
+
         ////////////////////////  Sorting functionality  //////////////////////////////
 
         $ionicPopover.fromTemplateUrl('templates/popover.html', {
@@ -47,6 +49,7 @@ app.controller('VendorListCtrl',
                 }
             }
         }
+
 
         function getAllVendors() {
             console.log("called!!!!!!!!!!!!")
@@ -109,7 +112,6 @@ app.controller('VendorListCtrl',
                     }
                 }
                 if (filters.type) {
-                    console.log("inside type")
                     for (key in response) {
                         if (response[key].vendorType === filters.type) {
                             response[key].show = true;
@@ -119,7 +121,6 @@ app.controller('VendorListCtrl',
                     }
                 }
                 if (filters.gender) {
-                    console.log("inside gender filter")
                     for (key in response) {
                         if ((response[key].gender == filters.gender) || (response[key].gender == 'unisex')) {
                             response[key].show = true;
@@ -130,7 +131,6 @@ app.controller('VendorListCtrl',
 
                 }
                 if (filters.amenities.length > 0) {
-                    console.log("inside amenities")
                     for (key in response) {
                         if (response[key].show) {
                             if (response[key].amenities) {
@@ -147,7 +147,6 @@ app.controller('VendorListCtrl',
                     }
                 }
                 if (filters.location.length > 0) {
-                    console.log("inside location")
                     for (key in response) {
                         if (response[key].show) {
                             var setX = response[key].address.locationId;
@@ -160,12 +159,9 @@ app.controller('VendorListCtrl',
                         }
                     }
                 }
-                console.log("response", response)
                 for (key in response) {
                     if (response[key].show) {
-                        console.log("inside show")
                         $scope.vendorList.push(response[key])
-                        console.log(response[key], $scope.vendorList);
                     } else {
                         console.log("inside else");
                     }
@@ -342,4 +338,19 @@ app.controller('VendorListCtrl',
             $scope.sortValue = val;
         }
 
+        $scope.loadMore = function(val){
+            console.log("val",val)
+        }
+
+        $scope.vendor_menu = function (id) {
+                    delete window.localStorage.slectedItems;
+                    // delete window.localStorage.catItems;
+                    delete window.localStorage.BegItems;
+                    if (localStorage.getItem('catItems')) {
+                        $state.go('vendorSelectedMenu', {vendor_id: id});
+                    }
+                    else {
+                        $state.go('vendorMenu', {vendor_id: id});
+                    }
+        };
     });

@@ -43,6 +43,9 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
             if(window.localStorage['vendorsListVersion']<newVersion){
                 vendorList();
             }
+            else{
+                $scope.vendorNames = JSON.stringify(window.localStorage['vendorsName'])
+            }
         })
     }
 

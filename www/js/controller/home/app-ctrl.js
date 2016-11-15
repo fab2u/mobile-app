@@ -1,12 +1,39 @@
-app
-.controller('AppCtrl', function($scope,$state,$rootScope,$ionicPopup,$cordovaInAppBrowser,$cordovaDevice) {
+app.controller('AppCtrl', function($scope,$state,$rootScope,$ionicPopup,$ionicLoading,
+								   $cordovaInAppBrowser,$cordovaDevice,allVendorService) {
 
 
 	$scope.liked = false;
 
-	// $scope.likePage = function(){
-	// 	$scope.liked =!$scope.liked;
-	// }
+	var hasVendorList = checkLocalStorage('vendorsName');
+	var locationInfo = JSON.parse(window.localStorage['selectedLocation'])
+	$scope.vendorNames = [];
+	function vendorList() {
+		$ionicLoading.show();
+		allVendorService.getVendorsList(locationInfo.cityId).then(function(response){
+			var vendors = response;
+			var version = response.version;
+			for(key in vendors){
+				var venObj={
+					vid: key,
+					vName: vendors[key]
+				}
+				$scope.vendorNames.push(venObj);
+			}
+			window.localStorage['vendorsName'] = JSON.stringify($scope.vendorNames)
+			window.localStorage['vendorsListVersion'] = version;
+		})
+	}
+	if(!hasVendorList){
+		vendorList();
+	}
+	else{
+		allVendorService.getVlistVersion(locationInfo.cityId).then(function(res){
+			var newVersion = res
+			if(window.localStorage['vendorsListVersion']<newVersion){
+				vendorList();
+			}
+		})
+	}
 	$rootScope.$on('logged_in', function (event, args) {
 		$scope.uid = window.localStorage.getItem('uid');
 	});

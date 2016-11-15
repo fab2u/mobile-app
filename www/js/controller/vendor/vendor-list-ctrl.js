@@ -415,4 +415,27 @@ app.controller('VendorListCtrl',
             $state.go('mapMultiple',{vendorPage:$stateParams.vendorPage})
         };
 
+
+
+        /////////////////////Sort vendor list /////////////////////////
+
+        $ionicPopover.fromTemplateUrl('templates/popover.html', {
+            scope: $scope,
+        }).then(function (popover) {
+            $scope.popover = popover;
+        });
+
+        $scope.closePopover = function () {
+            $scope.popover.hide();
+        };
+
+        $scope.closePopover = function () {
+            $scope.popover.hide();
+        };
+
+        $scope.sortVendors = function (val) {
+            console.log("val", val)
+            $scope.sortValue = val;
+        }
+
     });

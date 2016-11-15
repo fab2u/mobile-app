@@ -18,6 +18,8 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
 
     var VendorServiceList  = JSON.parse(window.localStorage['VendorServiceList']);
 
+    console.log("VendorServiceList",VendorServiceList)
+
     function vendorList() {
         $ionicLoading.show();
         allVendorService.getVendorsList(locationInfo.cityId).then(function(response){
@@ -374,24 +376,38 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
             }
             // console.log("services id",$scope.serviceIds)
             $scope.finalServiceIds = _.uniq($scope.serviceIds)
+            console.log($scope.finalServiceIds)
             $scope.vendorIds = [];
              // console.log($scope.finalServiceIds)
             var count = 0;
             var vendorsIds = [];
             var finalVendorIds =[];
             for(key in $scope.finalServiceIds){
-                vendorsIds[count] = VendorServiceList[$scope.finalServiceIds[key]].split(',');
-                if(count != 0) {
-                    finalVendorIds = _.intersection(vendorsIds[count], finalVendorIds)
+                if(VendorServiceList[$scope.finalServiceIds[key]]){
+                    vendorsIds[count] = VendorServiceList[$scope.finalServiceIds[key]].split(',');
+                    if(count != 0) {
+                        finalVendorIds = _.intersection(vendorsIds[count], finalVendorIds)
+                    }
+                    else{
+                        finalVendorIds = vendorsIds[count];
+                    }
+                    count++;
                 }
                 else{
-                    finalVendorIds = vendorsIds[count];
+                    vendorsIds[count] = [];
+                    if(count != 0) {
+                        finalVendorIds = _.intersection(vendorsIds[count], finalVendorIds)
+                    }
+                    else{
+                        finalVendorIds = vendorsIds[count];
+                    }
+                    count++;
                 }
-                count++;
+
             }
             window.localStorage['VendorServiceListIds'] = JSON.stringify(finalVendorIds);
             console.log(finalVendorIds);
-            if(finalVendorIds){
+            if(finalVendorIds.length>0){
                 $state.go('vendorList',{vendorPage:'serviceList'});
             }
             else{

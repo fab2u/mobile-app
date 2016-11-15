@@ -112,18 +112,30 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 			var vendorsIds = [];
 			var finalVendorIds =[];
 			for(key in $scope.finalServiceIds){
-				vendorsIds[count] = $scope.VendorIdForService[$scope.finalServiceIds[key]].split(',');
-				if(count != 0) {
-					finalVendorIds = _.intersection(vendorsIds[count], finalVendorIds)
+				if($scope.VendorIdForService[$scope.finalServiceIds[key]]){
+					vendorsIds[count] = VendorServiceList[$scope.finalServiceIds[key]].split(',');
+					if(count != 0) {
+						finalVendorIds = _.intersection(vendorsIds[count], finalVendorIds)
+					}
+					else{
+						finalVendorIds = vendorsIds[count];
+					}
+					count++;
 				}
 				else{
-					finalVendorIds = vendorsIds[count];
+					vendorsIds[count] = [];
+					if(count != 0) {
+						finalVendorIds = _.intersection(vendorsIds[count], finalVendorIds)
+					}
+					else{
+						finalVendorIds = vendorsIds[count];
+					}
+					count++;
 				}
-				count++;
 			}
 			window.localStorage['VendorServiceListIds'] = JSON.stringify(finalVendorIds);
 			console.log(finalVendorIds);
-			if(finalVendorIds){
+			if(finalVendorIds.length>0){
 				$state.go('vendorList',{vendorPage:'serviceList'});
 			}
 			else{

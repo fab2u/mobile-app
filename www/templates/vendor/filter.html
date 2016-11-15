@@ -30,7 +30,6 @@
                 <p class="pull-left text-bold">Locations
                     <i class="icon ion-chevron-right"></i>
                 </p>
-
                 <p>All Locations</p>
             </div>
         </div>
@@ -40,7 +39,8 @@
         <div class="filter_row2">
             <center>
                 <div class="row amenities">
-                    <div class="col col-25" ng-repeat="amenity in amenities" ng-model="ame_type" ng-click="amenity_list(amenity)"
+                    <div class="col col-25" ng-repeat="amenity in amenities" ng-model="ame_type"
+                         ng-click="amenity_list(amenity)"
                          ng-class="amenity.selected?'selected_amenity':'not_selected_amenity'">
                         <i class="icon {{amenity.icon}}"></i>
                         <p>{{amenity.name}}</p>
@@ -49,9 +49,9 @@
             </center>
         </div>
      </ion-content>
-    <ion-footer-bar class="bar custom-footer" align-title="center" ng-click="apply()">
+    <ion-footer-bar class="bar custom-footer" align-title="center" ng-click="applyFilter()">
         <h1 class="title footer_text">
             APPLY
         </h1>
     </ion-footer-bar>
-</ion-modal-view >
+</ion-modal-view>

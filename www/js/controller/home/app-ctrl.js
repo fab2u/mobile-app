@@ -18,11 +18,11 @@ app
 	$rootScope.$on('location', function (event, args) {
 		$scope.message = args.message;
 		delete window.localStorage.vendorsName;
-		delete window.localStorage.vendorsFilter;
 		delete window.localStorage.vendorsListVersion;
-		delete window.localStorage.vendorsListFilter;
 		delete window.localStorage.VendorServiceListVersion;
 		delete window.localStorage.VendorServiceList;
+		delete window.localStorage.allVendors;
+		delete window.localStorage.allVendorsVersion;
 		delete window.localStorage.pageName;
 		$scope.location_info = JSON.parse(window.localStorage['selectedLocation']);
 	});

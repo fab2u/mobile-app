@@ -9,11 +9,8 @@ app.controller('multipleMapCtrl', function($scope, $ionicPlatform, $state, $time
 
     $scope.showPrevious = function(){
        $state.go('vendorList',{vendorPage:$stateParams.vendorPage})
-    }
-
+    };
     var mapData = JSON.parse(window.localStorage['mapStorage'])
-
-    console.log("mapData",mapData)
 
     function initialize(){
         var myOptions = {

@@ -378,7 +378,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
             for(key in $scope.finalServiceIds){
                 vendorsIds[count] = VendorServiceList[$scope.finalServiceIds[key]].split(',');
                 if(count != 0) {
-                    finalVendorIds = _.intersection(vendorsIds[count], t)
+                    finalVendorIds = _.intersection(vendorsIds[count], finalVendorIds)
                 }
                 else{
                     finalVendorIds = vendorsIds[count];

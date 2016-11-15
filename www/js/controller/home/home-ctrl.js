@@ -1,5 +1,5 @@
-app
-.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$location,$ionicSlideBoxDelegate) {
+app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$location,
+								$ionicSlideBoxDelegate,allServiceList) {
 
 	$scope.fabSelected = false;
 	// window.localStorage.setItem("serviceId",'');
@@ -82,19 +82,19 @@ app
 
 
 	function getVendorServiceList(){
-		firebase.database().ref('vendorServiceList/'+locationInfo.cityId).once('value',function(response){
-            var result = response.val()
-			var version = response.val().version;
+		allServiceList.getAllServices(locationInfo.cityId).then(function (response) {
+			var result = response;
+			var version = response.version;
 			window.localStorage['VendorServiceList'] = JSON.stringify(result);
 			window.localStorage['VendorServiceListVersion'] = version;
-		});
+		})
 	}
 	if(!VendorServiceList){
 		getVendorServiceList()
 	}
 	else{
-		firebase.database().ref('vendorServiceList/'+locationInfo.cityId+'/version').once('value',function(res) {
-			var newVersion = res.val()
+		allServiceList.getServiceVersion(locationInfo.cityId).then(function(res){
+			var newVersion = res;
 			if(window.localStorage['VendorServiceListVersion']<newVersion){
 				getVendorServiceList()
 			}

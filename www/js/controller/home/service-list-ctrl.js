@@ -1,5 +1,6 @@
 app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate,$timeout,
-                                           $ionicScrollDelegate, $rootScope,$cordovaToast,$ionicLoading) {
+                                           $ionicScrollDelegate, $rootScope,$cordovaToast,
+                                           $ionicLoading,allVendorService) {
 
     $scope.selectedServices = {}; // Stores selected services
 
@@ -19,9 +20,9 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
 
     function vendorList() {
         $ionicLoading.show();
-        firebase.database().ref('vendorList/'+locationInfo.cityId).once('value',function(response){
-            var vendors = response.val();
-            var version = response.val().version;
+        allVendorService.getVendorsList(locationInfo.cityId).then(function(response){
+            var vendors = response;
+            var version = response.version;
             for(key in vendors){
                 var venObj={
                     vid: key,
@@ -31,14 +32,14 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
             }
             window.localStorage['vendorsName'] = JSON.stringify($scope.vendorNames)
             window.localStorage['vendorsListVersion'] = version;
-        });
+        })
     }
     if(!hasVendorList){
         vendorList();
     }
     else{
-        firebase.database().ref('vendorList/'+locationInfo.cityId+'/version').once('value',function(res) {
-            var newVersion = res.val()
+        allVendorService.getVlistVersion(locationInfo.cityId).then(function(res){
+            var newVersion = res
             if(window.localStorage['vendorsListVersion']<newVersion){
                 vendorList();
             }

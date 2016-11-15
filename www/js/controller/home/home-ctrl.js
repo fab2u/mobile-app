@@ -58,27 +58,19 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 		}
 		else if(cat == 'Spa') {
 			$scope.serviceIds = ["8001"];
-			window.localStorage.setItem("serviceId",'8001');
 			VendorIdsForServices($scope.serviceIds)
-			// $state.go('vendorList');
 		}
 		else if(cat == 'Fitness') {
 			$scope.serviceIds = ["9001"];
 			VendorIdsForServices($scope.serviceIds)
-			window.localStorage.setItem("serviceId",'9001');
-			// $state.go('vendorList');
 		}
 		else if(cat == 'Wedding & Party') {
 			$scope.serviceIds = ["1101"];
 			VendorIdsForServices($scope.serviceIds)
-			window.localStorage.setItem("serviceId",'1101');
-			// $state.go('vendorList');
 		}
 		else if(cat == 'Tattoo') {
 			$scope.serviceIds = ["1201"];
 			VendorIdsForServices($scope.serviceIds)
-			window.localStorage.setItem("serviceId",'1201');
-			// $state.go('vendorList');
 		}
 	};
 

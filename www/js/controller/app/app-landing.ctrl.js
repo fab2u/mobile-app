@@ -2,269 +2,68 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                                           $cordovaDevice,$cordovaToast, $cordovaNetwork, $ionicPopup,
                                           $rootScope,$http) {
 
+
     $ionicHistory.clearHistory();
     $ionicHistory.clearCache();
     $ionicLoading.show();
-   // localStorage.clear();
+
+    var appVersion = 1;
     var appInfoNew = {};
-    var location = {};
-    $scope.updates = {};
-    $scope.walletBalance = 0;
-    $scope.data = {};
+    var updates = {};
 
-    $scope.myReferral = '';
-
-    // var appInfo = {
-    //
-    //     'trackingIdStatusFlag': '',
-    //     'customerid': '5677',
-    //     'trackingId': '8111',
-    //     'custInfo': {
-    //         'dob': '',
-    //         'name': 'sonam',
-    //         'weight': '',
-    //         'location': '',
-    //         'mobile': '801067466',
-    //         'gender': 'Female',
-    //         'Height': '',
-    //         'email': 'sonam@fab2u.com',
-    //         'address': '',
-    //         'anniversaryDate': ''
-    //     },
-    //     'deviceInfo': {
-    //         'udid': '',
-    //         'uuid': 'deeccd2ee4e13261',
-    //         'os': '',
-    //         'platform': '',
-    //         'version': '',
-    //         'model': '',
-    //         'manufacture': 'dummy',
-    //         'deviceToken': ''
-    //     },
-    //     'instanceId': ''
-    // };
-
-    // window.localStorage['appInfo'] = JSON.stringify(appInfo);
-
-
-    function updateWallet(walletBalance,NewUid){
-        $ionicLoading.show();
-        console.log("step5")
-        var walletTransactionId = db.ref('userWallet/' + NewUid+'/credit').push().key;
-        var transactionDetail = {
-            'amount': walletBalance,
-            'transactionId': walletTransactionId,
-            'bookingId': '',
-            'creditDate': new Date().getTime(),
-            'type':'Wallet Balance'
-        };
-        $scope.updates['userWallet/' +NewUid+'/credit/'+walletTransactionId] = transactionDetail;
-    }
-
-    function userUpdate(oldUserInfo,NewUid,myReferral,walletAmount) {
-        $ionicLoading.show();
-        console.log("step6")
-        var userData = {
-            activeFlag: true,
-            createdTime: new Date().getTime(),
-            deviceId: oldUserInfo.deviceInfo.uuid,
-            deviceName: oldUserInfo.deviceInfo.manufacture,
-            email: {
-                userEmail: oldUserInfo.custInfo.email,
-                verifiedTime: '',
-                emailFlag: false
-            },
-            mobile: {
-                mobileNum: oldUserInfo.custInfo.mobile,
-                mobileFlag: true
-            },
-            myReferralCode: myReferral,
-            name: oldUserInfo.custInfo.name,
-            referralCode: '',
-            referralName: '',
-            referralContact: '',
-            userId: NewUid,
-            gender: oldUserInfo.custInfo.gender
-        };
-        var referralData = {
-            uid: NewUid,
-            amount: 25,
-            amountReferred: 25,
-            referredUsers: {},
-            referredBy: '',
-            referredDate: new Date().getTime()
-        };
-        var oldUserData = {
-            oldUid:oldUserInfo.customerid,
-            oldTrackingId:oldUserInfo.trackingId,
-            newUid:NewUid,
-            oldWalletInfo:{
-                amount:walletAmount,
-                transferredDate:new Date().getTime()
-            }
-        }
-        firebase.database().ref('users/data/' + NewUid)
-            .set(userData, function (response) {
-                if (response == null) {
-                    firebase.database().ref('oldUsers/data/' + NewUid)
-                        .set(oldUserData, function (res) {
-                            if(res == null){
-                                firebase.database().ref('referralCode/' + myReferral)
-                                    .set(referralData, function (response) {
-                                        if (response == null) {
-                                            db.ref().update($scope.updates).then(function () {
-                                                console.log("success")
-                                            });
-                                        }
-                                    })
-                                window.localStorage.setItem("name", oldUserInfo.custInfo.name);
-                                window.localStorage.setItem("mobileNumber", oldUserInfo.custInfo.mobile);
-                                window.localStorage.setItem("email", oldUserInfo.custInfo.email);
-                                window.localStorage.setItem("uid", NewUid);
-                                window.localStorage.setItem("referralCode", '');
-                                $rootScope.$broadcast('logged_in', {message: 'usr logged in'});
-                                delete window.localStorage.appInfo;
-                                $state.go('intro-slider');
-                                $cordovaToast
-                                    .show('Thank You', 'long', 'center')
-                                    .then(function (success) {
-                                        // success
-                                    }, function (error) {
-                                        // error
-                                    });
-                            }
-                            else {
-                                $cordovaToast
-                                    .show('Try again!', 'long', 'center')
-                                    .then(function (success) {
-                                        // success
-                                    }, function (error) {
-                                        // error
-                                    });
-                            }
-                        })
-
+    function checkAppStatus() {
+        firebase.database().ref('appStatus').once('value', function (snapshot) {
+            var newStatus = snapshot.val();
+            if (newStatus.live == true) {
+                if (newStatus.version > appVersion) {
+                    $state.go('updateApp');
                 }
                 else {
-                    $cordovaToast
-                        .show('Try again!', 'long', 'center')
-                        .then(function (success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
-                }
-            })
-
-    }
-
-    $scope.userDataEntry = function(oldUserInfo,NewUid){
-        $ionicLoading.show();
-        console.log("inside user entry function step2")
-        $http({
-            url: 'http://139.162.53.146//api/InsertReferFriend',
-            method: "POST",
-            params: {
-                customerId: oldUserInfo.customerid,
-                trackId: oldUserInfo.trackingId
-            }
-        }).success(function(response) {
-            console.log(response);
-            $scope.myReferral = response.Items[0].code.toUpperCase();
-            console.log("old referral code",$scope.myReferral)
-            if($scope.myReferral) {
-                console.log("inside if :step2")
-                $http({
-                    url: 'http://139.162.53.146//api/GetCustomerWalletAmount',
-                    method: "GET",
-                    params: {
-                        customerId: oldUserInfo.customerid,
-                        opt: 1
+                    var hasAppInfo = checkLocalStorage("appInfo");
+                    if(hasAppInfo){
+                    //    Old user
+                        signUpOldUser();
                     }
-                }).success(function(response) {
-                    console.log(response);
-                    $scope.walletBalance = response.Items[0].walletAmount;
-                    $ionicLoading.hide();
-
-                    console.log("old balance step4",$scope.walletBalance)
-
-                });
-                if($scope.walletBalance){
-                    console.log("step4 + if balance:")
-                    updateWallet( $scope.walletBalance,NewUid);
-                    userUpdate(oldUserInfo,NewUid,$scope.myReferral,$scope.walletBalance);
-                }
-                else{
-                    $scope.walletBalance = 0;
-                    console.log("step4 - no balance:")
-
-                    userUpdate(oldUserInfo,NewUid,$scope.myReferral, $scope.walletBalance);
-                }
-            }
-
-        });
-       };
-
-    $scope.signUp = function(oldData,password){
-        $ionicLoading.show();
-        firebase.auth().createUserWithEmailAndPassword(oldData.custInfo.email, password).then(function(data){
-            $scope.uid = data.uid;
-            if($scope.uid){
-                console.log("authenticated")
-                $timeout( function() {
-                    $scope.userDataEntry(oldData,$scope.uid);
-                    $ionicLoading.hide();
-                },300);
-            }
-        })
-            .catch(function(error) {
-                // Handle Errors here.
-                var Id = db.ref('oldErrorUsers/data/').push().key;
-
-                firebase.database().ref('oldErrorUsers/data/' + Id)
-                    .set(oldData, function (response) {
-                        if(response == null){
-                            delete window.localStorage.appInfo;
-                            $state.go('login');
+                    else{
+                    //    New user
+                    //    Check if first time user
+                        var firstTimeUser = !checkLocalStorage("appInfoNew");
+                        if(firstTimeUser){
+                        //    first time user
+                            initialiseAppInfo();
                         }
-                    })
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                $ionicLoading.hide();
-                alert(errorMessage);
+                        else{
+                        //    Not first time user
+                        //    Check if user is logged in
+                            checkLoginStatus();
+                        }
+                    }
+                }
 
-
-                // $cordovaToast
-                //     .show(errorMessage, 'long', 'center')
-                //     .then(function(success) {
-                //         // success
-                //     }, function (error) {
-                //         // error
-                //     });                $timeout( function() {
-                //     $ionicLoading.hide();
-                // },300);
-                console.log("errorCode",errorCode,errorMessage)
-            })
+            }
+            else {
+                $state.go('under-construction');
+            }
+        });
     };
-    function SignUpToNewApp(oldUserData){
+    checkAppStatus();
+    function signUpOldUser(){
         $ionicPopup.show({
-            template: '<input type="password" ng-model="data.password">',
-            title: 'Please enter your six digit password',
-            // subTitle: 'Please use normal things',
+            template: '<input type="password" ng-model="password">',
+            title: 'Set your password',
+            subTitle: 'We have found that you have not setup your password yet! Please enter your six digit password.',
             scope: $scope,
             buttons: [
-                { text: 'Cancel' },
                 {
-                    text: '<b>Save</b>',
+                    text: '<b>Set Password</b>',
                     type: 'button-positive',
                     onTap: function(e) {
-                        if (!$scope.data.password) {
-                            SignUpToNewApp(oldUserData);
+                        if (!$scope.password) {
+                            signUpOldUser();
                             //don't allow the user to close unless he enters wifi password
                             e.preventDefault();
                         } else {
-                            $scope.signUp(oldUserData,$scope.data.password);
-                            // return $scope.data.password;
+                            registerOldUser();
                         }
                     }
                 }
@@ -273,103 +72,181 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
 
     }
 
-    checkAppInfo();
+    function registerOldUser(){
+        var oldUserInfo = JSON.parse(window.localStorage['appInfo']);
+        firebase.auth().createUserWithEmailAndPassword(oldUserInfo.custInfo.email, $scope.password).then(function(data){
+            $scope.uid = data.uid;
+                $timeout( function() {
+                   oldUserDataRecords(oldUserInfo);
+                },300);
+        })
+            .catch(function(error) {
+                // Handle Errors here.
+                oldUserInfo.errorCode = error.code;
+                oldUserInfo.errorMessage = error.message;
+                var Id = db.ref('oldErrorUsers/data/').push().key;
 
-    function checkAppInfo() {
-        var hasAppInfo = checkLocalStorage("appInfo");
-        var userSelectedLocation = checkLocalStorage("selectedLocation");
+                firebase.database().ref('oldErrorUsers/data/' + Id)
+                    .set(oldUserInfo, function (response) {
 
-        if (!hasAppInfo) {
-            initialiseAppInfo();
-            if(!userSelectedLocation){
-                initialiseLocation();
+                        delete window.localStorage.appInfo;
+                        $ionicPopup.show({
+                            template: '<p>Kindly contact our customer care at contact@fab2u.com or call us at 0124-406-5593</p>',
+                            title: 'Registration Error',
+                            subTitle: 'We cannot find your registration details. We apologize for the inconvenience.',
+                            scope: $scope,
+                            buttons: [
+                                {
+                                    text: '<b>Ok</b>',
+                                    type: 'button-positive',
+                                    onTap: function(e) {
+                                        location.reload();
+                                    }
+                                }
+                            ]
+                        });
+                    });
+
+            });
+    };
+
+
+    function oldUserDataRecords(oldUserInfo){
+        $http({
+            url: 'http://139.162.53.146//api/InsertReferFriend',
+            method: "POST",
+            params: {
+                customerId: oldUserInfo.customerid,
+                trackId: oldUserInfo.trackingId
             }
-        }
-        checkAppStatus();
-    }
-
-    function checkAppStatus() {
-        var checkNewUser = checkLocalStorage('appInfo');
-        if (checkNewUser) {
-            var oldUserInfo = JSON.parse(window.localStorage['appInfo']);
-            firebase.database().ref('appStatus').once('value', function(snapshot) {
-                var newStatus = snapshot.val();
-
-                console.log("newStatus",newStatus)
-                var currentStatus = JSON.parse(window.localStorage['appInfo']);
-                if(checkNewUser){
-                    $ionicLoading.hide();
-                    SignUpToNewApp(oldUserInfo);
-                    initialiseAppInfo();
-                }
-                else{
-                    $ionicLoading.hide();
-                    checkLoginStatus();
-                }
-                // if (newStatus.live == true) {
-                //     console.log("1")
-                //     if (newStatus.version > currentStatus.version) {
-                //         $ionicLoading.hide();
-                //         console.log("2")
-                //         // $state.go('app-update');
-                //         SignUpToNewApp(oldUserInfo);
-                //     } else {
-                //         checkLoginStatus();
-                //     }
-                // } else {
-                //     console.log("3")
-                //     $ionicLoading.hide();
-                //     $state.go('under-construction');
-                // }
-            });
-        } else {
-            firebase.database().ref('appStatus').once('value', function(snapshot) {
-                var newStatus = snapshot.val();
-                if (newStatus.live == false) {
-                    $ionicLoading.hide();
-                    $state.go('under-construction');
-                } else {
-                    $ionicLoading.hide();
-                    // $state.go('intro-slider');
-                    var hasCurrentBooking = checkLocalStorage('currentBooking');
-                    if(hasCurrentBooking == true){
-                    	$state.go('bill');
+        }).success(function(response) {
+            $scope.myReferral = response.Items[0].code.toUpperCase();
+            if($scope.myReferral) {
+                $http({
+                    url: 'http://139.162.53.146//api/GetCustomerWalletAmount',
+                    method: "GET",
+                    params: {
+                        customerId: oldUserInfo.customerid,
+                        opt: 1
                     }
-                    else if(window.localStorage.getItem('SkipIntro')== "true"){
-                        $state.go('app.home');
-                        // $state.go('location');
-                    }else{
-                      $state.go('intro-slider');
-                      // $state.go('location');
-                    }
-                }
-            });
-        }
+                }).success(function(response) {
+                    $scope.walletAmount = response.Items[0].walletAmount;
+                    oldUserDataUpdate(oldUserInfo);
+                });
+            }
+
+        });
+    };
+
+    function oldUserDataUpdate(oldUserInfo) {
+        var userData = {
+            activeFlag: true,
+            createdTime: new Date().getTime(),
+            deviceId: oldUserInfo.deviceInfo.uuid,
+            deviceName: oldUserInfo.deviceInfo.manufacture,
+            email: {
+                userEmail: oldUserInfo.custInfo.email,
+                emailFlag: false
+            },
+            mobile: {
+                mobileNum: oldUserInfo.custInfo.mobile,
+                mobileFlag: true
+            },
+            myReferralCode: $scope.myReferral,
+            name: oldUserInfo.custInfo.name,
+            userId: $scope.uid,
+            gender: oldUserInfo.custInfo.gender
+        };
+
+        var referralData = {
+            uid: $scope.uid,
+            amount: 25,
+            amountReferred: 25,
+            referredUsers: {},
+            referredBy: '',
+            referredDate: new Date().getTime()
+        };
+
+        var walletTransactionId = db.ref('userWallet/' + $scope.uid+'/credit').push().key;
+
+        var transactionDetail = {
+            'amount': $scope.walletAmount,
+            'transactionId': walletTransactionId,
+            'creditDate': new Date().getTime(),
+            'type':'Old Wallet Balance Transferred'
+        };
+
+        var oldUserData = {
+            oldUid:oldUserInfo.customerid,
+            newUid:$scope.uid,
+            oldWalletInfo:{
+                amount:$scope.walletAmount,
+                transferredDate:new Date().getTime(),
+                transactionId: walletTransactionId
+            }
+        };
+        updates['users/data/' + $scope.uid] = userData;
+        updates['oldUsers/data/' + $scope.uid] = oldUserData;
+        updates['referralCode/' + $scope.myReferral] = referralData;
+        updates['userWallet/' +$scope.uid+'/credit/'+walletTransactionId] = transactionDetail;
+
+        db.ref().update(updates).then(function(res){
+            if(res.val() == null){
+                window.localStorage.setItem("name", oldUserInfo.custInfo.name);
+                window.localStorage.setItem("mobileNumber", oldUserInfo.custInfo.mobile);
+                window.localStorage.setItem("email", oldUserInfo.custInfo.email);
+                window.localStorage.setItem("uid", $scope.uid);
+                window.localStorage.setItem("referralCode", '');
+                $rootScope.$broadcast('logged_in', {message: 'usr logged in'});
+                delete window.localStorage.appInfo;
+                // $state.go('intro-slider');
+                initialiseAppInfo()
+                $cordovaToast
+                    .show('Thank you.Your password set successfully!', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
+            else{
+
+                /////////////////delete old app history and user data and switch to old user as new user? /////////
+                var Id = db.ref('oldErrorUsers/data/').push().key;
+
+                firebase.database().ref('oldErrorUsers/data/' + Id)
+                    .set(oldUserInfo, function (response) {
+
+                        delete window.localStorage.appInfo;
+                        $ionicPopup.show({
+                            template: '<p>Kindly contact our customer care at contact@fab2u.com or call us at 0124-406-5593</p>',
+                            title: 'Registration Error',
+                            subTitle: 'We cannot find your registration details. We apologize for the inconvenience.',
+                            scope: $scope,
+                            buttons: [
+                                {
+                                    text: '<b>Ok</b>',
+                                    type: 'button-positive',
+                                    onTap: function(e) {
+                                        location.reload();
+                                    }
+                                }
+                            ]
+                        });
+                    });
+            }
+
+        });
     }
 
-    function checkLoginStatus() {
-        var checkLogin = checkLocalStorage('userUid');
-        var hasCurrentBooking = checkLocalStorage('currentBooking');
-        if(hasCurrentBooking == true){
-            $state.go('bill');
-        }
-        else if (checkLogin) {
-            $ionicLoading.hide();
-            $state.go('app.home');
-        } else {
-            $ionicLoading.hide();
-            $state.go('app.home');
-            // $state.go('location');
-        }
-    }
 
     function initialiseAppInfo() {
-        try {
+
             var date = new Date();
             var currTimeStamp = date.getTime();
             appInfoNew = {
                 udid: '',
-                uuid: currTimeStamp,
+                uuid: '',
                 os: '',
                 platform: '',
                 version: '',
@@ -380,9 +257,9 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                 device: null,
                 timeStamp: currTimeStamp
             };
-        } catch (e) {}
         registerDevice();
     }
+
 
     function registerDevice() {
         if (window.cordova) {
@@ -401,85 +278,38 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
             } catch (e) {
                 console.log("error",e.message);
                 appInfoNew.error = e.message;
-                appInfoNew.device = "notCordova";
+                appInfoNew.device = "errorCordova";
                 var newPostKey = firebase.database().ref().child('deviceInformation').push().key;
+                appInfoNew.uuid = newPostKey;
                 firebase.database().ref('deviceInformation/notRegistered/' + newPostKey).update(appInfoNew).then(function() {});
             };
-            window.localStorage['appInfoNew'] = JSON.stringify(appInfoNew);
         } else {
             appInfoNew.device = "notCordova";
             appInfoNew.error = "not cordova";
             var newPostKey = firebase.database().ref().child('deviceInformation').push().key;
+            appInfoNew.uuid = newPostKey;
             firebase.database().ref('deviceInformation/notRegistered/' + newPostKey).update(appInfoNew).then(function() {});
-            window.localStorage['appInfoNew'] = JSON.stringify(appInfoNew);
-        }
+        };
+        window.localStorage['appInfoNew'] = JSON.stringify(appInfoNew);
+        $state.go('intro-slider');
     }
 
-    function initialiseLocation() {
-        try {
-            location = {
-                cityId:"-KQJsLMldL5R6ReFbKr2",
-                cityName: "Gurgaon",
-                country: "India",
-                latitude: 28.4595,
-                locationId: "-KOe9LJSgmcLJx5GzaRJ",
-                locationName: "Sohna Road",
-                longitude: 77.0266,
-                state: "Haryana",
-                zoneId: "-KOe9DIxKASx33GdHx1P",
-                zoneName: "Sohna Road"
-            }
-        } catch (e) {}
-        window.localStorage['selectedLocation'] = JSON.stringify(location);
-    }
 
-    // All the booking id for active booking and their detail
-
-    function bookingInfo() {
-        var activeBookingId = [];
-        var activeBookings = [];
-        firebase.database().ref('userBookings/'+localStorage.getItem('uid')).once('value', function (response) {
-            if(response.val()){
-                angular.forEach(response.val(), function (value, key) {
-                    if(value == 'active'){
-                        activeBookingId.push(key);
-                    }
-                });
-                for (var i = 0; i < activeBookingId.length; i++) {
-                    firebase.database().ref('bookings/' + activeBookingId[i]).once('value', function (response) {
-                        if (response.val()) {
-                            activeBookings.push(response.val())
-                            window.localStorage['activeBooking'] = JSON.stringify(activeBookings);
-                        }
-                    });
-                }
-            }
-        })
-    };
-    if(localStorage.getItem('uid')){
-        bookingInfo();
-    }
-    var hasActiveBookings = checkLocalStorage('activeBooking');
-    if(hasActiveBookings) {
-        var activeBookingInformation = JSON.parse(window.localStorage['activeBooking']);
-        var sortedActiveBookings = _.sortBy(activeBookingInformation, function(o) { return o.appointmentTime; })
-        if(sortedActiveBookings[0].appointmentTime < new Date().getTime()){
-            window.localStorage['currentBooking'] = JSON.stringify(sortedActiveBookings[0]);
-            $state.go('bill');
-
-        }
-    }
-    $rootScope.$on('booking', function (event, args) {
-        bookingInfo();
-        var hasActiveBookings = checkLocalStorage('activeBooking');
-        if(hasActiveBookings) {
-            var activeBookingInformation = JSON.parse(window.localStorage['activeBooking']);
-            var sortedActiveBookings = _.sortBy(activeBookingInformation, function(o) { return o.appointmentTime; })
-            if(sortedActiveBookings[0].appointmentTime < new Date().getTime()){
-                window.localStorage['currentBooking'] = JSON.stringify(sortedActiveBookings[0]);
+    function checkLoginStatus() {
+        var checkLogin = checkLocalStorage('userUid');
+        $ionicLoading.hide();
+        if(checkLogin){
+            var hasCurrentBooking = checkLocalStorage('currentBooking');
+            if(hasCurrentBooking == true){
                 $state.go('bill');
             }
+            else{
+                $state.go('app.home');
+            }
         }
-    });
+        else{
+            $state.go('app.home');
+        }
+    }
 
 });

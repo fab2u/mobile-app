@@ -31,7 +31,6 @@ app.directive('expandingTextarea', function () {
 
 app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,$cordovaToast,
                                       $cordovaCamera, $ionicLoading){
-   $ionicLoading.show();
 
    var uid = localStorage.getItem("uid");
    db.ref("users/data/"+uid+"/name").once("value", function(snapshot){
@@ -48,6 +47,10 @@ app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,$cordov
    };
 
    $scope.feed = {};
+
+    $timeout(function () {
+        $ionicLoading.hide();
+    }, 5000);
 
    $scope.submitFeed = function(){
        if(uid){
@@ -215,9 +218,7 @@ app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,$cordov
    };
 
    function resizeImage(source){
-       $timeout(function () {
-           $ionicLoading.show();
-       }, 4000);
+     $ionicLoading.show();
       var canvas = document.createElement("canvas");
       var ctx = canvas.getContext("2d");
 
@@ -241,6 +242,9 @@ app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,$cordov
 
          })
          .error(function(response){
+             $scope.url = '';
+            alert("error: " + response);
+
              $cordovaToast
                  .show('Please try after some time', 'long', 'center')
                  .then(function(success) {

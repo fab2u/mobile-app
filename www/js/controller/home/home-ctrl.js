@@ -104,7 +104,6 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 
 	function VendorIdsForServices(serviceId) {
 		if(serviceId){
-			console.log("inside if",serviceId)
 			$scope.finalServiceIds = _.uniq(serviceId)
 			$scope.vendorIds = [];
 			// console.log($scope.finalServiceIds)

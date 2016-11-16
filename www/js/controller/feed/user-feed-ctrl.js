@@ -444,7 +444,7 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
             });
 
             function cropImage(source){
-                alert("inside crop image:")
+                alert('Image cropping')
                 $scope.modal.show();
                 basic = $('.demo').croppie({
                     viewport: {
@@ -516,9 +516,7 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 
 
             $scope.cropClick = function(){
-                $timeout(function () {
-                    $ionicLoading.show();
-                }, 4000);
+               $ionicLoading.show();
                 basic.croppie('result', {
                     type: 'canvas',
                     format: 'jpeg',
@@ -538,6 +536,7 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
                                 user.updateProfile({
                                     photoURL: response.Message
                                 }).then(function(){
+                                    $ionicLoading.hide();
                                     alert("Photo updated successfully");
                                     $scope.modal.hide();
                                     $scope.loadMore();
@@ -546,9 +545,13 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
 
                         })
                         .error(function(response){
+                            $ionicLoading.hide();
                             alert('Please try again, something went wrong');
                         });
                 });
+                $timeout(function () {
+                    $ionicLoading.show();
+                }, 4000);
             }
         }
         else{

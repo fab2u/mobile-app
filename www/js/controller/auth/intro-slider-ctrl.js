@@ -1,73 +1,32 @@
-app.controller('IntroSliderCtrl',
-    function($scope, $ionicSlideBoxDelegate, $state, $ionicLoading, $interval,$timeout) {
+app.controller('IntroSliderCtrl', function($scope, $ionicSlideBoxDelegate,
+                                           $state, $ionicLoading, $interval,$timeout) {
 
     $scope.pager = true;
-    var count = 0;
     var location = {};
+     $ionicLoading.show();
+     $timeout(function () {
+            $ionicLoading.hide();
+     }, 1000);
 
     var hasLocation = checkLocalStorage('selectedLocation');
     if (hasLocation) {
         location = JSON.parse(window.localStorage['selectedLocation']);
     } else {
-        location = {
-            cityId:"-KOe8n_TOSKc29trcGJh",
-            cityName: "Gurgaon",
-            country: "India",
-            latitude: 28.4595,
-            locationId: "-KOe9LJSgmcLJx5GzaRJ",
-            locationName: "Sohna Road",
-            longitude: 77.0266,
-            state: "Haryana",
-            zoneId: "-KOe9DIxKASx33GdHx1P",
-            zoneName: "Sohna Road"
-        }
-        window.localStorage['selectedLocation'] = JSON.stringify(location);
+        db.ref('defaultLocation').once('value', function (snapshot) {
+            setLocation(snapshot.val());
+        });
     }
-
-
-        updateLocalData();
+    function setLocation(locationInfo){
+       console.log("locationInfo",locationInfo);
+       window.localStorage['selectedLocation'] = JSON.stringify(locationInfo);
+    }
 
     function updateLocalData() {
         db.ref('appStatus').once('value', function(snapshot) {
             updateAppStatus(snapshot.val());
-            // updateLocationData();
-            // updateNearbyData();
-            // updateProjectData();
         });
     };
-
-
-    // function updateLocationData() {
-    //     db.ref('location/' + location.cityId).once('value', function(data) {
-    //         window.localStorage['allLocations'] = JSON.stringify(data.val());
-    //         count = count + 1;
-    //     })
-    // }
-
-    // function updateNearbyData() {
-    //     db.ref('nearby/' + location.cityId).once('value', function(data) {
-    //         window.localStorage['allnearbyLocations'] = JSON.stringify(data.val());
-    //         count = count + 1;
-    //     });
-
-    //     db.ref('nearbyDistance/' + location.cityId).once('value', function(data2) {
-    //         window.localStorage['allnearbyDistances'] = JSON.stringify(data2.val());
-    //         count = count + 1;
-    //     });
-    // }
-
-    // function updateProjectData() {
-    //     db.ref('projects/' + location.cityId + '/residential').once('value', function(data) {
-    //         window.localStorage['allProjectsData'] = JSON.stringify(data.val());
-    //         count = count + 1;
-    //     });
-
-    //     db.ref('projectDisplayData/' + location.cityId + '/residential').once('value', function(data2) {
-    //         window.localStorage['allDisplayData'] = JSON.stringify(data2.val());
-    //         count = count + 1;
-    //     });
-    // }
-
+    updateLocalData();
 
 
     function updateAppStatus(newData) {
@@ -81,29 +40,17 @@ app.controller('IntroSliderCtrl',
     }
 
     $scope.skipSlide = function() {
-        // $ionicSlideBoxDelegate.slide(5);
-        // $scope.pager = false;
-        // $ionicSlideBoxDelegate.update();
-        // $ionicLoading.show();
-        // stop = $interval(function() {
-        //     window.localStorage.setItem('SkipIntro','true');
-        //     $ionicLoading.hide();
-        //     $interval.cancel(stop);
-        //     $state.go('app.home');
-        //     // }
-        // }, 200);
         $scope.pager = false;
         $ionicLoading.show();
         window.localStorage.setItem('SkipIntro','true');
         $timeout( function() {
             $ionicLoading.hide();
             $state.go('location');
-            // $state.go('app.home');
         },500);
     };
 
     $scope.nextSlide = function() {
-            $ionicSlideBoxDelegate.next();
+      $ionicSlideBoxDelegate.next();
     };
 
     $scope.slideChanged = function() {
@@ -113,13 +60,9 @@ app.controller('IntroSliderCtrl',
             $ionicLoading.show();
             stop = $interval(function() {
                 window.localStorage.setItem('SkipIntro','true');
-
-                // if (count == 5) {
-                    $ionicLoading.hide();
+                 $ionicLoading.hide();
                     $interval.cancel(stop);
                     $state.go('location');
-                // $state.go('app.home');
-                // }
             }, 200);
         }
     }

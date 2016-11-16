@@ -141,6 +141,21 @@ app
 		controller: 'FavouriteCtrl'
 	});
 
+	//State for update app
+	$stateProvider.state('updateApp', {
+		url: '/updateApp',
+		templateUrl: 'templates/general/updateApp.html',
+		controller: 'updateAppCtrl'
+
+	});
+	$stateProvider.state('under-construction', {
+		url: '/under-construction',
+		templateUrl: 'templates/general/AppUnderConstruction.html',
+		controller: 'AppUnderConstructionCtrl'
+
+	});
+
+
 	//State for cart
 	$stateProvider.state('cart', {
 		url: '/cart/:ven_id',

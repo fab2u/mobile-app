@@ -18,8 +18,6 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
 
     var VendorServiceList  = JSON.parse(window.localStorage['VendorServiceList']);
 
-    console.log("VendorServiceList",VendorServiceList)
-
     function vendorList() {
         $ionicLoading.show();
         allVendorService.getVendorsList(locationInfo.cityId).then(function(response){

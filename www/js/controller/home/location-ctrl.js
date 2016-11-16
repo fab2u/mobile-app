@@ -18,6 +18,9 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 	if($ionicHistory.backView().stateName == 'app.home'){
 		$scope.backButtonValue = true;
 	}
+	else{
+		$scope.backButtonValue = false;
+	}
 
     $scope.backButton = function(){
         $state.go('app.home');

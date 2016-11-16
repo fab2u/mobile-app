@@ -9,7 +9,7 @@
     }
     </style>
     <ion-content id="full-content-slider" scroll="false">
-        <ion-slide-box on-slide-changed="slideChanged(index)" show-pager="true" ng-class="pager? 'show-pager': 'no-pager'">
+        <ion-slide-box show-pager="true">
             <ion-slide>
                 <ion-content>
                     <div class="box background-white">
@@ -40,7 +40,7 @@
             </ion-slide>
         </ion-slide-box>
     </ion-content>
-    <ion-footer-bar ng-show="pager">
+    <ion-footer-bar>
         <div class="bar bar-footer bar-dark">
             <button ng-click="skipSlide()" class="button button-clear pull-left padding-right">Skip</button>
             <button ng-click="nextSlide($index)" class="button button-clear pull-right padding-right">Next</button>
@@ -52,58 +52,3 @@
         <span>Please wait...</span>
     </script>
 </ion-view>
-<!-- 
-<ion-view>
-	<ion-content id="full-content-slider" scroll="false">
-		<ion-slide-box on-slide-changed="slideChanged(index)">
-          <ion-slide>
-            <ion-content>
-              <div class="box background-white">
-                <img ng-src="img/intro-slider/final1.jpg" align="middle">                
-              </div>
-            </ion-content>
-          </ion-slide>
-          <ion-slide>
-            <ion-content>
-              <div class="box background-white">
-                <img ng-src="img/intro-slider/final2.jpg" align="middle"> 
-              </div>
-            </ion-content>
-          </ion-slide>
-          <ion-slide>
-            <ion-content>
-              <div class="box background-white">
-               <img ng-src="img/intro-slider/final3.jpg" align="middle"> 
-              </div>
-            </ion-content>
-          </ion-slide>
-          <ion-slide>
-            <ion-content>
-              <div class="box background-white">
-               <img ng-src="img/intro-slider/final4.jpg" align="middle">               
-              </div>
-            </ion-content>
-          </ion-slide>
-          <ion-slide>
-            <ion-content>
-              <div class="box background-white">
-               <img ng-src="img/intro-slider/final5.jpg" align="middle">               
-              </div>
-            </ion-content>
-          </ion-slide>
-          <ion-slide>
-            <ion-content>
-              <div class="box background-white">
-               <img ng-src="img/intro-slider/final6.jpg" align="middle">               
-              </div>
-            </ion-content>
-          </ion-slide>
-        </ion-slide-box>
-	</ion-content>
-  <ion-footer-bar>
-    <div class="bar bar-footer bar-assertive">
-    <button ng-click="skipSlide()" class="button button-clear pull-left padding-right">Skip</button>
-    <button ng-click="nextSlide($index)" class="button button-clear pull-right padding-right">Next</button>
-  </div>
-  </ion-footer-bar>
-</ion-view> -->

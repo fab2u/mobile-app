@@ -8,27 +8,33 @@ app.controller('ReferralDetailsCtrl',function($scope,$timeout,$state,$ionicLoadi
 		$ionicLoading.hide();
 	}, 10000);
 
-	$scope.myReferralCode = '';
 	$scope.goToRefer = function(){
 		$state.go('refer');
 	};
 
-	function referredByInfo(referredBy) {
-		firebase.database().ref('/users/data/' + referredBy).once('value', function (response) {
-			$scope.referredByDetail = response.val();
-			$ionicLoading.hide();
-		})
-	}
+	function myReferral() {
+		$ionicLoading.show();
+		firebase.database().ref('/users/data/' + window.localStorage.getItem('uid')).once('value', function (response) {
+			if(response.val()){
+				$scope.myReferralCode = response.val().myReferralCode;
+				myReferralHistory()
+			}
+			else{
+				$ionicLoading.hide();
+			}
+		});
+	};
+    myReferral();
 
-	function myReferralHistory(myReferralCode){
-		firebase.database().ref('referralCode/'+myReferralCode)
+	function myReferralHistory(){
+		firebase.database().ref('referralCode/'+$scope.myReferralCode)
 			.once('value', function (response) {
 				if(response.val()){
 					$scope.referralDetails = response.val().referredUsers;
 					$scope.referredBy = response.val().referredBy;
 					$scope.referredDate = response.val().referredDate;
 					if($scope.referredBy){
-						referredByInfo($scope.referredBy)
+						referredByInfo()
 					}
 					else{
 						$scope.msg = 'Referred by none!';
@@ -42,19 +48,16 @@ app.controller('ReferralDetailsCtrl',function($scope,$timeout,$state,$ionicLoadi
 			})
 	}
 
-	$scope.myReferral = function() {
-		$ionicLoading.show();
-		firebase.database().ref('/users/data/' + window.localStorage.getItem('uid')).once('value', function (response) {
-			if(response.val()){
-				$scope.myReferralCode = response.val().myReferralCode;
-				myReferralHistory($scope.myReferralCode)
-			}
-			else{
-				$ionicLoading.hide();
-			}
-		});
-	};
-	$scope.myReferral();
+	function referredByInfo() {
+		firebase.database().ref('/users/data/' + $scope.referredBy).once('value', function (response) {
+			$scope.referredByDetail = response.val();
+			$ionicLoading.hide();
+		})
+	}
+
+
+
+
 
 	$scope.referNearn = function () {
 		$state.go('refer');

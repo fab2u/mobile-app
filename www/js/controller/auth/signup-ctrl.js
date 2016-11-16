@@ -1,4 +1,4 @@
-app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ionicLoading,$ionicPopup,
+app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordovaDevice,$ionicLoading,$ionicPopup,
                                       $timeout,$rootScope,$cordovaToast){
     $scope.generatedCode = '';
     $scope.myReferral = '';
@@ -8,8 +8,11 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
     $scope.referralName = '';
     $scope.referralContact = '';
     $scope.user_device_register = false;
+    $scope.user = {};
 
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+
+
 
 
 
@@ -203,37 +206,51 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
         }
 
 
+
     $scope.signup = function(){
-        $ionicLoading.show();
-        firebase.auth().createUserWithEmailAndPassword($scope.user.email, $scope.user.password).then(function(data){
-            $scope.uid = data.uid;
-            if($scope.uid){
+        signUpService.signUp($scope.user.email,$scope.user.password,$scope.user.name).then(function(res){
+            console.log("res",res);
+            if($scope.user.referral_code){
                 $scope.sendVerification();
                 $scope.generateMyReferralCode($scope.user.name);
-                if($scope.user.referral_code){
-                    $scope.checkValidCode($scope.user.referral_code);
-                }
-                $timeout( function() {
-                    $ionicLoading.hide();
-                },300);
+                $scope.checkValidCode($scope.user.referral_code);
+            }
+            else{
+                $scope.sendVerification();
+                $scope.generateMyReferralCode($scope.user.name);
             }
         })
-            .catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-                $cordovaToast
-                    .show(errorMessage, 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });                $timeout( function() {
-                    $ionicLoading.hide();
-                },300);
-                console.log("errorCode",errorCode,errorMessage)
-        })
     };
+
+    // $scope.signup = function(){
+    //     $ionicLoading.show();
+    //     firebase.auth().createUserWithEmailAndPassword($scope.user.email, $scope.user.password).then(function(data){
+    //         $scope.uid = data.uid;
+    //         if($scope.uid){
+    //             $scope.sendVerification();
+    //             $scope.generateMyReferralCode($scope.user.name);
+    //             if($scope.user.referral_code){
+    //                 $scope.checkValidCode($scope.user.referral_code);
+    //             }
+    //           $ionicLoading.hide();
+    //         }
+    //     })
+    //         .catch(function(error) {
+    //             $ionicLoading.hide();
+    //
+    //             // Handle Errors here.
+    //         var errorCode = error.code;
+    //         var errorMessage = error.message;
+    //             $cordovaToast
+    //                 .show(errorMessage, 'long', 'center')
+    //                 .then(function(success) {
+    //                     // success
+    //                 }, function (error) {
+    //                     // error
+    //                 });
+    //             console.log("errorCode",errorCode,errorMessage)
+    //     })
+    // };
 
     $scope.generateVerificationCode = function(){
         var a = Math.floor(100000 + Math.random() * 900000)
@@ -399,49 +416,43 @@ app.controller("SignupCtrl", function($scope, $http,$state, $cordovaDevice,$ioni
                             referredBy:'',
                             referredDate:new Date().getTime()
                         };
-                        firebase.database().ref('users/data/'+$scope.uid)
-                            .set(userData,function(response) {
-                                if(response == null){
-                                    firebase.database().ref('referralCode/'+$scope.myReferral)
-                                        .set(referralData,function(response){
-                                            if(response == null){
-                                                console.log("update json",JSON.stringify($scope.updates))
-                                                db.ref().update($scope.updates).then(function(){
-                                                    console.log("success")
-                                                });
-                                            }
-                                        })
-                                    window.localStorage.setItem("name", $scope.user.name);
-                                    window.localStorage.setItem("mobileNumber", $scope.user.mobile_num);
-                                    window.localStorage.setItem("email", $scope.user.email);
-                                    window.localStorage.setItem("uid", $scope.uid);
-                                    window.localStorage.setItem("referralCode", $scope.user.referral_code);
-                                    $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-                                    if(localStorage.getItem('confirmation') == 'true'){
-                                        localStorage.setItem('confirmation', '');
-                                        $state.go('confirmation');
-                                    }
-                                    else{
-                                        $state.go('app.home');
-                                    }
-                                    $cordovaToast
-                                        .show('Your account is successfully created.', 'long', 'center')
-                                        .then(function(success) {
-                                            // success
-                                        }, function (error) {
-                                            // error
-                                        });
+
+                        $scope.updates['users/data/'+$scope.uid] = userData;
+                        $scope.updates['referralCode/'+$scope.myReferral] = referralData;
+
+                        db.ref().update($scope.updates).then(function(response){
+                            if(response == null){
+                                window.localStorage.setItem("name", $scope.user.name);
+                                window.localStorage.setItem("mobileNumber", $scope.user.mobile_num);
+                                window.localStorage.setItem("email", $scope.user.email);
+                                window.localStorage.setItem("uid", $scope.uid);
+                                window.localStorage.setItem("referralCode", $scope.user.referral_code);
+                                $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
+                                if(localStorage.getItem('confirmation') == 'true'){
+                                    localStorage.setItem('confirmation', '');
+                                    $state.go('confirmation');
                                 }
                                 else{
-                                    $cordovaToast
-                                        .show('Try again!', 'long', 'center')
-                                        .then(function(success) {
-                                            // success
-                                        }, function (error) {
-                                            // error
-                                        });
+                                    $state.go('app.home');
                                 }
-                            })
+                                $cordovaToast
+                                    .show('Your account is successfully created.', 'long', 'center')
+                                    .then(function(success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+                            }
+                            else{
+                                $cordovaToast
+                                    .show('Try again!', 'long', 'center')
+                                    .then(function(success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+                            }
+                        });
                     })
 
             }

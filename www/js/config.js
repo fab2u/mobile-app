@@ -178,13 +178,6 @@ app
 		controller: 'SignupCtrl'
 	});
 
-	//State for email verification
-	$stateProvider.state('verify', {
-		url: '/verify',
-		templateUrl: 'templates/auth/verify-email.html',
-		controller: 'verifyEmailCtrl'
-	});
-
 	//State for vendorList
 	$stateProvider.state('vendorList', {
 		url: '/vendorList/:vendorPage',

@@ -8,7 +8,7 @@ app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $io
             $ionicHistory.goBack();
         }
         else{
-            $state.go('menu.home');
+            $state.go('app.home');
         }
     }
 

@@ -33,6 +33,9 @@ app.controller('VendorDetailsCtrl',
         if(window.localStorage.getItem("selectedTab")=='true'){
             $scope.menu_button = false;
         }
+        else{
+            $scope.menu_button = true;
+        }
 
         // Get selected services if previously stored in localstorage
         if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {

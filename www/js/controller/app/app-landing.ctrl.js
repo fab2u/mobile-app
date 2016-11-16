@@ -1,13 +1,13 @@
 app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ionicLoading, $state,
-                                          $cordovaDevice,$cordovaToast, $cordovaNetwork, $ionicPopup,
-                                          $rootScope,$http) {
+                                          $cordovaDevice,$cordovaToast, $ionicPopup,
+                                          $rootScope,$http,signUpService) {
 
 
     $ionicHistory.clearHistory();
     $ionicHistory.clearCache();
     $ionicLoading.show();
 
-    var appVersion = 1;
+    var appVersion = 1; ///////version increase when upload
     var appInfoNew = {};
     var updates = {};
 
@@ -47,11 +47,12 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
         });
     };
     checkAppStatus();
+
     function signUpOldUser(){
         $ionicPopup.show({
             template: '<input type="password" ng-model="password">',
             title: 'Set your password',
-            subTitle: 'We have found that you have not setup your password yet! Please enter your six digit password.',
+            subTitle: 'We have found that you have not setup your password yet! Please enter minimum six digit password.',
             scope: $scope,
             buttons: [
                 {
@@ -63,7 +64,18 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                             //don't allow the user to close unless he enters wifi password
                             e.preventDefault();
                         } else {
-                            registerOldUser();
+                            if($scope.password.length ==6||$scope.password.length>6){
+                                registerOldUser();
+                            }
+                            else{
+                                $cordovaToast
+                                    .show('Please enter at-least six digit password!', 'long', 'center')
+                                    .then(function (success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+                            }
                         }
                     }
                 }
@@ -74,40 +86,11 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
 
     function registerOldUser(){
         var oldUserInfo = JSON.parse(window.localStorage['appInfo']);
-        firebase.auth().createUserWithEmailAndPassword(oldUserInfo.custInfo.email, $scope.password).then(function(data){
-            $scope.uid = data.uid;
-                $timeout( function() {
-                   oldUserDataRecords(oldUserInfo);
-                },300);
+        signUpService.oldUserSignUp(oldUserInfo, $scope.password).then(function(res){
+            console.log("res",res)
+            $scope.uid = res;
+            oldUserDataRecords(oldUserInfo);
         })
-            .catch(function(error) {
-                // Handle Errors here.
-                oldUserInfo.errorCode = error.code;
-                oldUserInfo.errorMessage = error.message;
-                var Id = db.ref('oldErrorUsers/data/').push().key;
-
-                firebase.database().ref('oldErrorUsers/data/' + Id)
-                    .set(oldUserInfo, function (response) {
-
-                        delete window.localStorage.appInfo;
-                        $ionicPopup.show({
-                            template: '<p>Kindly contact our customer care at contact@fab2u.com or call us at 0124-406-5593</p>',
-                            title: 'Registration Error',
-                            subTitle: 'We cannot find your registration details. We apologize for the inconvenience.',
-                            scope: $scope,
-                            buttons: [
-                                {
-                                    text: '<b>Ok</b>',
-                                    type: 'button-positive',
-                                    onTap: function(e) {
-                                        location.reload();
-                                    }
-                                }
-                            ]
-                        });
-                    });
-
-            });
     };
 
 
@@ -191,16 +174,12 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
         updates['userWallet/' +$scope.uid+'/credit/'+walletTransactionId] = transactionDetail;
 
         db.ref().update(updates).then(function(res){
-            if(res.val() == null){
-                window.localStorage.setItem("name", oldUserInfo.custInfo.name);
-                window.localStorage.setItem("mobileNumber", oldUserInfo.custInfo.mobile);
-                window.localStorage.setItem("email", oldUserInfo.custInfo.email);
-                window.localStorage.setItem("uid", $scope.uid);
-                window.localStorage.setItem("referralCode", '');
+            if(res == null){
                 $rootScope.$broadcast('logged_in', {message: 'usr logged in'});
                 delete window.localStorage.appInfo;
                 // $state.go('intro-slider');
-                initialiseAppInfo()
+                $scope.oldUser = true;
+                initialiseAppInfo();
                 $cordovaToast
                     .show('Thank you.Your password set successfully!', 'long', 'center')
                     .then(function (success) {
@@ -257,9 +236,18 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                 device: null,
                 timeStamp: currTimeStamp
             };
-        registerDevice();
+        initialiseLocation();
     }
 
+    function initialiseLocation(){
+        db.ref('defaultLocation').once('value', function (snapshot) {
+            $timeout(function(){
+                var locationInfo = snapshot.val();
+                window.localStorage['selectedLocation'] = JSON.stringify(locationInfo);
+                registerDevice();
+            },200);
+        });
+    }
 
     function registerDevice() {
         if (window.cordova) {
@@ -291,15 +279,19 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
             firebase.database().ref('deviceInformation/notRegistered/' + newPostKey).update(appInfoNew).then(function() {});
         };
         window.localStorage['appInfoNew'] = JSON.stringify(appInfoNew);
-        $state.go('intro-slider');
+        if($scope.oldUser){
+            $state.go('location');
+        }else{
+            $state.go('intro-slider');
+        }
+
     }
 
 
     function checkLoginStatus() {
-        var checkLogin = checkLocalStorage('userUid');
-        $ionicLoading.hide();
-        if(checkLogin){
-            var hasCurrentBooking = checkLocalStorage('currentBooking');
+        var user = firebase.auth().currentUser;
+        if(user){
+            var hasCurrentBooking = checkLocalStorage('currentBookingId');
             if(hasCurrentBooking == true){
                 $state.go('bill');
             }

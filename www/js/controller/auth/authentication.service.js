@@ -1,13 +1,17 @@
-app.factory("AuthenticationService", function($http, $location,$rootScope,$state, $timeout){
+app.factory("AuthenticationService", function($http, $location,$rootScope,$state,$cordovaToast,
+                                              $ionicLoading,$timeout){
    var service = {};
    service.LoginEmail = LoginEmail;
-   service.LoginGmail = LoginGmail;
    service.Logout = Logout;
    service.checkAuthentication = checkAuthentication;
-
    return service;
 
-   function LoginEmail(email,password,callback) {
+   $timeout(function () {
+      $ionicLoading.hide();
+   }, 2000);
+
+   function LoginEmail(email,password) {
+      $ionicLoading.show();
       firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
          db.ref().child("users").child("data").child(user.uid).on("value", function (snapshot) {
             console.log(snapshot.val());
@@ -17,58 +21,76 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
             window.localStorage.setItem("uid", user.uid);
             if(localStorage.getItem('confirmation') == 'true'){
                localStorage.setItem('confirmation', '');
+               $cordovaToast
+                   .show('Logged in successfully!', 'long', 'center')
+                   .then(function(success) {
+                      // success
+                   }, function (error) {
+                      // error
+                   });
+               $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
+               $ionicLoading.hide();
                $state.go('confirmation');
             }
             else{
+               $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
+
+               // $cordovaToast
+               //     .show('Logged in successfully!', 'long', 'center')
+               //     .then(function(success) {
+               //        // success
+               //     }, function (error) {
+               //        // error
+               //     });
+               $ionicLoading.hide();
                $state.go('app.home');
             }
          });
       }).catch(function(error) {
-               var errorCode = error.code;
-               var errorMessage = error.message;
-            });
-
-   }
-
-
-   function LoginGmail(){
-      var provider = new firebase.auth.GoogleAuthProvider();
-      provider.addScope('https://www.googleapis.com/auth/plus.login');
-      firebase.auth().signInWithPopup(provider).then(function(result) {
-         var token = result.credential.accessToken;
-         var user = result.user;
-         console.log(user);
-         console.log(user.uid);
-         console.log(user.email);
-         var ref = db.ref().child("users").orderByKey().equalTo(user.uid);
-         ref.once("value", function(snapshot){
-            console.log(snapshot.exists());
-            if(snapshot.exists() == false){
-               var newPostKey = firebase.database().ref().child('users').push().key;
-               var postData = {
-                  email: user.email,
-                  created_date: new Date(),
-                  uid: user.uid,
-                  email_flag: true,
-                  active_flag: true,
-               };
-              // Write the new post's data simultaneously in the posts list and the user's post list.
-              var updates = {};
-              updates['/users/' + user.uid] = postData;
-              db.ref().update(updates);
-            }
-         });
-         window.localStorage.setItem("email", user.email);
-         window.localStorage.setItem("uid", user.uid);
-         console.log(window.localStorage);
-         $timeout(function(){
-            $location.path('/app/home');
-         }, 0);
-      }).catch(function(error) {
-         console.log(error);
-         console.log("error in google signin");
+         $ionicLoading.hide();
+         // Handle Errors here.
+         var errorCode = error.code;
+         var errorMessage = error.message;
+         if(errorCode === 'auth/invalid-email'){
+            $cordovaToast
+                .show('You entered wrong email address!', 'long', 'center')
+                .then(function(success) {
+                   // success
+                }, function (error) {
+                   // error
+                });
+         }
+         else if(errorCode === 'auth/user-disabled'){
+            $cordovaToast
+                .show('Your access is temporary denied!', 'long', 'center')
+                .then(function(success) {
+                   // success
+                }, function (error) {
+                   // error
+                });
+         }
+         else if(errorCode === 'auth/user-not-found'){
+            $cordovaToast
+                .show('Sorry,currently you are not registered with us!', 'long', 'center')
+                .then(function(success) {
+                   // success
+                }, function (error) {
+                   // error
+                });
+         }
+         else if(errorCode === 'auth/wrong-password'){
+            $cordovaToast
+                .show('You entered wrong password!', 'long', 'center')
+                .then(function(success) {
+                   // success
+                }, function (error) {
+                   // error
+                });
+         }
       });
+
    }
+
 
    function Logout(){
       console.log(window.localStorage);
@@ -94,11 +116,8 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
    function checkAuthentication(){
       firebase.auth().onAuthStateChanged(function(user) {
          if (user) {
-            console.log("yes login");
-            console.log(user);
             console.log(user.uid);
          } else {
-            console.log("no login");
             $location.path("/login");
          }
       });

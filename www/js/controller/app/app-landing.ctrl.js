@@ -6,6 +6,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     $ionicHistory.clearHistory();
     $ionicHistory.clearCache();
     $ionicLoading.show();
+    $scope.data = {};
 
     var appVersion = 1; ///////version increase when upload over play store //////////
     var appInfoNew = {};
@@ -49,8 +50,9 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     checkAppStatus();
 
     function signUpOldUser(){
+        $ionicLoading.hide();
         $ionicPopup.show({
-            template: '<input type="password" ng-model="password">',
+            template: '<input type="password" ng-model="data.password">',
             title: 'Set your password',
             subTitle: 'We have found that you have not setup your password yet! Please enter minimum six digit password.',
             scope: $scope,
@@ -59,12 +61,13 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                     text: '<b>Set Password</b>',
                     type: 'button-positive',
                     onTap: function(e) {
-                        if (!$scope.password) {
+                        if (!$scope.data.password) {
+                            console.log($scope.data.password)
                             signUpOldUser();
                             //don't allow the user to close unless he enters wifi password
                             e.preventDefault();
                         } else {
-                            if($scope.password.length ==6||$scope.password.length>6){
+                            if($scope.data.password.length ==6||$scope.data.password.length>6){
                                 registerOldUser();
                             }
                             else{
@@ -88,7 +91,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
 
     function registerOldUser(){
         var oldUserInfo = JSON.parse(window.localStorage['appInfo']);
-        signUpService.oldUserSignUp(oldUserInfo, $scope.password).then(function(res){
+        signUpService.oldUserSignUp(oldUserInfo, $scope.data.password).then(function(res){
             console.log("res",res)
             $scope.uid = res;
             oldUserDataRecords(oldUserInfo);

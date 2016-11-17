@@ -110,6 +110,9 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
       delete window.localStorage.email;
       delete window.localStorage.uid;
       delete window.localStorage.name;
+      delete window.localStorage.allBookingInfo;
+      delete window.localStorage.mobileNumber;
+      delete window.localStorage.mobile_verify;
       // $http.defaults.headers.common.uid = '';
    }
 

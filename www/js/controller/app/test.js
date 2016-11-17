@@ -17,8 +17,8 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     // var appInfo = {
     //
     //     'trackingIdStatusFlag': '',
-    //     'customerid': '5677',
-    //     'trackingId': '8111',
+    //     'customerid': '1',
+    //     'trackingId': '18913',
     //     'custInfo': {
     //         'dob': '',
     //         'name': 'sonam',
@@ -27,7 +27,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     //         'mobile': '801067466',
     //         'gender': 'Female',
     //         'Height': '',
-    //         'email': 'sonam@fab2u.com',
+    //         'email': 'sonam2@fab2u.com',
     //         'address': '',
     //         'anniversaryDate': ''
     //     },

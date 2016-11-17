@@ -9,40 +9,39 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
     $scope.cancelButton = false;
     $scope.vendorAddress = '';
     $scope.bookingInformation = {};
-
-
+    var allBookingInfo = JSON.parse(window.localStorage['allBookingInfo'])
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
-    var hasCurrentBooking = checkLocalStorage('currentBooking');
+    var hasCurrentBooking = checkLocalStorage('BookingIdToMarkStatus');
     if(hasCurrentBooking){
-        $scope.bookingInformation = JSON.parse(window.localStorage['currentBooking']);
-        $scope.vendorId = $scope.bookingInformation.vendorId;
-        db.ref('vendors/'+locationInfo.cityId+'/vendors/'+$scope.vendorId).once('value', function(response){
+         $scope.bookingIdToMarkStatus = window.localStorage['BookingIdToMarkStatus'];
+
+        console.log("bookingIdToMarkStatus",$scope.bookingIdToMarkStatus)
+
+        db.ref('bookings/'+$scope.bookingIdToMarkStatus).once('value',function (response) {
             if(response.val()){
-                $scope.bookingInformation.venue = response.val().vendorName;
-                $scope.bookingInformation.address1 = response.val().address.address1;
-                $scope.bookingInformation.address2 = response.val().address.address2;
-                $scope.bookingInformation.vendorLat = response.val().address.latitude;
-                $scope.bookingInformation.vendorLong = response.val().address.longitude;
-                $scope.bookingInformation.vendorName = response.val().contactDetails.name;
-                $scope.vendorAddress = response.val();
-                $ionicLoading.hide();
+                $scope.bookingInformation = response.val();
+                db.ref('vendors/'+locationInfo.cityId+'/vendors/'+$scope.bookingInformation.vendorId).once('value', function(response){
+                        if(response.val()){
+                            $scope.bookingInformation.venue = response.val().vendorName;
+                            $scope.bookingInformation.address1 = response.val().address.address1;
+                            $scope.bookingInformation.address2 = response.val().address.address2;
+                            $scope.bookingInformation.vendorLat = response.val().address.latitude;
+                            $scope.bookingInformation.vendorLong = response.val().address.longitude;
+                            $scope.bookingInformation.vendorName = response.val().contactDetails.name;
+                            $scope.vendorAddress = response.val();
+                            $ionicLoading.hide();
+                        }
+                        else{
+                            $ionicLoading.hide();
+                        }
+                    });
             }
             else{
                 $ionicLoading.hide();
             }
-        });
+
+        })
         $scope.cancelButton = true;
-        //// To check we, can cancel a booking or not! ///////
-        // $scope.isActiveCancel = function(){
-        //     if($scope.bookingInformation.appointmentTime>new Date().getTime()){
-        //         $scope.cancelButton = true;
-        //     }
-        //     else{
-        //         $scope.cancelButton = false;
-        //     }
-        // };
-        //
-        // $scope.isActiveCancel();
     }
   else if(window.localStorage.getItem("currentBookingId")){
        firebase.database().ref('bookings/' + window.localStorage.getItem("currentBookingId")).once('value', function (response) {
@@ -79,10 +78,6 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
             'name': vendorName
         });
     };
-
-
-
-
     $scope.home = function(){
         window.localStorage.setItem("currentBookingId", '');
         $state.go('app.home');
@@ -200,8 +195,10 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
         updates['userBookings/' + localStorage.getItem('uid') + '/' + $scope.bookingInformation.bookingId] = 'Availed';
         updates['vendorBookings/' + $scope.bookingInformation.vendorId + '/' + $scope.bookingInformation.bookingId] = 'Availed';
         db.ref().update(updates).then(function () {
-            delete window.localStorage.currentBooking;
-            delete window.localStorage.activeBooking;
+            ///// delete booking id from local storage ///////
+            delete allBookingInfo[$scope.bookingIdToMarkStatus];
+            window.localStorage['allBookingInfo'] = JSON.stringify(allBookingInfo);
+            delete window.localStorage.BookingIdToMarkStatus;
             $ionicLoading.hide();
             $cordovaToast
                 .show('Your review has been submitted successfully!', 'long', 'center')
@@ -224,10 +221,14 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
         updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'notAvailed';
         updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'notAvailed';
         db.ref().update(updates).then(function(){
-            delete window.localStorage.currentBooking;
-            delete window.localStorage.activeBooking;
+            ///// delete booking id from local storage ///////
+             delete allBookingInfo[$scope.bookingIdToMarkStatus];
+             window.localStorage['allBookingInfo'] = JSON.stringify(allBookingInfo);
+             delete window.localStorage.BookingIdToMarkStatus;
+
             $state.go('app.home');
             $ionicLoading.hide();
+            /////////////delete booking id from local storage
             $rootScope.$broadcast('booking', { message: 'booking changed' });
         });
     };

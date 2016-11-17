@@ -133,17 +133,22 @@ app.controller('VendorDetailsCtrl',
 
         ////// To get vendor fav or not //////////////
 
-
-        if(localStorage.getItem('uid')){
-            firebase.database().ref('favourites/'+localStorage.getItem('uid'))
-                .once('value',function(response) {
-                    angular.forEach(response.val(),function (value,key) {
-                        if(value.vendorId == $stateParams.ven_id){
-                            $scope.liked = true;
-                        }
+        function getFavVendor() {
+            if(localStorage.getItem('uid')){
+                firebase.database().ref('favourites/'+localStorage.getItem('uid'))
+                    .once('value',function(response) {
+                        angular.forEach(response.val(),function (value,key) {
+                            if(value.vendorId == $stateParams.ven_id){
+                                $scope.liked = true;
+                            }
+                        })
                     })
-                })
+            }
+            else{
+                $scope.liked = false;
+            }
         }
+        getFavVendor()
 
 /// To get review for a particular vendor ///////
         $scope.review_info = [];

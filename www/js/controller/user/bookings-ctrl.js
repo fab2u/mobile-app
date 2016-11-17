@@ -11,6 +11,7 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 	}, 10000);
 
 	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+	var allBookingInfo = JSON.parse(window.localStorage['allBookingInfo'])
 
 	$scope.bookingIds = [];
 	$scope.allBookings = [];
@@ -126,8 +127,9 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 					updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancelled';
 					updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancelled';
 					db.ref().update(updates).then(function(){
-						delete window.localStorage.currentBooking;
-						delete window.localStorage.activeBooking;
+                       ///// delete booking id from local storage ///////
+						delete allBookingInfo[$scope.bookingInformation.bookingId];
+						window.localStorage['allBookingInfo'] = JSON.stringify(allBookingInfo);
 						$state.go('app.home');
 						$ionicLoading.hide();
 						$cordovaToast
@@ -146,9 +148,9 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 					updates['userBookings/'+localStorage.getItem('uid')+'/'+$scope.bookingInformation.bookingId] = 'cancelled';
 					updates['vendorBookings/'+$scope.bookingInformation.vendorId+'/'+$scope.bookingInformation.bookingId] = 'cancelled';
 					db.ref().update(updates).then(function(){
-						delete window.localStorage.currentBooking;
-						delete window.localStorage.activeBooking;
-
+						///// delete booking id from local storage ///////
+						delete allBookingInfo[$scope.bookingInformation.bookingId];
+						window.localStorage['allBookingInfo'] = JSON.stringify(allBookingInfo);
 						$state.go('app.home');
 						$ionicLoading.hide();
 						$cordovaToast
@@ -165,8 +167,6 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 
 			}
 		})
-
 	};
-
 
 });

@@ -300,9 +300,24 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     function checkLoginStatus() {
         var user = firebase.auth().currentUser;
         if(user){
-            var hasCurrentBooking = checkLocalStorage('currentBookingId');
+            var hasCurrentBooking = checkLocalStorage('allBookingInfo');
             if(hasCurrentBooking == true){
-                $state.go('bill');
+              var allBookingInfo = JSON.parse(window.localStorage['allBookingInfo'])
+                if(_.size(allBookingInfo)>0){
+                    for(key in allBookingInfo){
+                        if(allBookingInfo[key]< new Date().getTime()){
+                            window.localStorage['BookingIdToMarkStatus'] = key;
+                            $state.go('bill');
+                            return;
+                        }
+                        else{
+                            $state.go('app.home');
+                        }
+                    }
+                }
+                else{
+                    $state.go('app.home');
+                }
             }
             else{
                 $state.go('app.home');

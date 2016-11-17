@@ -520,14 +520,36 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 			updates['vendorBookings/'+vendorId+'/'+bookingDetails.bookingId] = 'active';
 			db.ref().update(updates).then(function(){
 				$ionicLoading.hide();
-				var allBookingInfo = {};
-				allBookingInfo[bookingDetails.bookingId] = bookingDetails.appointmentTime;
+				if(checkLocalStorage('allBookingInfo')){
+					var allBookingInfo = JSON.parse(window.localStorage['allBookingInfo'])
+					allBookingInfo[bookingDetails.bookingId] = bookingDetails.appointmentTime;
+
+				}
+				else{
+					var allBookingInfo = {};
+					allBookingInfo[bookingDetails.bookingId] = bookingDetails.appointmentTime;
+				}
 				window.localStorage['allBookingInfo'] = JSON.stringify(allBookingInfo);
 				window.localStorage.setItem("currentBookingId", bookingDetails.bookingId);
-				window.localStorage.setItem("chosenTime", '');
+				clearOldLocalStorage();
 				$rootScope.$broadcast('booking', { message: 'booking changed' });
 				$state.go('bill');
 			});
+		}
+
+		function clearOldLocalStorage() {
+			delete window.localStorage.chosenTime;
+			delete window.localStorage.vendorName;
+			delete window.localStorage.vendorMobile;
+			delete window.localStorage.vendorLandmark;
+			delete window.localStorage.vendorLandline;
+			delete window.localStorage.vendorId;
+			delete window.localStorage.slectedItem;
+			delete window.localStorage.BegItems;
+			delete window.localStorage.previousOtp;
+			delete window.localStorage.pageName;
+			delete window.localStorage.selectedTab;
+			delete window.localStorage.mapStorage;
 		}
 	}
 });

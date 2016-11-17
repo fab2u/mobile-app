@@ -2,9 +2,26 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 								$ionicSlideBoxDelegate,allServiceList) {
 
 	$scope.fabSelected = false;
-	delete window.localStorage.slectedItems;
-	delete window.localStorage.catItems;
-	delete window.localStorage.serviceId;
+
+	function clearOldLocalStorage() {
+		delete window.localStorage.slectedItems;
+		delete window.localStorage.catItems;
+		delete window.localStorage.serviceId;
+		delete window.localStorage.chosenTime;
+		delete window.localStorage.vendorName;
+		delete window.localStorage.vendorMobile;
+		delete window.localStorage.vendorLandmark;
+		delete window.localStorage.vendorLandline;
+		delete window.localStorage.vendorId;
+		delete window.localStorage.slectedItem;
+		delete window.localStorage.BegItems;
+		delete window.localStorage.previousOtp;
+		delete window.localStorage.pageName;
+		delete window.localStorage.selectedTab
+		delete window.localStorage.currentBookingId
+		delete window.localStorage.mapStorage
+	}
+	clearOldLocalStorage();
 
 	$scope.selectMain = function(val){
 		if(val == 1){

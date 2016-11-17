@@ -5,7 +5,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
     $ionicHistory.clearCache();
     $timeout(function () {
         $ionicLoading.hide();
-    }, 10000);
+    }, 5000);
     $scope.cancelButton = false;
     $scope.vendorAddress = '';
     $scope.bookingInformation = {};
@@ -14,27 +14,10 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
     var hasCurrentBooking = checkLocalStorage('BookingIdToMarkStatus');
     if(hasCurrentBooking){
          $scope.bookingIdToMarkStatus = window.localStorage['BookingIdToMarkStatus'];
-
-        console.log("bookingIdToMarkStatus",$scope.bookingIdToMarkStatus)
-
         db.ref('bookings/'+$scope.bookingIdToMarkStatus).once('value',function (response) {
             if(response.val()){
                 $scope.bookingInformation = response.val();
-                db.ref('vendors/'+locationInfo.cityId+'/vendors/'+$scope.bookingInformation.vendorId).once('value', function(response){
-                        if(response.val()){
-                            $scope.bookingInformation.venue = response.val().vendorName;
-                            $scope.bookingInformation.address1 = response.val().address.address1;
-                            $scope.bookingInformation.address2 = response.val().address.address2;
-                            $scope.bookingInformation.vendorLat = response.val().address.latitude;
-                            $scope.bookingInformation.vendorLong = response.val().address.longitude;
-                            $scope.bookingInformation.vendorName = response.val().contactDetails.name;
-                            $scope.vendorAddress = response.val();
-                            $ionicLoading.hide();
-                        }
-                        else{
-                            $ionicLoading.hide();
-                        }
-                    });
+                vendorInfo($scope.bookingInformation.vendorId);
             }
             else{
                 $ionicLoading.hide();
@@ -43,32 +26,37 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
         })
         $scope.cancelButton = true;
     }
-  else if(window.localStorage.getItem("currentBookingId")){
+    else if(window.localStorage.getItem("currentBookingId")){
        firebase.database().ref('bookings/' + window.localStorage.getItem("currentBookingId")).once('value', function (response) {
            if (response.val()) {
                $scope.bookingInformation = response.val();
-               $scope.vendorId = response.val().vendorId;
-               db.ref('vendors/'+locationInfo.cityId+'/vendors/'+$scope.vendorId).once('value', function(response){
-                   if(response.val()){
-                       $scope.bookingInformation.venue = response.val().vendorName;
-                       $scope.bookingInformation.address1 = response.val().address.address1;
-                       $scope.bookingInformation.address2 = response.val().address.address2;
-                       $scope.bookingInformation.vendorLat = response.val().address.latitude;
-                       $scope.bookingInformation.vendorLong = response.val().address.longitude;
-                       $scope.bookingInformation.vendorName = response.val().contactDetails.name;
-                       $scope.vendorAddress = response.val();
-                       $ionicLoading.hide();
-                   }
-                   else{
-                       $ionicLoading.hide();
-                   }
-               })
+               vendorInfo($scope.bookingInformation.vendorId)
+           }
+           else{
+               $ionicLoading.hide()
            }
        });
-   }
+    }
 
+    function vendorInfo() {
+        db.ref('vendors/'+locationInfo.cityId+'/vendors/'+$scope.vendorId).once('value', function(response){
+            if(response.val()){
+                $scope.bookingInformation.venue = response.val().vendorName;
+                $scope.bookingInformation.address1 = response.val().address.address1;
+                $scope.bookingInformation.address2 = response.val().address.address2;
+                $scope.bookingInformation.vendorLat = response.val().address.latitude;
+                $scope.bookingInformation.vendorLong = response.val().address.longitude;
+                $scope.bookingInformation.vendorName = response.val().contactDetails.name;
+                $scope.vendorAddress = response.val();
+                $ionicLoading.hide();
+            }
+            else{
+                $ionicLoading.hide();
+            }
+        })
+    }
 
-//////////////Map for vendor location  ////////////////////////////////
+     //////////Map for vendor location  ////////////////////////////////
     $scope.open_map = function(latitude,longitude,line1,line2,vendorName){
         $state.go('map',{
             'lat': latitude,
@@ -78,10 +66,32 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
             'name': vendorName
         });
     };
+    //////////////////////       end    ////////////////////////////////////////
     $scope.home = function(){
-        window.localStorage.setItem("currentBookingId", '');
+        delete window.localStorage.currentBookingId;
         $state.go('app.home');
     };
+
+    //////////////////////  Booking Availed   //////////////////////////////////////
+    $scope.availed = function(){
+        $scope.rate_vendor.show();
+    };
+    $scope.close_modal = function () {
+        $scope.rate_vendor.hide();
+    };
+
+    $scope.custReview ={
+        review:'',
+        rating: 0
+    };
+    $ionicModal.fromTemplateUrl('templates/checkout/review.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.rate_vendor = modal;
+    });
+
+
     $scope.ratingsCallback = function(rating) {
         $scope.custReview.rating = rating;
     };
@@ -99,30 +109,6 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
     };
 
 
-
-    $scope.custReview ={
-        review:'',
-        rating: 0
-    };
-    $ionicModal.fromTemplateUrl('templates/checkout/review.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-    }).then(function(modal) {
-        $scope.rate_vendor = modal;
-    });
-
-    $scope.rateVendor = function() {
-        $scope.custReview ={
-            review:'',
-            rating: 0
-        };
-        $scope.rate_vendor.show();
-    };
-
-    $scope.availed = function(){
-        $scope.rate_vendor.show();
-    };
-
     $scope.storeReview = function(){
         if($scope.custReview.rating == 0){
             $cordovaToast
@@ -137,7 +123,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
             var updates = {};
             var reviewData = {};
             var reviewId = firebase.database().ref('reviews/'+$scope.bookingInformation.cityId+'/'+
-                $scope.bookingInformation.vendorId+'/Reviews').push().key;
+            $scope.bookingInformation.vendorId+'/Reviews').push().key;
             firebase.database().ref('users/data/'+localStorage.getItem('uid')).once('value',function(response) {
                 if(response.val()){
                     if(response.val().photoUrl){
@@ -177,19 +163,25 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
                     updates['userReviews/'+localStorage.getItem('uid')+'/'+reviewData.ReviewId] = userReviewData;
                     updates['bookings/' + $scope.bookingInformation.bookingId + '/' + 'reviewId'] = reviewId;
                     db.ref().update(updates).then(function () {
-                        $scope.review();
+                       updateBookingInfo();
                     });
 
                 }
                 else{
-                   alert('Something went wrong!')
+                    $cordovaToast
+                        .show('Something went wrong!', 'long', 'center')
+                        .then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
                 }
             })
 
         }
     };
 
-    $scope.review = function() {
+    function updateBookingInfo() {
         var updates = {};
         updates['bookings/' + $scope.bookingInformation.bookingId + '/' + 'userStatus'] = 'Availed';
         updates['userBookings/' + localStorage.getItem('uid') + '/' + $scope.bookingInformation.bookingId] = 'Availed';
@@ -214,6 +206,10 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
         });
     };
 
+    //////////////////////////////////////////////end mark availed booking  ///////////////
+
+    ///////////////////////////////Mark status not availed booking  /////////////////////////
+
     $scope.notAvailed = function(){
         $ionicLoading.show();
         var updates = {};
@@ -225,16 +221,10 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
              delete allBookingInfo[$scope.bookingIdToMarkStatus];
              window.localStorage['allBookingInfo'] = JSON.stringify(allBookingInfo);
              delete window.localStorage.BookingIdToMarkStatus;
-
             $state.go('app.home');
             $ionicLoading.hide();
-            /////////////delete booking id from local storage
             $rootScope.$broadcast('booking', { message: 'booking changed' });
         });
-    };
-    $scope.close_modal = function () {
-        $scope.rate_vendor.hide();
-
     };
 
 });

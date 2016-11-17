@@ -1,5 +1,6 @@
 app.controller('updateAppCtrl', function($scope, $cordovaInAppBrowser, $cordovaDevice){
-
+    $ionicHistory.clearHistory();
+    $ionicHistory.clearCache();
     $scope.downloadUpdate = function(){
         var options = {
             location: 'yes',

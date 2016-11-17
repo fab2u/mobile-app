@@ -26,8 +26,8 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
         $state.go('app.home');
     };
 
-    $scope.selected_city = function(city){
-    	$scope.cityId = city.cityId;
+    $scope.selected_city = function(cityInfo){
+    	$scope.cityId = cityInfo.cityId;
         	$timeout( function() {
 				$scope.open_location();
         	}, 500);

@@ -2,7 +2,6 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 								$ionicSlideBoxDelegate,allServiceList) {
 
 	$scope.fabSelected = false;
-	// window.localStorage.setItem("serviceId",'');
 	delete window.localStorage.slectedItems;
 	delete window.localStorage.catItems;
 	delete window.localStorage.serviceId;
@@ -16,12 +15,10 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 		}
 	};
 
-	// amenities
-
 	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
 
 
-	$scope.get_banners = function(){
+	function get_banners(){
 		$ionicLoading.show();
 		firebase.database().ref('banners/'+locationInfo.cityId).once('value',function(response){
 			if(response.val()){
@@ -38,7 +35,34 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 			}
 		});
 	};
-	$scope.get_banners();
+	get_banners();
+
+	function getVendorServiceList(){
+		allServiceList.getAllServices(locationInfo.cityId).then(function (response) {
+			var result = response;
+			var version = response.version;
+			window.localStorage['VendorServiceList'] = JSON.stringify(result);
+			window.localStorage['VendorServiceListVersion'] = version;
+			$scope.VendorIdForService  = response;
+			VendorIdsForServices()
+		})
+	}
+	if(!checkLocalStorage('VendorServiceList')){
+		getVendorServiceList()
+	}
+	else{
+		allServiceList.getServiceVersion(locationInfo.cityId).then(function(res){
+			var newVersion = res;
+			if(window.localStorage['VendorServiceListVersion']<newVersion){
+				getVendorServiceList()
+			}
+			else{
+				$scope.VendorIdForService = JSON.parse(window.localStorage['VendorServiceList'])
+				VendorIdsForServices()
+			}
+		})
+	}
+
 	$scope.offers = [
 		{offer: 'Refer a friend and get hidden gift', image: 'img/home/slider/slider1.jpg'},
 		{offer: 'Refer a friend and get hidden gift', image: 'img/home/slider/slider2.jpg'}
@@ -74,32 +98,6 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 		}
 	};
 
-
-	function getVendorServiceList(){
-		allServiceList.getAllServices(locationInfo.cityId).then(function (response) {
-			var result = response;
-			var version = response.version;
-			window.localStorage['VendorServiceList'] = JSON.stringify(result);
-			window.localStorage['VendorServiceListVersion'] = version;
-			$scope.VendorIdForService  = response;
-			VendorIdsForServices()
-		})
-	}
-	if(!checkLocalStorage('VendorServiceList')){
-		getVendorServiceList()
-	}
-	else{
-		allServiceList.getServiceVersion(locationInfo.cityId).then(function(res){
-			var newVersion = res;
-			if(window.localStorage['VendorServiceListVersion']<newVersion){
-				getVendorServiceList()
-			}
-			else{
-				$scope.VendorIdForService = JSON.parse(window.localStorage['VendorServiceList'])
-				VendorIdsForServices()
-			}
-		})
-	}
 
 
 	function VendorIdsForServices(serviceId) {

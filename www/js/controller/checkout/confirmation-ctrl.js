@@ -3,7 +3,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	$ionicLoading.show();
 	$timeout(function () {
 		$ionicLoading.hide();
-	}, 10000);
+	}, 5000);
 	var loggedIn = checkLocalStorage('uid');
 	$scope.appointmentTime = '';
 	$scope.goBack = function(){
@@ -520,6 +520,8 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 			updates['vendorBookings/'+vendorId+'/'+bookingDetails.bookingId] = 'active';
 			db.ref().update(updates).then(function(){
 				$ionicLoading.hide();
+				var allBookingInfo = {};
+				//allBookingInfo[bookingDetails.bookingId] = bookingDetails.appointmentTime;
 				// window.localStorage['currentBooking'] = JSON.stringify(bookingDetails);
 				window.localStorage.setItem("currentBookingId", bookingDetails.bookingId);
 				window.localStorage.setItem("chosenTime", '');

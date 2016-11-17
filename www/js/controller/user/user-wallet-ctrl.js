@@ -6,7 +6,7 @@ app.controller('UserWalletCtrl',function($scope,$state,$ionicLoading,$timeout){
 	$scope.show();
 	$timeout(function () {
 		$ionicLoading.hide();
-	}, 10000);
+	}, 3000);
 
 	$scope.amount = 0;
 	$scope.walletHistory = [];

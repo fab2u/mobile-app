@@ -5,9 +5,7 @@ app.controller('VendorDetailsCtrl',
         $scope.images =[];
         $scope.reviewerName = '';
         $scope.reviewerImage = '';
-        $scope.cart_item = '';
         $scope.selectedServices = {};
-        $scope.begItems = {};
         $scope.menu_button = true;
         $scope.more = false;
         $scope.days = [];
@@ -40,15 +38,14 @@ app.controller('VendorDetailsCtrl',
         // Get selected services if previously stored in localstorage
         if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
             $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
-            $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
-            $scope.cart_item = _.size($scope.selectedServices);
+        }
+        else{
+            $scope.selectedServices = {}
         }
 
         $rootScope.$on('cart', function (event, args) {
             $scope.message = args.message;
             $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
-            $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
-            $scope.cart_item = _.size($scope.selectedServices);
         });
 
     $scope.vendorDetail = function() {
@@ -449,7 +446,6 @@ app.controller('VendorDetailsCtrl',
 
         $scope.editReview = function (editReviewInfo) {
             console.log("editReviewInfo",editReviewInfo);
-
             $scope.editData = editReviewInfo;
             $scope.edit_rate_vendor.show();
         };

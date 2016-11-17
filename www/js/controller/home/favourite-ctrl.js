@@ -1,5 +1,5 @@
 app.controller('FavouriteCtrl', function($state,$ionicLoading,$cordovaToast, $scope) {
-    $scope.favouriteList = function () {
+    function favouriteList() {
         $ionicLoading.show();
         if(localStorage.getItem('uid')){
             firebase.database().ref('favourites/'+localStorage.getItem('uid')).once('value',function(response){
@@ -18,7 +18,7 @@ app.controller('FavouriteCtrl', function($state,$ionicLoading,$cordovaToast, $sc
             $ionicLoading.hide();
         }
     };
-    $scope.favouriteList();
+    favouriteList();
 
     $scope.home = function(){
         $state.go('app.home');

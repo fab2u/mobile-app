@@ -16,7 +16,7 @@ app.controller('BookingDetailCtrl', function($scope,$state,$ionicLoading,$stateP
 
     // Booking detail /////
 
-    $scope.bookingDetail = function() {
+     function bookingDetail() {
         $ionicLoading.show();
                 firebase.database().ref('bookings/' + $stateParams.bookingId).once('value', function (response) {
                     if (response.val()) {
@@ -37,7 +37,7 @@ app.controller('BookingDetailCtrl', function($scope,$state,$ionicLoading,$stateP
                     }
                 });
         };
-    $scope.bookingDetail();
+     bookingDetail();
 
     $scope.back = function () {
         $state.go('bookings');

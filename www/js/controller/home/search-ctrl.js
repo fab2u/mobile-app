@@ -10,7 +10,7 @@ app.controller('SearchCtrl', function($state, $scope,$http,$timeout,$ionicLoadin
 
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
 
-    $scope.vendorNames = []
+    $scope.vendorNames = [];
     var tempList = {};
 
     $ionicLoading.show();

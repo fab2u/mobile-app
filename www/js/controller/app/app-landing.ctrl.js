@@ -7,7 +7,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     $ionicHistory.clearCache();
     $ionicLoading.show();
 
-    var appVersion = 1; ///////version increase when upload
+    var appVersion = 1; ///////version increase when upload over play store //////////
     var appInfoNew = {};
     var updates = {};
 
@@ -75,6 +75,8 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                                     }, function (error) {
                                         // error
                                     });
+
+                                signUpOldUser();
                             }
                         }
                     }
@@ -191,28 +193,8 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
             else{
 
                 /////////////////delete old app history and user data and switch to old user as new user? /////////
-                var Id = db.ref('oldErrorUsers/data/').push().key;
 
-                firebase.database().ref('oldErrorUsers/data/' + Id)
-                    .set(oldUserInfo, function (response) {
-
-                        delete window.localStorage.appInfo;
-                        $ionicPopup.show({
-                            template: '<p>Kindly contact our customer care at contact@fab2u.com or call us at 0124-406-5593</p>',
-                            title: 'Registration Error',
-                            subTitle: 'We cannot find your registration details. We apologize for the inconvenience.',
-                            scope: $scope,
-                            buttons: [
-                                {
-                                    text: '<b>Ok</b>',
-                                    type: 'button-positive',
-                                    onTap: function(e) {
-                                        location.reload();
-                                    }
-                                }
-                            ]
-                        });
-                    });
+                oldUserError(oldUserInfo)
             }
 
         });
@@ -238,7 +220,6 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
             };
         initialiseLocation();
     }
-
     function initialiseLocation(){
         db.ref('defaultLocation').once('value', function (snapshot) {
             $timeout(function(){
@@ -248,6 +229,34 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
             },200);
         });
     }
+
+
+    function oldUserError(oldUserInfo) {
+        var Id = db.ref('oldErrorUsers/data/').push().key;
+
+        firebase.database().ref('oldErrorUsers/data/' + Id)
+            .set(oldUserInfo, function (response) {
+
+                delete window.localStorage.appInfo;
+                $ionicPopup.show({
+                    template: '<p>Kindly contact our customer care at contact@fab2u.com or call us at 0124-406-5593</p>',
+                    title: 'Registration Error',
+                    subTitle: 'We cannot find your registration details. We apologize for the inconvenience.',
+                    scope: $scope,
+                    buttons: [
+                        {
+                            text: '<b>Ok</b>',
+                            type: 'button-positive',
+                            onTap: function(e) {
+                                location.reload();
+                            }
+                        }
+                    ]
+                });
+            });
+    }
+
+
 
     function registerDevice() {
         if (window.cordova) {
@@ -303,5 +312,10 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
             $state.go('app.home');
         }
     }
+
+    $rootScope.$on('oldUserError', function (event, args) {
+        var oldUserDataInfo = JSON.parse(window.localStorage['appInfo']);
+        oldUserError(oldUserDataInfo)
+    });
 
 });

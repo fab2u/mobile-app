@@ -3,10 +3,10 @@ app.controller('AppCtrl', function($scope,$state,$rootScope,$ionicPopup,$ionicLo
 
 
 	$scope.liked = false;
+	$scope.vendorNames = [];
 
 	var hasVendorList = checkLocalStorage('vendorsName');
 	var locationInfo = JSON.parse(window.localStorage['selectedLocation'])
-	$scope.vendorNames = [];
 	function vendorList() {
 		$ionicLoading.show();
 		allVendorService.getVendorsList(locationInfo.cityId).then(function(response){

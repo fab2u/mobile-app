@@ -1,5 +1,5 @@
-app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordovaDevice,$ionicLoading,$ionicPopup,
-                                      $timeout,$rootScope,$cordovaToast){
+app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordovaDevice,$ionicLoading,
+                                      $ionicPopup, $timeout,$rootScope,$cordovaToast){
     $scope.generatedCode = '';
     $scope.myReferral = '';
     $scope.walletMoney = 0;
@@ -8,7 +8,22 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
     $scope.referralName = '';
     $scope.referralContact = '';
     $scope.user_device_register = false;
-    $scope.user = {};
+    $scope.user = {
+        name: '',
+        email: '',
+        mobile_num: '',
+        referral_code: '',
+        gender: '',
+        password:''
+    };
+
+    $scope.showMobileVerify = false;
+    $scope.showOTPfield = false;
+
+    $scope.newOtp= {
+        code: ''
+    };
+    var storedOTP = [];
 
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
 
@@ -76,9 +91,30 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         }
     };
 
+
+    /////////////////////singUp  ///////////////////////
+
+
+    $scope.signup = function(){
+        signUpService.signUp($scope.user.email,$scope.user.password,$scope.user.name).then(function(res){
+            console.log("res",res);
+            if($scope.user.referral_code){
+                checkValidCode($scope.user.referral_code);
+                generateMyReferralCode($scope.user.name);
+                sendVerification();
+            }
+            else{
+                generateMyReferralCode($scope.user.name);
+                sendVerification();
+            }
+        })
+    };
+
+    ///////////////////////////end ////////////////////////
+
     ///////////////////   To check user entered referral code validation //////////
 
-    $scope.checkValidCode = function(referralCode){
+    function checkValidCode(referralCode){
         firebase.database().ref('referralCode/'+referralCode)
             .once('value', function (response) {
                 if(response.val()){
@@ -113,6 +149,13 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
 
 
     //// To generate my referral code    //////////////////
+    function generateMyReferralCode(name){
+        var res = name.split(" ");
+        var firstName = res[0];
+        var lastName = res[1];
+        console.log(res,firstName,lastName);
+        getReferralCode(firstName,lastName);
+    };
 
     function getReferralCode(fname, lname) {
         var refchar;
@@ -158,13 +201,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         return mystring;
     }
 
-    $scope.generateMyReferralCode = function(name){
-        var res = name.split(" ");
-        var firstName = res[0];
-        var lastName = res[1];
-        console.log(res,firstName,lastName);
-        getReferralCode(firstName,lastName);
-    };
+
 
 
 
@@ -173,26 +210,11 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
 
 
 
-   $scope.user = {
-      name: '',
-      email: '',
-      mobile_num: '',
-      referral_code: '',
-      gender: '',
-      password:''
-   };
 
      $scope.loginPage = function(){
         $state.go('login');
        };
 
-        $scope.showMobileVerify = false;
-        $scope.showOTPfield = false;
-
-        $scope.newOtp= {
-            code: ''
-        };
-        var storedOTP = [];
 
         //localStorage.removeItem('previousOtp');
 
@@ -207,59 +229,8 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
 
 
 
-    $scope.signup = function(){
-        signUpService.signUp($scope.user.email,$scope.user.password,$scope.user.name).then(function(res){
-            console.log("res",res);
-            if($scope.user.referral_code){
-                $scope.sendVerification();
-                $scope.generateMyReferralCode($scope.user.name);
-                $scope.checkValidCode($scope.user.referral_code);
-            }
-            else{
-                $scope.sendVerification();
-                $scope.generateMyReferralCode($scope.user.name);
-            }
-        })
-    };
-
-    // $scope.signup = function(){
-    //     $ionicLoading.show();
-    //     firebase.auth().createUserWithEmailAndPassword($scope.user.email, $scope.user.password).then(function(data){
-    //         $scope.uid = data.uid;
-    //         if($scope.uid){
-    //             $scope.sendVerification();
-    //             $scope.generateMyReferralCode($scope.user.name);
-    //             if($scope.user.referral_code){
-    //                 $scope.checkValidCode($scope.user.referral_code);
-    //             }
-    //           $ionicLoading.hide();
-    //         }
-    //     })
-    //         .catch(function(error) {
-    //             $ionicLoading.hide();
-    //
-    //             // Handle Errors here.
-    //         var errorCode = error.code;
-    //         var errorMessage = error.message;
-    //             $cordovaToast
-    //                 .show(errorMessage, 'long', 'center')
-    //                 .then(function(success) {
-    //                     // success
-    //                 }, function (error) {
-    //                     // error
-    //                 });
-    //             console.log("errorCode",errorCode,errorMessage)
-    //     })
-    // };
-
-    $scope.generateVerificationCode = function(){
-        var a = Math.floor(100000 + Math.random() * 900000)
-        $scope.generatedCode= a.toString().substring(0, 4);
-        console.log("number",$scope.generatedCode)  ;
-    };
-
-    $scope.sendVerification = function(){
-        $scope.generateVerificationCode();
+    function sendVerification(){
+      generateVerificationCode();
         $ionicLoading.show();
         $http({
             url: 'http://139.162.27.64/api/send-otp?otp='+$scope.generatedCode+'&mobile='+
@@ -299,8 +270,8 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             });
 
     };
-    $scope.reSendVerification = function(){
-        $scope.generateVerificationCode();
+     function reSendVerification(){
+        generateVerificationCode();
         $ionicLoading.show();
         $http({
             method: 'POST',
@@ -337,6 +308,13 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             });
 
     };
+
+
+    function generateVerificationCode(){
+        var a = Math.floor(100000 + Math.random() * 900000)
+        $scope.generatedCode= a.toString().substring(0, 4);
+        console.log("number",$scope.generatedCode)  ;
+    };
     $scope.showPopup = function() {
             $scope.data = {};
             $ionicPopup.show({
@@ -346,7 +324,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                 buttons: [
                     { text: 'Resend' ,
                     onTap:function () {
-                        $scope.reSendVerification();
+                        reSendVerification();
                     }
                     },
                     {
@@ -357,7 +335,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                                 //don't allow the user to close unless he enters otp
                                 e.preventDefault();
                             } else {
-                                $scope.verifyOTP($scope.data.otp);
+                               verifyOTP($scope.data.otp);
                                // return $scope.data.otp;
                             }
                         }
@@ -366,7 +344,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             });
     };
 
-    $scope.verifyOTP = function(verify_otp){
+    function verifyOTP(verify_otp){
         $scope.newOtp.code = verify_otp;
         console.log($scope.newOtp.code);
         console.log(storedOTP);

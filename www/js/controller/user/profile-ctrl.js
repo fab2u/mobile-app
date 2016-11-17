@@ -15,8 +15,6 @@ app.controller("profileCtrl",function($scope, $timeout,$location, $ionicLoading,
       $scope.modal = modal;
    });
 
-   $scope.testData = 'asdsdfb';
-
    $ionicLoading.show();
 
    $timeout(function () {

@@ -1,4 +1,4 @@
-app.factory('signUpService', function ($q) {
+app.factory('signUpService', function ($q,$rootScope) {
     return {
         signUp: function(email,password,name){
             return $q(function (resolve,reject) {
@@ -51,15 +51,23 @@ app.factory('signUpService', function ($q) {
                     var errorMessage = error.message;
                     if (errorCode == 'auth/email-already-in-use') {
                         alert('Already exists an account with the given email address.Please try with another email address.');
+                        $rootScope.$broadcast('oldUserError', { message: 'usr logged in' });
+
                     }
                     else if (errorCode == 'auth/invalid-email') {
                         alert('The given email address is not valid.Please try with another email address.');
+                        $rootScope.$broadcast('oldUserError', { message: 'usr logged in' });
+
                     }
                     else if (errorCode == 'auth/operation-not-allowed') {
                         alert('Sorry, you can not sign Up by using email and password.');
+                        $rootScope.$broadcast('oldUserError', { message: 'usr logged in' });
+
                     }
                     else if (errorCode == 'auth/weak-password') {
                         alert('The password is too weak.Please enter at-least six digit password');
+                        $rootScope.$broadcast('oldUserError', { message: 'usr logged in' });
+
                     }
                     console.log("errorCode",errorCode,errorMessage)
                 })

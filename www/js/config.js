@@ -4,16 +4,6 @@ app
 		$ionicConfigProvider.scrolling.jsScrolling(false);
 	}
 
-	// App starting controller
-
-    $stateProvider.state('app-start', {
-        url: '/app-start',
-        abstract: false,
-		cache:false,
-        templateUrl: 'templates/app/app-start.html',
-        controller: 'appStartCtrl'
-    });
-
     // App landing controller
     $stateProvider.state('landing', {
         url: '/landing',
@@ -310,7 +300,7 @@ app
 			controller: 'nearmeFeedCtrl'
 		});
 
-	 $urlRouterProvider.otherwise('/app-start');
+	 $urlRouterProvider.otherwise('/landing');
 
 	// var hasCurrentBooking = checkLocalStorage('currentBooking');
 	// if(hasCurrentBooking == true){

@@ -21,6 +21,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
     function vendorList() {
         $ionicLoading.show();
         allVendorService.getVendorsList(locationInfo.cityId).then(function(response){
+            $ionicLoading.hide();
             var vendors = response;
             var version = response.version;
             for(key in vendors){
@@ -58,7 +59,10 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
     if ((localStorage.getItem("slectedItems") != null) && (localStorage.getItem('catItems') != null)) {
         $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItems'));
         $scope.categoryItems = JSON.parse(localStorage.getItem('catItems'));
-
+    }
+    else{
+        $scope.selectedServices = {};
+        $scope.categoryItems = {};
     }
 
     $rootScope.$on('category', function (event, args) {

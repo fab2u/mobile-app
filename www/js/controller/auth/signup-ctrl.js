@@ -49,7 +49,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             console.log("else")
         }
     }
-   deviceRegistered();
+    deviceRegistered();
 
     /////////////////////////////// To check apply referral code valid or not ////////////////
     $scope.apply_promoCode = function (referralCode) {
@@ -96,7 +96,9 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
 
 
     $scope.signup = function(){
+        $ionicLoading.show();
         signUpService.signUp($scope.user.email,$scope.user.password,$scope.user.name).then(function(res){
+            $scope.uid = res;
             console.log("res",res);
             if($scope.user.referral_code){
                 checkValidCode($scope.user.referral_code);
@@ -353,7 +355,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             console.log($scope.newOtp.code, parseInt(storedOTP[i]));
             console.log("myReferral",$scope.myReferral);
             if($scope.myReferral.length != 8){
-                $scope.generateMyReferralCode();
+                generateMyReferralCode();
             }
 
             if($scope.newOtp.code == parseInt(storedOTP[i])){
@@ -397,6 +399,8 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
 
                         $scope.updates['users/data/'+$scope.uid] = userData;
                         $scope.updates['referralCode/'+$scope.myReferral] = referralData;
+
+                        console.log("update",$scope.updates)
 
                         db.ref().update($scope.updates).then(function(response){
                             if(response == null){

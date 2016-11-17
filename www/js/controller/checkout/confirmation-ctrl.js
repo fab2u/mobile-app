@@ -521,8 +521,8 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 			db.ref().update(updates).then(function(){
 				$ionicLoading.hide();
 				var allBookingInfo = {};
-				//allBookingInfo[bookingDetails.bookingId] = bookingDetails.appointmentTime;
-				// window.localStorage['currentBooking'] = JSON.stringify(bookingDetails);
+				allBookingInfo[bookingDetails.bookingId] = bookingDetails.appointmentTime;
+				window.localStorage['allBookingInfo'] = JSON.stringify(allBookingInfo);
 				window.localStorage.setItem("currentBookingId", bookingDetails.bookingId);
 				window.localStorage.setItem("chosenTime", '');
 				$rootScope.$broadcast('booking', { message: 'booking changed' });

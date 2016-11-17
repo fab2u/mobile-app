@@ -1,5 +1,5 @@
-app.controller('IntroSliderCtrl', function($scope, $ionicSlideBoxDelegate, $state) {
-
+app.controller('IntroSliderCtrl', function($scope, $ionicSlideBoxDelegate, $state,$ionicLoading) {
+    $ionicLoading.hide();
     $scope.skipSlide = function() {
      $state.go('location');
     };

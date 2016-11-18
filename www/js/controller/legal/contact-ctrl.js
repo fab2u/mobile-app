@@ -1,25 +1,28 @@
-app.controller('ContactCtrl', function($state, $scope,$cordovaToast,$timeout,$ionicLoading) {
+app.controller('ContactCtrl', function($state, $scope,$cordovaToast,$timeout,LocationService,
+                                       $ionicLoading) {
 
-    $scope.show = function() {
-        $ionicLoading.show();
-    };
-    $scope.show();
     $timeout(function () {
         $ionicLoading.hide();
-    }, 5000);
+    }, 3000);
 
-     function locationOptions() {
-         $ionicLoading.show();
-         firebase.database().ref('city').once('value',function(response){
-            $scope.location_list = response.val();
-             $ionicLoading.hide();
-         });
-     }
-     locationOptions();
     $scope.user = {};
 
     $scope.query_options = ['HR','Appointment Booking','Marketing','Sales','Payment','Others'];
 
+    function getCity() {
+         $ionicLoading.show();
+         LocationService.getAllCity().then(function (result) {
+             if(result){
+                 $scope.cityList = result;
+                 $ionicLoading.hide();
+             }
+             else{
+                 $scope.cityList = '';
+                 $ionicLoading.hide();
+             }
+         })
+     }
+    getCity();
 
     $scope.submit_query = function(){
         $ionicLoading.show();
@@ -49,6 +52,4 @@ app.controller('ContactCtrl', function($state, $scope,$cordovaToast,$timeout,$io
             }
         });
     };
-
-
 });

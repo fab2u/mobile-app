@@ -1,24 +1,30 @@
-app.controller('FavouriteCtrl', function($state,$ionicLoading,$cordovaToast, $scope) {
-    function favouriteList() {
-        $ionicLoading.show();
-        if(localStorage.getItem('uid')){
-            firebase.database().ref('favourites/'+localStorage.getItem('uid')).once('value',function(response){
-                $scope.vendorList = response.val();
-                $ionicLoading.hide();
+app.controller('FavouriteCtrl', function($state,favouriteVendorsService,
+                                         $ionicLoading,$cordovaToast, $scope) {
+    if(localStorage.getItem('uid')){
+        getFavouriteVendor();
+    }
+    else{
+        $cordovaToast
+            .show('Please,login first!', 'long', 'center')
+            .then(function(success) {
+                // success
+            }, function (error) {
+                // error
             });
-        }
-        else{
-            $cordovaToast
-                .show('Please,login first!', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
-            $ionicLoading.hide();
-        }
-    };
-    favouriteList();
+    }
+    function getFavouriteVendor() {
+        $ionicLoading.show();
+        favouriteVendorsService.getFavVendors().then(function(result){
+            if(result){
+                $scope.vendorList = result;
+                $ionicLoading.hide();
+            }
+            else{
+                $scope.vendorList ='';
+                $ionicLoading.hide();
+            }
+        })
+    }
 
     $scope.home = function(){
         $state.go('app.home');
@@ -28,7 +34,6 @@ app.controller('FavouriteCtrl', function($state,$ionicLoading,$cordovaToast, $sc
         localStorage.setItem('favourite', true);
         $state.go('vendorMenu',{vendor_id:id});
     };
-
 
     $scope.open_map = function (latitude, longitude, line1, line2, vendorName) {
         $state.go('map', {

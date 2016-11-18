@@ -9,7 +9,7 @@ app.controller("CartCtrl", function ($scope, $rootScope, $stateParams, $cordovaT
     $scope.selectedServices = {};
     $timeout(function () {
         $ionicLoading.hide();
-    }, 5000);
+    }, 2000);
 
     window.localStorage.setItem("vendorId", $stateParams.ven_id);
 
@@ -27,11 +27,18 @@ app.controller("CartCtrl", function ($scope, $rootScope, $stateParams, $cordovaT
         $scope.cartItems = JSON.parse(localStorage.getItem('BegItems'));
         $scope.calPrice($scope.cartItems);
     }
+    else{
+        $scope.cartItems = {}
+    }
 
     // Get selected services if previously stored in localstorage
     if (localStorage.getItem("slectedItem") != null) {
         $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
         $scope.cart_item = _.size($scope.selectedServices);
+    }
+    else{
+        $scope.selectedServices = {}
+        $scope.cart_item = 0;
     }
 
     $rootScope.$on('cart', function (event, args) {

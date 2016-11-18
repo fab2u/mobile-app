@@ -6,7 +6,7 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
   $ionicLoading.show();
   $timeout(function () {
     $ionicLoading.hide();
-  }, 5000);
+  }, 2000);
 
   $scope.monthName = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
   $scope.active_slot_1 = false;

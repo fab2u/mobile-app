@@ -1,94 +1,12 @@
 app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate,$timeout,
                                            $ionicScrollDelegate, $rootScope,$cordovaToast,
                                            $ionicLoading,allVendorService) {
-
     $scope.selectedServices = {}; // Stores selected services
-
     $scope.categoryItems = {};
-
     $scope.index_number = 0;
-
-    var locationInfo = JSON.parse(window.localStorage['selectedLocation'])
     $scope.vendorNames = [];
-    $ionicLoading.show();
-    $timeout(function () {
-        $ionicLoading.hide();
-    }, 2000);
-    var hasVendorList = checkLocalStorage('vendorsName');
-
-    var VendorServiceList  = JSON.parse(window.localStorage['VendorServiceList']);
-
-    function vendorList() {
-        $ionicLoading.show();
-        allVendorService.getVendorsList(locationInfo.cityId).then(function(response){
-            $ionicLoading.hide();
-            var vendors = response;
-            var version = response.version;
-            for(key in vendors){
-                var venObj={
-                    vid: key,
-                    vName: vendors[key]
-                }
-                $scope.vendorNames.push(venObj);
-            }
-            window.localStorage['vendorsName'] = JSON.stringify($scope.vendorNames)
-            window.localStorage['vendorsListVersion'] = version;
-        })
-    }
-    if(!hasVendorList){
-        vendorList();
-    }
-    else{
-        allVendorService.getVlistVersion(locationInfo.cityId).then(function(res){
-            var newVersion = res
-            if(window.localStorage['vendorsListVersion']<newVersion){
-                vendorList();
-            }
-            else{
-                $scope.vendorNames = JSON.stringify(window.localStorage['vendorsName'])
-            }
-        })
-    }
-
-
-
-
-    ///////     Get selected services if previously stored in localStorage           //////////
-
-
-    if ((localStorage.getItem("slectedItems") != null) && (localStorage.getItem('catItems') != null)) {
-        $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItems'));
-        $scope.categoryItems = JSON.parse(localStorage.getItem('catItems'));
-    }
-    else{
-        $scope.selectedServices = {};
-        $scope.categoryItems = {};
-    }
-
-    $rootScope.$on('category', function (event, args) {
-        $scope.message = args.message;
-        $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItems'));
-        $scope.categoryItems = JSON.parse(localStorage.getItem('catItems'));
-    });
-
-    $scope.backButton = function(){
-        $state.go('app.home');
-    };
-
-    // initialize the current slide number for slide box
-
-    $scope.currSlide = 0;
-
+    $scope.currSlide = 0;// initialize the current slide number for slide box
     $scope.tabActive = false;
-
-    $scope.searchButton = function () {
-        $state.go('vendorList',{vendorPage:'discoverSalons'});
-    };
-
-    $scope.nextSlide = function() {
-        $ionicSlideBoxDelegate.next();
-    };
-
     $scope.services = {
         "Face":
         {
@@ -133,7 +51,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                     name:'Skincare Consultations',
                     id:'2010'
                 }
-                ],
+            ],
             "image": 'img/home/new-slider/Face.jpg'
         },
         "Hair":
@@ -191,7 +109,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                     name:'Anti HairFall Treatment',
                     id:'1013'
                 }
-                ],
+            ],
             "image": 'img/home/new-slider/Hair.jpg'
         },
         "HairRemoval":{
@@ -232,7 +150,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                     name:'Laser Hair Removal',
                     id:'3009'
                 }
-                ],
+            ],
             "image": 'img/home/new-slider/Hair-Removal.jpg'
         },
         "Body": {
@@ -312,11 +230,66 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
             "image": 'img/home/new-slider/Packages.jpg'
         }
     };
+    $ionicLoading.show();
+    $timeout(function () {
+        $ionicLoading.hide();
+    }, 2000);
+    var VendorServiceList  = JSON.parse(window.localStorage['VendorServiceList']);
+    var locationInfo = JSON.parse(window.localStorage['selectedLocation'])
+    var hasVendorList = checkLocalStorage('vendorsName');
+    if(!hasVendorList){
+        vendorList();
+    }
+    else{
+        allVendorService.getVlistVersion(locationInfo.cityId).then(function(res){
+            var newVersion = res
+            if(window.localStorage['vendorsListVersion']<newVersion){
+                vendorList();
+            }
+            else{
+                $scope.vendorNames = JSON.stringify(window.localStorage['vendorsName'])
+            }
+        })
+    }
+    function vendorList() {
+        $ionicLoading.show();
+        allVendorService.getVendorsList(locationInfo.cityId).then(function(response){
+            $ionicLoading.hide();
+            var vendors = response;
+            var version = response.version;
+            for(key in vendors){
+                var venObj={
+                    vid: key,
+                    vName: vendors[key]
+                }
+                $scope.vendorNames.push(venObj);
+            }
+            window.localStorage['vendorsName'] = JSON.stringify($scope.vendorNames)
+            window.localStorage['vendorsListVersion'] = version;
+        })
+    }
 
-//             update the slide number for slide box
+
+    ///////     Get selected services if previously stored in localStorage           //////////
+
+    if ((localStorage.getItem("slectedItems") != null) && (localStorage.getItem('catItems') != null)) {
+        $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItems'));
+        $scope.categoryItems = JSON.parse(localStorage.getItem('catItems'));
+    }
+    else{
+        $scope.selectedServices = {};
+        $scope.categoryItems = {};
+    }
+
+    $rootScope.$on('category', function (event, args) {
+        $scope.message = args.message;
+        $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItems'));
+        $scope.categoryItems = JSON.parse(localStorage.getItem('catItems'));
+    });
+
+    //             update the slide number for slide box    ////////////
 
     $scope.slideHasChanged = function(index,activeTab) {
-        console.log("index",index)
         if(activeTab == true){
             $scope.currSlide = index;
             $scope.tabActive = false;
@@ -337,14 +310,10 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
         }
     };
 
-    $scope.scrollToBottom = function($event) {
-        $($event.currentTarget).toggleClass("ion-chevron-down ion-chevron-up");
-        if($($event.currentTarget).hasClass("ion-chevron-down")){
-            $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
-        }else{
-            $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom(true);
-        }
+    $scope.nextSlide = function() {
+        $ionicSlideBoxDelegate.next();
     };
+
 
     $scope.scrollToRight = function($event) {
         $($event.currentTarget).toggleClass("ion-chevron-right ion-chevron-left");
@@ -352,75 +321,6 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
             $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(0, 0, true);
         }else{
             $ionicScrollDelegate.$getByHandle('myhandel').scrollTo(500, 0, true);
-        }
-    };
-
-    $scope.findVendors = function() {
-        var itemLength = _.size($scope.selectedServices);
-        if(itemLength == 0){
-            $cordovaToast
-                .show('Please select at least one service', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
-
-            // alert('Please, select some services!')
-        }
-        else{
-            $scope.serviceIds = [];
-            if (localStorage.getItem('catItems')) {
-                var items = JSON.parse(localStorage.getItem('catItems'))
-                for(key in items){
-                    $scope.serviceIds.push(items[key].id);
-                }
-            }
-            // console.log("services id",$scope.serviceIds)
-            $scope.finalServiceIds = _.uniq($scope.serviceIds)
-            console.log($scope.finalServiceIds)
-            $scope.vendorIds = [];
-             // console.log($scope.finalServiceIds)
-            var count = 0;
-            var vendorsIds = [];
-            var finalVendorIds =[];
-            for(key in $scope.finalServiceIds){
-                if(VendorServiceList[$scope.finalServiceIds[key]]){
-                    vendorsIds[count] = VendorServiceList[$scope.finalServiceIds[key]].split(',');
-                    if(count != 0) {
-                        finalVendorIds = _.intersection(vendorsIds[count], finalVendorIds)
-                    }
-                    else{
-                        finalVendorIds = vendorsIds[count];
-                    }
-                    count++;
-                }
-                else{
-                    vendorsIds[count] = [];
-                    if(count != 0) {
-                        finalVendorIds = _.intersection(vendorsIds[count], finalVendorIds)
-                    }
-                    else{
-                        finalVendorIds = vendorsIds[count];
-                    }
-                    count++;
-                }
-
-            }
-            window.localStorage['VendorServiceListIds'] = JSON.stringify(finalVendorIds);
-            console.log(finalVendorIds);
-            if(finalVendorIds.length>0){
-                $state.go('vendorList',{vendorPage:'serviceList'});
-            }
-            else{
-                $cordovaToast
-                    .show('No,vendor found for selected services.', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
-            }
         }
     };
 
@@ -458,4 +358,72 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
         $rootScope.$broadcast('category', { message: 'category length changed' });
     };
 
+    $scope.backButton = function(){
+        $state.go('app.home');
+    };
+
+    $scope.discoverSalons = function () {
+        $state.go('vendorList',{vendorPage:'discoverSalons'});
+    };
+    $scope.findVendors = function() {
+        var itemLength = _.size($scope.selectedServices);
+        if(itemLength == 0){
+            $cordovaToast
+                .show('Please select at least one service', 'long', 'center')
+                .then(function(success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
+        }
+        else{
+            $scope.serviceIds = [];
+            if (localStorage.getItem('catItems')) {
+                var items = JSON.parse(localStorage.getItem('catItems'))
+                for(key in items){
+                    $scope.serviceIds.push(items[key].id);
+                }
+            }
+            $scope.finalServiceIds = _.uniq($scope.serviceIds)
+            $scope.vendorIds = [];
+            var count = 0;
+            var vendorsIds = [];
+            var finalVendorIds =[];
+            for(key in $scope.finalServiceIds){
+                if(VendorServiceList[$scope.finalServiceIds[key]]){
+                    vendorsIds[count] = VendorServiceList[$scope.finalServiceIds[key]].split(',');
+                    if(count != 0) {
+                        finalVendorIds = _.intersection(vendorsIds[count], finalVendorIds)
+                    }
+                    else{
+                        finalVendorIds = vendorsIds[count];
+                    }
+                    count++;
+                }
+                else{
+                    vendorsIds[count] = [];
+                    if(count != 0) {
+                        finalVendorIds = _.intersection(vendorsIds[count], finalVendorIds)
+                    }
+                    else{
+                        finalVendorIds = vendorsIds[count];
+                    }
+                    count++;
+                }
+            }
+            if(finalVendorIds.length>0){
+                window.localStorage['VendorServiceListIds'] = JSON.stringify(finalVendorIds);
+                $state.go('vendorList',{vendorPage:'serviceList'});
+            }
+            else{
+                $cordovaToast
+                    .show('No,vendor found for selected services.', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
+        }
+    };
 });

@@ -93,27 +93,21 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
 
 
    function Logout(){
-      console.log(window.localStorage);
       if(window.localStorage.email && window.localStorage.uid){
          firebase.auth().signOut().then(function() {
             console.log('Sign-out successful.');
             delete window.localStorage.email;
             delete window.localStorage.uid;
             delete window.localStorage.name;
-            // delete window.localStorage;
+            delete window.localStorage.allBookingInfo;
+            delete window.localStorage.mobileNumber;
+            delete window.localStorage.mobile_verify;
             console.log("Successfully deleted from localStorage");
             console.log(window.localStorage);
          }, function(error) {
             console.log("error");
          });
       }
-      delete window.localStorage.email;
-      delete window.localStorage.uid;
-      delete window.localStorage.name;
-      delete window.localStorage.allBookingInfo;
-      delete window.localStorage.mobileNumber;
-      delete window.localStorage.mobile_verify;
-      // $http.defaults.headers.common.uid = '';
    }
 
    function checkAuthentication(){

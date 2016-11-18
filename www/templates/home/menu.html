@@ -7,14 +7,15 @@
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
       </ion-nav-buttons>
-      <ion-nav-title class="location" ng-click="location_option()">
+      <ion-nav-title class="location" ng-click="selectLocation()">
       <span class="loc1"><i class="icon ion-location"></i> Your location</span>
       <span class="break">{{location_info.cityName}},{{location_info.locationName}}</span>
       </ion-nav-title>
       <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-ios-heart" ng-class="uid? 'pink':'normal'" ng-click="favorate_list()">
+        <button class="button button-icon button-clear ion-ios-heart"
+                ng-class="uid? 'pink':'normal'" ng-click="favouriteVendorList()">
         </button>
-        <button class="button button-icon button-clear ion-android-search" ng-click="search_text()">
+        <button class="button button-icon button-clear ion-android-search" ng-click="searchVendor()">
         </button>
       </ion-nav-buttons>
     </ion-nav-bar>

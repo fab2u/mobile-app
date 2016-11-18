@@ -1,17 +1,18 @@
 app.controller('SearchCtrl', function($state, $scope,$http,$timeout,$ionicLoading) {
 
     $scope.searchQuery = '';
-
-    delete window.localStorage.slectedItems;
-    delete window.localStorage.catItems;
-    delete window.localStorage.serviceId;
-    delete window.localStorage.selectedTab;
-    window.localStorage.setItem("serviceId",'');
+    clearUnUsedLocalStorage();
+    function clearUnUsedLocalStorage() {
+        delete window.localStorage.slectedItems;
+        delete window.localStorage.catItems;
+        delete window.localStorage.serviceId;
+        delete window.localStorage.selectedTab;
+        delete window.localStorage.serviceId;
+        delete window.localStorage.BegItems;
+    }
 
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
-
     $scope.vendorNames = [];
-    var tempList = {};
 
     $ionicLoading.show();
 
@@ -20,7 +21,20 @@ app.controller('SearchCtrl', function($state, $scope,$http,$timeout,$ionicLoadin
     }, 5000);
 
     var hasVendorList = checkLocalStorage('vendorsName');
-
+    if(!hasVendorList){
+        vendorList();
+    }
+    else{
+        firebase.database().ref('vendorList/'+locationInfo.cityId+'/version').once('value',function(res) {
+            var newVersion = res.val()
+            if(window.localStorage['vendorsListVersion']<newVersion){
+                vendorList();
+            }
+            else {
+                $scope.vendorNames = JSON.parse(window.localStorage['vendorsName'])
+            }
+        })
+    }
     function vendorList() {
         firebase.database().ref('vendorList/'+locationInfo.cityId).once('value',function(response){
             var vendors = response.val();
@@ -36,31 +50,16 @@ app.controller('SearchCtrl', function($state, $scope,$http,$timeout,$ionicLoadin
             window.localStorage['vendorsListVersion'] = version;
         });
     }
-    if(!hasVendorList){
-        vendorList();
-    }
-    else{
-          firebase.database().ref('vendorList/'+locationInfo.cityId+'/version').once('value',function(res) {
-              var newVersion = res.val()
-              if(window.localStorage['vendorsListVersion']<newVersion){
-                  vendorList();
-              }
-              else {
-                  $scope.vendorNames = JSON.parse(window.localStorage['vendorsName'])
-              }
-          })
-    }
+
 
     $scope.home = function(){
         $state.go('app.home');
     };
 
     $scope.vendorMenu = function(vendorId){
-            delete window.localStorage.slectedItems;
-            delete window.localStorage.BegItems;
-            window.localStorage.setItem("service_type",'vendor');
-            $state.go('vendorMenu',{vendor_id:vendorId});
-    }
+     window.localStorage.setItem("service_type",'vendor');
+     $state.go('vendorMenu',{vendor_id:vendorId});
+    };
 
 
 });

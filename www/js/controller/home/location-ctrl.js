@@ -1,37 +1,66 @@
 app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ionicHistory,
-										$ionicModal,$ionicLoading) {
-
-	function location() {
-		$ionicLoading.show();
-		firebase.database().ref('city')
-			.orderByChild('active').equalTo(true).once('value',function(response){
-			$scope.location_list = response.val();
-			if($scope.location_list){
-				$ionicLoading.hide();
-			}
-		});
-	}
-	location();
+										$ionicModal,$ionicLoading,LocationService) {
 
 	$scope.backButtonValue = false;
+	function backButtonVisibility() {
+		if($ionicHistory.backView().stateName == 'app.home'){
+			$scope.backButtonValue = true;
+		}
+		else{
+			$scope.backButtonValue = false;
+		}
+	}
+	backButtonVisibility();
 
-	if($ionicHistory.backView().stateName == 'app.home'){
-		$scope.backButtonValue = true;
+	function getCityList() {
+		$ionicLoading.show();
+		LocationService.getAllCity().then(function (result) {
+			if(result){
+				$scope.cityList = result;
+				$ionicLoading.hide();
+			}
+			else{
+				$scope.cityList = '';
+				$ionicLoading.hide();
+			}
+		})
 	}
-	else{
-		$scope.backButtonValue = false;
-	}
+	getCityList();
 
     $scope.backButton = function(){
         $state.go('app.home');
     };
-
     $scope.selected_city = function(cityInfo){
     	$scope.cityId = cityInfo.cityId;
         	$timeout( function() {
-				$scope.open_location();
+				openLocalityOption();
         	}, 500);
     };
+
+	$ionicModal.fromTemplateUrl('templates/home/locality.html', {
+		scope: $scope,
+		animation: 'slide-in-up'
+	}).then(function(modal) {
+		$scope.location = modal;
+	});
+	function openLocalityOption() {
+		$ionicLoading.show();
+		LocationService.getCityLocality($scope.cityId).then(function (result) {
+			if(result){
+				$scope.localities = result;
+				$scope.location.show();
+				$ionicLoading.hide();
+			}
+			else{
+				$scope.localities = '';
+				$ionicLoading.hide();
+			}
+		})
+	}
+	$scope.close_location = function() {
+		$scope.location.hide();
+	};
+
 	$scope.location_selected = function(val){
 		var selectedLocation = JSON.parse(window.localStorage['selectedLocation'] || '{}');
 		selectedLocation.cityId = val.cityId;
@@ -48,22 +77,4 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 			$state.go('app.home');
 		}, 500);
 	};
-	$ionicModal.fromTemplateUrl('templates/home/locality.html', {
-		scope: $scope,
-		animation: 'slide-in-up'
-	}).then(function(modal) {
-		$scope.location = modal;
-	});
-	$scope.open_location = function() {
-		$ionicLoading.show();
-		firebase.database().ref('location/' + $scope.cityId).once('value', function (response) {
-			$scope.location_detail = response.val();
-			$scope.location.show();
-			$ionicLoading.hide();
-		});
-	};
-	$scope.close_location = function() {
-		$scope.location.hide();
-	};
-
 });

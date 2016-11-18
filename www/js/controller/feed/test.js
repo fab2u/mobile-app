@@ -597,8 +597,9 @@ app.controller("userFeedCtrl", function($scope, $timeout, $stateParams,$cordovaC
         if(callback){
             callback();
         }
-        console.log("testing:", $scope.blogArr)
     }
+
+
 
     $scope.likeFeeds = function(){
         $timeout(function () {

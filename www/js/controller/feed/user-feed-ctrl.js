@@ -1,5 +1,6 @@
-app.controller("userFeedCtrl", function($scope,userInfoService, $timeout, $stateParams,$cordovaCamera,$http,$state,
-                                        $location, $ionicLoading,$sce, $ionicModal, $ionicPopup){
+app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordovaCamera,
+                                        $http,$state, $location,$ionicModal, $ionicLoading,$sce,
+                                        $ionicPopup){
 
     $scope.myUid = window.localStorage.getItem("uid");
     $scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
@@ -21,7 +22,6 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout, $state
 
         function getPersonalInfo() {
             userInfoService.getPersonalInfo($scope.myUid).then(function (result) {
-                console.log("result",result)
                 $scope.userDetails = result;
                 if($scope.userDetails.following){
                     $scope.following = Object.keys($scope.userDetails.following).length;
@@ -40,7 +40,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout, $state
                 }
             })
         }
-        getPersonalInfo()
+        getPersonalInfo();
 
 
 
@@ -310,11 +310,123 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout, $state
 
         $scope.createNew = function(){
             $location.path("/new-feed");
+        };
+
+        //////////////////////////////LoadMore feeds ///////////////////////////////////////
+
+        $scope.loadMore = function(){
+            getPostInfo();
+        };
+
+        //////////////////////image upload  to user profile//////////////////////////////////
+
+        var basic;
+        $ionicModal.fromTemplateUrl('templates/user/image-crop.html', {
+            scope: $scope
+        }).then(function(modal) {
+            $scope.modal = modal;
+        });
+        $scope.cameraUpload = function() {
+            $timeout(function () {
+                $ionicLoading.show();
+            }, 2000);
+            var options = {
+                destinationType : Camera.DestinationType.FILE_URI,
+                sourceType :	Camera.PictureSourceType.CAMERA,
+                allowEdit : false,
+                encodingType: Camera.EncodingType.JPEG,
+                popoverOptions: CameraPopoverOptions,
+            };
+            $ionicLoading.hide();
+            $cordovaCamera.getPicture(options).then(function(imageURI) {
+                var image = document.getElementById('profile-pic');
+                image.src = imageURI;
+                $scope.url = imageURI;
+                if($scope.url){
+                    cropImage($scope.url);
+                }
+                else{
+                    alert('Please click a pic again!')
+                }
+            }, function(err) {
+                console.log(err);
+            });
+        };
+
+        function cropImage(source){
+            $scope.modal.show();
+            basic = $('.demo').croppie({
+                viewport: {
+                    width: 200,
+                    height: 200,
+                    type: 'circle'
+                }
+            });
+            basic.croppie('bind', {
+                url: source
+            });
         }
+        $scope.cropClick = function(){
+            $ionicLoading.show();
+            basic.croppie('result', {
+                type: 'canvas',
+                format: 'jpeg',
+                circle: true
+            }).then(function (resp) {
+                $ionicLoading.hide();
+                $http.post("http://139.162.3.205/api/testupload", {path: resp})
+                    .success(function(response){
+                        var updates1 = {};
+                        updates1["/users/data/"+$scope.myUid+"/photoUrl"] = response.Message;
+                        window.localStorage.setItem("userPhoto", response.Message);
+                        db.ref().update(updates1).then(function(){
+                            user.updateProfile({
+                                photoURL: response.Message
+                            }).then(function(){
+                                $ionicLoading.hide();
+                                alert("Photo updated successfully");
+                                $scope.modal.hide();
+                            });
+                        });
+
+                    })
+                    .error(function(response){
+                        $ionicLoading.hide();
+                        alert('Please try again, something went wrong');
+                    });
+            });
+            $timeout(function () {
+                $ionicLoading.hide();
+            }, 4000);
+        };
+        $scope.galleryUpload = function() {
+            $timeout(function () {
+                $ionicLoading.show();
+            }, 2000);
+            var options = {
+                destinationType : Camera.DestinationType.FILE_URI,
+                sourceType :	Camera.PictureSourceType.PHOTOLIBRARY, //, Camera.PictureSourceType.CAMERA,
+                allowEdit : false,
+                encodingType: Camera.EncodingType.JPEG,
+                popoverOptions: CameraPopoverOptions,
+            };
+            $ionicLoading.hide()
+            $cordovaCamera.getPicture(options).then(function(imageURI) {
+                var image = document.getElementById('profile-pic');
+                $scope.url = imageURI;
+                if($scope.url){
+                    cropImage($scope.url);
+                }
+                else{
+                    alert('Please take another picture!')
+                }
+            }, function(err) {
+                console.log(err);
+            });
+        };
+
     }
     else{
         alert('Please login/SignUp with fabbook.')
     }
-
-
 });

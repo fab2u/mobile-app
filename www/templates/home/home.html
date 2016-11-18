@@ -1,9 +1,9 @@
 <ion-view id="home-page">
    <ion-content class="has-header" ng-show="banners">
         <div class="services-n-fab">
-            <div class="services" ng-class="fabSelected? 'no-border':'with-border'" ng-click="selectMain(1)">SERVICES</div>
-            <div class="fab" ng-class="fabSelected? 'with-border':'no-border'" ng-click="selectMain(2)"></div>
-            <div class="fab-book" ng-click="selectMain(2)">FAB BOOK</div>
+            <div class="services" ng-class="fabSelected? 'no-border':'with-border'" ng-click="selectButton(1)">SERVICES</div>
+            <div class="fab" ng-class="fabSelected? 'with-border':'no-border'" ng-click="selectButton(2)"></div>
+            <div class="fab-book" ng-click="selectButton(2)">FAB BOOK</div>
         </div>
         <div class="offerList">
             <ion-slide-box class="offers" does-continue="true" auto-play="true">
@@ -16,7 +16,7 @@
             </ion-slide-box>
         </div>
       <div class="category-list">
-          <div class="categories" ng-click="services(category.catHeading)" ng-repeat="category in categories"
+          <div class="categories" ng-click="selectedCategory(category.catHeading)" ng-repeat="category in categories"
                ng-style="{'background-image':'url({{category.catImg}})'}">
                 <!-- <img src="{{category.catImg}}"> -->
                 <div class="catDescription">

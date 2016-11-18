@@ -1,9 +1,10 @@
 app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$location,
-								$ionicSlideBoxDelegate,allServiceList) {
+								$ionicSlideBoxDelegate,allServiceList,homeServices) {
 
-	$scope.fabSelected = false;
+	/// clear all the un-required local Storage ////////////
 
-	function clearOldLocalStorage() {
+	clearUnUsedLocalStorage();
+	function clearUnUsedLocalStorage() {
 		delete window.localStorage.slectedItems;
 		delete window.localStorage.catItems;
 		delete window.localStorage.serviceId;
@@ -17,13 +18,29 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 		delete window.localStorage.BegItems;
 		delete window.localStorage.previousOtp;
 		delete window.localStorage.pageName;
-		delete window.localStorage.selectedTab
-		delete window.localStorage.currentBookingId
-		delete window.localStorage.mapStorage
+		delete window.localStorage.selectedTab;
+		delete window.localStorage.currentBookingId;
+		delete window.localStorage.mapStorage;
+		delete window.localStorage.VendorServiceListIds;
 	}
-	clearOldLocalStorage();
+	$scope.fabSelected = false;
+	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+	$scope.offers = [
+		{offer: 'Refer a friend and get hidden gift', image: 'img/home/slider/slider1.jpg'},
+		{offer: 'Refer a friend and get hidden gift', image: 'img/home/slider/slider2.jpg'}
+	];
 
-	$scope.selectMain = function(val){
+	$scope.categories = [
+		{catHeading: 'Salons', catSubheading: 'Be Bold, Be Daring, Be Fabulous', catImg: 'img/home/cat/salon.jpg'},
+		{catHeading: 'Spa', catSubheading: 'Walk in , Float out', catImg: 'img/home/cat/spa.jpg',serviceId:'8001'},
+		{catHeading: 'Fitness', catSubheading: 'Stop Saying Tomorrow', catImg: 'img/home/cat/fitness.jpg',serviceId:'9001'},
+		{catHeading: 'Wedding & Party', catSubheading: 'Because Memories Last Forever', catImg: 'img/home/cat/wedding.jpg',serviceId:'1101'},
+		{catHeading: 'Tattoo', catSubheading: 'Show The Word Your Story', catImg: 'img/home/cat/tattoo.jpg',serviceId:'1201'}
+	];
+
+
+	///////////////////////Select fab-book or  services //////////////
+	$scope.selectButton = function(val){
 		if(val == 1){
 			$scope.fabSelected = false;
 		} else {
@@ -32,27 +49,29 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 		}
 	};
 
-	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
-
-
+	/////////////////////////////Get home banners for selected city////////////////////////
 	function get_banners(){
 		$ionicLoading.show();
-		firebase.database().ref('banners/'+locationInfo.cityId).once('value',function(response){
-			if(response.val()){
-				$ionicLoading.hide();
-				$scope.banners = response.val();
+		homeServices.getSelectedCityBanner(locationInfo.cityId).then(function(result){
+			if(result){
+				$scope.banners = result;
 				$ionicSlideBoxDelegate.update();
+				$ionicLoading.hide();
 			}
 			else{
-				firebase.database().ref('banners/fab2u').once('value',function(response){
-						$ionicLoading.hide();
-						$scope.banners = response.val();
-						$ionicSlideBoxDelegate.update();
-				});
+				homeServices.getDefaultBanner().then(function (result) {
+					$scope.banners = result;
+					$ionicSlideBoxDelegate.update();
+					$ionicLoading.hide();
+				})
 			}
-		});
-	};
+		})
+	}
 	get_banners();
+
+
+	//////////////////////end get banners function /////////////////////////////////
+	///////////////////////Get vendor list regarding to their services /////////////
 
 	function getVendorServiceList(){
 		allServiceList.getAllServices(locationInfo.cityId).then(function (response) {
@@ -61,7 +80,6 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 			window.localStorage['VendorServiceList'] = JSON.stringify(result);
 			window.localStorage['VendorServiceListVersion'] = version;
 			$scope.VendorIdForService  = response;
-			VendorIdsForServices()
 		})
 	}
 	if(!checkLocalStorage('VendorServiceList')){
@@ -74,60 +92,49 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 				getVendorServiceList()
 			}
 			else{
-				$scope.VendorIdForService = JSON.parse(window.localStorage['VendorServiceList'])
-				VendorIdsForServices()
+				$scope.VendorIdForService = JSON.parse(window.localStorage['VendorServiceList']);
 			}
 		})
 	}
 
-	$scope.offers = [
-		{offer: 'Refer a friend and get hidden gift', image: 'img/home/slider/slider1.jpg'},
-		{offer: 'Refer a friend and get hidden gift', image: 'img/home/slider/slider2.jpg'}
-		];
 
-	$scope.categories = [
-		{catHeading: 'Salons', catSubheading: 'Be Bold, Be Daring, Be Fabulous', catImg: 'img/home/cat/salon.jpg'},
-		{catHeading: 'Spa', catSubheading: 'Walk in , Float out', catImg: 'img/home/cat/spa.jpg',serviceId:'8001'},
-		{catHeading: 'Fitness', catSubheading: 'Stop Saying Tomorrow', catImg: 'img/home/cat/fitness.jpg',serviceId:'9001'},
-		{catHeading: 'Wedding & Party', catSubheading: 'Because Memories Last Forever', catImg: 'img/home/cat/wedding.jpg',serviceId:'1101'},
-		{catHeading: 'Tattoo', catSubheading: 'Show The Word Your Story', catImg: 'img/home/cat/tattoo.jpg',serviceId:'1201'}
-	];
+	////////////////////////end vendor list regarding to services   ///////////////////////
 
-	$scope.services = function(cat){
+
+	$scope.selectedCategory = function(cat){
 		if(cat == 'Salons'){
 			$state.go('salonServices');
 		}
 		else if(cat == 'Spa') {
-			$scope.serviceIds = ["8001"];
-			VendorIdsForServices($scope.serviceIds)
+			var serviceIds = ["8001"];
+			VendorIdsForSelectedCategory(serviceIds)
 		}
 		else if(cat == 'Fitness') {
-			$scope.serviceIds = ["9001"];
-			VendorIdsForServices($scope.serviceIds)
+			var serviceIds = ["9001"];
+			VendorIdsForSelectedCategory(serviceIds)
 		}
 		else if(cat == 'Wedding & Party') {
-			$scope.serviceIds = ["1101"];
-			VendorIdsForServices($scope.serviceIds)
+			var serviceIds = ["1101"];
+			VendorIdsForSelectedCategory(serviceIds)
 		}
 		else if(cat == 'Tattoo') {
-			$scope.serviceIds = ["1201"];
-			VendorIdsForServices($scope.serviceIds)
+			var serviceIds = ["1201"];
+			VendorIdsForSelectedCategory(serviceIds)
 		}
 	};
 
+	////////////////////////////vendor's list for selected category   ////////////////////
 
-
-	function VendorIdsForServices(serviceId) {
+	function VendorIdsForSelectedCategory(serviceId) {
 		if(serviceId){
 			$scope.finalServiceIds = _.uniq(serviceId)
 			$scope.vendorIds = [];
-			// console.log($scope.finalServiceIds)
 			var count = 0;
 			var vendorsIds = [];
 			var finalVendorIds =[];
 			for(key in $scope.finalServiceIds){
 				if($scope.VendorIdForService[$scope.finalServiceIds[key]]){
-					vendorsIds[count] = VendorServiceList[$scope.finalServiceIds[key]].split(',');
+					vendorsIds[count] = $scope.VendorIdForService[$scope.finalServiceIds[key]].split(',');
 					if(count != 0) {
 						finalVendorIds = _.intersection(vendorsIds[count], finalVendorIds)
 					}
@@ -147,9 +154,8 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 					count++;
 				}
 			}
-			window.localStorage['VendorServiceListIds'] = JSON.stringify(finalVendorIds);
-			console.log(finalVendorIds);
 			if(finalVendorIds.length>0){
+				window.localStorage['VendorServiceListIds'] = JSON.stringify(finalVendorIds);
 				$state.go('vendorList',{vendorPage:'serviceList'});
 			}
 			else{
@@ -159,8 +165,17 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 						// success
 					}, function (error) {
 						// error
-				});
+					});
 			}
+		}
+		else{
+			$cordovaToast
+				.show('Please, select some services!', 'long', 'center')
+				.then(function(success) {
+					// success
+				}, function (error) {
+					// error
+				});
 		}
 	}
 });

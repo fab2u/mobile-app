@@ -1,7 +1,8 @@
 app.controller('VendorDetailsCtrl',
-    function($scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state
-        ,$ionicLoading,$rootScope,$cordovaToast,$timeout){
+    function(allVendorService,$scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state
+        ,$ionicLoading,$rootScope,$cordovaToast,$timeout,favouriteVendorsService){
 
+        $scope.vendorId = $stateParams.ven_id;
         $scope.images =[];
         $scope.reviewerName = '';
         $scope.reviewerImage = '';
@@ -9,6 +10,9 @@ app.controller('VendorDetailsCtrl',
         $scope.menu_button = true;
         $scope.more = false;
         $scope.days = [];
+        $scope.review_info = [];
+        $scope.currentValue = 0;
+        $scope.liked = false;
         var d = new Date();
         var weekday = new Array(7);
         weekday[0]=  "sunday";
@@ -18,29 +22,32 @@ app.controller('VendorDetailsCtrl',
         weekday[4] = "thursday";
         weekday[5] = "friday";
         weekday[6] = "saturday";
-        if(localStorage.getItem('uid')){
-            $scope.myUid = localStorage.getItem('uid');
-        }
+        var n = weekday[d.getDay()];
+        $scope.location = JSON.parse(window.localStorage['selectedLocation']);
+        $scope.myUid = localStorage.getItem('uid');
+
         $timeout(function () {
             $ionicLoading.hide();
-        }, 4000);
-        var n = weekday[d.getDay()];
+        }, 10000);
 
-        $scope.location = JSON.parse(window.localStorage['selectedLocation'])
-
-        if(window.localStorage.getItem("selectedTab")=='true'){
-            $scope.menu_button = false;
+        showMenuButton();
+        function showMenuButton() {
+            if(window.localStorage.getItem("selectedTab")=='true'){
+                $scope.menu_button = false;
+            }
+            else{
+                $scope.menu_button = true;
+            }
         }
-        else{
-            $scope.menu_button = true;
-        }
-
         // Get selected services if previously stored in localstorage
-        if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
-            $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
-        }
-        else{
-            $scope.selectedServices = {}
+        checkSelectedServices();
+        function checkSelectedServices() {
+            if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
+                $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+            }
+            else{
+                $scope.selectedServices = {};
+            }
         }
 
         $rootScope.$on('cart', function (event, args) {
@@ -48,182 +55,54 @@ app.controller('VendorDetailsCtrl',
             $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
         });
 
-    $scope.vendorDetail = function() {
-        $ionicLoading.show();
-        firebase.database().ref('vendors/' +
-            JSON.parse(window.localStorage['selectedLocation']).cityId + '/vendors/' +
-            $stateParams.ven_id).once('value', function (response) {
-            if(response.val()){
-               $scope.vendor_detail = response.val();
-               $ionicLoading.hide();
-               if(response.val().images){
-                   if(response.val().images.gallery){
-                       angular.forEach(response.val().images.gallery, function (value, key) {
-                           $scope.images.push({id: key, src: value.url})
-                       });
-                   }
-                   else{
-                       $scope.images.push({id: 'dummy', src: 'img/vendorMain.jpg'})
-                   }
+        ///////////////////////////////////////////////////////////////////////////////////
 
-               }
-               else{
-                   $scope.images.push({id: 'dummy', src: 'img/vendorMain.jpg'})
-               }
-           }
-           else{
-               $scope.msg1 = 'No,menu found for this vendor!';
-               $ionicLoading.hide();
-
-           }
-
-        });
-    };
-     $scope.vendorDetail();
-  $scope.currentValue = 0;
-  $scope.liked = false;
-
-  $scope.likeVendor = function(){
-      var key = db.ref('favourites/'+localStorage.getItem('uid')).push().key;
-      var favouriteData = {
-          vendorId:$stateParams.ven_id,
-          vendorDetail:$scope.vendor_detail
-      };
-      if(localStorage.getItem('uid') && key){
-          firebase.database().ref('favourites/'+localStorage.getItem('uid')+'/'+key)
-              .set(favouriteData,function(response) {
-                  if(response ==null){
-                      $scope.liked  = !$scope.liked ;
-                      $cordovaToast
-                          .show('Vendor added to your favorite list.', 'long', 'center')
-                          .then(function(success) {
-                              // success
-                          }, function (error) {
-                              // error
-                          });
-                  }
-              })
-      }
-      else{
-          $cordovaToast
-              .show('Please login.', 'long', 'center')
-              .then(function(success) {
-                  // success
-              }, function (error) {
-                  // error
-              });
-      }
-
-  };
-
-	$scope.next = function() {
-    	$ionicSlideBoxDelegate.next();
-  	};
-  	$scope.previous = function() {
-    	$ionicSlideBoxDelegate.previous();
-  	};
-
-  	// // Called each time the slide changes
-  	// $scope.slideChanged = function(index) {
-   //    console.log($ionicSlideBoxDelegate.currentIndex());
-   //  	$scope.slideIndex = index;
-   //    console.log(index);
-  	// };
-
-
-        ////// To get vendor fav or not //////////////
-
-        function getFavVendor() {
-            if(localStorage.getItem('uid')){
-                firebase.database().ref('favourites/'+localStorage.getItem('uid'))
-                    .once('value',function(response) {
-                        angular.forEach(response.val(),function (value,key) {
-                            if(value.vendorId == $stateParams.ven_id){
-                                $scope.liked = true;
-                            }
-                        })
-                    })
-            }
-            else{
-                $scope.liked = false;
-            }
-        }
-        getFavVendor()
-
-/// To get review for a particular vendor ///////
-        $scope.review_info = [];
-        $scope.reviewList = function(){
-            $ionicLoading.show();
-            firebase.database().ref('reviews/'+
-                JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+
-                $stateParams.ven_id+'/Reviews').once('value',function(response){
-                $scope.reviews = response.val();
-                if(response.val()){
-                    angular.forEach(response.val(), function(value, key) {
-                        $scope.review_info.push(value);
-                        $ionicLoading.hide();
-                    });
-                }
-                else if(response.val() == null){
-                    $scope.msg = 'No,reviews found!';
-                    $ionicLoading.hide();
-                }
-            });
+        ////////////////////// To update slide number ////////////////////////////////////////
+        $scope.next = function() {
+            $ionicSlideBoxDelegate.next();
+        };
+        $scope.previous = function() {
+            $ionicSlideBoxDelegate.previous();
+        };
+        $scope.changeSlide = function(val){
+            $scope.currentValue = val;
+            $ionicSlideBoxDelegate.$getByHandle('vendorMainDetails').slide(val);
         };
 
-    $scope.slideHasChanged = function(value){
-        if(value == 2){
-            $scope.reviewList();
+        //////////////////////////Get vendor detail  /////////////////////////////////////
+        getVendorDetail();
+
+        function getVendorDetail() {
+            $ionicLoading.show();
+            allVendorService.getVendorInfo($scope.location.cityId,$scope.vendorId).then(function (result) {
+                if(result){
+                    $scope.vendor_detail = result;
+                    getDistance($scope.location.latitude,$scope.location.longitude,$scope.vendor_detail.address.latitude,$scope.vendor_detail.address.longitude,'km');
+                    $ionicLoading.hide();
+                    if($scope.vendor_detail.images){
+                        if($scope.vendor_detail.images.gallery){
+                            angular.forEach($scope.vendor_detail.images.gallery, function (value, key) {
+                                $scope.images.push({id: key, src: value.url})
+                            });
+                        }
+                        else{
+                            $scope.images.push({id: 'dummy', src: 'img/vendorMain.jpg'})
+                        }
+
+                    }
+                    else{
+                        $scope.images.push({id: 'dummy', src: 'img/vendorMain.jpg'})
+                    }
+                }
+                else{
+                    $scope.vendor_detail = '';
+                    $ionicLoading.hide();
+                }
+            })
         }
-        else{
-            $scope.review_info = [];
-        }
-      $scope.currentValue = value;
-    };
 
-        $rootScope.$on('reviewList', function (event, args) {
-            $scope.reviewList();
-        });
-
-
-
-    $scope.showVendorTiming = function(time_info){
-        angular.forEach(time_info, function(value, key) {
-            if(key == n){
-                $scope.today_end_time = value.pm;
-            }
-            // $scope.days.push({name : key,startTime:value.am , endTime:value.pm})
-            $scope.days.push({name : key,Times:value})
-        });
-        $scope.more = !$scope.more;
-    };
-
-
-
-
-        $scope.open_map = function(latitude,longitude,line1,line2,vendorName){
-       $state.go('map',{
-                'lat': latitude,
-                'lng': longitude,
-                'add1': line1,
-                'add2': line2,
-                'name': vendorName
-        });
-    };
-
-    $scope.starrating=function(rating) {
-      return new Array(rating);   //ng-repeat will run as many times as size of array
-    };
-
-   $scope.changeSlide = function(val){
-      $scope.currentValue = val;
-      $ionicSlideBoxDelegate.$getByHandle('vendorMainDetails').slide(val);
-   };
-
-
-
-
-        $scope.get_distance = function(latitude1,longitude1,latitude2,longitude2,units) {
+        /////////////////////get distance ////////////////////////////////
+        function getDistance(latitude1,longitude1,latitude2,longitude2,units) {
             var p = 0.017453292519943295;    //This is  Math.PI / 180
             var c = Math.cos;
             var a = 0.5 - c((latitude2 - latitude1) * p)/2 +
@@ -238,57 +117,82 @@ app.controller('VendorDetailsCtrl',
                 return false;
             }
 
+        }
+        ///////////////////////ratings         /////////////////////////////
+        $scope.starrating=function(rating) {
+            return new Array(rating);   //ng-repeat will run as many times as size of array
         };
 
-    $ionicModal.fromTemplateUrl('templates/vendor/image.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.modal = modal;
-    });
 
-    $scope.openModal = function() {
-      $ionicSlideBoxDelegate.$getByHandle('ImgGallery').slide(0);
-      $scope.modal.show();
-    };
+        //////////////////////////vendor service timings   //////////////////////
+        $scope.showVendorTiming = function(time_info){
+            angular.forEach(time_info, function(value, key) {
+                if(key == n){
+                    $scope.today_end_time = value.pm;
+                }
+                $scope.days.push({name : key,Times:value})
+            });
+            $scope.more = !$scope.more;
+        };
 
-    $scope.closeModal = function() {
-      $scope.modal.hide();
-    };
+        ////////////////////Gallery image show up and down   ///////////////////
+        $ionicModal.fromTemplateUrl('templates/vendor/image.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
+        });
 
-    $scope.goToSlide = function(value){
-      $ionicSlideBoxDelegate.$getByHandle('ImgGallery').slide(value);
-      $scope.modal.show();
-    };
+        $scope.openModal = function() {
+            $ionicSlideBoxDelegate.$getByHandle('ImgGallery').slide(0);
+            $scope.modal.show();
+        };
 
-    $scope.cart = function(){
-        if(_.size($scope.selectedServices)>0){
-            $state.go('cart',{'ven_id':$stateParams.ven_id});
+        $scope.closeModal = function() {
+            $scope.modal.hide();
+        };
+
+        $scope.goToSlide = function(value){
+            $ionicSlideBoxDelegate.$getByHandle('ImgGallery').slide(value);
+            $scope.modal.show();
+        };
+
+        ///////////////////to check active function  ////////////////////////
+        $scope.slideHasChanged = function(value){
+            if(value == 2){
+                getReviewList();
+            }
+            else{
+                $scope.review_info = [];
+            }
+            $scope.currentValue = value;
+        };
+
+        $rootScope.$on('reviewList', function (event, args) {
+            getReviewList();
+        });
+        /////////////////////////////////////////////////////////////////////////
+
+        ///////// To get review for a particular vendor ////////////////////////
+
+        function getReviewList() {
+            $ionicLoading.show();
+            allVendorService.getAllReview($scope.location.cityId, $scope.vendorId).then(function (result) {
+                if (result) {
+                    $scope.reviews = result;
+                    for (key in $scope.reviews) {
+                        $scope.review_info.push($scope.reviews[key]);
+                    }
+                    $ionicLoading.hide();
+                }
+                else {
+                    $scope.reviews = '';
+                    $ionicLoading.hide();
+                }
+            })
         }
-        else{
-            $cordovaToast
-                .show('Please select at least one service.', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
-        }
-    };
 
-
-
-        $scope.vendorMenu = function(){
-        if(window.localStorage.getItem("selectedTab")=='true'){
-            $state.go('vendorSelectedMenu',{vendor_id:$stateParams.ven_id});
-        }
-        else{
-            $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id})
-
-        }
-    };
-
-
+        //////////////////post and edit review for a vendor      /////////////////////
 
         $scope.ratingsCallback = function(rating) {
             console.log("rating",rating)
@@ -306,8 +210,6 @@ app.controller('VendorDetailsCtrl',
                 $scope.ratingsCallback(rating);
             }
         };
-
-
 
         $scope.custReview ={
             review:'',
@@ -365,9 +267,8 @@ app.controller('VendorDetailsCtrl',
                 }
                 else{
                     var updates = {};
-                    var reviewId = firebase.database().ref('reviews/'+
-                        JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+
-                        $stateParams.ven_id+'/Reviews').push().key;
+                    var reviewId = firebase.database().ref('reviews/'+ $scope.location.cityId+'/'+
+                        $scope.vendorId+'/Reviews').push().key;
                     firebase.database().ref('users/data/'+localStorage.getItem('uid')).once('value',function(response) {
                         if(response.val()){
                             if(response.val().photoUrl){
@@ -377,8 +278,8 @@ app.controller('VendorDetailsCtrl',
                                     'userId':localStorage.getItem('uid'),
                                     'ReviewText':$scope.custReview.review,
                                     'ReviewRating':$scope.custReview.rating,
-                                    'VendorId':$stateParams.ven_id,
-                                    'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
+                                    'VendorId':$scope.vendorId,
+                                    'cityName':$scope.location.cityName,
                                     'ReviewDate':new Date().getTime(),
                                     'name':response.val().name,
                                     'image':response.val().photoUrl
@@ -391,8 +292,8 @@ app.controller('VendorDetailsCtrl',
                                     'userId':localStorage.getItem('uid'),
                                     'ReviewText':$scope.custReview.review,
                                     'ReviewRating':$scope.custReview.rating,
-                                    'VendorId':$stateParams.ven_id,
-                                    'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
+                                    'VendorId':$scope.vendorId,
+                                    'cityName': $scope.location.cityName,
                                     'ReviewDate':new Date().getTime(),
                                     'name':response.val().name,
                                     'image':''
@@ -400,13 +301,13 @@ app.controller('VendorDetailsCtrl',
                             }
 
                             var userReviewData = {
-                                'VendorId':$stateParams.ven_id,
-                                'cityId':JSON.parse(window.localStorage['selectedLocation']).cityId,
-                                'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName
+                                'VendorId':$scope.vendorId,
+                                'cityId':$scope.location.cityId,
+                                'cityName':$scope.location.cityName
 
                             }
-                            updates['reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+
-                            $stateParams.ven_id+'/Reviews/'+$scope.reviewData.ReviewId] = $scope.reviewData;
+                            updates['reviews/'+$scope.location.cityId+'/'+ $scope.vendorId+
+                            '/Reviews/'+$scope.reviewData.ReviewId] = $scope.reviewData;
                             updates['userReviews/'+localStorage.getItem('uid')+'/'+$scope.reviewData.ReviewId] = userReviewData;
                             db.ref().update(updates).then(function () {
                                 $scope.custReview ={
@@ -417,17 +318,23 @@ app.controller('VendorDetailsCtrl',
                                 $ionicLoading.hide();
                                 $rootScope.$broadcast('reviewList', { message: 'review list changed' });
                                 $cordovaToast
-                                .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
+                                    .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
+                                    .then(function(success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+                                $scope.rate_vendor.hide();
+                            });
+                        }
+                        else{
+                            $cordovaToast
+                                .show('Something went wrong!', 'long', 'center')
                                 .then(function(success) {
                                     // success
                                 }, function (error) {
                                     // error
                                 });
-                                $scope.rate_vendor.hide();
-                            });
-                        }
-                        else{
-                           alert('Something went wrong!')
                         }
                     })
                 }
@@ -450,14 +357,12 @@ app.controller('VendorDetailsCtrl',
 
 
         $scope.editReview = function (editReviewInfo) {
-            console.log("editReviewInfo",editReviewInfo);
             $scope.editData = editReviewInfo;
             $scope.edit_rate_vendor.show();
         };
 
 
         $scope.storeEditReview = function(data){
-            console.log("data",data);
             if(localStorage.getItem('uid')){
                 if($scope.custReview.rating == 0){
                     $cordovaToast
@@ -480,8 +385,8 @@ app.controller('VendorDetailsCtrl',
                                     'userId':localStorage.getItem('uid'),
                                     'ReviewText':$scope.custReview.review,
                                     'ReviewRating':$scope.custReview.rating,
-                                    'VendorId':$stateParams.ven_id,
-                                    'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
+                                    'VendorId':$scope.vendorId,
+                                    'cityName':$scope.location.cityName,
                                     'ReviewDate':new Date().getTime(),
                                     'name':response.val().name,
                                     'image':response.val().photoUrl
@@ -494,8 +399,8 @@ app.controller('VendorDetailsCtrl',
                                     'userId':localStorage.getItem('uid'),
                                     'ReviewText':$scope.custReview.review,
                                     'ReviewRating':$scope.custReview.rating,
-                                    'VendorId':$stateParams.ven_id,
-                                    'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName,
+                                    'VendorId':$scope.vendorId,
+                                    'cityName':$scope.location.cityName,
                                     'ReviewDate':new Date().getTime(),
                                     'name':response.val().name,
                                     'image':''
@@ -503,13 +408,12 @@ app.controller('VendorDetailsCtrl',
                             }
 
                             var userReviewData = {
-                                'VendorId':$stateParams.ven_id,
-                                'cityId':JSON.parse(window.localStorage['selectedLocation']).cityId,
-                                'cityName':JSON.parse(window.localStorage['selectedLocation']).cityName
-
+                                'VendorId':$scope.vendorId,
+                                'cityId':$scope.location.cityId,
+                                'cityName':$scope.location.cityName
                             }
-                            updates['reviews/'+JSON.parse(window.localStorage['selectedLocation']).cityId+'/'+
-                            $stateParams.ven_id+'/Reviews/'+$scope.reviewData.ReviewId] = $scope.reviewData;
+                            updates['reviews/'+$scope.location.cityId+'/'+
+                            $scope.vendorId+'/Reviews/'+$scope.reviewData.ReviewId] = $scope.reviewData;
                             updates['userReviews/'+localStorage.getItem('uid')+'/'+$scope.reviewData.ReviewId] = userReviewData;
                             db.ref().update(updates).then(function () {
                                 $scope.custReview ={
@@ -530,7 +434,13 @@ app.controller('VendorDetailsCtrl',
                             });
                         }
                         else{
-                            alert('Something went wrong!')
+                            $cordovaToast
+                                .show('Something went wrong!', 'long', 'center')
+                                .then(function(success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
                         }
                     })
                 }
@@ -546,4 +456,110 @@ app.controller('VendorDetailsCtrl',
             }
         }
 
-});
+
+        ///////////////////////// To check vendor is fav or not //////////////
+        getFavVendor();
+        function getFavVendor() {
+            if(localStorage.getItem('uid')){
+                favouriteVendorsService.getFavVendors(localStorage.getItem('uid')).then(function(result){
+                    if(result){
+                        for(key in result){
+                            if(result[key] == $scope.vendorId){
+                                $scope.liked = true;
+                                return;
+                            }
+                            else{
+                                $scope.liked = false;
+                            }
+                        }
+                    }
+                    else{
+                        $scope.liked = false;
+                    }
+                })
+            }
+            else{
+                $scope.liked = false;
+            }
+        }
+
+
+        $scope.likeVendor = function(){
+            var key = db.ref('favourites/'+localStorage.getItem('uid')).push().key;
+            var favouriteData = {
+                vendorId:$stateParams.ven_id,
+                vendorDetail:$scope.vendor_detail
+            };
+            if(localStorage.getItem('uid') && key){
+                firebase.database().ref('favourites/'+localStorage.getItem('uid')+'/'+key)
+                    .set(favouriteData,function(response) {
+                        if(response ==null){
+                            $scope.liked  = !$scope.liked ;
+                            $cordovaToast
+                                .show('Vendor added to your favorite list.', 'long', 'center')
+                                .then(function(success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                        }
+                        else{
+                            $cordovaToast
+                                .show('Sorry, we can not added this vendor to your favourite vendor list. Please try again!', 'long', 'center')
+                                .then(function(success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                        }
+                    })
+            }
+            else{
+                $cordovaToast
+                    .show('Please login/SignUp first!.', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
+
+        };
+
+        $scope.open_map = function(latitude,longitude,line1,line2,vendorName){
+            $state.go('map',{
+                'lat': latitude,
+                'lng': longitude,
+                'add1': line1,
+                'add2': line2,
+                'name': vendorName
+            });
+        };
+
+
+        $scope.cart = function(){
+            if(_.size($scope.selectedServices)>0){
+                $state.go('cart',{'ven_id':$stateParams.ven_id});
+            }
+            else{
+                $cordovaToast
+                    .show('Please select at least one service.', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
+        };
+
+        $scope.vendorMenu = function(){
+            if(window.localStorage.getItem("selectedTab")=='true'){
+                $state.go('vendorSelectedMenu',{vendor_id:$stateParams.ven_id});
+            }
+            else{
+                $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id})
+
+            }
+        };
+
+    });

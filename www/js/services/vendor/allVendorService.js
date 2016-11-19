@@ -49,6 +49,16 @@ app.factory('allVendorService', function ($q) {
                     reject(error);
                 });
             });
+        },
+        getAllReview: function (cityId,vendorId) {
+            return $q(function (resolve, reject) {
+                firebase.database().ref('reviews/'+ cityId+'/'+ vendorId+'/Reviews')
+                    .once('value').then(function (snapshot) {
+                    resolve(snapshot.val());
+                }, function (error) {
+                    reject(error);
+                });
+            });
         }
     }
 });

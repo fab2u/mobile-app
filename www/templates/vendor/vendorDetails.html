@@ -68,7 +68,7 @@
 			    		<p>Wifi</p>
 			    	</div>
 			    	<div class="col col-15"
-						 ng-class="get_distance(location.latitude,location.longitude,vendor_detail.address.latitude,vendor_detail.address.longitude,'km')?'available':'notAvailable'">
+						 ng-class="dist?'available':'notAvailable'">
 			    		<i class="icon ion-ios-location-outline"></i>
 			    		<p>{{dist}} km</p>
 			    	</div>

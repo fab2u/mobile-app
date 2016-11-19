@@ -14,7 +14,7 @@ app.controller('FavouriteCtrl', function($state,favouriteVendorsService,
     }
     function getFavouriteVendor() {
         $ionicLoading.show();
-        favouriteVendorsService.getFavVendors().then(function(result){
+        favouriteVendorsService.getFavVendors(localStorage.getItem('uid')).then(function(result){
             if(result){
                 $scope.vendorList = result;
                 $ionicLoading.hide();

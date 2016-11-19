@@ -21,7 +21,7 @@ app.controller('ReferCtrl',function($scope,userServices,$state,$cordovaSocialSha
 		$ionicLoading.show();
 		 userServices.getReferralCode(uId).then(function (result) {
 			 if(result){
-				 $scope.myReferralCode = result.myReferralCode;
+				 $scope.myReferralCode = result;
 				 $ionicLoading.hide();
 			 }
 			 else{

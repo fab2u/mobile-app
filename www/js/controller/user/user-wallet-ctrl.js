@@ -29,7 +29,7 @@ app.controller('UserWalletCtrl',function($scope,$state,userServices,$ionicLoadin
 		userServices.getWalletInfo(uId).then(function (result) {
 			var debitAmount = 0;
 			var creditAmount = 0;
-			if(response.val()){
+			if(result){
 				if(result.debit){
 					angular.forEach(result.debit, function(value, key){
 						$scope.walletHistory.push(value);

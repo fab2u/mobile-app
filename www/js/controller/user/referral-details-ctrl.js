@@ -20,7 +20,7 @@ app.controller('ReferralDetailsCtrl',function($scope,$timeout,$state,$ionicLoadi
 	function myReferral() {
 		userServices.getReferralCode(uId).then(function (result) {
 			if(result){
-				$scope.myReferralCode = result.myReferralCode;
+				$scope.myReferralCode = result;
 				myReferralHistory()
 			}
 			else{
@@ -49,7 +49,7 @@ app.controller('ReferralDetailsCtrl',function($scope,$timeout,$state,$ionicLoadi
 	}
 
 	function referredByInfo() {
-		userServices.getReferralCode($scope.referredBy).then(function (result) {
+		userServices.getUserInfo($scope.referredBy).then(function (result) {
 			if(result){
 				$scope.referredByDetail = result;
 			}

@@ -49,6 +49,26 @@ app.factory('userServices', function ($q) {
                     reject(error);
                 });
             });
+        },
+        getAllBookingTimes: function (uId) {
+            return $q(function (resolve, reject) {
+                firebase.database().ref('bookingsTiming/' + uId)
+                    .once('value').then(function (snapshot) {
+                    resolve(snapshot.val());
+                }, function (error) {
+                    reject(error);
+                });
+            });
+        },
+        AllBookingIds: function (uId) {
+            return $q(function (resolve, reject) {
+                firebase.database().ref('userBookings/' + uId)
+                    .once('value').then(function (snapshot) {
+                    resolve(snapshot.val());
+                }, function (error) {
+                    reject(error);
+                });
+            });
         }
     }
 })

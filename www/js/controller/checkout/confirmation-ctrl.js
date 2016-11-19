@@ -518,12 +518,12 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 			updates['userBookings/'+userId+'/'+bookingDetails.bookingId] = 'active';
 			updates['cityBookings/'+locationInfo.cityId+'/'+vendorId+'/'+bookingDetails.bookingId] = true;
 			updates['vendorBookings/'+vendorId+'/'+bookingDetails.bookingId] = 'active';
+			updates['bookingsTiming/'+userId+'/'+bookingDetails.bookingId] = bookingDetails.appointmentTime;
 			db.ref().update(updates).then(function(){
 				$ionicLoading.hide();
 				if(checkLocalStorage('allBookingInfo')){
 					var allBookingInfo = JSON.parse(window.localStorage['allBookingInfo'])
 					allBookingInfo[bookingDetails.bookingId] = bookingDetails.appointmentTime;
-
 				}
 				else{
 					var allBookingInfo = {};

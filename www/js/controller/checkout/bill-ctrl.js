@@ -187,6 +187,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
         updates['bookings/' + $scope.bookingInformation.bookingId + '/' + 'userStatus'] = status;
         updates['userBookings/' + localStorage.getItem('uid') + '/' + $scope.bookingInformation.bookingId] = status;
         updates['vendorBookings/' + $scope.bookingInformation.vendorId + '/' + $scope.bookingInformation.bookingId] = status;
+        updates['bookingsTiming/' + localStorage.getItem('uid') + '/' + $scope.bookingIdToMarkStatus] = null;
         db.ref().update(updates).then(function () {
             ///// delete booking id from local storage ///////
             delete allBookingInfo[$scope.bookingIdToMarkStatus];

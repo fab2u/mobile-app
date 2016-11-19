@@ -1,6 +1,6 @@
 app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ionicLoading, $state,
                                           $cordovaDevice,$cordovaToast, $ionicPopup,
-                                          $rootScope,$http,signUpService) {
+                                          $rootScope,$http,signUpService,userServices) {
 
 
     $ionicHistory.clearHistory();
@@ -322,6 +322,9 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                     $state.go('app.home');
                 }
             }
+            else if(localStorage.getItem('uid')){
+                getBookingTimings()
+            }
             else{
                 $state.go('app.home');
             }
@@ -329,6 +332,27 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
         else{
             $state.go('app.home');
         }
+    }
+
+    function getBookingTimings() {
+        userServices.getAllBookingTimes(localStorage.getItem('uid')).then(function (result) {
+           if(result){
+             var allBookingInfo = result;
+               for(key in allBookingInfo){
+                   if(allBookingInfo[key]< new Date().getTime()){
+                       window.localStorage['BookingIdToMarkStatus'] = key;
+                       $state.go('bill');
+                       return;
+                   }
+                   else{
+                       $state.go('app.home');
+                   }
+               }
+           }
+           else{
+              var allBookingInfo = {};
+           }
+        })
     }
 
     $rootScope.$on('oldUserError', function (event, args) {

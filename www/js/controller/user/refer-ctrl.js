@@ -1,4 +1,4 @@
-app.controller('ReferCtrl',function($scope,referService,$state,$cordovaSocialSharing,
+app.controller('ReferCtrl',function($scope,userServices,$state,$cordovaSocialSharing,
 									$ionicLoading,$timeout,$cordovaToast){
 
     var uId = window.localStorage.getItem('uid');
@@ -19,7 +19,7 @@ app.controller('ReferCtrl',function($scope,referService,$state,$cordovaSocialSha
 	}
 	 function myReferral() {
 		$ionicLoading.show();
-		 referService.getReferralCode(uId).then(function (result) {
+		 userServices.getReferralCode(uId).then(function (result) {
 			 if(result){
 				 $scope.myReferralCode = result.myReferralCode;
 				 $ionicLoading.hide();
@@ -61,5 +61,5 @@ app.controller('ReferCtrl',function($scope,referService,$state,$cordovaSocialSha
 	$scope.go_home = function () {
 		$state.go('app.home')
 	};
-	
+
 });

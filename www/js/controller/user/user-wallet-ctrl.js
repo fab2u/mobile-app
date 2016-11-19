@@ -1,31 +1,43 @@
-app.controller('UserWalletCtrl',function($scope,$state,$ionicLoading,$timeout){
+app.controller('UserWalletCtrl',function($scope,$state,userServices,$ionicLoading,
+										 $timeout,$cordovaToast){
 
-	$scope.show = function() {
-		$ionicLoading.show();
-	};
-	$scope.show();
 	$timeout(function () {
 		$ionicLoading.hide();
 	}, 3000);
 
+	var uId = localStorage.getItem('uid');
 	$scope.amount = 0;
 	$scope.walletHistory = [];
+
+	if(uId){
+		getWalletInfo();
+	}
+	else{
+		$cordovaToast
+			.show('Please login/SignUp first!', 'long', 'center')
+			.then(function(success) {
+				// success
+			}, function (error) {
+				// error
+			});
+	}
+
 	// To get user wallet information for wallet money and transactions
 
 	function getWalletInfo() {
 		$ionicLoading.show();
-		firebase.database().ref('userWallet/' + localStorage.getItem('uid')).once('value', function(response) {
+		userServices.getWalletInfo(uId).then(function (result) {
 			var debitAmount = 0;
 			var creditAmount = 0;
 			if(response.val()){
-				if(response.val().debit){
-					angular.forEach(response.val().debit, function(value, key){
+				if(result.debit){
+					angular.forEach(result.debit, function(value, key){
 						$scope.walletHistory.push(value);
 						debitAmount = debitAmount+ value.amount;
 					})
 				}
-				if(response.val().credit){
-					angular.forEach(response.val().credit, function(value, key){
+				if(result.credit){
+					angular.forEach(result.credit, function(value, key){
 						$scope.walletHistory.push(value);
 						creditAmount = creditAmount+ value.amount;
 					})
@@ -39,7 +51,6 @@ app.controller('UserWalletCtrl',function($scope,$state,$ionicLoading,$timeout){
 			}
 		})
 	}
-	getWalletInfo();
 
 	$scope.go_home = function () {
 		$state.go('app.home')

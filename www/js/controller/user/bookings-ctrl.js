@@ -11,7 +11,12 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 	}, 10000);
 
 	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
-	var allBookingInfo = JSON.parse(window.localStorage['allBookingInfo'])
+	if(window.localStorage['allBookingInfo']){
+		var allBookingInfo = JSON.parse(window.localStorage['allBookingInfo'])
+	}
+	else{
+		var allBookingInfo = {};
+	}
 
 	$scope.bookingIds = [];
 	$scope.allBookings = [];

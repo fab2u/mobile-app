@@ -39,6 +39,16 @@ app.factory('allVendorService', function ($q) {
                     reject(error);
                 });
             });
+        },
+        getVendorInfo: function (cityId,vendorId) {
+            return $q(function (resolve, reject) {
+                firebase.database().ref('vendors/' + cityId +'/vendors/'+vendorId)
+                    .once('value').then(function (snapshot) {
+                    resolve(snapshot.val());
+                }, function (error) {
+                    reject(error);
+                });
+            });
         }
     }
 });

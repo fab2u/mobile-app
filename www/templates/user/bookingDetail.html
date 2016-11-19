@@ -14,8 +14,8 @@
 
             <div>
                 <div  id = "myBill" class = "container">
-                    <div class = "custom-border padding class"><b>Venue: </b>{{bookingAddress.address.landmark}}</div>
-                    <div class = "custom-border padding class"><b>Address: </b>{{bookingAddress.address.address1}} {{bookingAddress.address.address2}}</div>
+                    <div class = "custom-border padding class"><b>Venue: </b>{{vendorDetail.address.landmark}}</div>
+                    <div class = "custom-border padding class"><b>Address: </b>{{vendorDetail.address.address1}} {{vendorDetail.address.address2}}</div>
                     <div class="padding class custom-border">
                         <b>Services </b>
                         <div ng-repeat = "service in bookingInformation.serviceInfo">{{service.menuItemName}}</div>
@@ -39,7 +39,7 @@
             </div>
             <div class="buttons" align = "center">
                 <button class="button button-positive icon ion-ios-location" id="location"
-                        ng-click="open_map(bookingAddress.address.latitude,bookingAddress.address.longitude,bookingAddress.address.address1,bookingAddress.address.address2,bookingAddress.vendorName)"></button>
+                        ng-click="open_map(vendorDetail.address.latitude,vendorDetail.address.longitude,vendorDetail.address.address1,vendorDetail.address.address2,vendorDetail.vendorName)"></button>
             </div>
         </div>
         </div>

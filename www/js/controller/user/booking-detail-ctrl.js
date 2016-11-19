@@ -1,43 +1,46 @@
-app.controller('BookingDetailCtrl', function($scope,$state,$ionicLoading,$stateParams,$timeout){
+app.controller('BookingDetailCtrl', function(userServices,$scope,$state,$ionicLoading,
+                                             $stateParams,$timeout,allVendorService){
 
 
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+    var bookingId = $stateParams.bookingId;
+    $scope.bookingInformation = {};
+    $scope.vendorDetail = {};
 
-    $scope.bookingInformation = '';
-    $scope.bookingAddress = '';
-
-    $scope.show = function() {
-        $ionicLoading.show();
-    };
-    $scope.show();
     $timeout(function () {
         $ionicLoading.hide();
     }, 10000);
 
     // Booking detail /////
+    bookingDetail();
 
      function bookingDetail() {
         $ionicLoading.show();
-                firebase.database().ref('bookings/' + $stateParams.bookingId).once('value', function (response) {
-                    if (response.val()) {
-                        $scope.bookingInformation = response.val();
-                        firebase.database().ref('vendors/' + locationInfo.cityId + '/vendors/' +response.val().vendorId).once
-                        ('value', function (response) {
-                            if(response.val()){
-                                $scope.bookingAddress = response.val();
-                                $ionicLoading.hide();
-                            }
-                          else{
-                                $ionicLoading.hide();
-                            }
-                        });
-                    }
-                    else{
-                        $ionicLoading.hide();
-                    }
-                });
-        };
-     bookingDetail();
+         userServices.getBookingDetail(bookingId).then(function (result) {
+             if(result){
+                 $scope.bookingInformation = result;
+                 $scope.vendorId = result.vendorId;
+                 getVendorDetail();
+             }
+             else{
+                 $scope.bookingInformation = {};
+                 $ionicLoading.hide();
+             }
+         })
+     }
+
+    function getVendorDetail() {
+        allVendorService.getVendorInfo(locationInfo.cityId,$scope.vendorId).then(function (result) {
+            if(result){
+                $scope.vendorDetail = result;
+                $ionicLoading.hide()
+            }
+            else{
+                $scope.vendorDetail = {};
+                $ionicLoading.hide()
+            }
+        })
+    }
 
     $scope.back = function () {
         $state.go('bookings');

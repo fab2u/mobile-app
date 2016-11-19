@@ -39,6 +39,16 @@ app.factory('userServices', function ($q) {
                     reject(error);
                 });
             });
+        },
+        getBookingDetail: function (bookingId) {
+            return $q(function (resolve, reject) {
+                firebase.database().ref('bookings/' + bookingId)
+                    .once('value').then(function (snapshot) {
+                    resolve(snapshot.val());
+                }, function (error) {
+                    reject(error);
+                });
+            });
         }
     }
 })

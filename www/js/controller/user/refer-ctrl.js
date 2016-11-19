@@ -1,26 +1,35 @@
-app.controller('ReferCtrl',function($scope, $state,$cordovaSocialSharing,$ionicLoading,$timeout){
+app.controller('ReferCtrl',function($scope,referService,$state,$cordovaSocialSharing,
+									$ionicLoading,$timeout,$cordovaToast){
 
-
-	$scope.show = function() {
-		$ionicLoading.show();
-	};
-	$scope.show();
+    var uId = window.localStorage.getItem('uid');
 	$timeout(function () {
 		$ionicLoading.hide();
 	}, 5000);
+	if(uId){
+		myReferral();
+	}
+	else{
+		$cordovaToast
+			.show('Please login/SignUp first!', 'long', 'center')
+			.then(function(success) {
+				// success
+			}, function (error) {
+				// error
+			});
+	}
 	 function myReferral() {
 		$ionicLoading.show();
-		firebase.database().ref('/users/data/' + window.localStorage.getItem('uid')).once('value', function (response) {
-			if(response.val()){
-				$scope.myReferralCode = response.val().myReferralCode;
-				$ionicLoading.hide();
-			}
-			else{
-				$ionicLoading.hide();
-			}
-		});
+		 referService.getReferralCode(uId).then(function (result) {
+			 if(result){
+				 $scope.myReferralCode = result.myReferralCode;
+				 $ionicLoading.hide();
+			 }
+			 else{
+				 $scope.myReferralCode = '';
+				 $ionicLoading.hide();
+			 }
+		 })
 	 }
-    myReferral();
 
 	$scope.showReferDetails = function(){
 		$state.go('referralDetails');
@@ -52,6 +61,5 @@ app.controller('ReferCtrl',function($scope, $state,$cordovaSocialSharing,$ionicL
 	$scope.go_home = function () {
 		$state.go('app.home')
 	};
-
-
+	
 });

@@ -1,18 +1,36 @@
 app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$cordovaToast,
                                         $ionicLoading,$timeout) {
 
-  $scope.chosenTime = ''; // will store the time selected by the user*/
+    $scope.chosenTime = ''; // will store the time selected by the user*/
+    delete window.localStorage.chosenTime;
+    delete window.localStorage.appointmentDate;
+    var weekday = new Array(7);
+    weekday[0]=  "Sunday";
+    weekday[1] = "Monday";
+    weekday[2] = "Tuesday";
+    weekday[3] = "Wednesday";
+    weekday[4] = "Thursday";
+    weekday[5] = "Friday";
+    weekday[6] = "Saturday";
+    $scope.monthName = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    $scope.fromDate = new Date();
+    $scope.month = $scope.fromDate.getMonth();
+    $scope.currentMonth = $scope.monthName[$scope.month];
+    $scope.date = $scope.fromDate.getDate();                       // store the current date
+    $scope.year = $scope.fromDate.getFullYear();
+    $scope.day = weekday[$scope.fromDate.getDay()];
+    $scope.countForward = 0;
 
   $ionicLoading.show();
   $timeout(function () {
     $ionicLoading.hide();
   }, 2000);
 
-  $scope.monthName = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
   $scope.active_slot_1 = false;
   $scope.active_slot_2 = false;
   $scope.active_slot_3 = false;
   $scope.active_slot_4 = false;
+
 
   $scope.slotValues = function() {
 
@@ -74,7 +92,7 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
       {time: '9:00', selected: false, isDisabled: false, id: 48, timeActual: '21:00'}];
 
   };
-  $scope.slotValues();
+    $scope.slotValues();
 
 
   $scope.back = function(){
@@ -84,22 +102,6 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
 
 
 
-  var weekday = new Array(7);
-  weekday[0]=  "Sunday";
-  weekday[1] = "Monday";
-  weekday[2] = "Tuesday";
-  weekday[3] = "Wednesday";
-  weekday[4] = "Thursday";
-  weekday[5] = "Friday";
-  weekday[6] = "Saturday";
-  
-  $scope.fromDate = new Date();
-  $scope.month = $scope.fromDate.getMonth();
-  $scope.currentMonth = $scope.monthName[$scope.month];
-  $scope.date = $scope.fromDate.getDate();                       // store the current date
-  $scope.year = $scope.fromDate.getFullYear();
-  $scope.day = weekday[$scope.fromDate.getDay()];
-  $scope.countForward = 0;
 
 /////   To check time slot for selected date and time of appointment /////////////
 
@@ -138,7 +140,6 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
   }
   localStorage.setItem('appointmentDate', JSON.stringify(appointmentDate));
 
-  window.localStorage.setItem("chosenTime", '');
 
 
 

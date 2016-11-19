@@ -550,6 +550,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 			delete window.localStorage.pageName;
 			delete window.localStorage.selectedTab;
 			delete window.localStorage.mapStorage;
+			delete window.localStorage.appointmentDate;
 		}
 	}
 });

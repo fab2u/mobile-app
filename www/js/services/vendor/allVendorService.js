@@ -59,6 +59,16 @@ app.factory('allVendorService', function ($q) {
                     reject(error);
                 });
             });
+        },
+        getMenu: function (vendorId) {
+            return $q(function (resolve, reject) {
+                firebase.database().ref('menu/'+ vendorId)
+                    .once('value').then(function (snapshot) {
+                    resolve(snapshot.val());
+                }, function (error) {
+                    reject(error);
+                });
+            });
         }
     }
 });

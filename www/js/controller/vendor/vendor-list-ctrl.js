@@ -1,5 +1,5 @@
 app.controller('VendorListCtrl',
-    function ($scope,allVendorService, $timeout, $ionicHistory, $state, $stateParams,
+    function ($scope,allVendorService, LocationService,$timeout, $ionicHistory, $state, $stateParams,
               $ionicLoading,$ionicModal, $ionicPopover, $rootScope, $cordovaToast) {
 
         delete window.localStorage.mapStorage;
@@ -306,14 +306,17 @@ app.controller('VendorListCtrl',
         });
         $scope.open_location = function () {
             $ionicLoading.show();
-            firebase.database().ref('location/' + locationInfo.cityId).once('value', function (response) {
-                $scope.location_detail = response.val();
-                $scope.location.show();
-                $ionicLoading.hide();
-            });
-            $timeout(function () {
-                $ionicLoading.hide();
-            }, 200);
+            LocationService.getCityLocality(locationInfo.cityId).then(function (result) {
+                if(result){
+                    $scope.location_detail = result;
+                    $scope.location.show();
+                    $ionicLoading.hide();
+                }
+                else{
+                    $scope.location_detail = '';
+                    $ionicLoading.hide();
+                }
+            })
         };
         $scope.close_location = function () {
             $scope.location.hide();

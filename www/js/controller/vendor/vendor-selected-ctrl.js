@@ -1,26 +1,27 @@
-app
-    .controller('VendorSelectedServicesListCtrl',function($scope,$stateParams,$rootScope,$state,
-                                                          $ionicLoading,$ionicPopup,$cordovaToast,
-                                                          $timeout){
+app.controller('VendorSelectedServicesListCtrl',function(allVendorService,$scope,$stateParams,
+                                                         $rootScope,$state, $ionicLoading,$ionicPopup,
+                                                         $cordovaToast,$timeout){
 
-
-        $scope.show = function() {
-            $ionicLoading.show();
-        };
-        $scope.show();
 
         $scope.total_fabtu=0;
         $scope.total_original=0;
         $scope.total_customer = 0;
-
+        $scope.selectedServices = {}; // Stores selected services
+        $scope.begItems = {};
+        $scope.currSlide = 0; // Current slide index
         $scope.selected_ids = [];
         $scope.selected_cat = [];
         $scope.menu = [];
         $scope.cart_item = 0;
         $scope.cart_price = {};
-
-
         $scope.fabSelected = false;
+        delete window.localStorage.vendorMobile;
+        delete window.localStorage.vendorLandline;
+        delete window.localStorage.vendorLandmark;
+        delete window.localStorage.vendorName;
+        $scope.selected_items = JSON.parse(localStorage.getItem('catItems'));
+        $scope.vendorId = $stateParams.vendor_id;
+
         $timeout(function () {
             $ionicLoading.hide();
         }, 10000);
@@ -38,7 +39,7 @@ app
                     confirmPopup.then(function(res) {
                         if(res) {
                             window.localStorage.setItem("selectedTab", false)
-                            $state.go('vendorMenu',{vendor_id:$stateParams.vendor_id});
+                            $state.go('vendorMenu',{vendor_id:$scope.vendorId});
                             delete window.localStorage.slectedItems;
                             delete window.localStorage.BegItems;
                             $rootScope.$broadcast('cart', { message: 'cart length changed' });
@@ -49,133 +50,166 @@ app
                 }
                 else{
                     window.localStorage.setItem("selectedTab", true)
-                    $state.go('vendorMenu',{vendor_id:$stateParams.vendor_id});
+                    $state.go('vendorMenu',{vendor_id:$scope.vendorId});
                 }
             }
         };
 
-       $scope.selected_items = JSON.parse(localStorage.getItem('catItems'));
-        console.log(JSON.stringify( $scope.selected_items));
-        if($scope.selected_items){
-            angular.forEach($scope.selected_items,function (value,key) {
-                $scope.selected_ids.push(value.id);
-            })
-        }
-
-        var sorted_id = _.sortBy($scope.selected_ids, function(num){
-            return num;
-        });
-
-        for(var i=0;i<sorted_id.length;i++){
-            if(sorted_id[i]<='1013' && sorted_id[i]>='1001'){
-                var cat_name = 'cat-01'
-                $scope.selected_cat.push(cat_name);
-            }
-           else if(sorted_id[i]<='2010' && sorted_id[i]>='2001'){
-                var cat_name = 'cat-02'
-                $scope.selected_cat.push(cat_name);
-            }
-            else if(sorted_id[i]<='3009' && sorted_id[i]>='3001'){
-                var cat_name = 'cat-03'
-                $scope.selected_cat.push(cat_name);
-            }
-            else if(sorted_id[i]<='4009' && sorted_id[i]>='4001'){
-                var cat_name = 'cat-04'
-                $scope.selected_cat.push(cat_name);
-            }
-            else if(sorted_id[i]<='5003' && sorted_id[i]>='5001'){
-                var cat_name = 'cat-05'
-                $scope.selected_cat.push(cat_name);
-            }
-            else if(sorted_id[i]<='6002' && sorted_id[i]>='6001'){
-                var cat_name = 'cat-06'
-                $scope.selected_cat.push(cat_name);
-            }
-            else if(sorted_id[i]=='7001'){
-                var cat_name = 'cat-07'
-                $scope.selected_cat.push(cat_name);
-            }
-            else if(sorted_id[i]<='8001'){
-                var cat_name = 'cat-08'
-                $scope.selected_cat.push(cat_name);
-            }
-            else if(sorted_id[i]<='9001'){
-                var cat_name = 'cat-09'
-                $scope.selected_cat.push(cat_name);
-            }
-            else if(sorted_id[i]<='1101'){
-                var cat_name = 'cat-11'
-                $scope.selected_cat.push(cat_name);
-            }
-            else if(sorted_id[i]<='1201'){
-                var cat_name = 'cat-12'
-                $scope.selected_cat.push(cat_name);
-            }
-
-        }
-        var mySubArray = _.uniq($scope.selected_cat, function (name) {
-            return name;
-        });
-        $scope.menu1 = {};
-        console.log("mySubArray",mySubArray)
-        if(mySubArray.length>0) {
-            firebase.database().ref('menu/' + $stateParams.vendor_id).once('value', function (response) {
-                if (response.val()) {
-                    $scope.menuInfo = response.val().services;
-                    window.localStorage.setItem("vendorName", response.val().vendorName);
-                    for(var j = 0; j< mySubArray.length;j++){
-                        angular.forEach($scope.menuInfo, function (value, key) {
-                            if(key == mySubArray[j]) {
-                                for (var k = 0; k < sorted_id.length; k++){
-                                    angular.forEach(value, function (value1, key1) {
-                                        if(key1 == sorted_id[k]){
-                                            console.log("value1",value1)
-                                            $scope.menu1[key1]=value1;
-
-                                        }
-                                    })
-                                }
-                            }
-                        })
-                    }
-                    $scope.vendorDetail();
+        //////////////////////check services are selected or not  //////////////////////
+        checkSelectedServices();
+        function checkSelectedServices() {
+            if($scope.selected_items){
+                for(key in $scope.selected_items){
+                    $scope.selected_ids.push($scope.selected_items[key].id);
                 }
-                else{
-                    $cordovaToast
-                        .show('No,menu found for this vendor,please select another vendor!', 'long', 'center')
-                        .then(function(success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
-                    $ionicLoading.hide();
-                }
-            })
-
+                findCatName();
+            }
+            else{
+                $scope.selected_ids = [];
+            }
         }
 
-
-
-
-
-
-        $scope.vendorDetail = function() {
-            $ionicLoading.show();
-            firebase.database().ref('vendors/' + JSON.parse(window.localStorage['selectedLocation']).cityId + '/vendors/' + $stateParams.vendor_id).once('value', function (response) {
-               if(response.val()){
-                   $scope.vendor_detail = response.val();
-                   window.localStorage.setItem("vendorMobile",$scope.vendor_detail.contactDetails.phone);
-                   window.localStorage.setItem("vendorLandline",$scope.vendor_detail.contactDetails.landline);
-                   window.localStorage.setItem("vendorLandmark",$scope.vendor_detail.address.landmark);
-
-                   $ionicLoading.hide();
-               }
-               else{
-                   $ionicLoading.hide();
-               }
-
+        function findCatName() {
+            $scope.sorted_id = _.sortBy($scope.selected_ids, function(num){
+                return num;
             });
-        };
+
+            for(var i=0;i<$scope.sorted_id.length;i++){
+                if($scope.sorted_id[i]<='1013' && $scope.sorted_id[i]>='1001'){
+                    var cat_name = 'cat-01'
+                    $scope.selected_cat.push(cat_name);
+                }
+                else if($scope.sorted_id[i]<='2010' && $scope.sorted_id[i]>='2001'){
+                    var cat_name = 'cat-02'
+                    $scope.selected_cat.push(cat_name);
+                }
+                else if($scope.sorted_id[i]<='3009' && $scope.sorted_id[i]>='3001'){
+                    var cat_name = 'cat-03'
+                    $scope.selected_cat.push(cat_name);
+                }
+                else if($scope.sorted_id[i]<='4009' && $scope.sorted_id[i]>='4001'){
+                    var cat_name = 'cat-04'
+                    $scope.selected_cat.push(cat_name);
+                }
+                else if($scope.sorted_id[i]<='5003' && $scope.sorted_id[i]>='5001'){
+                    var cat_name = 'cat-05'
+                    $scope.selected_cat.push(cat_name);
+                }
+                else if($scope.sorted_id[i]<='6002' && $scope.sorted_id[i]>='6001'){
+                    var cat_name = 'cat-06'
+                    $scope.selected_cat.push(cat_name);
+                }
+                else if($scope.sorted_id[i]=='7001'){
+                    var cat_name = 'cat-07'
+                    $scope.selected_cat.push(cat_name);
+                }
+                else if($scope.sorted_id[i]<='8001'){
+                    var cat_name = 'cat-08'
+                    $scope.selected_cat.push(cat_name);
+                }
+                else if($scope.sorted_id[i]<='9001'){
+                    var cat_name = 'cat-09'
+                    $scope.selected_cat.push(cat_name);
+                }
+                else if($scope.sorted_id[i]<='1101'){
+                    var cat_name = 'cat-11'
+                    $scope.selected_cat.push(cat_name);
+                }
+                else if($scope.sorted_id[i]<='1201'){
+                    var cat_name = 'cat-12'
+                    $scope.selected_cat.push(cat_name);
+                }
+            }
+            selectedMenu();
+        }
+
+       function selectedMenu() {
+           var mySubArray = _.uniq($scope.selected_cat, function (name) {
+               return name;
+           });
+           $scope.menu1 = {};
+           if(mySubArray.length>0) {
+               allVendorService.getMenu($scope.vendorId).then(function (result) {
+                   if (result) {
+                       $scope.menuInfo = result.services;
+                       window.localStorage.setItem("vendorName", result.vendorName);
+                       for(var j = 0; j< mySubArray.length;j++){
+                           angular.forEach($scope.menuInfo, function (value, key) {
+                               if(key == mySubArray[j]) {
+                                   for (var k = 0; k < $scope.sorted_id.length; k++){
+                                       angular.forEach(value, function (value1, key1) {
+                                           if(key1 == $scope.sorted_id[k]){
+                                               console.log("value1",value1)
+                                               $scope.menu1[key1]=value1;
+
+                                           }
+                                       })
+                                   }
+                               }
+                           })
+                       }
+                       vendorDetail();
+                   }
+                   else{
+                       $cordovaToast
+                           .show('No,menu found for this vendor,please select another vendor!', 'long', 'center')
+                           .then(function(success) {
+                               // success
+                           }, function (error) {
+                               // error
+                           });
+                       $ionicLoading.hide();
+                   }
+               })
+           }
+           else{
+               $ionicLoading.hide();
+               $cordovaToast
+                   .show('Please select some other services, don not find any detail for your selected services', 'long', 'center')
+                   .then(function(success) {
+                       // success
+                   }, function (error) {
+                       // error
+                   });
+           }
+       }
+
+         function vendorDetail() {
+             $ionicLoading.show();
+             allVendorService.getVendorInfo($scope.cityId,$scope.vendorId).then(function (result) {
+                 if(result){
+                     $scope.vendor_detail = result;
+                     window.localStorage.setItem("vendorMobile",$scope.vendor_detail.contactDetails.phone);
+                     window.localStorage.setItem("vendorLandline",$scope.vendor_detail.contactDetails.landline);
+                     window.localStorage.setItem("vendorLandmark",$scope.vendor_detail.address.landmark);
+                     $ionicLoading.hide();
+                 }
+                 else{
+                     $ionicLoading.hide();
+                 }
+             })
+        }
+
+
+        // Get selected services if previously stored in localstorage
+        if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
+            $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+            $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
+            $scope.calPrice($scope.begItems);
+            $scope.cart_item = _.size($scope.selectedServices);
+        }
+        else{
+            $scope.selectedServices = {};
+            $scope.begItems = {}
+            $scope.cart_item = 0;
+        }
+        $rootScope.$on('cart', function (event, args) {
+            $scope.message = args.message;
+            $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+            $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
+            $scope.cart_item = _.size($scope.selectedServices);
+            $scope.calPrice($scope.begItems);
+        });
 
 
         ///To calculate cart price //////
@@ -190,32 +224,6 @@ app
                 $scope.total_customer += value.customerPrice;
             })
         };
-        if(localStorage.getItem('BegItems') != null){
-            $scope.cartItems = JSON.parse(localStorage.getItem('BegItems'));
-            $scope.calPrice($scope.cartItems);
-        }
-
-
-        $scope.selectedServices = {}; // Stores selected services
-        $scope.begItems = {};
-
-        $scope.currSlide = 0; // Current slide index
-
-        // Get selected services if previously stored in localstorage
-        if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
-            $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
-            $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
-
-            $scope.cart_item = _.size($scope.selectedServices);
-        }
-
-        $rootScope.$on('cart', function (event, args) {
-            $scope.message = args.message;
-            $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
-            $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
-            $scope.cart_item = _.size($scope.selectedServices);
-            $scope.calPrice($scope.begItems);
-        });
 
         $scope.selectItem = function(index, serviceName,selectObj) {
             var data = selectObj;

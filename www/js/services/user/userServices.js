@@ -19,6 +19,16 @@ app.factory('userServices', function ($q) {
                     reject(error);
                 });
             });
+        },
+        getReferralHistory: function (myReferralCode) {
+            return $q(function (resolve, reject) {
+                firebase.database().ref('referralCode/' + myReferralCode)
+                    .once('value').then(function (snapshot) {
+                    resolve(snapshot.val());
+                }, function (error) {
+                    reject(error);
+                });
+            });
         }
     }
 })

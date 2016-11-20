@@ -20,19 +20,25 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
     $scope.year = $scope.fromDate.getFullYear();
     $scope.day = weekday[$scope.fromDate.getDay()];
     $scope.countForward = 0;
+    $scope.active_slot_1 = false;
+    $scope.active_slot_2 = false;
+    $scope.active_slot_3 = false;
+    $scope.active_slot_4 = false;
 
-  $ionicLoading.show();
-  $timeout(function () {
-    $ionicLoading.hide();
-  }, 2000);
+    $ionicLoading.show();
+    $timeout(function () {
+       $ionicLoading.hide();
+    }, 2000);
 
-  $scope.active_slot_1 = false;
-  $scope.active_slot_2 = false;
-  $scope.active_slot_3 = false;
-  $scope.active_slot_4 = false;
+    var appointmentDate = {
+        'date':$scope.date,
+        'month':$scope.currentMonth,
+        'year':$scope.year
+    }
+    localStorage.setItem('appointmentDate', JSON.stringify(appointmentDate));
 
-
-  $scope.slotValues = function() {
+    slotValues();
+ function slotValues() {
 
     $scope.timeSlots9To12 = [
       {time: '9:00', selected: false, isDisabled: false, id: 0, timeActual: '9:00'},
@@ -92,38 +98,105 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
       {time: '9:00', selected: false, isDisabled: false, id: 48, timeActual: '21:00'}];
 
   };
-    $scope.slotValues();
+
+  ///////check selected date for appointment time difference of 30min from current time   ////////////
+
+    function selectedAppointmentDate() {
+        var dateForAppointment = JSON.parse(localStorage.getItem('appointmentDate'));
+        if((dateForAppointment.date == $scope.fromDate.getDate())&&
+            (dateForAppointment.month == $scope.monthName[$scope.fromDate.getMonth()])&&
+            (dateForAppointment.year == $scope.fromDate.getFullYear()) ){
+            getActiveTimeDiff(dateForAppointment);
+        }
+        else{
+            //// initialized slots again ///
+            slotValues();
+        }
+    }
+    selectedAppointmentDate();
+
+    $rootScope.$on('appointment', function (event, args) {
+        $scope.message = args.message;
+        var dateForAppointment = JSON.parse(localStorage.getItem('appointmentDate'));
+        if((dateForAppointment.date == $scope.fromDate.getDate())&&
+            (dateForAppointment.month == $scope.monthName[$scope.fromDate.getMonth()])&&
+            (dateForAppointment.year ==$scope.fromDate.getFullYear()) ){
+            getActiveTimeDiff(dateForAppointment);
+        }
+        else{
+            //// initialized slots again ///
+            slotValues();
+        }
+    });
 
 
-  $scope.back = function(){
-    $state.go('cart',{'ven_id':window.localStorage.getItem("vendorId")})
-  };
+    //////    To check current selected date for appointment id equal to today's date  ////////////
+
+   function getActiveTimeDiff(dateApt) {
+
+        var bookDateForAppointment = dateApt.date+'-'+dateApt.month+'-'+dateApt.year;
+
+        /// add '30' for difference of 30 min from right now time ////////
+
+        var tempMinute = new Date().getMinutes() + 30;
+        if(tempMinute>60){
+            var newMinute = tempMinute-60;
+            var tempHours = 1;
+            $scope.timeTobe = (new Date().getHours() + tempHours)+':'+newMinute;
+            $scope.currentHour = (new Date().getHours() + tempHours);
+            $scope.thisBookingTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
+            checkSlotsDivision($scope.currentHour);
+
+        }
+        else if(tempMinute==60){
+            var newMinute = 00;
+            var tempHours = 1;
+            $scope.timeTobe = (new Date().getHours() + tempHours)+':'+newMinute;
+            $scope.currentHour = (new Date().getHours() + tempHours);
+            $scope.thisBookingTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
+            checkSlotsDivision($scope.currentHour);
+        }
+        else{
+            var newMinute = tempMinute;
+            var tempHours = 0;
+            $scope.timeTobe = (new Date().getHours() + tempHours)+':'+newMinute;
+            $scope.currentHour = (new Date().getHours() + tempHours);
+            $scope.thisBookingTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
+            checkSlotsDivision($scope.currentHour);
+        }
+    }
+
+    //  To calculate the time stamp for selected date and and current time  ////
 
 
+    function toTimestamp(thisBookingTime) {
+        var datum = Date.parse(thisBookingTime);
+        return datum;
+    }
 
 
 
 /////   To check time slot for selected date and time of appointment /////////////
 
-  $scope.checkSlots = function(hourValue){
+ function checkSlotsDivision(hourValue){
     if(hourValue>=9){
-      $scope.disabledTimeSlots($scope.timeSlots9To12);
+      disabledTimeSlots($scope.timeSlots9To12);
     }
     if(hourValue>=12){
-      $scope.disabledTimeSlots($scope.timeSlots12To3);
+      disabledTimeSlots($scope.timeSlots12To3);
     }
     if(hourValue>=15){
-      $scope.disabledTimeSlots($scope.timeSlots3To6);
+     disabledTimeSlots($scope.timeSlots3To6);
     }
     if(hourValue>=18){
-      $scope.disabledTimeSlots($scope.timeSlots6To9);
+      disabledTimeSlots($scope.timeSlots6To9);
     }
   };
 
 
   ///// To disable particular slots which are less than the current time /////////////////
 
-  $scope.disabledTimeSlots = function(updateTimeSlots){
+ function disabledTimeSlots(updateTimeSlots){
     for(var i =0;i<updateTimeSlots.length;i++){
       var dateValue = $scope.fromDate.getDate()+'-'+$scope.monthName[$scope.fromDate.getMonth()]+'-'+$scope.fromDate.getFullYear();
       $scope.newStamp = toTimestamp( dateValue+ ' ' + updateTimeSlots[i].timeActual);
@@ -133,95 +206,9 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
     }
   };
 
-  var appointmentDate = {
-    'date':$scope.date,
-    'month':$scope.currentMonth,
-    'year':$scope.year
-  }
-  localStorage.setItem('appointmentDate', JSON.stringify(appointmentDate));
 
 
-
-
-  //////    To check current selected date for appointment id equal to today's date  ////////////
-
-  $scope.getTimeFormat = function (dateApt) {
-
-    var bookDateForAppointment = dateApt.date+'-'+dateApt.month+'-'+dateApt.year;
-
-    /// add '1' for difference of 1 hour from right now time ////////
-
-    var tempMinute = new Date().getMinutes() + 30;
-    if(tempMinute>60){
-      var newMinute = tempMinute-60;
-      var tempHours = 1;
-      $scope.timeTobe = (new Date().getHours() + tempHours)+':'+newMinute;
-      $scope.currentHour = (new Date().getHours() + tempHours);
-      $scope.thisBookingTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
-      $scope.checkSlots($scope.currentHour);
-      console.log("tempHours",tempHours,newMinute)
-    }
-    else if(tempMinute==60){
-      var newMinute = 00;
-      var tempHours = 1;
-      $scope.timeTobe = (new Date().getHours() + tempHours)+':'+newMinute;
-      $scope.currentHour = (new Date().getHours() + tempHours);
-      $scope.thisBookingTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
-      $scope.checkSlots($scope.currentHour);
-      console.log("tempHours",tempHours,newMinute)
-    }
-    else{
-      var newMinute = tempMinute;
-      var tempHours = 0;
-      $scope.timeTobe = (new Date().getHours() + tempHours)+':'+newMinute;
-      $scope.currentHour = (new Date().getHours() + tempHours);
-      $scope.thisBookingTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
-      $scope.checkSlots($scope.currentHour);
-      console.log("tempHours",tempHours,newMinute)
-    }
-    console.log("tempMinute",tempMinute)
-
-
-    // $scope.timeTobe = (new Date().getHours()+1)+':'+new Date().getMinutes();
-    //
-    // $scope.currentHour = new Date().getHours()+1;
-    // $scope.thisBookingTime = toTimestamp(bookDateForAppointment + ' ' + $scope.timeTobe);
-    // $scope.checkSlots($scope.currentHour);
-  };
-
-  //  To calculate the time stamp for selected date and and current time  ////
-
-
-  function toTimestamp(thisBookingTime) {
-    var datum = Date.parse(thisBookingTime);
-    return datum;
-  }
-
-  var dateForAppointment = JSON.parse(localStorage.getItem('appointmentDate'));
-
-  if((dateForAppointment.date == $scope.fromDate.getDate())&&
-      (dateForAppointment.month == $scope.monthName[$scope.fromDate.getMonth()])&&
-      (dateForAppointment.year ==$scope.fromDate.getFullYear()) ){
-    $scope.getTimeFormat(dateForAppointment);
-  }
-  else{
-    //// initialized slots again ///
-    $scope.slotValues();
-
-  }
-  $rootScope.$on('appointment', function (event, args) {
-    $scope.message = args.message;
-    var dateForAppointment = JSON.parse(localStorage.getItem('appointmentDate'));
-    if((dateForAppointment.date == $scope.fromDate.getDate())&&
-        (dateForAppointment.month == $scope.monthName[$scope.fromDate.getMonth()])&&
-        (dateForAppointment.year ==$scope.fromDate.getFullYear()) ){
-      $scope.getTimeFormat(dateForAppointment);
-    }
-    else{
-      //// initialized slots again ///
-      $scope.slotValues();
-    }
-  });
+    /////////////////////Appointment time selected bu user   //////////////////////////
 
   $scope.timeSelected = function(index, id) {
     for (var key in $scope.timeSlots9To12) {
@@ -239,8 +226,6 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
           $scope.active_slot_4 = false;
           $scope.chosenTime = $scope.timeSlots9To12[key].time+'AM';
           window.localStorage.setItem("chosenTime", $scope.chosenTime);
-
-          console.log($scope.chosenTime);
         }
         else{
           $cordovaToast
@@ -266,8 +251,6 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
           $scope.active_slot_4 = false;
           $scope.chosenTime = $scope.timeSlots12To3[key].time+'PM';
           window.localStorage.setItem("chosenTime", $scope.chosenTime);
-
-          console.log($scope.chosenTime);
         }
         else{
           $cordovaToast
@@ -291,8 +274,6 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
           $scope.active_slot_4 = false;
           $scope.chosenTime = $scope.timeSlots3To6[key].time+'PM';
           window.localStorage.setItem("chosenTime", $scope.chosenTime);
-
-          console.log($scope.chosenTime);
         }
         else{
           $cordovaToast
@@ -317,8 +298,6 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
           $scope.active_slot_4 = true;
           $scope.chosenTime = $scope.timeSlots6To9[key].time+'PM';
           window.localStorage.setItem("chosenTime", $scope.chosenTime);
-
-          console.log($scope.chosenTime);
         }
         else{
           $cordovaToast
@@ -333,6 +312,8 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
     }
   };
 
+
+  ///////////////////////////////////////////date change  ////////////////////////////////
   $scope.rightArrowClicked = function() {
     $scope.countForward++;
     if ($scope.countForward < 7) {
@@ -400,6 +381,9 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
   $scope.getItemHeight = function() {
     return ($(window).height() - 226)+'px';  // 226 is the height of header + footer + the upper part(row)
   };
+    $scope.back = function(){
+        $state.go('cart',{'ven_id':window.localStorage.getItem("vendorId")})
+    };
 
   $scope.confirmation = function(){
     if((JSON.parse(localStorage.getItem('appointmentDate'))) && (window.localStorage.getItem("chosenTime"))){

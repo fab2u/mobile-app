@@ -68,15 +68,16 @@ app.controller('VendorListCtrl',
         function bindedVendorInfo(){
             if($stateParams.vendorPage == 'discoverSalons'){
                 $scope.vendorNames = JSON.parse(window.localStorage['vendorsName']);
+                console.log($scope.vendorNames)
                 window.localStorage['pageName'] = 'discoverSalons';
                 delete window.localStorage.VendorServiceListIds;
                 delete window.localStorage.VendorServiceListVersion;
                 for(key in $scope.vendorNames) {
                     // load_vendors($scope.vendorNames[key].vid)
-                    for(key in $scope.allVendors) {
-                        if ((key == $scope.vendorNames[key].vid) && (key != 'version')) {
-                            $scope.bindedVendors.push($scope.allVendors[key]);
-                            $scope.bindedVendorsIds.push(key);
+                    for(key1 in $scope.allVendors) {
+                        if ((key1 == $scope.vendorNames[key].vid) && (key1 != 'version')) {
+                            $scope.bindedVendors.push($scope.allVendors[key1]);
+                            $scope.bindedVendorsIds.push(key1);
                         }
                     }
                 }

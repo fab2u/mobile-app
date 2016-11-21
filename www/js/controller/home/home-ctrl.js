@@ -2,6 +2,9 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 								$ionicSlideBoxDelegate,$ionicHistory,allServiceList,homeServices) {
 	$ionicHistory.clearHistory();
 	$ionicHistory.clearCache();
+	$timeout(function () {
+		$ionicLoading.hide();
+	}, 10000);
 	/// clear all the un-required local Storage ////////////
 
 	clearUnUsedLocalStorage();

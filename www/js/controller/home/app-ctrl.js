@@ -1,6 +1,6 @@
 app.controller('AppCtrl', function($scope,$state,$rootScope,$ionicPopup,$ionicLoading,
 								   $cordovaInAppBrowser,$cordovaDevice,AuthenticationService,
-								   allVendorService,$cordovaToast) {
+								   allVendorService,$cordovaToast,$timeout) {
 
 
 	$scope.liked = false;
@@ -11,6 +11,9 @@ app.controller('AppCtrl', function($scope,$state,$rootScope,$ionicPopup,$ionicLo
 	$rootScope.$on('logged_in', function (event, args) {
 		$scope.uid = window.localStorage.getItem('uid');
 	});
+	$timeout(function () {
+		$ionicLoading.hide();
+	}, 5000);
 
 	////////////on location change delete local storage for new data regarding to selected city ////
 	$rootScope.$on('location', function (event, args) {

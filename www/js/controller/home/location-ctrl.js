@@ -1,6 +1,9 @@
 app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ionicHistory,
 										$ionicModal,$ionicLoading,LocationService) {
 
+	$timeout(function () {
+		$ionicLoading.hide();
+	}, 5000);
 	$scope.backButtonValue = false;
 	function backButtonVisibility() {
 		if($ionicHistory.backView().stateName == 'app.home'){

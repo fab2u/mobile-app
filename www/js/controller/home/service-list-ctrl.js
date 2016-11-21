@@ -233,7 +233,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
     $ionicLoading.show();
     $timeout(function () {
         $ionicLoading.hide();
-    }, 2000);
+    }, 10000);
     var VendorServiceList  = JSON.parse(window.localStorage['VendorServiceList']);
     var locationInfo = JSON.parse(window.localStorage['selectedLocation'])
     var hasVendorList = checkLocalStorage('vendorsName');

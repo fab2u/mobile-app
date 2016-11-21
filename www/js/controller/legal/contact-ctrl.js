@@ -3,7 +3,7 @@ app.controller('ContactCtrl', function($state, $scope,$cordovaToast,$timeout,Loc
 
     $timeout(function () {
         $ionicLoading.hide();
-    }, 3000);
+    }, 5000);
 
     $scope.user = {};
 

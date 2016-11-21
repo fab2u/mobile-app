@@ -1,5 +1,8 @@
-app.controller('FavouriteCtrl', function($state,favouriteVendorsService,
+app.controller('FavouriteCtrl', function($state,favouriteVendorsService,$timeout,
                                          $ionicLoading,$cordovaToast, $scope) {
+    $timeout(function () {
+        $ionicLoading.hide();
+    }, 5000);
     if(localStorage.getItem('uid')){
         getFavouriteVendor();
     }

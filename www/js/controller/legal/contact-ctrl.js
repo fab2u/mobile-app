@@ -7,6 +7,7 @@ app.controller('ContactCtrl', function($state, $scope,$cordovaToast,$timeout,Loc
 
     $scope.user = {};
 
+
     $scope.query_options = ['HR','Appointment Booking','Marketing','Sales','Payment','Others'];
 
     function getCity() {
@@ -37,6 +38,7 @@ app.controller('ContactCtrl', function($state, $scope,$cordovaToast,$timeout,Loc
                     }, function (error) {
                         // error
                     });
+                location.reload();
             }
             else{
                 $ionicLoading.hide();

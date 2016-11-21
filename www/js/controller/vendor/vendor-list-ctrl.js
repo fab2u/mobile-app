@@ -5,7 +5,7 @@ app.controller('VendorListCtrl',
         delete window.localStorage.mapStorage;
         $timeout(function () {
             $ionicLoading.hide();
-        }, 2000);
+        }, 10000);
         var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
         $scope.limit= 7;
         $scope.sortValue = 'distance';
@@ -36,6 +36,7 @@ app.controller('VendorListCtrl',
 
 
         function getAllVendors() {
+            $ionicLoading.show();
             allVendorService.getAllVendors(locationInfo.cityId).then(function (res) {
                 var vendorDetail = res;
                 var version = res.version;
@@ -113,6 +114,10 @@ app.controller('VendorListCtrl',
                 for (var i =0; i<bindedVendorsIds.length;i++){
                     $scope.vendorsForFilter[bindedVendorsIds[i]] = $scope.allVendors[bindedVendorsIds[i]]
                 }
+                $ionicLoading.hide();
+            }
+            else {
+                $ionicLoading.hide();
             }
         }
 

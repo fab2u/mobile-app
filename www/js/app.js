@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 var app = angular.module('Fab2u', ['ionic', 'ngCordova', 'ion-floating-menu'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$ionicPopup,$state) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -20,12 +20,10 @@ var app = angular.module('Fab2u', ['ionic', 'ngCordova', 'ion-floating-menu'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
-
   });
-});
+})
 
 var db = firebase.database();
-
 
 
 function checkLocalStorage(item) {

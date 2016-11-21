@@ -1,5 +1,5 @@
-app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$timeout,
-                                    $ionicModal,$rootScope,$ionicHistory){
+app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$timeout,userServices,
+                                    $ionicModal,$rootScope,$ionicHistory,allVendorService){
     $ionicLoading.show();
     $ionicHistory.clearHistory();
     $ionicHistory.clearCache();
@@ -13,41 +13,42 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
     var hasCurrentBooking = checkLocalStorage('BookingIdToMarkStatus');
     if(hasCurrentBooking){
+        $ionicLoading.show();
          $scope.bookingIdToMarkStatus = window.localStorage['BookingIdToMarkStatus'];
-        db.ref('bookings/'+$scope.bookingIdToMarkStatus).once('value',function (response) {
-            if(response.val()){
-                $scope.bookingInformation = response.val();
-                vendorInfo($scope.bookingInformation.vendorId);
+        userServices.getBookingDetail($scope.bookingIdToMarkStatus).then(function (result) {
+            if(result){
+                $scope.bookingInformation = result;
+                vendorInfo();
             }
             else{
                 $ionicLoading.hide();
             }
-
         })
         $scope.cancelButton = true;
     }
     else if(window.localStorage.getItem("currentBookingId")){
-       firebase.database().ref('bookings/' + window.localStorage.getItem("currentBookingId")).once('value', function (response) {
-           if (response.val()) {
-               $scope.bookingInformation = response.val();
-               vendorInfo($scope.bookingInformation.vendorId)
-           }
-           else{
-               $ionicLoading.hide()
-           }
-       });
+        $ionicLoading.show();
+        userServices.getBookingDetail(window.localStorage.getItem("currentBookingId")).then(function (result) {
+            if(result){
+                $scope.bookingInformation = result;
+                vendorInfo();
+            }
+            else{
+                $ionicLoading.hide();
+            }
+        })
     }
 
     function vendorInfo() {
-        db.ref('vendors/'+locationInfo.cityId+'/vendors/'+$scope.vendorId).once('value', function(response){
-            if(response.val()){
-                $scope.bookingInformation.venue = response.val().vendorName;
-                $scope.bookingInformation.address1 = response.val().address.address1;
-                $scope.bookingInformation.address2 = response.val().address.address2;
-                $scope.bookingInformation.vendorLat = response.val().address.latitude;
-                $scope.bookingInformation.vendorLong = response.val().address.longitude;
-                $scope.bookingInformation.vendorName = response.val().contactDetails.name;
-                $scope.vendorAddress = response.val();
+        allVendorService.getVendorInfo(locationInfo.cityId,$scope.bookingInformation.vendorId).then(function (result) {
+            if(result){
+                $scope.bookingInformation.venue = result.vendorName;
+                $scope.bookingInformation.address1 = result.address.address1;
+                $scope.bookingInformation.address2 = result.address.address2;
+                $scope.bookingInformation.vendorLat = result.address.latitude;
+                $scope.bookingInformation.vendorLong = result.address.longitude;
+                $scope.bookingInformation.vendorName = result.contactDetails.name;
+                $scope.vendorAddress = result;
                 $ionicLoading.hide();
             }
             else{

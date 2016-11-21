@@ -235,6 +235,7 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
          getVendorMenu();
 
         function getVendorMenu() {
+            $ionicLoading.show();
             allVendorService.getMenu($scope.vendorId).then(function (result) {
                 if(result){
                     $scope.menuInfo = result.services;
@@ -288,7 +289,6 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
                     vendorDetail();
                     $timeout( function() {
                         $ionicSlideBoxDelegate.update();
-                        $ionicLoading.hide();
                     },3000);
                 }
                 else{
@@ -305,7 +305,6 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
         }
 
         function vendorDetail() {
-            $ionicLoading.show();
             allVendorService.getVendorInfo($scope.cityId,$scope.vendorId).then(function (result) {
                 if(result){
                     $scope.vendor_detail = result;

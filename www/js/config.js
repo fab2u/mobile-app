@@ -118,6 +118,7 @@ app
 
 	$stateProvider.state('contact', {
 		url: '/contact',
+		cache:false,
 		templateUrl: 'templates/legal/contact.html',
 		controller:'ContactCtrl'
 

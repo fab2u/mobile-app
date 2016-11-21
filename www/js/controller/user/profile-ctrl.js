@@ -56,6 +56,7 @@ app.controller("profileCtrl",function($scope, $timeout,$state, $ionicLoading, $h
       };
 
       function cropImage(source){
+         var basic = {};
          $scope.modal.show();
          basic = $('.demo').croppie({
             viewport: {

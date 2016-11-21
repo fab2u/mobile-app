@@ -124,6 +124,7 @@ app.controller('VendorSelectedServicesListCtrl',function(allVendorService,$scope
         }
 
        function selectedMenu() {
+           $ionicLoading.show();
            var mySubArray = _.uniq($scope.selected_cat, function (name) {
                return name;
            });
@@ -175,7 +176,6 @@ app.controller('VendorSelectedServicesListCtrl',function(allVendorService,$scope
        }
 
          function vendorDetail() {
-             $ionicLoading.show();
              allVendorService.getVendorInfo($scope.cityId,$scope.vendorId).then(function (result) {
                  if(result){
                      $scope.vendor_detail = result;
@@ -195,7 +195,7 @@ app.controller('VendorSelectedServicesListCtrl',function(allVendorService,$scope
         if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
             $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
             $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
-            $scope.calPrice($scope.begItems);
+            calPrice($scope.begItems);
             $scope.cart_item = _.size($scope.selectedServices);
         }
         else{
@@ -208,13 +208,13 @@ app.controller('VendorSelectedServicesListCtrl',function(allVendorService,$scope
             $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
             $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
             $scope.cart_item = _.size($scope.selectedServices);
-            $scope.calPrice($scope.begItems);
+           calPrice($scope.begItems);
         });
 
 
         ///To calculate cart price //////
 
-        $scope.calPrice = function (item_list) {
+          function calPrice(item_list) {
             $scope.total_fabtu=0;
             $scope.total_original=0;
             $scope.total_customer = 0;

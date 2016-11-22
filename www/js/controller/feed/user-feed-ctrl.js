@@ -1,6 +1,6 @@
 app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordovaCamera,
                                         $http,$state, $location,$ionicModal, $ionicLoading,$sce,
-                                        $ionicPopup){
+                                        $ionicPopup,$cordovaToast){
 
     $scope.myUid = window.localStorage.getItem("uid");
     $scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
@@ -13,9 +13,37 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
     var blogsNum= 0;
     var blogCount = 0;
     var count = 0;
+    var count1 =0;
     var followingNum = 0;
     delete window.localStorage.iFollowingIds;
     delete window.localStorage.myFollowers;
+
+    // ----------------------------------------------------------------------
+    $ionicModal.fromTemplateUrl('templates/feed/image-modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+
+    $scope.openModal = function() {
+        $scope.modal.show();
+    };
+
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+    };
+
+    //Cleanup the modal when we're done with it!
+    $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+    });
+
+    $scope.showImage = function(source) {
+        $scope.imageSrc = source;
+        $scope.openModal();
+    }
+    // ----------------------------------------------------------------------
 
     if($scope.myUid){
         /////////////do all things here
@@ -50,16 +78,18 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
         });
 
         function getPostInfo(){
+            $ionicLoading.show();
             if(Object.keys($scope.blogIdList).length > 0){
-                console.log($scope.bottomKey);
                 db.ref("users/data/"+$scope.myUid+"/blogs").orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){
                     if(snap.numChildren() == 1){
                         $scope.moreMessagesScroll = false;
+                        $ionicLoading.hide();
                         $scope.$broadcast('scroll.infiniteScrollComplete');
                     }
                     else{
                         $scope.oldBottomKey = $scope.bottomKey;
                         $scope.bottomKey = Object.keys(snap.val())[0];
+                        $scope.blogLength = Object.keys(snap.val()).length;
                         for(var i in snap.val()){
                             if (i != $scope.oldBottomKey){
                                blogAlgo(i);
@@ -72,6 +102,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
             else if(Object.keys($scope.blogIdList).length == 0){
                 db.ref("users/data/"+$scope.myUid +"/blogs").limitToLast(25).once("value", function(snapshot){
                     $scope.blogIdList = snapshot.val();
+                    $scope.blogLength = Object.keys($scope.blogIdList).length;
                     if($scope.blogIdList !== null){
                         $scope.bottomKey = Object.keys($scope.blogIdList)[0];
                     }
@@ -117,43 +148,46 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
 
         /////////////////////        posts detail            //////////////////////
         function blogAlgo(i, callback){
+            count1++;
             $scope.blogArr = [];
             var blogData = db.ref().child("blogs").child(i);
             blogData.once("value", function(snap){ //access individual blog
-                // console.log(snap.val());
                 single_blog = snap.val();
-                var temp = single_blog.introduction.replace(/\s/g, '');
-
-                single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-                // single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-                single_blog.profilePic = $scope.userPhoto;
-
-                // start: comment system code
-                if(single_blog.comments){
-                    single_blog['commentCount'] = Object.keys(single_blog.comments).length;
-                }
-
-                // start convert comments object to array
-                single_blog['commentsArr'] = $.map(single_blog.comments, function(value, index) {
-                    return [value];
-                });
-                // console.log(value.commentsArr);
-                // end convert comments object to array
-                // end: comment system code
-
-                if(single_blog.likedBy){
-                    count = Object.keys(single_blog.likedBy).length;
-                    single_blog['numLikes'] = count;
-                    if($scope.myUid in single_blog.likedBy){
-                        $timeout(function () {
-                            $("#"+i+"-likeFeed").addClass("clicked");
-                        }, 1000);
+                if(single_blog){
+                    single_blog.profilePic = $scope.userPhoto;
+                    if(single_blog.introduction){
+                        var temp = single_blog.introduction.replace(/\s/g, '');
+                        single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
                     }
+                    // start: comment system code
+                    if(single_blog.comments){
+                        single_blog['commentCount'] = Object.keys(single_blog.comments).length;
+                    }
+                    // start convert comments object to array
+                    single_blog['commentsArr'] = $.map(single_blog.comments, function(value, index) {
+                        return [value];
+                    });
+                    // end convert comments object to array
+                    // end: comment system code
+                    if(single_blog.likedBy){
+                        var count2 = Object.keys(single_blog.likedBy).length;
+                        single_blog['numLikes'] = count2;
+                        if($scope.myUid in single_blog.likedBy){
+                            $timeout(function () {
+                                $("#"+i+"-likeFeed").addClass("clicked");
+                            }, 1000);
+                        }
+                    }
+                    $scope.blogArr.push(single_blog);
                 }
-                $scope.blogArr.push(single_blog);
+
             });
             if(callback){
                 callback();
+            }
+            if(count1 == $scope.blogLength){
+                $ionicLoading.hide();
+                $scope.moreMessagesScroll = true;
             }
         }
 
@@ -171,7 +205,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
 
 
         $scope.likeFeeds = function(){
-            console.log("liked ids :",$scope.likeBlogIds);
+            $ionicLoading.show();
             if($scope.totalLikes>0){
                 for(key in $scope.likeBlogIds){
                     console.log("key",key)
@@ -179,7 +213,14 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                 }
             }
             else{
-                alert('No like found for you!')
+                $ionicLoading.hide();
+                $cordovaToast
+                    .show('You do not have any liked post yet.For more liked post use our services and create post.', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
             }
         };
 
@@ -188,12 +229,21 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
         ///////////////////////Get follower count and detail /////////////
 
         $scope.myFollowers = function(val){
+            $ionicLoading.show();
             if(val){
                 window.localStorage['myFollowers'] = JSON.stringify($scope.myFollowersDetail);
+                $ionicLoading.hide();
                 $state.go('follower',{uid:$scope.myUid });
             }
             else{
-                alert('No followers found!')
+                $ionicLoading.hide();
+                $cordovaToast
+                    .show('You do not have any follower yet.For more follower use our services and create post.', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
             }
         }
 
@@ -202,23 +252,32 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
         //////////////////////Get follow info //////////////////////////
 
         $scope.followDetail = function (val) {
+            $ionicLoading.show();
             if(val){
                 window.localStorage['iFollowingIds'] = JSON.stringify($scope.followingIds);
+                $ionicLoading.hide();
                 $state.go('follow',{uid:$scope.myUid});
             }
             else{
-                alert('No follow found!')
+                $ionicLoading.hide();
+                $cordovaToast
+                    .show('You do not have any follow yet.For more follow  see Fabbook', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
             }
         };
         ///////////////////////end follow detail  ////////////////////////
         //////////////////////////Like a particular feed ////////////////
         $scope.likeThisFeed = function(feed){
+            $ionicLoading.show();
                 if($("#"+feed.blog_id+"-likeFeed").hasClass('clicked')){
                     feed.numLikes -= 1;
                     db.ref("blogs/"+feed.blog_id+"/likedBy/"+$scope.myUid).remove().then(function(){
                         $("#"+feed.blog_id+"-likeFeed").removeClass("clicked");
                     });
-                    console.log("after remove",feed);
                 }
                 else {
                     if (feed.numLikes == undefined) {
@@ -231,10 +290,9 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                         console.log('success');
                         $("#" + feed.blog_id + "-likeFeed").addClass("clicked");
                     });
-                    console.log("after add", feed);
                 }
                 db.ref("blogs/"+feed.blog_id+"/likedBy").on("value", function(snap){
-                    console.log(snap.numChildren());
+                    $ionicLoading.hide();
                     feed.numLikes = snap.numChildren();
                 });
         };
@@ -324,7 +382,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
         $ionicModal.fromTemplateUrl('templates/user/image-crop.html', {
             scope: $scope
         }).then(function(modal) {
-            $scope.modal = modal;
+            $scope.modal1 = modal;
         });
         $scope.cameraUpload = function() {
             $timeout(function () {
@@ -346,7 +404,13 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                     cropImage($scope.url);
                 }
                 else{
-                    alert('Please click a pic again!')
+                    $cordovaToast
+                        .show('Please click a photo again.', 'long', 'center')
+                        .then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
                 }
             }, function(err) {
                 console.log(err);
@@ -354,7 +418,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
         };
 
         function cropImage(source){
-            $scope.modal.show();
+            $scope.modal1.show();
             basic = $('.demo').croppie({
                 viewport: {
                     width: 200,
@@ -384,15 +448,27 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                                 photoURL: response.Message
                             }).then(function(){
                                 $ionicLoading.hide();
-                                alert("Photo updated successfully");
-                                $scope.modal.hide();
+                                $cordovaToast
+                                    .show('Your profile photo updated successfully', 'long', 'center')
+                                    .then(function(success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+                                $scope.modal1.hide();
                             });
                         });
 
                     })
                     .error(function(response){
                         $ionicLoading.hide();
-                        alert('Please try again, something went wrong');
+                        $cordovaToast
+                            .show('Please try again.', 'long', 'center')
+                            .then(function(success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
                     });
             });
             $timeout(function () {
@@ -418,7 +494,13 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                     cropImage($scope.url);
                 }
                 else{
-                    alert('Please take another picture!')
+                    $cordovaToast
+                        .show('Please take another Photo', 'long', 'center')
+                        .then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
                 }
             }, function(err) {
                 console.log(err);
@@ -427,6 +509,12 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
 
     }
     else{
-        alert('Please login/SignUp with fabbook.')
+        $cordovaToast
+            .show('Please login/SignUp with Fabbook', 'long', 'center')
+            .then(function(success) {
+                // success
+            }, function (error) {
+                // error
+            });
     }
 });

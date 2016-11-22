@@ -4,13 +4,16 @@
         <h1 class="title">FOLLOW</h1>
     </ion-header-bar>
     <ion-content>
-        <div class="list">
+        <div class="list" ng-show="IfollowingUserDetail">
             <a class="item item-avatar list_item " ng-repeat="followDetail in IfollowingUserDetail">
                 <img ng-src="{{followDetail.photoUrl ||'img/person.jpg'}}">
                 <span ng-if="followDetail.postNum>0" ng-click="viewPosts(followDetail.userId)">View Posts</span>
                 <h2>{{followDetail.name}}</h2>
                 <p>Post:{{followDetail.postNum || 0}}</p>
             </a>
+        </div>
+        <div class="list text-center" ng-show="msg">
+            <p>You are not following anyone yet!</p>
         </div>
     </ion-content>
 </ion-view>

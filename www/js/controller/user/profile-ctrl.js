@@ -29,9 +29,6 @@ app.controller("profileCtrl",function($scope, $timeout,$state, $ionicLoading, $h
       });
 
       $scope.cameraUpload = function() {
-         $timeout(function () {
-            $ionicLoading.show();
-         }, 2000);
          var options = {
             destinationType : Camera.DestinationType.FILE_URI,
             sourceType :	Camera.PictureSourceType.CAMERA,
@@ -39,8 +36,6 @@ app.controller("profileCtrl",function($scope, $timeout,$state, $ionicLoading, $h
             encodingType: Camera.EncodingType.JPEG,
             popoverOptions: CameraPopoverOptions,
          };
-         $ionicLoading.hide();
-
          $cordovaCamera.getPicture(options).then(function(imageURI) {
             var image = document.getElementById('profile-pic');
             image.src = imageURI;
@@ -128,9 +123,6 @@ app.controller("profileCtrl",function($scope, $timeout,$state, $ionicLoading, $h
          })
       };
       $scope.galleryUpload = function() {
-         $timeout(function () {
-            $ionicLoading.show();
-         }, 2000);
          var options = {
             destinationType : Camera.DestinationType.FILE_URI,
             sourceType :	Camera.PictureSourceType.PHOTOLIBRARY, //, Camera.PictureSourceType.CAMERA,
@@ -138,7 +130,6 @@ app.controller("profileCtrl",function($scope, $timeout,$state, $ionicLoading, $h
             encodingType: Camera.EncodingType.JPEG,
             popoverOptions: CameraPopoverOptions,
          };
-         $ionicLoading.hide();
          $cordovaCamera.getPicture(options).then(function(imageURI) {
             var image = document.getElementById('profile-pic');
             // image.src = imageURI;

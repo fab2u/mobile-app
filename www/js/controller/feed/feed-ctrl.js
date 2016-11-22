@@ -1,22 +1,13 @@
 app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $ionicLoading,
-										  $ionicModal, $ionicPopup,$state,$sce){
+										  $ionicModal,userInfoService,$cordovaToast,
+									      $ionicPopup,$state,$sce){
 
-	$ionicLoading.show();
 	$scope.blogLength = 0;
+	var count = 0;
 	$scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
-
 	$scope.uid = window.localStorage.getItem("uid");
-	console.log($scope.uid)
-
-	db.ref("users/data/"+$scope.uid+"/name").once("value", function(snapshot){
-		console.log(snapshot.val());
-		$scope.userName = snapshot.val();
-		$ionicLoading.hide();
-	});
-
 	$scope.moreMessagesScroll = true;
 	$scope.moreMessagesRefresh = true;
-	// $scope.cityId = $stateParams.cityId;
 	$scope.blogIdList = {};
 
 	$scope.goBack = function(){
@@ -58,74 +49,159 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 	}
 	// ----------------------------------------------------------------------
 
+	if($scope.uid){
+		getUserInfo();
+	}
+	else{
+		$scope.userName = '';
+	}
+    function getUserInfo() {
+		userInfoService.getPersonalInfo($scope.uid).then(function (result) {
+			$scope.userName = result.name;
+		})
+	}
 	$scope.commentToggle = function(feedId) {
 		$("#"+feedId+"-commentsBlock").toggle();
 	};
-
-	function showAlertLike() {
-		var alertPopup = $ionicPopup.alert({
-			title: 'Sign up for Fabbook',
-			template: 'Join Fabbook to like this post.',
-			buttons: [
-				{ text: 'Cancel' },
-				{
-					text: 'Join Now',
-					type: 'button-custom',
-					onTap: function(e) {
-						$location.path("/login");
-					}
-				}
-			]
-		});
-		alertPopup.then(function(res) {
-		});
+	$scope.$on('$stateChangeSuccess', function() {
+		$scope.loadMore();
+	});
+	$scope.toTrustedHTML = function( html ){
+		return $sce.trustAsHtml( html );
 	};
 
-	function showAlertFollow() {
-		var alertPopup = $ionicPopup.alert({
-			title: 'Sign up for Fabbook',
-			template: 'Not on Fabbook? Sign up on Fab2u to follow this user.',
-			buttons: [
-				{ text: 'Cancel' },
-				{
-					text: 'Join Now',
-					type: 'button-custom',
-					onTap: function(e) {
-						$location.path("/login");
+	$scope.loadMore = function(){
+		$ionicLoading.show();
+		if(Object.keys($scope.blogIdList).length > 0){
+			db.ref("blogs").orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){
+				if(snap.numChildren() == 1){
+					$scope.moreMessagesScroll = false;
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+				}
+				else{
+					$scope.oldBottomKey = $scope.bottomKey;
+					$scope.bottomKey = Object.keys(snap.val())[0];
+					$scope.blogLength = Object.keys(snap.val()).length;
+
+					for(var i in snap.val()){
+						// console.log(i); // i is the key of blogs object or the id of each blog
+						if (i != $scope.oldBottomKey){
+							blogAlgo(i);
+						}
+					}
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+				}
+			});
+		}
+		else if(Object.keys($scope.blogIdList).length == 0){
+			db.ref("blogs").limitToLast(25).once('value', function(snapshot){
+				$ionicLoading.hide();
+				$scope.blogIdList = snapshot.val();
+				$scope.bottomKey = Object.keys($scope.blogIdList)[0];
+				$scope.topKey = Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1];
+				$scope.blogArr = [];
+				$scope.blogLength = Object.keys($scope.blogIdList).length;
+				for(var i in $scope.blogIdList){
+					// console.log(i); // i is the key of blogs object or the id of each blog
+					blogAlgo(i);
+				}
+			})
+		}
+	}
+
+	function blogAlgo(i, callback){
+		count++;
+		var blogData = db.ref().child("blogs").child(i);
+		blogData.once("value", function(snap){ //access individual blog
+			single_blog = snap.val();
+			if(single_blog){
+				if(single_blog.introduction){
+					var temp = single_blog.introduction.replace(/\s/g, '');
+					single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+				}
+				// start: comment system code
+				if(single_blog.comments){
+					single_blog['commentCount'] = Object.keys(single_blog.comments).length;
+				}
+				// start convert comments object to array
+				single_blog['commentsArr'] = $.map(single_blog.comments, function(value, index) {
+					return [value];
+				});
+				// end convert comments object to array
+				// end: comment system code
+
+				// If you want to run asynchronous functions inside a loop, but still want to keep the index or other variables after a callback gets executed you can wrap your code in an IIFE (immediately-invoked function expression).
+				(function(single_blog){
+					if(single_blog.user){
+						if(single_blog.user.user_id == $scope.uid){
+							$timeout(function () {
+								$('.'+single_blog.user.user_id+'-follow').hide();
+							}, 0);
+						}
+						db.ref("users/data/"+single_blog.user.user_id).once("value", function(snap){
+							if(snap.val().photoUrl){
+								single_blog.profilePic = snap.val().photoUrl;
+							}
+							if(snap.val().myFollowers){
+								if ($scope.uid in snap.val().myFollowers){
+									$timeout(function () {
+										$('.'+single_blog.user.user_id+'-follow').hide();
+										$("."+single_blog.user.user_id+'-unfollow').css("display", "block");
+									}, 0);
+								}
+							}
+						});
+					}
+				})(single_blog);
+				if(single_blog.likedBy){
+					var count1 = Object.keys(single_blog.likedBy).length;
+					single_blog['numLikes'] = count1;
+					if($scope.uid in single_blog.likedBy){
+						$timeout(function () {
+							$("#"+i+"-likeFeed").addClass("clicked");
+						}, 1000);
 					}
 				}
-			]
+				$scope.blogArr.push(single_blog);
+			}
 		});
-		alertPopup.then(function(res) {
-		});
-	};
-
-	function showAlertComment() {
-		var alertPopup = $ionicPopup.alert({
-			title: 'Sign up for Fabbook',
-			template: 'Join Fabbook to comment on this post.',
-			buttons: [
-				{ text: 'Cancel' },
-				{
-					text: 'Join Now',
-					type: 'button-custom',
-					onTap: function(e) {
-						$location.path("/login");
+		if (callback) {
+			callback();
+		}
+		if(count == $scope.blogLength){
+			$ionicLoading.hide();
+			$scope.moreMessagesScroll = true;
+		}
+	}
+	$scope.doRefresh = function(){
+		$ionicLoading.show();
+		db.ref("blogs").orderByKey().startAt($scope.topKey).once("value", function(snapshot){
+			if(snapshot.numChildren() == 1){
+				$scope.moreMessagesRefresh = false;
+				$ionicLoading.hide();
+			}
+			else{
+				console.log(snapshot.val());
+				$scope.prevTopKey = $scope.topKey;
+				$scope.topKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1];
+				var single_blog = {};
+				for(var i in snapshot.val()){
+					// console.log(i); // i is the key of blogs object or the id of each blog
+					if (i != $scope.prevTopKey){
+						blogAlgo(i);
 					}
 				}
-			]
-		});
-		alertPopup.then(function(res) {
-		});
+			}
+			$scope.$broadcast('scroll.refreshComplete');
+		})
 	};
 
-	$scope.showPopup = function(id) {
+	$scope.commentPost = function(id) {
 		if($scope.uid){
 			$scope.data = {}
 			var myPopup = $ionicPopup.show({
 				template: '<input type="text" ng-model="data.comment">',
 				title: 'Enter your Comment',
-				// subTitle: 'Please use normal things',
 				scope: $scope,
 				buttons: [
 					{text: 'Cancel'},
@@ -138,11 +214,6 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 							} else {
 								console.log(id);
 								var newCommentKey = db.ref().push().key;
-								// var commentObject_user = {
-								// 	blogId: id,
-								// 	comment: res,
-								// commentId: newCommentKey
-								// };
 								var commentObject_blog = {
 									blogId: id,
 									created_time: new Date().getTime(),
@@ -153,14 +224,11 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 								console.log(commentObject_blog);
 								var updateComment = {};
 								updateComment['blogs/' + id + '/comments/' + newCommentKey] = commentObject_blog;
-								// updateComment['users/data/'+$scope.uid+"/comments/"+newCommentKey] = commentObject_user;
 								db.ref().update(updateComment).then(function () {
-									console.log('comment addedd successfully');
 									// start: adding comment to particular feed
 									var result = $.grep($scope.blogArr, function (e) {
 										return e.blog_id == id;
 									});
-									console.log(result);
 									if (result[0].commentCount == undefined) {
 										result[0].commentCount = 0;
 									}
@@ -182,49 +250,68 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 			});
 		}
 		else{
-			alert('Please login/signUp for comment.')
+			$cordovaToast
+				.show('Please login/SignUp for comment this post.', 'long', 'center')
+				.then(function(success) {
+					// success
+				}, function (error) {
+					// error
+				});
 		}
 	};
 
 	$scope.followUser = function(id) {
+		$ionicLoading.show();
 		if (!$scope.uid) {
-			showAlertFollow();
+			$cordovaToast
+				.show('Please login/SignUp for follow this post.', 'long', 'center')
+				.then(function(success) {
+					// success
+				}, function (error) {
+					// error
+				});
+			$ionicLoading.hide();
 		}
 		else {
-			console.log(id, $scope.uid);
-			// id - post creator's uid
-			// $scope.uid - my uid
 			var updateFollow = {};
 			updateFollow['users/data/' + id + '/myFollowers/' + $scope.uid] = true;
 			updateFollow['users/data/' + $scope.uid + '/following/' + id] = true;
 			db.ref().update(updateFollow).then(function () {
-				console.log('success');
 				$('.' + id + '-follow').hide();
 				$("."+id+'-unfollow').css("display", "block");
+				$ionicLoading.hide();
 				$state.go('feed')
 			});
 		}
 	}
 
 	$scope.unfollowUser = function(id){
+		$ionicLoading.show();
 		if(!$scope.uid){
-			showAlertFollow();
+			$ionicLoading.hide();
+			$cordovaToast
+				.show('Please login/SignUp for unfollow this post.', 'long', 'center')
+				.then(function(success) {
+					// success
+				}, function (error) {
+					// error
+				});
 		}
 		else{
 			var updateFollow = {};
 			updateFollow['users/data/'+id+'/myFollowers/'+$scope.uid] = null;
 			updateFollow['users/data/'+$scope.uid+'/following/'+id] = null;
 			db.ref().update(updateFollow).then(function(){
-				console.log('success');
 				$('.'+id+'-follow').show();
 				$("."+id+'-unfollow').css("display", "none");
+				$ionicLoading.hide();
 				$state.go('feed')
 			});
 		}
 	}
 
 	$scope.likeThisFeed = function(feed){
-		console.log("feed",feed)
+		$ionicLoading.show();
 		if($scope.uid){
 			if($("#"+feed.blog_id+"-likeFeed").hasClass('clicked')){
 				feed.numLikes -= 1;
@@ -233,7 +320,6 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 						$("#"+feed.blog_id+"-likeFeed").removeClass("clicked");
 					})
 				});
-				console.log("after remove",feed);
 			}
 			else {
 				if (feed.numLikes == undefined) {
@@ -244,163 +330,23 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 				updates["blogs/" + feed.blog_id + "/likedBy/" + $scope.uid] = true;
 				updates["users/data/"+$scope.uid+"/likedBlogs/"+feed.blog_id] = true;
 				db.ref().update(updates).then(function () {
-					console.log('success');
 					$("#" + feed.blog_id + "-likeFeed").addClass("clicked");
 				});
-				console.log("after add", feed);
 			}
 			db.ref("blogs/"+feed.blog_id+"/likedBy").on("value", function(snap){
-				console.log(snap.numChildren());
+				$ionicLoading.hide();
 				feed.numLikes = snap.numChildren();
 			});
 		}
 		else{
-			alert('Please login/signUp for like')
-		}
-	}
-
-	$scope.doRefresh = function(){
-		console.log('pull to refresh');
-		db.ref("blogs").orderByKey().startAt($scope.topKey).once("value", function(snapshot){
-			console.log(snapshot.val());
-			if(snapshot.numChildren() == 1){
-				console.log('one child');
-				$scope.moreMessagesRefresh = false;
-			}
-			else{
-				console.log(snapshot.val());
-				$scope.prevTopKey = $scope.topKey;
-				$scope.topKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1];
-				var single_blog = {};
-				for(var i in snapshot.val()){
-					// console.log(i); // i is the key of blogs object or the id of each blog
-					if (i != $scope.prevTopKey){
-						blogAlgo(i);
-					}
-				}
-			}
-			$scope.$broadcast('scroll.refreshComplete');
-		})
-	};
-
-	$scope.loadMore = function(){
-		if(Object.keys($scope.blogIdList).length > 0){
-			db.ref("blogs").orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){
-				// console.log(snap.val());
-				if(snap.numChildren() == 1){
-					$scope.moreMessagesScroll = false;
-					$scope.$broadcast('scroll.infiniteScrollComplete');
-				}
-				else{
-					// console.log($scope.bottomKey);
-					$scope.oldBottomKey = $scope.bottomKey;
-					$scope.bottomKey = Object.keys(snap.val())[0];
-					// console.log($scope.bottomKey);
-					for(var i in snap.val()){
-						// console.log(i); // i is the key of blogs object or the id of each blog
-						if (i != $scope.oldBottomKey){
-							blogAlgo(i);
-						}
-					}
-					$scope.$broadcast('scroll.infiniteScrollComplete');
-				}
-			});
-		}
-		else if(Object.keys($scope.blogIdList).length == 0){
-			console.log("length = 0");
-			db.ref("blogs").limitToLast(25).once('value', function(snapshot){
-				$ionicLoading.hide();
-				$scope.blogIdList = snapshot.val();
-				// console.log($scope.blogIdList);
-				$scope.bottomKey = Object.keys($scope.blogIdList)[0];
-				// console.log(Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1]);
-				$scope.topKey = Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1];
-				// console.log($scope.bottomKey);
-				$scope.blogArr = [];
-				$scope.blogLength = Object.keys($scope.blogIdList).length;
-
-				for(var i in $scope.blogIdList){
-					// console.log(i); // i is the key of blogs object or the id of each blog
-					blogAlgo(i);
-				}
-				$timeout(function () {
-				}, 0);
-			})
-		}
-	}
-	$scope.$on('$stateChangeSuccess', function() {
-		$scope.loadMore();
-	});
-	$scope.toTrustedHTML = function( html ){
-		return $sce.trustAsHtml( html );
-	}
-	var cd = 0;
-	function blogAlgo(i, callback){
-		cd++;
-		var blogData = db.ref().child("blogs").child(i);
-		blogData.once("value", function(snap){ //access individual blog
-			// console.log(i, snap.val());
-			single_blog = snap.val();
-			var temp = single_blog.introduction.replace(/\s/g, '');
-
-			single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-			// single_blog.introduction = single_blog.introduction.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-
-			// start: comment system code
-			if(single_blog.comments){
-				single_blog['commentCount'] = Object.keys(single_blog.comments).length;
-			}
-
-			// start convert comments object to array
-			single_blog['commentsArr'] = $.map(single_blog.comments, function(value, index) {
-				return [value];
-			});
-			// console.log(value.commentsArr);
-			// end convert comments object to array
-			// end: comment system code
-
-			// If you want to run asynchronous functions inside a loop, but still want to keep the index or other variables after a callback gets executed you can wrap your code in an IIFE (immediately-invoked function expression).
-			(function(single_blog){
-				if(single_blog.user){
-					if(single_blog.user.user_id == $scope.uid){
-						$timeout(function () {
-							$('.'+single_blog.user.user_id+'-follow').hide();
-						}, 0);
-					}
-					db.ref("users/data/"+single_blog.user.user_id).once("value", function(snap){
-						// console.log(single_blog.user.user_id, snap.val());
-						if(snap.val().photoUrl){
-							single_blog.profilePic = snap.val().photoUrl;
-						}
-						if(snap.val().myFollowers){
-							// console.log(snap.val().myFollowers);
-							if ($scope.uid in snap.val().myFollowers){
-								$timeout(function () {
-									$('.'+single_blog.user.user_id+'-follow').hide();
-									$("."+single_blog.user.user_id+'-unfollow').css("display", "block");
-								}, 0);
-							}
-						}
-					});
-				}
-
-			})(single_blog);
-			if(single_blog.likedBy){
-				count = Object.keys(single_blog.likedBy).length;
-				single_blog['numLikes'] = count;
-				if($scope.uid in single_blog.likedBy){
-					$timeout(function () {
-						$("#"+i+"-likeFeed").addClass("clicked");
-					}, 1000);
-				}
-			}
-			$scope.blogArr.push(single_blog);
-		});
-		if (callback) {
-			callback();
-		}
-		if(cd == $scope.blogLength){
-			$scope.moreMessagesScroll = true;
+			$ionicLoading.hide();
+			$cordovaToast
+				.show('Please login/SignUp for like this post.', 'long', 'center')
+				.then(function(success) {
+					// success
+				}, function (error) {
+					// error
+				});
 		}
 	}
 });

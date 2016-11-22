@@ -1,172 +1,33 @@
-app.directive('expandingTextarea', function () {
-    return {
-        restrict: 'A',
-        controller: function ($scope, $element, $attrs, $timeout) {
-            $element.css('min-height', '0');
-            $element.css('resize', 'none');
-            $element.css('overflow-y', 'hidden');
-            setHeight(0);
-            $timeout(setHeightToScrollHeight);
-
-            function setHeight(height) {
-                $element.css('height', height + 'px');
-                $element.css('max-height', height + 'px');
-            }
-
-            function setHeightToScrollHeight() {
-                setHeight(0);
-                var scrollHeight = angular.element($element)[0]
-                  .scrollHeight;
-                if (scrollHeight !== undefined) {
-                    setHeight(scrollHeight);
-                }
-            }
-
-            $scope.$watch(function () {
-                return angular.element($element)[0].value;
-            }, setHeightToScrollHeight);
-        }
-    };
-});
-
-app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,$cordovaToast,
+app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $timeout,$cordovaToast,
                                       $cordovaCamera, $ionicLoading){
 
-   var uid = localStorage.getItem("uid");
-   db.ref("users/data/"+uid+"/name").once("value", function(snapshot){
-		console.log(snapshot.val());
-		$scope.uname = snapshot.val();
-		$ionicLoading.hide();
-	});
+    $scope.uid = localStorage.getItem("uid");
    var blogData;
-
    var locDetails = JSON.parse(localStorage.getItem('selectedLocation'));
 
-   $scope.goBack = function(){
-		history.back();
-   };
-
    $scope.feed = {};
-
     $timeout(function () {
         $ionicLoading.hide();
-    }, 5000);
+    }, 10000);
 
-   $scope.submitFeed = function(){
-       if(uid){
-           if(!$scope.feed.introduction && !$scope.image_url){
-               $cordovaToast
-                   .show('Please add an image and description.', 'long', 'center')
-                   .then(function(success) {
-                       // success
-                   }, function (error) {
-                       // error
-                   });
-           }
-           else if($scope.feed.introduction && !$scope.image_url){
-               $cordovaToast
-                   .show('Please add an image', 'long', 'center')
-                   .then(function(success) {
-                       // success
-                   }, function (error) {
-                       // error
-                   });
+    if($scope.uid){
+        getUserInfo();
+    }
+    else{
+        $cordovaToast
+            .show('Please login/SignUp for create post.', 'long', 'center')
+            .then(function(success) {
+                // success
+            }, function (error) {
+                // error
+            });
+    }
 
-           }
-           else if(!$scope.feed.introduction && $scope.image_url){
-               $cordovaToast
-                   .show('Please add description.', 'long', 'center')
-                   .then(function(success) {
-                       // success
-                   }, function (error) {
-                       // error
-                   });
-
-           }
-           else if($scope.feed.introduction && $scope.image_url){
-               if($scope.feed.introduction.substring(0, 1) == '#'){
-                   var newBlogKey = db.ref().child("blogs").push().key;
-                   blogData = {
-                       blog_id: newBlogKey,
-                       // title: $scope.feed.title,
-                       introduction: $scope.feed.introduction,
-                       user: {
-                           user_name: $scope.uname,
-                           user_id: localStorage.getItem("uid"),
-                           user_email: localStorage.getItem("email")
-                       },
-                       active: true,
-                       created_time: new Date().getTime(),
-                       city_id: locDetails.cityId,
-                       city_name: locDetails.cityName
-                   };
-                   // alert($scope.image_url)
-                   // blogData['photoUrl'] = $scope.image_url;
-                   if ($scope.image_url != undefined){
-                       // alert('inside if');
-                       blogData['photoUrl'] = $scope.image_url;
-                   }
-                   // alert(blogData.photoUrl)
-
-                   var re = /#(\w+)(?!\w)/g, hashTag, tagsValue = [];
-                   while (hashTag = re.exec($scope.feed.introduction)) {
-                       tagsValue.push(hashTag[1]);
-                   }
-                   console.log(tagsValue);
-                   // blog object update without tags, functional
-                   var updateBlog = {};
-                   updateBlog['/blogs/' + newBlogKey] = blogData;
-                   updateBlog['/cityBlogs/'+blogData.city_id+"/blogs/"+newBlogKey] = true;
-                   console.log(updateBlog);
-                   db.ref().update(updateBlog);
-                   // alert('2');
-                   for(var i=0; i<tagsValue.length; i++){
-                       //tags object update, functional
-                       var tagsData = db.ref().child("tags").child(tagsValue[i]);
-                       console.log(tagsData);
-                       var tag_blog =  tagsData.child("blogs");
-                       var obj = {};
-                       obj[newBlogKey] = true;
-                       console.log(obj);
-                       tag_blog.update(obj);
-
-                       var updates = {};
-                       updates['/blogs/'+newBlogKey+'/tags/' + tagsValue[i]] = true;
-                       console.log(updates);
-                       db.ref().update(updates);
-                   }
-                   // user object update, functional
-                   var authUpdate = {};
-                   authUpdate['/users/data/'+ blogData.user.user_id+ '/blogs/' + newBlogKey] = true;
-                   console.log(authUpdate);
-                   // alert('4');
-                   db.ref().update(authUpdate).then(function(){
-                       $timeout(function () {
-                           $location.path("/feed");
-                       }, 0);
-                   });
-               }
-               else{
-                   $cordovaToast
-                       .show('Please add # in your description.', 'long', 'center')
-                       .then(function(success) {
-                           // success
-                       }, function (error) {
-                           // error
-                       });
-               }
-           }
-       }
-       else{
-           $cordovaToast
-               .show('Please login/SignUp for create post.', 'long', 'center')
-               .then(function(success) {
-                   // success
-               }, function (error) {
-                   // error
-               });
-       }
-   };
+    function getUserInfo() {
+        userServices.getUserInfo($scope.uid).then(function (result) {
+            $scope.uname = result.name;
+        })
+    }
 
    $scope.galleryUpload = function() {
        $timeout(function () {
@@ -229,7 +90,6 @@ app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,$cordov
          canvas.height = img.height;
          var ctx = canvas.getContext("2d");
          ctx.drawImage(img, 0, 0);
-         // alert(canvas.width+" "+canvas.height+" "+img.width+" "+img.height);
          var dataURL = canvas.toDataURL("image/jpeg");
 
          $http.post("http://139.162.3.205/api/testupload", {path: dataURL})
@@ -243,8 +103,6 @@ app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,$cordov
          })
          .error(function(response){
              $scope.url = '';
-            alert("error: " + response);
-
              $cordovaToast
                  .show('Please try after some time', 'long', 'center')
                  .then(function(success) {
@@ -252,7 +110,6 @@ app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,$cordov
                  }, function (error) {
                      // error
                  });
-            // alert("error: " + response);
              $ionicLoading.hide();
 
          });
@@ -260,4 +117,107 @@ app.controller("newFeedCtrl",function($scope, $http, $location, $timeout,$cordov
       img.src = source;
       $(".upload").css("display", 'none');
    }
+
+    $scope.submitFeed = function(){
+        if($scope.uid){
+            if(!$scope.feed.introduction && !$scope.image_url){
+                $cordovaToast
+                    .show('Please add an image and description.', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
+            else if($scope.feed.introduction && !$scope.image_url){
+                $cordovaToast
+                    .show('Please add an image', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+
+            }
+            else if(!$scope.feed.introduction && $scope.image_url){
+                $cordovaToast
+                    .show('Please add description.', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+
+            }
+            else if($scope.feed.introduction && $scope.image_url){
+                if($scope.feed.introduction.substring(0, 1) == '#'){
+                    var newBlogKey = db.ref().child("blogs").push().key;
+                    blogData = {
+                        blog_id: newBlogKey,
+                        introduction: $scope.feed.introduction,
+                        photoUrl:$scope.image_url,
+                        user: {
+                            user_name: $scope.uname,
+                            user_id: localStorage.getItem("uid"),
+                            user_email: localStorage.getItem("email")
+                        },
+                        active: true,
+                        created_time: new Date().getTime(),
+                        city_id: locDetails.cityId,
+                        city_name: locDetails.cityName
+                    };
+                    var re = /#(\w+)(?!\w)/g, hashTag, tagsValue = [];
+                    while (hashTag = re.exec($scope.feed.introduction)) {
+                        tagsValue.push(hashTag[1]);
+                    }
+                    // blog object update without tags, functional
+                    var updateBlog = {};
+                    updateBlog['/blogs/' + newBlogKey] = blogData;
+                    updateBlog['/cityBlogs/'+blogData.city_id+"/blogs/"+newBlogKey] = true;
+                    db.ref().update(updateBlog);
+                    for(var i=0; i<tagsValue.length; i++){
+                        var tagsData = db.ref().child("tags").child(tagsValue[i]);
+                        var tag_blog =  tagsData.child("blogs");
+                        var obj = {};
+                        obj[newBlogKey] = true;
+                        console.log(obj);
+                        tag_blog.update(obj);
+
+                        var updates = {};
+                        updates['/blogs/'+newBlogKey+'/tags/' + tagsValue[i]] = true;
+                        db.ref().update(updates);
+                    }
+                    // user object update, functional
+                    var authUpdate = {};
+                    authUpdate['/users/data/'+ blogData.user.user_id+ '/blogs/' + newBlogKey] = true;// alert('4');
+                    db.ref().update(authUpdate).then(function(){
+                        $timeout(function () {
+                            $location.path("/feed");
+                        }, 0);
+                    });
+                }
+                else{
+                    $cordovaToast
+                        .show('Please add # in your description.', 'long', 'center')
+                        .then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
+            }
+        }
+        else{
+            $cordovaToast
+                .show('Please login/SignUp for create post.', 'long', 'center')
+                .then(function(success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
+        }
+    };
+    $scope.goBack = function(){
+        history.back();
+    };
 });

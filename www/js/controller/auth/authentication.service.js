@@ -35,13 +35,13 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
             else{
                $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
 
-               $cordovaToast
-                   .show('Logged in successfully!', 'long', 'center')
-                   .then(function(success) {
-                      // success
-                   }, function (error) {
-                      // error
-                   });
+               // $cordovaToast
+               //     .show('Logged in successfully!', 'long', 'center')
+               //     .then(function(success) {
+               //        // success
+               //     }, function (error) {
+               //        // error
+               //     });
                $ionicLoading.hide();
                $state.go('app.home');
             }

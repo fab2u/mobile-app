@@ -205,7 +205,6 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
 
 
     function initialiseAppInfo() {
-
             var date = new Date();
             var currTimeStamp = date.getTime();
             appInfoNew = {
@@ -322,7 +321,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                     $state.go('app.home');
                 }
             }
-            else if(localStorage.getItem('uid')){
+            else if((!hasCurrentBooking) && (localStorage.getItem('uid'))){
                 getBookingTimings()
             }
             else{
@@ -351,6 +350,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
            }
            else{
               var allBookingInfo = {};
+               $state.go('app.home');
            }
         })
     }

@@ -9,7 +9,9 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
     $scope.cancelButton = false;
     $scope.vendorAddress = '';
     $scope.bookingInformation = {};
-    var allBookingInfo = JSON.parse(window.localStorage['allBookingInfo'])
+    if(checkLocalStorage('allBookingInfo')){
+        var allBookingInfo = JSON.parse(window.localStorage['allBookingInfo'])
+    }
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
     var hasCurrentBooking = checkLocalStorage('BookingIdToMarkStatus');
     if(hasCurrentBooking){
@@ -184,6 +186,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
     };
 
     function updateBookingInfo(status) {
+        console.log("stssff",status)
         var updates = {};
         updates['bookings/' + $scope.bookingInformation.bookingId + '/' + 'userStatus'] = status;
         updates['userBookings/' + localStorage.getItem('uid') + '/' + $scope.bookingInformation.bookingId] = status;
@@ -191,11 +194,10 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
         updates['bookingsTiming/' + localStorage.getItem('uid') + '/' + $scope.bookingIdToMarkStatus] = null;
         db.ref().update(updates).then(function () {
             ///// delete booking id from local storage ///////
-            delete allBookingInfo[$scope.bookingIdToMarkStatus];
-            window.localStorage['allBookingInfo'] = JSON.stringify(allBookingInfo);
-            delete window.localStorage.BookingIdToMarkStatus;
-            $ionicLoading.hide();
-            if(status == 'Availed'){
+            if(status === 'Availed'){
+                delete allBookingInfo[$scope.bookingIdToMarkStatus];
+                window.localStorage['allBookingInfo'] = JSON.stringify(allBookingInfo);
+                delete window.localStorage.BookingIdToMarkStatus;
                 $cordovaToast
                     .show('Your review has been submitted successfully!', 'long', 'center')
                     .then(function(success) {
@@ -207,10 +209,16 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
                 $state.go('app.home');
                 $rootScope.$broadcast('booking', { message: 'booking changed' });
             }
-            else{
-                $state.go('app.home');
+            else if(status === 'notAvailed'){
+                delete allBookingInfo[$scope.bookingIdToMarkStatus];
+                window.localStorage['allBookingInfo'] = JSON.stringify(allBookingInfo);
+                delete window.localStorage.BookingIdToMarkStatus;                $state.go('app.home');
                 $rootScope.$broadcast('booking', { message: 'booking changed' });
             }
+            $ionicLoading.hide();
+            $state.go('app.home');
+            $rootScope.$broadcast('booking', { message: 'booking changed' });
+
         });
     };
 
@@ -219,7 +227,6 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
     ///////////////////////////////Mark status not availed booking  /////////////////////////
 
     $scope.notAvailed = function(){
-        $ionicLoading.show();
         var updates = {};
         var status = 'notAvailed';
         updateBookingInfo(status)

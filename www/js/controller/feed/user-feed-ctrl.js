@@ -384,34 +384,43 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
         }).then(function(modal) {
             $scope.modal1 = modal;
         });
-        $scope.cameraUpload = function() {
-            $timeout(function () {
-                $ionicLoading.show();
-            }, 2000);
+
+        $scope.galleryUpload = function() {
             var options = {
-                destinationType : Camera.DestinationType.FILE_URI,
+                destinationType : Camera.DestinationType.DATA_URL,
+                sourceType :	Camera.PictureSourceType.PHOTOLIBRARY, //, Camera.PictureSourceType.CAMERA,
+                allowEdit : false,
+                encodingType: Camera.EncodingType.JPEG,
+                popoverOptions: CameraPopoverOptions,
+            };
+            $cordovaCamera.getPicture(options).then(function(imageURI) {
+                var image = document.getElementById('profile-pic');
+                image.src = "data:image/jpeg;base64,"+imageURI;
+                $scope.url = imageURI;
+                $scope.image_base_64 = image.src;
+                cropImage($scope.image_base_64);
+                // resizeImage(imageURI);
+            }, function(err) {
+                console.log(err);
+            });
+        };
+
+
+        $scope.cameraUpload = function() {
+            var options = {
+                destinationType : Camera.DestinationType.DATA_URL,
                 sourceType :	Camera.PictureSourceType.CAMERA,
                 allowEdit : false,
                 encodingType: Camera.EncodingType.JPEG,
                 popoverOptions: CameraPopoverOptions,
             };
-            $ionicLoading.hide();
+
             $cordovaCamera.getPicture(options).then(function(imageURI) {
                 var image = document.getElementById('profile-pic');
-                image.src = imageURI;
+                image.src = "data:image/jpeg;base64,"+imageURI;
                 $scope.url = imageURI;
-                if($scope.url){
-                    cropImage($scope.url);
-                }
-                else{
-                    $cordovaToast
-                        .show('Please click a photo again.', 'long', 'center')
-                        .then(function(success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
-                }
+                $scope.image_base_64 = image.src;
+                cropImage($scope.image_base_64);
             }, function(err) {
                 console.log(err);
             });
@@ -430,40 +439,41 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                 url: source
             });
         }
+
         $scope.cropClick = function(){
-            $ionicLoading.show();
+            $ionicLoading.show({
+                template: 'Loading! Please wait...'
+            });
             basic.croppie('result', {
                 type: 'canvas',
                 format: 'jpeg',
                 circle: true
             }).then(function (resp) {
-                $ionicLoading.hide();
+                // alert(JSON.stringify(resp));
                 $http.post("http://139.162.3.205/api/testupload", {path: resp})
                     .success(function(response){
                         var updates1 = {};
                         updates1["/users/data/"+$scope.myUid+"/photoUrl"] = response.Message;
                         window.localStorage.setItem("userPhoto", response.Message);
                         db.ref().update(updates1).then(function(){
-                            user.updateProfile({
-                                photoURL: response.Message
-                            }).then(function(){
                                 $ionicLoading.hide();
                                 $cordovaToast
-                                    .show('Your profile photo updated successfully', 'long', 'center')
-                                    .then(function(success) {
-                                        // success
-                                    }, function (error) {
-                                        // error
-                                    });
+                                .show('Photo updated successfully!', 'long', 'center')
+                                .then(function(success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                                 location.reload();
                                 $scope.modal1.hide();
-                            });
                         });
 
                     })
                     .error(function(response){
                         $ionicLoading.hide();
+                        console.log(JSON.stringify(response));
                         $cordovaToast
-                            .show('Please try again.', 'long', 'center')
+                            .show('Something went wrong,please try again!', 'long', 'center')
                             .then(function(success) {
                                 // success
                             }, function (error) {
@@ -471,41 +481,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                             });
                     });
             });
-            $timeout(function () {
-                $ionicLoading.hide();
-            }, 4000);
-        };
-        $scope.galleryUpload = function() {
-            $timeout(function () {
-                $ionicLoading.show();
-            }, 2000);
-            var options = {
-                destinationType : Camera.DestinationType.FILE_URI,
-                sourceType :	Camera.PictureSourceType.PHOTOLIBRARY, //, Camera.PictureSourceType.CAMERA,
-                allowEdit : false,
-                encodingType: Camera.EncodingType.JPEG,
-                popoverOptions: CameraPopoverOptions,
-            };
-            $ionicLoading.hide()
-            $cordovaCamera.getPicture(options).then(function(imageURI) {
-                var image = document.getElementById('profile-pic');
-                $scope.url = imageURI;
-                if($scope.url){
-                    cropImage($scope.url);
-                }
-                else{
-                    $cordovaToast
-                        .show('Please take another Photo', 'long', 'center')
-                        .then(function(success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
-                }
-            }, function(err) {
-                console.log(err);
-            });
-        };
+        }
 
     }
     else{

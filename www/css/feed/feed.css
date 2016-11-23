@@ -123,8 +123,11 @@ float:right;
 	border-left: 1px solid #bcbcbc;
 	border-right: 1px solid #bcbcbc;
 }
-
-.fabFeed .profile-pic{
+.save_button_color{
+	background-color: #ff8386 !important;
+	color: #ffffff;
+}
+.fabFeed #profile-pic{
 	border: 2px solid #8e8e8e;
 	border-radius: 50%;
 

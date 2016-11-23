@@ -10,12 +10,15 @@
         <div class="row tab-row">
             <a href="#/user/{{myUid}}" class="col active-tab text-center center-tab">
                 <img class="fab-book-header-img" ng-src="img/fabbook-header/notification.png"/>
+                <p>Profile</p>
             </a>
             <a href="#/feed" class="col text-center center-tab">
                 <img class="fab-book-header-img" ng-src="img/fabbook-header/fabbook.png"/>
+                <p>Posts</p>
             </a>
             <a href="#/nearme/{{cityId}}" class="col text-center center-tab">
                 <img class="fab-book-header-img" ng-src="img/fabbook-header/Nearby.png"/>
+                <p>Near me posts</p>
             </a>
         </div>
         <div class="user-info">
@@ -96,15 +99,15 @@
                 </div>
             </div>
             <div id="{{feed.blog_id}}-commentsBlock" class="initiallyHidden">
-                <div class="row padding-left" ng-repeat="comment in feed.commentsArr">
-                    <div class="col col-25">
-                        <span class="comment-name">{{comment.userName}}</span><br>
-                        <span class="comment-date">{{comment.created_time | date:'d MMM yy'}}</span>
-                    </div>
-                    <div class="col col-75">
-                        <p>{{comment.comment}}</p>
-                    </div>
-                </div>
+                <ion-list>
+                    <ion-item class="item_view" ng-repeat="comment in feed.commentsArr">
+                        <div class="row">
+                            <div class="col-67 comment-name comment-user-name">{{comment.userName}}</div>
+                            <div class="col-33">{{comment.created_time |  date:'MM/dd/yyyy @ h:mma'}}</div>
+                        </div>
+                        <div class="row">{{comment.comment}}</div>
+                    </ion-item>
+                </ion-list>
             </div>
         </div>
         <div ng-hide="moreMessagesScroll" class="feedend">You are at the end of the feed</div>

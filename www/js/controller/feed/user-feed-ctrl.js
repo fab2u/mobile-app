@@ -510,11 +510,12 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
     }
     else{
         $cordovaToast
-            .show('Please login/SignUp with Fabbook', 'long', 'center')
+            .show('Please login/SignUp to see your profile', 'long', 'center')
             .then(function(success) {
                 // success
             }, function (error) {
                 // error
             });
+        $state.go('feed')
     }
 });

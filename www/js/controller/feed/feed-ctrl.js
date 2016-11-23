@@ -251,7 +251,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 		}
 		else{
 			$cordovaToast
-				.show('Please login/SignUp for comment this post.', 'long', 'center')
+				.show('Please login/SignUp to comment on this post.', 'long', 'center')
 				.then(function(success) {
 					// success
 				}, function (error) {
@@ -264,7 +264,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 		$ionicLoading.show();
 		if (!$scope.uid) {
 			$cordovaToast
-				.show('Please login/SignUp for follow this post.', 'long', 'center')
+				.show('Please login/SignUp to follow the user.', 'long', 'center')
 				.then(function(success) {
 					// success
 				}, function (error) {
@@ -290,7 +290,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 		if(!$scope.uid){
 			$ionicLoading.hide();
 			$cordovaToast
-				.show('Please login/SignUp for unfollow this post.', 'long', 'center')
+				.show('Please login/SignUp to unfollow the user.', 'long', 'center')
 				.then(function(success) {
 					// success
 				}, function (error) {
@@ -341,7 +341,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 		else{
 			$ionicLoading.hide();
 			$cordovaToast
-				.show('Please login/SignUp for like this post.', 'long', 'center')
+				.show('Please login/SignUp to like this post.', 'long', 'center')
 				.then(function(success) {
 					// success
 				}, function (error) {

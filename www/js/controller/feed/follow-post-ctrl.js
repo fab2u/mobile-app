@@ -48,7 +48,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
     }
     else{
         $cordovaToast
-            .show('Please login/SignUp for create post.', 'long', 'center')
+            .show('Please login/SignUp for follower/follow', 'long', 'center')
             .then(function(success) {
                 // success
             }, function (error) {
@@ -234,7 +234,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
         }
         else{
             $cordovaToast
-                .show('Please login/SignUp for comment this post.', 'long', 'center')
+                .show('Please login/SignUp to comment on this post.', 'long', 'center')
                 .then(function(success) {
                     // success
                 }, function (error) {
@@ -271,7 +271,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
         }
         else{
             $cordovaToast
-                .show('Please login/SignUp for like this post.', 'long', 'center')
+                .show('Please login/SignUp to like this post.', 'long', 'center')
                 .then(function(success) {
                     // success
                 }, function (error) {
@@ -285,7 +285,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
         if (!$scope.myUid) {
             $ionicLoading.hide()
             $cordovaToast
-                .show('Please login/SignUp for follow', 'long', 'center')
+                .show('Please login/SignUp to follow the user', 'long', 'center')
                 .then(function(success) {
                     // success
                 }, function (error) {
@@ -309,7 +309,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
         if(!$scope.myUid){
             $ionicLoading.hide()
             $cordovaToast
-                .show('Please login/SignUp for unfollow', 'long', 'center')
+                .show('Please login/SignUp to unfollow the user', 'long', 'center')
                 .then(function(success) {
                     // success
                 }, function (error) {

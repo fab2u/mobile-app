@@ -266,7 +266,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
         if (!$scope.uid) {
             $ionicLoading.hide();
             $cordovaToast
-                .show('Please login/SignUp for follow this post.', 'long', 'center')
+                .show('Please login/SignUp to follow the user.', 'long', 'center')
                 .then(function(success) {
                     // success
                 }, function (error) {
@@ -292,7 +292,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
         if (!$scope.uid) {
             $ionicLoading.hide();
             $cordovaToast
-                .show('Please login/SignUp for unfollow this post.', 'long', 'center')
+                .show('Please login/SignUp to unfollow the user.', 'long', 'center')
                 .then(function(success) {
                     // success
                 }, function (error) {
@@ -340,7 +340,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
         else{
             $ionicLoading.hide();
             $cordovaToast
-                .show('Please login/SignUp for like this post.', 'long', 'center')
+                .show('Please login/SignUp to like this post.', 'long', 'center')
                 .then(function(success) {
                     // success
                 }, function (error) {

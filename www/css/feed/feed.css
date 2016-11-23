@@ -112,6 +112,13 @@ float:right;
 .fabFeed .active-tab{
 	border-bottom: 4px solid #FF8386;
 }
+.fabFeed .active-tab p{
+	color: #ff8386 !important;
+}
+.fabFeed .center-tab p{
+	margin-bottom: 0px!important;
+	color: #4d4d4c;
+}
 .fabFeed .center-tab{
 	border-left: 1px solid #bcbcbc;
 	border-right: 1px solid #bcbcbc;
@@ -323,4 +330,15 @@ float:right;
 
 .fabFeed .initiallyHidden{
    display: none;
+}
+.fabFeed .item_view{
+	background-color: aliceblue;
+	padding: 5px!important;
+	font-size: 12px;
+}
+.fabFeed .item_view .row:nth-child(1){
+	padding: 0 0 0;
+}
+.fabFeed .item_view .comment-user-name{
+	text-transform: capitalize;
 }

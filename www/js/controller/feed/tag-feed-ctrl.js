@@ -182,7 +182,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
     $scope.showPopup = function(id) {
         if(!$scope.uid){
             $cordovaToast
-                .show('Please login/SignUp for create post.', 'long', 'center')
+                .show('Please login/SignUp to comment on this post', 'long', 'center')
                 .then(function(success) {
                     // success
                 }, function (error) {
@@ -253,7 +253,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
         if(!$scope.uid){
             $ionicLoading.hide();
             $cordovaToast
-                .show('Please login/SignUp for create post.', 'long', 'center')
+                .show('Please login/SignUp to follow this user', 'long', 'center')
                 .then(function(success) {
                     // success
                 }, function (error) {
@@ -279,7 +279,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
         $ionicLoading.show();
         if(!$scope.uid){
             $cordovaToast
-                .show('Please login/SignUp for create post.', 'long', 'center')
+                .show('Please login/SignUp to unfollow the user', 'long', 'center')
                 .then(function(success) {
                     // success
                 }, function (error) {
@@ -306,7 +306,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
         if(!$scope.uid){
             $ionicLoading.hide();
             $cordovaToast
-                .show('Please login/SignUp for create post.', 'long', 'center')
+                .show('Please login/SignUp to like this post.', 'long', 'center')
                 .then(function(success) {
                     // success
                 }, function (error) {

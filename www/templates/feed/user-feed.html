@@ -6,7 +6,7 @@
     <ion-floating-button click="createNew()" has-footer="false" button-color="#0DD1D1"
                          icon="ion-camera"
                          icon-color="#fff"></ion-floating-button>
-    <ion-content class="has-header">
+    <ion-content class="has-header" ng-show="userDetails">
         <div class="row tab-row">
             <a href="#/user/{{myUid}}" class="col active-tab text-center center-tab">
                 <img class="fab-book-header-img" ng-src="img/fabbook-header/notification.png"/>
@@ -18,14 +18,14 @@
             </a>
             <a href="#/nearme/{{cityId}}" class="col text-center center-tab">
                 <img class="fab-book-header-img" ng-src="img/fabbook-header/Nearby.png"/>
-                <p>Near me posts</p>
+                <p>Near Me</p>
             </a>
         </div>
         <div class="user-info">
             <div class="center">
                 <img ng-src="{{userDetails.photoUrl || 'img/person.jpg'}}" width="130" height="130"
                      id="profile-pic"/>
-                <i class="icon ion-edit" style="font-size: 30px;position: absolute;z-index: -1;"
+                <i class="icon ion-edit" style="font-size: 30px; margin-left: 30px;position: absolute"
                    ng-click="showUploadOptions = !showUploadOptions"></i>
                 <div class="row" ng-show="showUploadOptions">
                     <div class="col">

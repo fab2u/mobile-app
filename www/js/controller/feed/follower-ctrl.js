@@ -24,6 +24,9 @@ app.controller("followerCtrl", function(userServices,$scope,$stateParams,$state,
                 $scope.followerUserDetail.push(result);
             })
         }
+        $timeout(function () {
+            $ionicLoading.hide();
+        }, 1500);
     }
 
     $scope.viewPosts = function (followId) {

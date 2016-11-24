@@ -47,6 +47,10 @@
                         <div class="col">
                             <p id="f_15">{{vendor.vendorName}}</p>
                             <p id="land_mark">{{vendor.address.landmark}}</p>
+                            <p>
+                                <span ng-if="vendor.discount.length>0 ">Discount up to {{vendor.discount}}</span>
+                                <span ng-if="vendor.label.length>0 ">on {{vendor.label}} </span>
+                            </p>
                         </div>
                     </div>
                 </div>

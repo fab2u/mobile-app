@@ -248,6 +248,8 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
             }
             else{
                 $scope.vendorNames = JSON.stringify(window.localStorage['vendorsName'])
+                $ionicLoading.hide();
+
             }
         })
     }

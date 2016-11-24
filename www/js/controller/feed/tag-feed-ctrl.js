@@ -181,13 +181,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
 
     $scope.showPopup = function(id) {
         if(!$scope.uid){
-            $cordovaToast
-                .show('Please login/SignUp to comment on this post', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
+            showLoginSignUp()
         }
         else {
             $scope.data = {}
@@ -252,13 +246,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
         $ionicLoading.show();
         if(!$scope.uid){
             $ionicLoading.hide();
-            $cordovaToast
-                .show('Please login/SignUp to follow this user', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
+            showLoginSignUp()
         }
         else {
             var updateFollow = {};
@@ -278,13 +266,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
     $scope.unfollowUser = function(id){
         $ionicLoading.show();
         if(!$scope.uid){
-            $cordovaToast
-                .show('Please login/SignUp to unfollow the user', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
+            showLoginSignUp()
         }
         else{
             var updateFollow = {};
@@ -305,13 +287,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
         $ionicLoading.show();
         if(!$scope.uid){
             $ionicLoading.hide();
-            $cordovaToast
-                .show('Please login/SignUp to like this post.', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
+            showLoginSignUp()
         }
         else{
             if($("#"+feed.blog_id+"-likeFeed").hasClass('clicked')){
@@ -337,6 +313,19 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
             });
         }
     };
+    function showLoginSignUp() {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Not logged in',
+            template: 'Please login/sign up to continue'
+        });
+        confirmPopup.then(function(res) {
+            if(res) {
+                $state.go('login')
+            } else {
+                console.log('You are not sure');
+            }
+        });
+    }
 
     $scope.goBack = function(){
         history.back();

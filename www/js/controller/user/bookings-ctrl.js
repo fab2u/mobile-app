@@ -4,8 +4,11 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 	$timeout(function () {
 		$ionicLoading.hide();
 	}, 10000);
+	$ionicLoading.show();
+
 	$scope.bookingIds = [];
 	$scope.allBookings = [];
+	$scope.bookingsLoaded = false;
 	$scope.activeBookingId = '';
 	$scope.allBookingInfo = {};
 	var count1 = 0;
@@ -33,7 +36,6 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 	}
 
 	function getAllBookingIds() {
-		$ionicLoading.show();
 		userServices.AllBookingIds(localStorage.getItem('uid')).then(function (result) {
 			if(result){
 				count1 = Object.keys(result).length;
@@ -52,26 +54,52 @@ app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,
 	}
 
 	// All the booking id for cancelled booking and active booking and their detail
-
+var count4 = 0;
+var count3 = 0;
 	function allBookingsDetail() {
+		count3 = $scope.bookingIds.length;
 		for (var i = 0; i <$scope.bookingIds.length; i++) {
-			firebase.database().ref('bookings/' + $scope.bookingIds[i]).once('value', function (response) {
-				if (response.val()) {
-					$scope.allBookings.push(response.val());
-					$ionicLoading.hide();
-				}
-			});
+			count4++;
+			detailBooking($scope.bookingIds[i], count4, $scope.bookingIds.length)
 		}
+	}
+	function detailBooking(bookingId, x, y) {
+		firebase.database().ref('bookings/' + bookingId).once('value', function (response) {
+			if (response.val()) {
+				$scope.allBookings.push(response.val());
+			}
+		}).then(function(){
+			if(x == y){
+				$ionicLoading.hide();
+				$scope.bookingsLoaded = true;
+			}
+		});
 	}
 
 	function getBookingTimings() {
 		userServices.getAllBookingTimes(localStorage.getItem('uid')).then(function (result) {
 			if(result){
+				console.log("if")
 				$scope.allBookingInfo = result;
 				getAllBookingIds();
 			}
 			else{
-				$scope.allBookingInfo = {};
+				firebase.database().ref('userBookings/'+localStorage.getItem('uid')).once('value', function (response) {
+					console.log(response.val())
+					if(response.val()) {
+						for(key in response.val()){
+							$scope.bookingIds.push(key)
+						}
+						allBookingsDetail()
+					}
+					else{
+						$timeout(function () {
+							$ionicLoading.hide();
+							$scope.bookingsLoaded = true;
+						},100)
+					}
+				})
+
 			}
 		})
 	}

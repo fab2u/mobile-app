@@ -2,6 +2,7 @@ app.controller("followCtrl", function(userServices,$scope,$stateParams,$state,$t
 
     var FollowIds = JSON.parse(window.localStorage['iFollowingIds']);
     $scope.IfollowingUserDetail = [];
+    delete window.localStorage.follower;
     $scope.msg = false;
 
     $timeout(function () {
@@ -22,8 +23,9 @@ app.controller("followCtrl", function(userServices,$scope,$stateParams,$state,$t
                     $scope.IfollowingUserDetail.push(result);
             })
         }
-        $ionicLoading.hide();
-
+        $timeout(function () {
+            $ionicLoading.hide();
+        }, 1500);
     }
 
     $scope.viewPosts = function (followId) {

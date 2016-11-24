@@ -18,6 +18,7 @@ app.controller('BookingDetailCtrl', function(userServices,$scope,$state,$ionicLo
         $ionicLoading.show();
          userServices.getBookingDetail(bookingId).then(function (result) {
              if(result){
+                 console.log("result",result)
                  $scope.bookingInformation = result;
                  $scope.vendorId = result.vendorId;
                  getVendorDetail();

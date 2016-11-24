@@ -2,12 +2,15 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                                            $ionicLoading,$location,$ionicPopup,$cordovaToast,
                                            $ionicModal,$sce){
 
-    $scope.myUid = window.localStorage.getItem("uid");
+    if(checkLocalStorage('uid')){
+        $scope.myUid = window.localStorage.getItem("uid");
+    }
     var followId = $stateParams.followId;
     $scope.uid = window.localStorage.getItem("uid");
     $scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
     $scope.blogIdList = {};
     $scope.moreMessagesScroll = true;
+    $scope.blogArr = [];
     var count = 0;
     $timeout(function () {
         $ionicLoading.hide();
@@ -47,13 +50,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
         followOrFollowerDetail();
     }
     else{
-        $cordovaToast
-            .show('Please login/SignUp for follower/follow', 'long', 'center')
-            .then(function(success) {
-                // success
-            }, function (error) {
-                // error
-            });
+        showLoginSignUp()
     }
 
     function myInfo() {
@@ -82,13 +79,14 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
             db.ref("users/data/"+followId+"/blogs").orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){
                 if(snap.numChildren() == 1){
                     $scope.moreMessagesScroll = false;
-                    $ionicLoading.hide()
+                    $ionicLoading.hide();
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }
                 else{
                     $scope.oldBottomKey = $scope.bottomKey;
                     $scope.bottomKey = Object.keys(snap.val())[0];
                     $scope.blogLength = Object.keys(snap.val()).length;
+                    count = 0;
                     for(var i in snap.val()){
                         if (i != $scope.oldBottomKey){
                             blogAlgo(i);
@@ -104,8 +102,6 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                 if($scope.blogIdList !== null){
                     $scope.bottomKey = Object.keys($scope.blogIdList)[0];
                 }
-                $scope.blogArr = [];
-                $scope.blogArr = [];
                 $scope.blogLength = Object.keys($scope.blogIdList).length;
                 for(var i in $scope.blogIdList){
                 	blogAlgo(i);
@@ -118,7 +114,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
     $scope.toTrustedHTML = function( html ){
         return $sce.trustAsHtml( html );
     };
-    function blogAlgo(i, callback){
+    function blogAlgo(i){
         count++;
         var blogData = db.ref().child("blogs").child(i);
         blogData.once("value", function(snap){ //access individual blog
@@ -129,16 +125,12 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                     var temp = single_blog.introduction.replace(/\s/g, '');
                     single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
                 }
-                // start: comment system code
                 if(single_blog.comments){
                     single_blog['commentCount'] = Object.keys(single_blog.comments).length;
                 }
-                // start convert comments object to array
                 single_blog['commentsArr'] = $.map(single_blog.comments, function(value, index) {
                     return [value];
                 });
-                // end convert comments object to array
-                // end: comment system code
                 (function(single_blog){
                     if(single_blog.user.user_id == $scope.myUid){
                         $timeout(function () {
@@ -161,7 +153,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                 })(single_blog);
                 if(single_blog.likedBy){
                     var count11 = Object.keys(single_blog.likedBy).length;
-                    single_blog['numLikes'] = count1;
+                    single_blog['numLikes'] = count11;
                     if($scope.myUid in single_blog.likedBy){
                         $timeout(function () {
                             $("#"+i+"-likeFeed").addClass("clicked");
@@ -170,10 +162,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                 }
                 $scope.blogArr.push(single_blog);
             }
-        });
-        if(callback){
-            callback();
-        }
+        })
         if(count == $scope.blogLength){
             $ionicLoading.hide();
             $scope.moreMessagesScroll = true;
@@ -225,7 +214,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                                 return $scope.data.comment;
                             }
                         }
-                    },
+                    }
                 ]
             });
             myPopup.then(function (res) {
@@ -233,13 +222,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
             });
         }
         else{
-            $cordovaToast
-                .show('Please login/SignUp to comment on this post.', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
+            showLoginSignUp()
         }
     };
 
@@ -270,13 +253,8 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
 
         }
         else{
-            $cordovaToast
-                .show('Please login/SignUp to like this post.', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
+            $ionicLoading.hide()
+            showLoginSignUp()
         }
     }
 
@@ -284,13 +262,8 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
         $ionicLoading.show()
         if (!$scope.myUid) {
             $ionicLoading.hide()
-            $cordovaToast
-                .show('Please login/SignUp to follow the user', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });        }
+            showLoginSignUp()
+        }
         else {
             var updateFollow = {};
             updateFollow['users/data/' + id + '/myFollowers/' + $scope.myUid] = true;
@@ -308,13 +281,8 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
         $ionicLoading.show()
         if(!$scope.myUid){
             $ionicLoading.hide()
-            $cordovaToast
-                .show('Please login/SignUp to unfollow the user', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });        }
+            showLoginSignUp()
+        }
         else{
             var updateFollow = {};
             updateFollow['users/data/'+id+'/myFollowers/'+$scope.myUid] = null;
@@ -327,6 +295,19 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
             });
         }
     };
+    function showLoginSignUp() {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Not logged in',
+            template: 'Please login/sign up to continue'
+        });
+        confirmPopup.then(function(res) {
+            if(res) {
+                $state.go('login')
+            } else {
+                console.log('You are not sure');
+            }
+        });
+    }
     $scope.goBack = function(){
         if(window.localStorage.getItem("follower")=='true') {
             $state.go('follower', {uid: $scope.myUid});

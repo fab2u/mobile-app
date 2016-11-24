@@ -21,7 +21,9 @@ app.controller('VendorListCtrl',
         if (checkLocalStorage('allVendors')) {
             allVendorService.getVersion(locationInfo.cityId).then(function (res) {
                 var newVersion = res;
+                console.log(newVersion,window.localStorage['allVendorsVersion'])
                 if (window.localStorage['allVendorsVersion'] < newVersion) {
+                    console.log("if")
                         getAllVendors();
                 }
                 else{
@@ -120,6 +122,7 @@ app.controller('VendorListCtrl',
             else {
                 $ionicLoading.hide();
             }
+            console.log($scope.vendorsForFilter)
         }
 
 

@@ -208,16 +208,23 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
             }
         }
         else{
-            $cordovaToast
-                .show('Please login/SignUp for create post.', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
+           showLoginSignUp()
         }
     };
     $scope.goBack = function(){
         history.back();
     };
+    function showLoginSignUp() {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Not logged in',
+            template: 'Please login/sign up to continue'
+        });
+        confirmPopup.then(function(res) {
+            if(res) {
+                $state.go('login')
+            } else {
+                console.log('You are not sure');
+            }
+        });
+    }
 });

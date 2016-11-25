@@ -8,6 +8,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
     $scope.moreMessagesRefresh = true;
     $scope.tagName = $stateParams.tag;
     $scope.blogIdList = {};
+    $scope.dataLoaded = false;
     var count = 0;
 
     // ----------------------------------------------------------------------
@@ -90,76 +91,94 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                     for(var i in $scope.blogIdList){
                         blogAlgo(i);
                     }
+                    $scope.dataLoaded = true;
+
                 }
                 else{
-                    alert('This feed no more available!')
+                    $scope.dataLoaded = true;
+
+                    $cordovaToast
+                        .show('This feed is not available!', 'long', 'center')
+                        .then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
                 }
 				$timeout(function () {
 				}, 0);
 			})
 		}
 	}
-    function blogAlgo(i, callback){
+    function blogAlgo(i){
         count++;
         var blogData = db.ref().child("blogs").child(i);
         blogData.once("value", function(snap){ //access individual blog
             single_blog = snap.val();
-           if(single_blog){
-               if(single_blog.user.user_id == $scope.uid){
-                   $timeout(function () {
-                       $('.'+single_blog.user.user_id+'-follow').hide();
-                   }, 0);
-               }
-               if(single_blog.introduction){
-                   var temp = single_blog.introduction.replace(/\s/g, '');
-                   single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
-               }
-               // start: comment system code
-               if(single_blog.comments){
-                   single_blog['commentCount'] = Object.keys(single_blog.comments).length;
-               }
-               // start convert comments object to array
-               single_blog['commentsArr'] = $.map(single_blog.comments, function(value, index) {
-                   return [value];
-               });
-               // If you want to run asynchronous functions inside a loop, but still want to keep the index or other variables after a callback gets executed you can wrap your code in an IIFE (immediately-invoked function expression).
-               (function(single_blog){
-                   db.ref("users/data/"+single_blog.user.user_id).once("value", function(snap){
-                       console.log(single_blog.user.user_id, snap.val());
-                       if(snap.val().photoUrl){
-                           single_blog.profilePic = snap.val().photoUrl;
-                       }
-                       if(snap.val().myFollowers){
-                           console.log(snap.val().myFollowers);
-                           if ($scope.uid in snap.val().myFollowers){
-                               $timeout(function () {
-                                   $('.' + single_blog.user.user_id + '-follow').hide();
-                                   $("."+single_blog.user.user_id+'-unfollow').css("display", "block");
-                               },0);
-                           }
-                       }
-                   });
-               })(single_blog);
-               if(single_blog.likedBy){
-                   var count1 = Object.keys(single_blog.likedBy).length;
-                   single_blog['numLikes'] = count1;
-                   if($scope.uid in single_blog.likedBy){
-                       $timeout(function () {
-                           $("#"+i+"-likeFeed").addClass("clicked");
-                       }, 1000);
-                   }
-               }
-               $scope.blogArr.push(single_blog);
-           }
+            if(single_blog){
+                if(single_blog.introduction){
+                    var temp = single_blog.introduction.replace(/\s/g, '');
+                    single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+                }
+                if(single_blog.comments){
+                    single_blog['commentCount'] = Object.keys(single_blog.comments).length;
+                }
+                single_blog['commentsArr'] = $.map(single_blog.comments, function(value, index) {
+                    return [value];
+                });
+                if(single_blog.likedBy) {
+                    single_blog['numLikes'] = Object.keys(single_blog.likedBy).length;
+                }
+                single_blog.liked = false;
+                checkFollowOrFollowerUser(single_blog,i);
+                $scope.blogArr.push(single_blog);
+            }
         });
-        if(callback){
-            callback();
-        }
         if(count == $scope.blogLength){
             $ionicLoading.hide();
             $scope.moreMessagesScroll = true;
         }
     }
+    function checkFollowOrFollowerUser(single_blog,i) {
+        if(single_blog.user){
+            if($scope.uid){
+                if(single_blog.user.user_id == $scope.uid){
+                    $timeout(function () {
+                        $('.'+single_blog.user.user_id+'-follow').hide();
+                    }, 0);
+                }
+                if(single_blog.likedBy){
+                    if($scope.uid in single_blog.likedBy){
+                        $timeout(function () {
+                            single_blog.liked = true;
+                        }, 0);
+                    }
+                }
+                db.ref("users/data/"+single_blog.user.user_id).once("value", function(snap){
+                    if(snap.val().photoUrl){
+                        single_blog.profilePic = snap.val().photoUrl;
+                    }
+                    if(snap.val().myFollowers){
+                        if ($scope.uid in snap.val().myFollowers){
+                            $timeout(function () {
+                                $('.'+single_blog.user.user_id+'-follow').hide();
+                                $("."+single_blog.user.user_id+'-unfollow').css("display", "block");
+                            }, 0);
+                        }
+                    }
+                });
+            }
+            else{
+                db.ref("users/data/"+single_blog.user.user_id).once("value", function(snap) {
+                    if (snap.val().photoUrl) {
+                        single_blog.profilePic = snap.val().photoUrl;
+                    }
+                })
+            }
+
+        }
+    }
+
     $scope.doRefresh = function(){
         db.ref("tags/"+$scope.tagName+"/blogs").orderByKey().startAt($scope.topKey).once("value", function(snapshot){
             if(snapshot.numChildren() == 1){
@@ -290,10 +309,14 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
             showLoginSignUp()
         }
         else{
-            if($("#"+feed.blog_id+"-likeFeed").hasClass('clicked')){
+            if(feed.liked){
                 feed.numLikes -= 1;
                 db.ref("blogs/"+feed.blog_id+"/likedBy/"+$scope.uid).remove().then(function(){
-                    $("#"+feed.blog_id+"-likeFeed").removeClass("clicked");
+                    db.ref("users/data/"+$scope.uid+'/likedBlogs/'+feed.blog_id).remove().then(function () {
+                        $timeout(function(){
+                            feed.liked = false;
+                        },0);
+                    })
                 });
             }
             else {
@@ -303,8 +326,10 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                 feed.numLikes += 1;
                 var updates = {};
                 updates["blogs/" + feed.blog_id + "/likedBy/" + $scope.uid] = true;
-                db.ref().update(updates).then(function () {
-                    $("#" + feed.blog_id + "-likeFeed").addClass("clicked");
+                updates["users/data/"+$scope.uid+"/likedBlogs/"+feed.blog_id] = true;                db.ref().update(updates).then(function () {
+                    $timeout(function () {
+                        feed.liked = true;
+                    },0)
                 });
             }
             db.ref("blogs/"+feed.blog_id+"/likedBy").on("value", function(snap){

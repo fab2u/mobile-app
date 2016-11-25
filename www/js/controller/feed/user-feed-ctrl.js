@@ -91,26 +91,21 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
         function getPostInfo(){
             // $ionicLoading.show();
             if(Object.keys($scope.blogIdList).length == 0){
-                db.ref("users/data/"+$scope.myUid +"/blogs").limitToLast(25).once("value", function(snapshot){
+                db.ref("users/data/"+$scope.myUid +"/blogs").limitToLast(5).once("value", function(snapshot){
                     $scope.blogIdList = snapshot.val();
                     $scope.blogLength = Object.keys($scope.blogIdList).length;
                     if($scope.blogIdList !== null){
                         $scope.bottomKey = Object.keys($scope.blogIdList)[0];
                     }
-                    // if($scope.following >0){
-                    //     myFollowing($scope.followingIds);
-                    // }
-                    // else{
                         for(var key in snapshot.val()){
-                            console.log("key",key)
-                            // $scope.myBlogIds.push(key);
                             blogAlgo(key);
                         }
-                    // }
+
                 });
-            }
+            }		//db.ref("blogs").orderByKey().limitToFirst(6).endAt($scope.bottomKey)
             else if(Object.keys($scope.blogIdList).length > 0){
-                db.ref("users/data/"+$scope.myUid+"/blogs").orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){
+                db.ref("users/data/"+$scope.myUid+"/blogs").
+                orderByKey().limitToFirst(6).endAt($scope.bottomKey).once("value", function(snap){
                     if(snap.numChildren() == 1){
                         $scope.moreMessagesScroll = false;
                         $ionicLoading.hide();
@@ -136,7 +131,6 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
         /////////////////////        posts detail            //////////////////////
         function blogAlgo(i){
             count1++;
-            $scope.blogArr = [];
             var blogData = db.ref().child("blogs").child(i);
             blogData.once("value", function(snap){ //access individual blog
                 single_blog = snap.val();
@@ -152,11 +146,12 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                     single_blog['commentsArr'] = $.map(single_blog.comments, function(value, index) {
                         return [value];
                     });
+                    single_blog.liked = false;
                     if(single_blog.likedBy){
                         var count2 = Object.keys(single_blog.likedBy).length;
                         single_blog['numLikes'] = count2;
                         if($scope.myUid in single_blog.likedBy){
-                                $("#"+i+"-likeFeed").addClass("clicked");
+                            single_blog.liked = true;
                         }
                     }
                     $scope.blogArr.push(single_blog);
@@ -259,11 +254,13 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
         //////////////////////////Like a particular feed ////////////////
         $scope.likeThisFeed = function(feed){
             $ionicLoading.show();
-                if($("#"+feed.blog_id+"-likeFeed").hasClass('clicked')){
+                if(feed.liked){
                     feed.numLikes -= 1;
                     db.ref("blogs/"+feed.blog_id+"/likedBy/"+$scope.myUid).remove().then(function(){
                         db.ref("users/data/"+$scope.myUid+'/likedBlogs/'+feed.blog_id).remove().then(function () {
-                            $("#"+feed.blog_id+"-likeFeed").removeClass("clicked");
+                            $timeout(function(){
+                                feed.liked = false;
+                            },0);
                             delete $scope.likeBlogIds[feed.blog_id];
                         })
                     });
@@ -277,7 +274,9 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                     updates["blogs/" + feed.blog_id + "/likedBy/" + $scope.myUid] = true;
                     updates["users/data/"+$scope.myUid+'/likedBlogs/'+feed.blog_id] = true;
                     db.ref().update(updates).then(function () {
-                        $("#" + feed.blog_id + "-likeFeed").addClass("clicked");
+                        $timeout(function(){
+                            feed.liked = true;
+                        },0);
                         if(!$scope.likeBlogIds){
                             $scope.likeBlogIds = {};
                         }

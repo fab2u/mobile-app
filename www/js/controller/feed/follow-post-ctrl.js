@@ -11,6 +11,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
     $scope.blogIdList = {};
     $scope.moreMessagesScroll = true;
     $scope.blogArr = [];
+    $scope.dataLoaded = false;
     var count = 0;
     $timeout(function () {
         $ionicLoading.hide();
@@ -76,7 +77,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
     $scope.loadMore = function(){
         $ionicLoading.show()
         if(Object.keys($scope.blogIdList).length > 0){
-            db.ref("users/data/"+followId+"/blogs").orderByKey().limitToFirst(5).endAt($scope.bottomKey).once("value", function(snap){
+            db.ref("users/data/"+followId+"/blogs").orderByKey().limitToFirst(6).endAt($scope.bottomKey).once("value", function(snap){
                 if(snap.numChildren() == 1){
                     $scope.moreMessagesScroll = false;
                     $ionicLoading.hide();
@@ -98,15 +99,30 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
         }
         else if(Object.keys($scope.blogIdList).length == 0){
             db.ref("users/data/"+followId +"/blogs").limitToLast(5).once("value", function(snapshot){
-                $scope.blogIdList = snapshot.val();
-                if($scope.blogIdList !== null){
-                    $scope.bottomKey = Object.keys($scope.blogIdList)[0];
+                if(snapshot.val()){
+                    $scope.blogIdList = snapshot.val();
+                    if($scope.blogIdList !== null){
+                        $scope.bottomKey = Object.keys($scope.blogIdList)[0];
+                    }
+                    $scope.blogLength = Object.keys($scope.blogIdList).length;
+                    for(var i in $scope.blogIdList){
+                        blogAlgo(i);
+                    }
+                    $scope.dataLoaded = true;
+                    $ionicLoading.hide();
                 }
-                $scope.blogLength = Object.keys($scope.blogIdList).length;
-                for(var i in $scope.blogIdList){
-                	blogAlgo(i);
+                else{
+                    $scope.dataLoaded = true;
+                    $ionicLoading.hide();
+                    $cordovaToast
+                        .show('No feeds available!', 'long', 'center')
+                        .then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
                 }
-                $ionicLoading.hide();
+
             });
         }
     };
@@ -156,8 +172,8 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                     single_blog['numLikes'] = count11;
                     if($scope.myUid in single_blog.likedBy){
                         $timeout(function () {
-                            $("#"+i+"-likeFeed").addClass("clicked");
-                        }, 1000);
+                            single_blog.liked = true;
+                        }, 0);
                     }
                 }
                 $scope.blogArr.push(single_blog);
@@ -229,10 +245,14 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
     $scope.likeThisFeed = function(feed){
         $ionicLoading.show()
         if($scope.myUid){
-            if($("#"+feed.blog_id+"-likeFeed").hasClass('clicked')){
+            if(feed.liked){
                 feed.numLikes -= 1;
                 db.ref("blogs/"+feed.blog_id+"/likedBy/"+$scope.myUid).remove().then(function(){
-                    $("#"+feed.blog_id+"-likeFeed").removeClass("clicked");
+                    db.ref("users/data/"+$scope.myUid+'/likedBlogs/'+feed.blog_id).remove().then(function () {
+                        $timeout(function(){
+                            feed.liked = false;
+                        },0);
+                    })
                 });
             }
             else {
@@ -241,9 +261,12 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                 }
                 feed.numLikes += 1;
                 var updates = {};
+                updates["users/data/"+$scope.myUid+'/likedBlogs/'+feed.blog_id] = true;
                 updates["blogs/" + feed.blog_id + "/likedBy/" + $scope.myUid] = true;
                 db.ref().update(updates).then(function () {
-                    $("#" + feed.blog_id + "-likeFeed").addClass("clicked");
+                    $timeout(function () {
+                        feed.liked = true;
+                    }, 0);
                 });
             }
             db.ref("blogs/"+feed.blog_id+"/likedBy").on("value", function(snap){

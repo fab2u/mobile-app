@@ -13,6 +13,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
     $scope.cityId = $stateParams.cityId;
     $scope.blogIdList = {};
     $scope.blogArr = [];
+    $scope.dataLoaded = false;
 
     var count = 0;
 
@@ -95,17 +96,28 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
         }
         else if (Object.keys($scope.blogIdList).length == 0) {
             db.ref("cityBlogs/" + $scope.cityId + "/blogs").limitToLast(5).once('value', function (snapshot) {
-                $ionicLoading.hide();
-                $scope.blogIdList = snapshot.val();
-                $scope.bottomKey = Object.keys($scope.blogIdList)[0];
-                $scope.topKey = Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1];
-                $scope.blogLength = Object.keys($scope.blogIdList).length;
-                for (var i in $scope.blogIdList) {
-                    // console.log(i); // i is the key of blogs object or the id of each blog
-                    blogAlgo(i);
+                if(snapshot.val()){
+                    $scope.blogIdList = snapshot.val();
+                    $scope.bottomKey = Object.keys($scope.blogIdList)[0];
+                    $scope.topKey = Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1];
+                    $scope.blogLength = Object.keys($scope.blogIdList).length;
+                    for (var i in $scope.blogIdList) {
+                        blogAlgo(i);
+                    }
+                    $scope.dataLoaded = true;
+                    $ionicLoading.hide();
                 }
-                $timeout(function () {
-                }, 0);
+                else{
+                    $scope.dataLoaded = true;
+                    $ionicLoading.hide();
+                    $cordovaToast
+                        .show('No feeds available!', 'long', 'center')
+                        .then(function(success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
             })
         }
     }
@@ -129,6 +141,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
                 if(single_blog.likedBy) {
                     single_blog['numLikes'] = Object.keys(single_blog.likedBy).length;
                 }
+                single_blog.liked = false;
                 checkFollowOrFollowerUser(single_blog,i);
                 $scope.blogArr.push(single_blog);
             }
@@ -150,8 +163,8 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
                 if(single_blog.likedBy){
                     if($scope.uid in single_blog.likedBy){
                         $timeout(function () {
-                            $("#"+i+"-likeFeed").addClass("clicked");
-                        }, 100);
+                           single_blog.liked = true;
+                        },0);
                     }
                 }
                 db.ref("users/data/"+single_blog.user.user_id).once("value", function(snap){
@@ -302,10 +315,14 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
     $scope.likeThisFeed = function (feed) {
         $ionicLoading.show();
         if($scope.uid) {
-            if ($("#" + feed.blog_id + "-likeFeed").hasClass('clicked')) {
+            if (feed.liked) {
                 feed.numLikes -= 1;
-                db.ref("blogs/" + feed.blog_id + "/likedBy/" + $scope.uid).remove().then(function () {
-                    $("#" + feed.blog_id + "-likeFeed").removeClass("clicked");
+                db.ref("blogs/"+feed.blog_id+"/likedBy/"+$scope.uid).remove().then(function(){
+                    db.ref("users/data/"+$scope.uid+'/likedBlogs/'+feed.blog_id).remove().then(function () {
+                        $timeout(function(){
+                            feed.liked = false;
+                        },0);
+                    })
                 });
             }
             else {
@@ -314,9 +331,12 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
                 }
                 feed.numLikes += 1;
                 var updates = {};
+                updates["users/data/"+$scope.myUid+'/likedBlogs/'+feed.blog_id] = true;
                 updates["blogs/" + feed.blog_id + "/likedBy/" + $scope.uid] = true;
                 db.ref().update(updates).then(function () {
-                    $("#" + feed.blog_id + "-likeFeed").addClass("clicked");
+                    $timeout(function () {
+                        feed.liked = true;
+                    },0)
                 });
             }
             db.ref("blogs/" + feed.blog_id + "/likedBy").on("value", function (snap) {

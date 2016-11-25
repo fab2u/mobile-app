@@ -76,7 +76,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 	$scope.loadMore = function(){
 		$ionicLoading.show();
 		if(Object.keys($scope.blogIdList).length == 0){
-			db.ref("blogs").limitToLast(25).once('value', function(snapshot){
+			db.ref("blogs").limitToLast(5).once('value', function(snapshot){
 				$ionicLoading.hide();
 				$scope.blogIdList = snapshot.val();
 				$scope.bottomKey = Object.keys($scope.blogIdList)[0];
@@ -88,7 +88,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 			})
 		}
 		else if(Object.keys($scope.blogIdList).length > 0){
-			db.ref("blogs").orderByKey().limitToFirst(26).endAt($scope.bottomKey)
+			db.ref("blogs").orderByKey().limitToFirst(6).endAt($scope.bottomKey)
 				.once("value", function(snap){
 				if(snap.numChildren() == 1){
 					$ionicLoading.hide();

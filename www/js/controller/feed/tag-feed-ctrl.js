@@ -60,7 +60,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
 	$scope.loadMore = function(){
         $ionicLoading.show();
 		if(Object.keys($scope.blogIdList).length > 0){
-			db.ref("tags/"+$scope.tagName+"/blogs").orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){
+			db.ref("tags/"+$scope.tagName+"/blogs").orderByKey().limitToFirst(6).endAt($scope.bottomKey).once("value", function(snap){
 				if(snap.numChildren() == 1){
 					$scope.moreMessagesScroll = false;
                     $ionicLoading.hide();
@@ -79,7 +79,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
 			});
 		}
 		else if(Object.keys($scope.blogIdList).length == 0){
-			db.ref('tags').child($scope.tagName).child("blogs").limitToLast(25).once('value', function(snapshot){
+			db.ref('tags').child($scope.tagName).child("blogs").limitToLast(5).once('value', function(snapshot){
 				$ionicLoading.hide();
 				$scope.blogIdList = snapshot.val();
                 if(snapshot.val()){

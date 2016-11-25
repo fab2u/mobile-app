@@ -73,7 +73,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
     $scope.loadMore = function () {
         $ionicLoading.show();
         if (Object.keys($scope.blogIdList).length > 0) {
-            db.ref("cityBlogs/" + $scope.cityId + "/blogs").orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function (snap) {
+            db.ref("cityBlogs/" + $scope.cityId + "/blogs").orderByKey().limitToFirst(6).endAt($scope.bottomKey).once("value", function (snap) {
                 if (snap.numChildren() == 1) {
                     $scope.moreMessagesScroll = false;
                     $ionicLoading.hide();
@@ -94,7 +94,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
             });
         }
         else if (Object.keys($scope.blogIdList).length == 0) {
-            db.ref("cityBlogs/" + $scope.cityId + "/blogs").limitToLast(25).once('value', function (snapshot) {
+            db.ref("cityBlogs/" + $scope.cityId + "/blogs").limitToLast(5).once('value', function (snapshot) {
                 $ionicLoading.hide();
                 $scope.blogIdList = snapshot.val();
                 $scope.bottomKey = Object.keys($scope.blogIdList)[0];

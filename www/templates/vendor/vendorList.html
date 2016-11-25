@@ -30,27 +30,27 @@
                     <img ng-src="{{vendor.mainImage || 'img/vendorImage.jpeg'}}" class="pkg-img">
                 </div>
                 <div id="part2" class="col-67">
-                    <div class="row">
+                    <div class="row" style="line-height: 0px;">
                         <div class="col-50">
                             <p id="f_13">
                                 <i class="icon ion-ios-location c-location-icon"
                                    ng-click="open_map(vendor.address.latitude,vendor.address.longitude,vendor.address.address1,vendor.address.address2,vendor.vendorName)">
                                 </i>{{vendor.distance| number : 2}} Km
-                            </p>
-                            &nbsp;
+                            </p>&nbsp;
                         </div>
                         <div class="col-50" ng-click="vendor_menu(vendor.vendorId)">
                             <p id="vendor_type">{{vendor.vendorType}}</p>
                         </div>
                     </div>
-                    <div class="row" id="m_t" ng-click="vendor_menu(vendor.vendorId)">
+                    <div class="row" >
+                        <p style=" color: #12BABA; font-size: 14px;font-weight: 600;" ng-if="vendor.discount.length>0">
+                         {{vendor.discount}}
+                        </p>
+                    </div>
+                    <div class="row" ng-click="vendor_menu(vendor.vendorId)">
                         <div class="col">
                             <p id="f_15">{{vendor.vendorName}}</p>
                             <p id="land_mark">{{vendor.address.landmark}}</p>
-                            <p>
-                                <span ng-if="vendor.discount.length>0 ">Discount up to {{vendor.discount}}</span>
-                                <span ng-if="vendor.label.length>0 ">on {{vendor.label}} </span>
-                            </p>
                         </div>
                     </div>
                 </div>

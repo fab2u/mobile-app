@@ -76,7 +76,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
     $scope.loadMore = function(){
         $ionicLoading.show()
         if(Object.keys($scope.blogIdList).length > 0){
-            db.ref("users/data/"+followId+"/blogs").orderByKey().limitToFirst(25).endAt($scope.bottomKey).once("value", function(snap){
+            db.ref("users/data/"+followId+"/blogs").orderByKey().limitToFirst(5).endAt($scope.bottomKey).once("value", function(snap){
                 if(snap.numChildren() == 1){
                     $scope.moreMessagesScroll = false;
                     $ionicLoading.hide();
@@ -97,7 +97,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
             })
         }
         else if(Object.keys($scope.blogIdList).length == 0){
-            db.ref("users/data/"+followId +"/blogs").limitToLast(25).once("value", function(snapshot){
+            db.ref("users/data/"+followId +"/blogs").limitToLast(5).once("value", function(snapshot){
                 $scope.blogIdList = snapshot.val();
                 if($scope.blogIdList !== null){
                     $scope.bottomKey = Object.keys($scope.blogIdList)[0];

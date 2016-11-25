@@ -4,6 +4,7 @@ app.controller('VendorDetailsCtrl',
 
         $scope.vendorId = $stateParams.ven_id;
         $scope.images =[];
+        $scope.dataLoaded = false;
         $scope.reviewerName = '';
         $scope.reviewerImage = '';
         $scope.selectedServices = {};
@@ -183,9 +184,11 @@ app.controller('VendorDetailsCtrl',
                     for (key in $scope.reviews) {
                         $scope.review_info.push($scope.reviews[key]);
                     }
+                    $scope.dataLoaded = true;
                     $ionicLoading.hide();
                 }
                 else {
+                    $scope.dataLoaded = true;
                     $scope.reviews = '';
                     $ionicLoading.hide();
                 }

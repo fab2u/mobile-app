@@ -15,36 +15,49 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
       firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
          db.ref().child("users").child("data").child(user.uid).on("value", function (snapshot) {
             console.log(snapshot.val());
-            window.localStorage.setItem("name", snapshot.val().name);
-            window.localStorage.setItem("mobileNumber", snapshot.val().mobile.mobileNum);
-            window.localStorage.setItem("email", email);
-            window.localStorage.setItem("uid", user.uid);
-            if(localStorage.getItem('confirmation') == 'true'){
-               localStorage.setItem('confirmation', '');
-               $cordovaToast
-                   .show('Logged in successfully!', 'long', 'center')
-                   .then(function(success) {
-                      // success
-                   }, function (error) {
-                      // error
-                   });
-               $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-               $ionicLoading.hide();
-               $state.go('confirmation');
+            if(snapshot.val()){
+               window.localStorage.setItem("name", snapshot.val().name);
+               window.localStorage.setItem("mobileNumber", snapshot.val().mobile.mobileNum);
+               window.localStorage.setItem("email", email);
+               window.localStorage.setItem("uid", user.uid);
+               if(localStorage.getItem('confirmation') == 'true'){
+                  localStorage.setItem('confirmation', '');
+                  $cordovaToast
+                      .show('Logged in successfully!', 'long', 'center')
+                      .then(function(success) {
+                         // success
+                      }, function (error) {
+                         // error
+                      });
+                  $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
+                  $ionicLoading.hide();
+                  $state.go('confirmation');
+               }
+               else{
+                  $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
+
+                  $cordovaToast
+                      .show('Logged in successfully!', 'long', 'center')
+                      .then(function(success) {
+                         // success
+                      }, function (error) {
+                         // error
+                      });
+                  $ionicLoading.hide();
+                  $state.go('app.home');
+               }
             }
             else{
-               $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-
+               $ionicLoading.hide();
                $cordovaToast
-                   .show('Logged in successfully!', 'long', 'center')
+                   .show('User not found. Please signup to continue.', 'long', 'center')
                    .then(function(success) {
                       // success
                    }, function (error) {
                       // error
                    });
-               $ionicLoading.hide();
-               $state.go('app.home');
             }
+
          });
       }).catch(function(error) {
          $ionicLoading.hide();

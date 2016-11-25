@@ -227,7 +227,12 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
             $timeout(function(){
                 var locationInfo = snapshot.val();
                 window.localStorage['selectedLocation'] = JSON.stringify(locationInfo);
-                registerDevice();
+                if($scope.oldUser){
+                    registerDeviceOldUser()
+                }
+                else{
+                    registerDevice();
+                }
             },200);
         });
     }
@@ -261,6 +266,35 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
 
 
     function registerDevice() {
+        if (window.cordova) {
+            try {
+                var deviceInformation = $cordovaDevice.getDevice();
+                appInfoNew.udid = deviceInformation.serial;
+                appInfoNew.uuid = deviceInformation.uuid;
+                appInfoNew.os = "1";
+                appInfoNew.platform = deviceInformation.platform;
+                appInfoNew.version = deviceInformation.version;
+                appInfoNew.model = deviceInformation.model;
+                appInfoNew.manufacture = deviceInformation.manufacturer;
+                appInfoNew.device = "cordova";
+            } catch (e) {
+                console.log("error",e.message);
+                appInfoNew.error = e.message;
+                appInfoNew.device = "errorCordova";
+            };
+        } else {
+            appInfoNew.device = "notCordova";
+            appInfoNew.error = "not cordova";
+        };
+        window.localStorage['appInfoNew'] = JSON.stringify(appInfoNew);
+        if($scope.oldUser){
+            $state.go('location');
+        }else{
+            $state.go('intro-slider');
+        }
+    }
+
+    function registerDeviceOldUser() {
         if (window.cordova) {
             try {
                 var deviceInformation = $cordovaDevice.getDevice();

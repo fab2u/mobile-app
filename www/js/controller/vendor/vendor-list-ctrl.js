@@ -7,7 +7,7 @@ app.controller('VendorListCtrl',
             $ionicLoading.hide();
         }, 10000);
         var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
-        $scope.limit= 7;
+        $scope.limit= 4;
         $scope.sortValue = 'distance';
         $scope.active_button1 = false;
         $scope.active_button2 = false;
@@ -154,7 +154,7 @@ app.controller('VendorListCtrl',
                 }
                 if (filters.type) {
                     for (key in response) {
-                        if (response[key].vendorType === filters.type) {
+                        if ((response[key].vendorType).toLowerCase() === filters.type) {
                             response[key].show = true;
                         } else {
                             response[key].show = false;
@@ -162,9 +162,10 @@ app.controller('VendorListCtrl',
                     }
                 }
                 if (filters.gender) {
+                    console.log(filters.gender)
                     for (key in response) {
                         if(response[key].show){
-                            if ((response[key].gender == filters.gender) || (response[key].gender == 'unisex')) {
+                            if (((response[key].gender).toLowerCase() == filters.gender) || ((response[key].gender).toLowerCase() == 'unisex')) {
                                 response[key].show = true;
                             } else {
                                 response[key].show = false;
@@ -408,7 +409,7 @@ app.controller('VendorListCtrl',
         /////////////////////////Load more vendors ///////////////////////
 
         $scope.loadMore = function(){
-            $scope.limit = $scope.limit+7;
+            $scope.limit = $scope.limit+4;
             var vendorListLength = $scope.bindedVendors.length;
             if(vendorListLength<$scope.limit){
                 $scope.isDisabled = true;

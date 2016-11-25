@@ -16,8 +16,10 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 	backButtonVisibility();
 
 	function getCityList() {
+		console.log("dddd")
 		$ionicLoading.show();
 		LocationService.getAllCity().then(function (result) {
+			console.log(result)
 			if(result){
 				$scope.cityList = result;
 				$ionicLoading.hide();
@@ -65,6 +67,7 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 	};
 
 	$scope.location_selected = function(val){
+		console.log(window.localStorage['selectedLocation'])
 		var selectedLocation = JSON.parse(window.localStorage['selectedLocation'] || '{}');
 		selectedLocation.cityId = val.cityId;
 		selectedLocation.cityName	= val.cityName;

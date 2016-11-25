@@ -178,10 +178,8 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
 
 
         $scope.likeFeeds = function(){
+            $scope.blogArr = [];
             $ionicLoading.show();
-            console.log($scope.likeBlogIds)
-            console.log($scope.totalLikes)
-
             if($scope.likeBlogIds){
                 $scope.blogLength = Object.keys($scope.likeBlogIds).length;
                 count1 = 0;

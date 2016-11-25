@@ -8,6 +8,8 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 	$scope.blogLength = 0;
 	var count = 0;
 	$scope.blogArr = [];
+	$scope.moreMessagesScroll = true;
+	$scope.moreMessagesRefresh = true;
 	$scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
 	$scope.dataLoaded = false;
 	$scope.blogIdList = {};

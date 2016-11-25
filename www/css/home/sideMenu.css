@@ -41,6 +41,11 @@
 
 }
 
+#side-menu #login-icon {
+	color: #ff8386;
+	padding: 0 8px 0 6px;
+}
+
 #side-menu .side-menu-header h1 {
 	color:#fff;
 }

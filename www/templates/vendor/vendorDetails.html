@@ -98,7 +98,7 @@
 			</ion-slide>
 			<ion-slide>
 			    <div class="gallery">
-			    	<div class="row allImages" ng-repeat="image in images|limitTo:4" ng-if="$index % 2 === 0">
+			    	<div class="row allImages" ng-repeat="image in images" ng-if="$index % 2 === 0">
 				        <div class="col col-50" ng-if="$index < images.length" ng-click="goToSlide($index)">
 				            <img ng-src="{{images[$index].src}}" width="100%" />
 				        </div>
@@ -112,7 +112,7 @@
 			    </div>
 			</ion-slide>
 			<ion-slide>
-			    <div class="Reviews" ng-show="reviews">
+			    <div class="Reviews" ng-show="dataLoaded">
 			    	<div class="card ratingCard" ng-repeat="review in review_info| orderBy: 'ReviewDate'" ng-show="reviews">
 			    		<div class="row">
 				    		<div class="col col-20 imgNname">
@@ -133,7 +133,7 @@
 				    		</div>
 			    		</div>
 			    	</div>
-					<div class="card ratingCard" ng-hide="reviews">
+					<div class="card text-center ratingCard" ng-hide="reviews">
 						No,review found
 					</div>
 			    </div>

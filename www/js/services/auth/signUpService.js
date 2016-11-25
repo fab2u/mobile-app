@@ -1,8 +1,9 @@
-app.factory('signUpService', function ($q,$ionicLoading,$rootScope) {
+app.factory('signUpService', function ($q,$ionicLoading,$cordovaToast,$rootScope) {
     return {
         signUp: function(email,password,name){
             return $q(function (resolve,reject) {
                 firebase.auth().createUserWithEmailAndPassword(email,password).then(function(data){
+                    console.log(data)
                     $ionicLoading.hide();
                     var user = firebase.auth().currentUser;
                     user.updateProfile({
@@ -16,6 +17,7 @@ app.factory('signUpService', function ($q,$ionicLoading,$rootScope) {
                 }, function (error) {
                     reject(error);
                     $ionicLoading.hide();
+                    console.log(error)
                     var errorCode = error.code;
                     var errorMessage = error.message;
                     if (errorCode == 'auth/email-already-in-use') {

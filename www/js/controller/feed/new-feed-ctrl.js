@@ -150,61 +150,108 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
 
             }
             else if($scope.feed.introduction && $scope.image_url){
-                if($scope.feed.introduction.substring(0, 1) == '#'){
-                    var newBlogKey = db.ref().child("blogs").push().key;
-                    blogData = {
-                        blog_id: newBlogKey,
-                        introduction: $scope.feed.introduction,
-                        photoUrl:$scope.image_url,
-                        user: {
-                            user_name: $scope.uname,
-                            user_id: localStorage.getItem("uid"),
-                            user_email: localStorage.getItem("email")
-                        },
-                        active: true,
-                        created_time: new Date().getTime(),
-                        city_id: locDetails.cityId,
-                        city_name: locDetails.cityName
-                    };
-                    var re = /#(\w+)(?!\w)/g, hashTag, tagsValue = [];
-                    while (hashTag = re.exec($scope.feed.introduction)) {
-                        tagsValue.push(hashTag[1]);
-                    }
-                    // blog object update without tags, functional
-                    var updateBlog = {};
-                    updateBlog['/blogs/' + newBlogKey] = blogData;
-                    updateBlog['/cityBlogs/'+blogData.city_id+"/blogs/"+newBlogKey] = true;
-                    db.ref().update(updateBlog);
-                    for(var i=0; i<tagsValue.length; i++){
-                        var tagsData = db.ref().child("tags").child(tagsValue[i]);
-                        var tag_blog =  tagsData.child("blogs");
-                        var obj = {};
-                        obj[newBlogKey] = true;
-                        console.log(obj);
-                        tag_blog.update(obj);
 
-                        var updates = {};
-                        updates['/blogs/'+newBlogKey+'/tags/' + tagsValue[i]] = true;
-                        db.ref().update(updates);
-                    }
-                    // user object update, functional
-                    var authUpdate = {};
-                    authUpdate['/users/data/'+ blogData.user.user_id+ '/blogs/' + newBlogKey] = true;// alert('4');
-                    db.ref().update(authUpdate).then(function(){
-                        $timeout(function () {
-                            $location.path("/feed");
-                        }, 0);
-                    });
+                var newBlogKey = db.ref().child("blogs").push().key;
+                blogData = {
+                    blog_id: newBlogKey,
+                    introduction: $scope.feed.introduction,
+                    photoUrl:$scope.image_url,
+                    user: {
+                        user_name: $scope.uname,
+                        user_id: localStorage.getItem("uid"),
+                        user_email: localStorage.getItem("email")
+                    },
+                    active: true,
+                    created_time: new Date().getTime(),
+                    city_id: locDetails.cityId,
+                    city_name: locDetails.cityName
+                };
+                var re = /#(\w+)(?!\w)/g, hashTag, tagsValue = [];
+                while (hashTag = re.exec($scope.feed.introduction)) {
+                    tagsValue.push(hashTag[1]);
                 }
-                else{
-                    $cordovaToast
-                        .show('Please add # in your description.', 'long', 'center')
-                        .then(function(success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
+                // blog object update without tags, functional
+                var updateBlog = {};
+                updateBlog['/blogs/' + newBlogKey] = blogData;
+                updateBlog['/cityBlogs/'+blogData.city_id+"/blogs/"+newBlogKey] = true;
+                db.ref().update(updateBlog);
+                for(var i=0; i<tagsValue.length; i++){
+                    var tagsData = db.ref().child("tags").child(tagsValue[i]);
+                    var tag_blog =  tagsData.child("blogs");
+                    var obj = {};
+                    obj[newBlogKey] = true;
+                    console.log(obj);
+                    tag_blog.update(obj);
+
+                    var updates = {};
+                    updates['/blogs/'+newBlogKey+'/tags/' + tagsValue[i]] = true;
+                    db.ref().update(updates);
                 }
+                // user object update, functional
+                var authUpdate = {};
+                authUpdate['/users/data/'+ blogData.user.user_id+ '/blogs/' + newBlogKey] = true;// alert('4');
+                db.ref().update(authUpdate).then(function(){
+                    $timeout(function () {
+                        $location.path("/feed");
+                    }, 0);
+                });
+
+                //
+                // if($scope.feed.introduction.substring(0, 1) == '#'){
+                //     var newBlogKey = db.ref().child("blogs").push().key;
+                //     blogData = {
+                //         blog_id: newBlogKey,
+                //         introduction: $scope.feed.introduction,
+                //         photoUrl:$scope.image_url,
+                //         user: {
+                //             user_name: $scope.uname,
+                //             user_id: localStorage.getItem("uid"),
+                //             user_email: localStorage.getItem("email")
+                //         },
+                //         active: true,
+                //         created_time: new Date().getTime(),
+                //         city_id: locDetails.cityId,
+                //         city_name: locDetails.cityName
+                //     };
+                //     var re = /#(\w+)(?!\w)/g, hashTag, tagsValue = [];
+                //     while (hashTag = re.exec($scope.feed.introduction)) {
+                //         tagsValue.push(hashTag[1]);
+                //     }
+                //     // blog object update without tags, functional
+                //     var updateBlog = {};
+                //     updateBlog['/blogs/' + newBlogKey] = blogData;
+                //     updateBlog['/cityBlogs/'+blogData.city_id+"/blogs/"+newBlogKey] = true;
+                //     db.ref().update(updateBlog);
+                //     for(var i=0; i<tagsValue.length; i++){
+                //         var tagsData = db.ref().child("tags").child(tagsValue[i]);
+                //         var tag_blog =  tagsData.child("blogs");
+                //         var obj = {};
+                //         obj[newBlogKey] = true;
+                //         console.log(obj);
+                //         tag_blog.update(obj);
+                //
+                //         var updates = {};
+                //         updates['/blogs/'+newBlogKey+'/tags/' + tagsValue[i]] = true;
+                //         db.ref().update(updates);
+                //     }
+                //     // user object update, functional
+                //     var authUpdate = {};
+                //     authUpdate['/users/data/'+ blogData.user.user_id+ '/blogs/' + newBlogKey] = true;// alert('4');
+                //     db.ref().update(authUpdate).then(function(){
+                //         $timeout(function () {
+                //             $location.path("/feed");
+                //         }, 0);
+                //     });
+                // }
+                // else{
+                //     $cordovaToast
+                //         .show('Please add # in your description.', 'long', 'center')
+                //         .then(function(success) {
+                //             // success
+                //         }, function (error) {
+                //             // error
+                //         });
+                // }
             }
         }
         else{

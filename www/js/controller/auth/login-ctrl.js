@@ -1,11 +1,17 @@
-app.controller('LoginCtrl',function($scope, AuthenticationService, $ionicPopup){
+app.controller('LoginCtrl',function($scope,$state, AuthenticationService, $ionicPopup){
 	AuthenticationService.Logout();
 	$scope.user = {
       user_email: '',
       user_password: ''
     };
     $scope.back = function () {
-        history.back();
+        if(localStorage.getItem('confirmation') == 'true'){
+            localStorage.setItem('confirmation', '');
+            $state.go('confirmation');
+        }
+        else{
+            $state.go('app.home')
+        }
     };
 
 	$scope.loginEmail = function(){

@@ -37,15 +37,18 @@
                              class="selected-bar">
                         </div>
                         <span class="serviceList-gender"
-                              ng-show="y.male == true && y.female==undefined">
+                              ng-show="y.male == true && y.female==undefined && y.kids == undefined">
                                     {{y.menuItemName}}&nbsp;<span>(Male)</span>
                                 </span>
-                        <span class="serviceList-gender" ng-show="y.female == true && y.male==undefined">
+                        <span class="serviceList-gender" ng-show="y.female == true && y.male==undefined && y.kids == undefined">
                                     {{y.menuItemName}}&nbsp;<span>(Female)</span>
                                 </span>
-                        <span class="serviceList-gender" ng-show="y.female == true && y.male ==true">
+                        <span class="serviceList-gender" ng-show="y.female == true && y.male ==true && y.kids == undefined">
                                     {{y.menuItemName}}&nbsp;<span>(Unisex)</span>
-                                </span>
+                        </span>
+                        <span class="serviceList-gender" ng-show="y.female == undefined && y.male ==undefined && y.kids == true">
+                                    {{y.menuItemName}}&nbsp;<span>(Kids)</span>
+                        </span>
                     </div>
                     <div class="col col-40 p-15 price-view"
                          ng-if="y.vendorPrice != y.customerPrice">

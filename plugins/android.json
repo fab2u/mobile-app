@@ -1,0 +1,49 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.fab2u"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.fab2u"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.fab2u"
+        },
+        "cordova-plugin-velda-devicefeedback": {
+            "PACKAGE_NAME": "com.fab2u"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.fab2u"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "com.fab2u"
+        },
+        "cordova-plugin-fcm": {
+            "PACKAGE_NAME": "com.fab2u"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.fab2u"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.fab2u"
+        },
+        "uk.co.workingedge.phonegap.plugin.launchnavigator": {
+            "PACKAGE_NAME": "com.fab2u"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.fab2u"
+        },
+        "cordova-plugin-actionsheet": {
+            "PACKAGE_NAME": "com.fab2u"
+        }
+    }
+}

@@ -1,0 +1,79 @@
+<ion-view class="fabFeed" cache-view="false">
+	<ion-header-bar align-title="center" class="bar-dark" title="FABBOOK" ng-click="goBack()">
+      <a class="button icon ion-ios-home button-clear"></a>
+      <h1 class="title">FAB BOOK</h1>
+   </ion-header-bar>
+	<ion-floating-button click="createNew()" has-footer="false" button-color="#0DD1D1"
+						 icon="ion-camera" icon-color="#fff"></ion-floating-button>
+	<ion-content class="has-header" ng-show="dataLoaded">
+      <div class="row tab-row">
+         <a href="#/user/{{uid}}" class="col text-center center-tab">
+			 <img class="fab-book-header-img" ng-src="img/fabbook-header/profile.png"/>
+			 <p>Profile</p>
+		 </a>
+         <a href="#/feed" class="col active-tab text-center center-tab">
+			 <img class="fab-book-header-img" ng-src="img/fabbook-header/fabbook_fill.png"/>
+			 <p>Posts</p>
+		 </a>
+         <a href="#/nearme/{{cityId}}" class="col text-center center-tab">
+			 <img class="fab-book-header-img" ng-src="img/fabbook-header/Nearby.png"/>
+			 <p>Near Me</p>
+		 </a>
+      </div>
+		<ion-refresher pulling-text="Loading New Feed" on-refresh="doRefresh()"></ion-refresher>
+		<div class="feeds" ng-repeat="feed in blogArr | orderBy:'-created_time'">
+			<div class="upper-row">
+				<div class="row">
+					<div class="col col-20">
+		            <img class="user_icon img-circle" id="{{feed.blog_id}}"
+						 ng-src="{{feed.profilePic || 'img/person.jpg'}}" width="40" height="40"/>
+					</div>
+					<div class="col col-55">
+						<p class="feed-name"><a href="#/user/{{feed.user.user_id}}">
+							{{feed.user.user_name}}</a> | {{feed.created_time | date:'d MMM yy'}}</p>
+						<p class="feed-city"><i class="ion ion-location"></i> {{feed.city_name}}</p>
+					</div>
+					<div class="col col-25 follow-wrap">
+						<span class="follow-btn {{feed.user.user_id}}-follow"
+							  ng-click="followUser(feed.user.user_id)">Follow</span>
+						<span class="unfollow-btn {{feed.user.user_id}}-unfollow"
+							   ng-click="unfollowUser(feed.user.user_id)">Unfollow</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col col-20"></div>
+					<div class="col col-80">
+						<p ng-bind-html="toTrustedHTML(feed.introduction)" class="feed-introduction"></p>
+					</div>
+				</div>
+			</div>
+			<img ng-src="{{feed.photoUrl}}" class="feed-img" ng-click="showImage(feed.photoUrl)">
+			<div class="row upper-row1">
+				<div class="col col-20 likenum">
+					<i class="like-btn icon ion-heart" ng-class="feed.liked?'clicked':'normal'"
+					   ng-click="likeThisFeed(feed)"></i>
+					<span>{{feed.numLikes || 0}} likes</span>
+				</div>
+				<div class="col col-40 likenum">
+					<i class="comment-btn icon ion-ios-chatbubble"
+					   ng-click="commentPost(feed.blog_id)"></i>
+					<span ng-click="commentToggle(feed.blog_id)">{{feed.commentCount || 0}} comments</span>
+				</div>
+			</div>
+			<div id="{{feed.blog_id}}-commentsBlock" class="initiallyHidden">
+				<ion-list>
+					<ion-item class="item_view" ng-repeat="comment in feed.commentsArr">
+						<div class="row">
+							<div class="col-67 comment-name comment-user-name">{{comment.userName}}</div>
+							<div class="col-33">{{comment.created_time |  date:'MM/dd/yyyy @ h:mma'}}</div>
+						</div>
+						<div class="row">{{comment.comment}}</div>
+					</ion-item>
+				</ion-list>
+			</div>
+		</div>
+		<div ng-hide="moreMessagesScroll" class="feedend">You are at the end of the feed</div>
+		<ion-infinite-scroll ng-if="moreMessagesScroll" immediate-check="false" on-infinite="loadMore()"
+							 distance="1%"> </ion-infinite-scroll>
+	</ion-content>
+</ion-view>

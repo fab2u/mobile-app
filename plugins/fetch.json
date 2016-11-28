@@ -1,0 +1,117 @@
+{
+    "cordova-plugin-camera": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-camera@~2.2.0"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-compat": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-compat"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/apache/cordova-plugin-whitelist.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-device": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-device"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-x-socialsharing": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-dialogs"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "cordova-plugin-globalization": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-globalization"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "cordova-plugin-velda-devicefeedback": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-velda-devicefeedback"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-inappbrowser": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-inappbrowser@1.5.0"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-fcm": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-fcm"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-x-toast": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-splashscreen": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-splashscreen@4.0.0"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": {
+        "source": {
+            "type": "registry",
+            "id": "uk.co.workingedge.phonegap.plugin.launchnavigator"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-actionsheet": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-actionsheet"
+        },
+        "is_top_level": false,
+        "variables": {}
+    }
+}

@@ -1,0 +1,59 @@
+<ion-view id="signupform" scroll="false">
+    <ion-content>
+        <button class="button button-dark button-small icon ion-chevron-left" id="backbutton"
+                ng-click="loginPage()"></button>
+        <form name="signupForm">
+            <div id="detailsform">
+                <center>
+                    <img src="img/fab2u.png" width=50%; height=50%>
+                </center>
+                <div class="create" style="">
+                    <center>
+                        <h5> CREATE YOUR ACCOUNT </h5>
+                    </center>
+                </div>
+                <div>
+                    <center>
+                        <h6> Explore the World of Fab2u </h6>
+                    </center>
+                </div>
+                <div class="card c1">
+                    <div class="item item-text-wrap c1">
+                        <div class="list">
+                            <label class="item item-input c1">
+                                <input type="text" placeholder="Enter Your Name" ng-model="user.name" required>
+                            </label>
+                            <label class="item item-input c1">
+                                <input type="email" placeholder="Email like abc@gmail.com" ng-model="user.email"
+                                       required>
+                            </label>
+                            <label class="item item-input c1">
+                                <input type="text" placeholder="Mobile number" ng-model="user.mobile_num" required>
+                            </label>
+                            <label class="item item-input c1">
+                                <input type="password" placeholder="Password" ng-model="user.password" required>
+                            </label>
+                            <div class="row" ng-hide="user_device_register == true">
+                              <div class="col-80">
+                                  <label class="item item-input c1">
+                                      <input type="text" placeholder="Referral Code (Optional)" ng-model="user.referral_code">
+                                  </label>
+                              </div>
+                                <div class="col-20 promo_code">
+                                    <button ng-click="apply_promoCode(user.referral_code)">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <center>
+                <input type="radio" name="gender" value="male" ng-model="user.gender" required> Male
+                <input type="radio" name="gender" value="female" ng-model="user.gender" required> Female
+            </center>
+            <button class="button button-block button-balanced" ng-click="signup()" ng-disabled="signupForm.$invalid">
+                SIGN UP
+            </button>
+        </form>
+    </ion-content>
+</ion-view>

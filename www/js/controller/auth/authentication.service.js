@@ -8,7 +8,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
 
    $timeout(function () {
       $ionicLoading.hide();
-   }, 2000);
+   }, 5000);
 
    function LoginEmail(email,password) {
       $ionicLoading.show();
@@ -108,19 +108,38 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
    function Logout(){
       if(window.localStorage.email && window.localStorage.uid){
          firebase.auth().signOut().then(function() {
-            console.log('Sign-out successful.');
-            delete window.localStorage.email;
-            delete window.localStorage.uid;
-            delete window.localStorage.name;
-            delete window.localStorage.allBookingInfo;
-            delete window.localStorage.mobileNumber;
-            delete window.localStorage.mobile_verify;
+            clearUnUsedLocalStorage();
             console.log("Successfully deleted from localStorage");
             console.log(window.localStorage);
          }, function(error) {
             console.log("error");
          });
       }
+   }
+   function clearUnUsedLocalStorage() {
+      delete window.localStorage.email;
+      delete window.localStorage.uid;
+      delete window.localStorage.name;
+      delete window.localStorage.allBookingInfo;
+      delete window.localStorage.mobileNumber;
+      delete window.localStorage.mobile_verify;
+      delete window.localStorage.slectedItems;
+      delete window.localStorage.catItems;
+      delete window.localStorage.serviceId;
+      delete window.localStorage.chosenTime;
+      delete window.localStorage.vendorName;
+      delete window.localStorage.vendorMobile;
+      delete window.localStorage.vendorLandmark;
+      delete window.localStorage.vendorLandline;
+      delete window.localStorage.vendorId;
+      delete window.localStorage.slectedItem;
+      delete window.localStorage.BegItems;
+      delete window.localStorage.previousOtp;
+      delete window.localStorage.pageName;
+      delete window.localStorage.selectedTab;
+      delete window.localStorage.currentBookingId;
+      delete window.localStorage.mapStorage;
+      delete window.localStorage.VendorServiceListIds;
    }
 
    function checkAuthentication(){

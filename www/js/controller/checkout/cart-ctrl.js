@@ -46,9 +46,10 @@ app.controller("CartCtrl", function ($scope, $rootScope, $stateParams, $cordovaT
     }
 
     $scope.list_changed = function (serv_id, serviceName) {
-        if (($scope.cartItems[serviceName]) && ($scope.selectedServices[serviceName])) {
-            delete $scope.cartItems[serviceName];
-            delete $scope.selectedServices[serviceName];
+        console.log($scope.cartItems,serv_id)
+        if (($scope.cartItems[serv_id]) && ($scope.selectedServices[serv_id])) {
+            delete $scope.cartItems[serv_id];
+            delete $scope.selectedServices[serv_id];
         }
         localStorage.setItem('BegItems', JSON.stringify($scope.cartItems));
         localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));

@@ -31,19 +31,19 @@
                 </div>
                 <div id="y.id " class="item item-text-wrap row"
                      id="custom-servicelist" ng-repeat="y in value"
-                     ng-click="selectItem($index, y.menuItemName,y)">
+                     ng-click="selectItem($index, y.menuItemId,y)">
                     <div class="col col-60 item-text-wrap p-15">
-                        <div ng-show="selectedServices[y.menuItemName]"
+                        <div ng-show="selectedServices[y.menuItemId]"
                              class="selected-bar">
                         </div>
                         <span class="serviceList-gender"
                               ng-show="y.male == true && y.female==undefined">
                                     {{y.menuItemName}}&nbsp;<span>(Male)</span>
                                 </span>
-                        <span class="serviceList-gender" ng-show="y.female == true &&y.male==undefined">
+                        <span class="serviceList-gender" ng-show="y.female == true && y.male==undefined">
                                     {{y.menuItemName}}&nbsp;<span>(Female)</span>
                                 </span>
-                        <span class="serviceList-gender" ng-show="y.female == true&&y.male ==true">
+                        <span class="serviceList-gender" ng-show="y.female == true && y.male ==true">
                                     {{y.menuItemName}}&nbsp;<span>(Unisex)</span>
                                 </span>
                     </div>

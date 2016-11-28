@@ -22,6 +22,11 @@ app.controller('VendorSelectedServicesListCtrl',function(allVendorService,$scope
         $scope.selected_items = JSON.parse(localStorage.getItem('catItems'));
         $scope.vendorId = $stateParams.vendor_id;
 
+
+
+
+    console.log($scope.vendorId)
+
         $timeout(function () {
             $ionicLoading.hide();
         }, 10000);
@@ -195,6 +200,8 @@ app.controller('VendorSelectedServicesListCtrl',function(allVendorService,$scope
         if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
             $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
             $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
+            console.log("hgggggggggggg",$scope.selectedServices,$scope.begItems)
+
             calPrice($scope.begItems);
             $scope.cart_item = _.size($scope.selectedServices);
         }
@@ -207,6 +214,7 @@ app.controller('VendorSelectedServicesListCtrl',function(allVendorService,$scope
             $scope.message = args.message;
             $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
             $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
+            console.log("ssss",$scope.selectedServices,$scope.begItems)
             $scope.cart_item = _.size($scope.selectedServices);
            calPrice($scope.begItems);
         });
@@ -227,12 +235,12 @@ app.controller('VendorSelectedServicesListCtrl',function(allVendorService,$scope
 
         $scope.selectItem = function(index, serviceName,selectObj) {
             var data = selectObj;
-            if(($scope.begItems[data.menuItemName]) && ($scope.selectedServices[serviceName])){
-                delete $scope.begItems[data.menuItemName];
+            if(($scope.begItems[data.menuItemId]) && ($scope.selectedServices[serviceName])){
+                delete $scope.begItems[data.menuItemId];
                 delete $scope.selectedServices[serviceName];
             }
             else {
-                $scope.begItems[data.menuItemName] = data;
+                $scope.begItems[data.menuItemId] = data;
                 $scope.selectedServices[serviceName] = true;
             }
             localStorage.setItem('BegItems', JSON.stringify($scope.begItems));

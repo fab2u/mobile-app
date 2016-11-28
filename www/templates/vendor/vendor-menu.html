@@ -56,12 +56,15 @@
                              ng-if="key == key1">{{value1.serviceName}}</div>
                         <div id="y.id " class="item item-text-wrap row"
                              id="custom-servicelist" ng-repeat="y in value"
-                             ng-click="selectItem($index, y.menuItemName,y)">
+                             ng-click="selectItem($index, y.menuItemId,y)">
 
                             <div class="col col-60 item-text-wrap p-15">
-                                  <div ng-show="selectedServices[y.menuItemName]"
-                                       class="selected-bar">
-                                  </div>
+                                  <!--<div ng-show="selectedServices[y.menuItemName]"-->
+                                       <!--class="selected-bar">-->
+                                  <!--</div>-->
+                                 <div ng-show="selectedServices[y.menuItemId]"
+                                      class="selected-bar">
+                                 </div>
                                 <span class="serviceList-gender"
                                       ng-show="y.male == true && y.female==undefined">
                                     {{y.menuItemName}}&nbsp; <span>(Male)</span>

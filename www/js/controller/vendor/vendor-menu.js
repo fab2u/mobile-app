@@ -321,7 +321,7 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
 
         ///To calculate cart price //////
 
-            $scope.calPrice = function (item_list) {
+           function calPrice(item_list) {
                 $scope.total_fabtu=0;
                 $scope.total_original=0;
                 $scope.total_customer = 0;
@@ -330,30 +330,53 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
                     $scope.total_original += value.vendorPrice;
                     $scope.total_customer += value.customerPrice;
                 })
-            };
+            }
 
             // Get selected services if previously stored in localstorage
-            if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
-                $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
-                $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
-                $scope.cart_item = _.size($scope.selectedServices);
-                $scope.calPrice($scope.begItems);
-            }
-            else{
-                $scope.selectedServices = {};
-                $scope.begItems = {}
-                $scope.cart_item = 0;
-            }
+            // if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
+            //     $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+            //     $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
+            //     $scope.cart_item = _.size($scope.selectedServices);
+            //     $scope.calPrice($scope.begItems);
+            // }
+            // else{
+            //     $scope.selectedServices = {};
+            //     $scope.begItems = {}
+            //     $scope.cart_item = 0;
+            // }
+            //
+            // $rootScope.$on('cart', function (event, args) {
+            //     $scope.message = args.message;
+            //     $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+            //     $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
+            //     $scope.cart_item = _.size($scope.selectedServices);
+            //     $scope.calPrice($scope.begItems);
+            // });
 
-            $rootScope.$on('cart', function (event, args) {
-                $scope.message = args.message;
-                $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
-                $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
-                $scope.cart_item = _.size($scope.selectedServices);
-                $scope.calPrice($scope.begItems);
-            });
+    // Get selected services if previously stored in localstorage
+    if ((localStorage.getItem("slectedItem") != null) && (localStorage.getItem('BegItems'))) {
+        $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+        $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
+        calPrice($scope.begItems);
+        $scope.cart_item = _.size($scope.selectedServices);
+    }
+    else{
+        $scope.selectedServices = {};
+        $scope.begItems = {}
+        $scope.cart_item = 0;
+    }
+    $rootScope.$on('cart', function (event, args) {
+        $scope.message = args.message;
+        $scope.selectedServices = JSON.parse(localStorage.getItem('slectedItem'));
+        $scope.begItems = JSON.parse(localStorage.getItem('BegItems'));
+        $scope.cart_item = _.size($scope.selectedServices);
+        calPrice($scope.begItems);
+    });
 
-            // Notify slide change
+
+
+
+    // Notify slide change
             // @param (int) slide index
             $scope.slideHasChanged = function(index) {
                 tabPositionCenter(index);
@@ -420,20 +443,34 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
 
             }//tabPositionCenter
 
-            $scope.selectItem = function(index, serviceName,selectObj) {
-                var data = selectObj;
-                if(($scope.begItems[data.menuItemName]) && ($scope.selectedServices[serviceName])){
-                    delete $scope.begItems[data.menuItemName];
-                    delete $scope.selectedServices[serviceName];
-                }
-                else {
-                    $scope.begItems[data.menuItemName] = data;
-                    $scope.selectedServices[serviceName] = true;
-                 }
-                localStorage.setItem('BegItems', JSON.stringify($scope.begItems));
-                localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
-                $rootScope.$broadcast('cart', { message: 'cart length changed' });
-            };
+            // $scope.selectItem = function(index, serviceName,selectObj) {
+            //     var data = selectObj;
+            //     if(($scope.begItems[data.menuItemName]) && ($scope.selectedServices[serviceName])){
+            //         delete $scope.begItems[data.menuItemName];
+            //         delete $scope.selectedServices[serviceName];
+            //     }
+            //     else {
+            //         $scope.begItems[data.menuItemName] = data;
+            //         $scope.selectedServices[serviceName] = true;
+            //      }
+            //     localStorage.setItem('BegItems', JSON.stringify($scope.begItems));
+            //     localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
+            //     $rootScope.$broadcast('cart', { message: 'cart length changed' });
+            // };
+    $scope.selectItem = function(index, serviceName,selectObj) {
+        var data = selectObj;
+        if(($scope.begItems[data.menuItemId]) && ($scope.selectedServices[serviceName])){
+            delete $scope.begItems[data.menuItemId];
+            delete $scope.selectedServices[serviceName];
+        }
+        else {
+            $scope.begItems[data.menuItemId] = data;
+            $scope.selectedServices[serviceName] = true;
+        }
+        localStorage.setItem('BegItems', JSON.stringify($scope.begItems));
+        localStorage.setItem('slectedItem', JSON.stringify($scope.selectedServices));
+        $rootScope.$broadcast('cart', { message: 'cart length changed' });
+    };
 
 
 

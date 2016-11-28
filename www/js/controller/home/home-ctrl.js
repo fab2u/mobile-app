@@ -1,4 +1,4 @@
-app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$location,
+app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$location,$cordovaToast,
 								$ionicSlideBoxDelegate,$ionicHistory,allServiceList,homeServices) {
 	$ionicHistory.clearHistory();
 	$ionicHistory.clearCache();
@@ -133,6 +133,7 @@ app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$locatio
 
 	function VendorIdsForSelectedCategory(serviceId) {
 		if(serviceId){
+			console.log("serviceId",serviceId)
 			$scope.finalServiceIds = _.uniq(serviceId)
 			$scope.vendorIds = [];
 			var count = 0;

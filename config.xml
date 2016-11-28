@@ -2,15 +2,16 @@
 <widget id="com.ionicframework.fab2u641617" version="1.1.15" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Fab2u</name>
   <description>
-        An Ionic Framework and Cordova project.
+        FAB2U is a platform that has been designed to simplify all your beauty and wellness needs. We enable customers to find health and beauty treatments options in towns without a glitch.
     </description>
-  <author email="you@example.com" href="http://example.com.com/">
-      Your Name Here
+  <author email="contact@fab2u.com" href="http://fab2u.com/">
+      Team Fab2u
     </author>
   <content src="index.html"/>
   <access origin="*"/>
   <access launch-external="yes" origin="tel:*"/>
   <allow-intent href="*"/>
+  <allow-navigation href="http://fab2u.org/* "/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>

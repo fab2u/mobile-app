@@ -1,0 +1,160 @@
+#cartview #customheader
+{
+    background-color: #3C3C3C;
+    border:2px  #3C3C3C;
+}
+#cartview #customheader a{
+    font-size: 25px;
+    color: #ffffff;
+    margin-top: 5px;
+}
+#cartview #striketextcolor
+{
+    color:white;
+}
+
+#cartview #customheader .edit_icon{
+    margin-left: 15px;
+}
+
+
+#cartview .badge_color
+{
+    color:#000 !important;
+    background-color:#FFFFFF !important;
+}
+
+#cartview #cartbadge
+{
+    position: absolute;
+    top:-20%;
+    right:0%;
+}
+#cartview .cartdetails
+{
+    word-wrap:break-word;
+    font-size: 15px;
+}
+#cartview .list_view{
+    border-bottom: 1px #b9b9b9;
+    border-style: solid;
+    margin-bottom: 10px;
+    padding: 10px 2px;
+}
+
+
+
+#cartview #totalcart
+{
+    background-color:rgb(211,211,211);
+
+    color: #444;
+}
+
+
+#cartview #carttotalprice
+{
+    color:#444;
+
+}
+#cartview #customfooter
+{
+    margin-left: 2%;
+    width: 96%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #FF8385;
+    border: 5px #FF8385;
+    text-align: center;
+}
+
+
+
+
+
+
+#cartview .line-arrow {
+    display: inline-block;
+    font-size: 4px;
+    width: 8px;
+    height: 8px;
+    margin-top: 10px;
+    margin-left: -10px;
+}
+
+#cartview .line-arrow.right {
+    /*border-top: 1px solid red;*/
+    /*border-left: 1px solid red;*/
+    /*transform: rotate(145deg);*/
+    skeborder-top: 0px black;
+    border-left: 0px black;
+    transform: rotate(145deg) skew(20deg);
+}
+
+#cartview strike {
+    color: #444;
+}
+
+#cartview .striked-text {
+    color: #444 !important;
+
+}
+#cartview #customfooter #striketextcolor.button_title{
+    font-size: 16px;
+    line-height: 35px;
+    text-align: center;
+    width: 100%;
+}
+#cartview #customfooter center{
+    width:100%;
+}
+
+.cart-heading{
+    font-size: 16px;
+    padding: 10px 10px;
+    background: #737373;
+    color: #fff;
+    margin: 0 0 10px;
+    font-weight: 700;
+}
+
+.cart-heading .col-20{
+    text-align: center;
+}
+
+#cartview .list_view .col-10 i{
+    font-size: 20px;
+    color:#404040;
+}
+
+#cartview .list_view .col-20{
+   text-align: center;
+    font-size:14px;
+    color:#404040;
+}
+
+#cartview .cartoriginal span{
+    text-decoration: line-through;
+}
+
+.cart-footer{
+    font-size: 16px;
+    padding: 14px 10px !important;
+    background: #737373;
+    color: #fff;
+    font-weight: 700;
+}
+
+.cart-footer .col-20{
+    text-align: center;
+}
+.cart-footer .price-original{
+    text-decoration: line-through;
+    color:#ccc;
+}
+
+#cartview span{
+    font-size: 12px;
+    color:#7f7f7f;
+    display: inline;
+}

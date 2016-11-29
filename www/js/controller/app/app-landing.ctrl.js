@@ -7,8 +7,9 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     $ionicHistory.clearCache();
     $ionicLoading.show();
     $scope.data = {};
+    $scope.oldUserInfo = {};
 
-    var appVersion = 1; ///////version increase when upload over play store //////////
+    var appVersion = 2; ///////version increase when upload over play store //////////
     var appInfoNew = {};
     var updates = {};
 
@@ -48,12 +49,12 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
         });
     };
     checkAppStatus();
-
     function signUpOldUser(){
+         $scope.oldUserInfo = JSON.parse(window.localStorage['appInfo']);
         $ionicLoading.hide();
         $ionicPopup.show({
             template: '<input type="password" ng-model="data.password">',
-            title: 'Set your password',
+            title: 'Email Id:'+$scope.oldUserInfo.custInfo.email,
             subTitle: 'We have found that you have not setup your password yet! Please enter minimum six digit password.',
             scope: $scope,
             buttons: [
@@ -92,7 +93,6 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     function registerOldUser(){
         var oldUserInfo = JSON.parse(window.localStorage['appInfo']);
         signUpService.oldUserSignUp(oldUserInfo, $scope.data.password).then(function(res){
-            console.log("res",res)
             $scope.uid = res;
             oldUserDataRecords(oldUserInfo);
         })

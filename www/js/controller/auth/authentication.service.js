@@ -1,5 +1,5 @@
 app.factory("AuthenticationService", function($http, $location,$rootScope,$state,$cordovaToast,
-                                              $ionicLoading,$timeout){
+                                              $ionicLoading,$timeout,$ionicHistory){
    var service = {};
    service.LoginEmail = LoginEmail;
    service.Logout = Logout;
@@ -20,8 +20,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                window.localStorage.setItem("mobileNumber", snapshot.val().mobile.mobileNum);
                window.localStorage.setItem("email", email);
                window.localStorage.setItem("uid", user.uid);
-               if(localStorage.getItem('confirmation') == 'true'){
-                  localStorage.setItem('confirmation', '');
+               if($ionicHistory.backView().stateName == 'signup'){
                   $cordovaToast
                       .show('Logged in successfully!', 'long', 'center')
                       .then(function(success) {
@@ -31,11 +30,35 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                       });
                   $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
                   $ionicLoading.hide();
-                  $state.go('confirmation');
+                  if($ionicHistory){
+                     if($ionicHistory.viewHistory()){
+                        if($ionicHistory.viewHistory().histories){
+                           if($ionicHistory.viewHistory().histories.root){
+                              if($ionicHistory.viewHistory().histories.root.stack[0]){
+                                 $state.go($ionicHistory.viewHistory().histories.root.stack[0].stateName)
+                              }
+                              else{
+                                 $state.go('app.home')
+                              }
+                           }
+                           else{
+                              $state.go('app.home')
+                           }
+                        }
+                        else{
+                           $state.go('app.home')
+                        }
+                     }
+                     else{
+                        $state.go('app.home')
+                     }
+                  }
+                  else{
+                     $state.go('app.home')
+                  }
                }
                else{
                   $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-
                   $cordovaToast
                       .show('Logged in successfully!', 'long', 'center')
                       .then(function(success) {
@@ -44,7 +67,32 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                          // error
                       });
                   $ionicLoading.hide();
-                  $state.go('app.home');
+                  if($ionicHistory){
+                     if($ionicHistory.viewHistory()){
+                        if($ionicHistory.viewHistory().histories){
+                           if($ionicHistory.viewHistory().histories.root){
+                              if($ionicHistory.viewHistory().histories.root.stack[1]){
+                                 $state.go($ionicHistory.viewHistory().histories.root.stack[1].stateName)
+                              }
+                              else{
+                                 $state.go('app.home')
+                              }
+                           }
+                           else{
+                              $state.go('app.home')
+                           }
+                        }
+                        else{
+                           $state.go('app.home')
+                        }
+                     }
+                     else{
+                        $state.go('app.home')
+                     }
+                  }
+                  else{
+                     $state.go('app.home')
+                  }
                }
             }
             else{

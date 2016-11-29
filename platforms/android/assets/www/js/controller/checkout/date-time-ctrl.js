@@ -211,6 +211,7 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
     /////////////////////Appointment time selected bu user   //////////////////////////
 
   $scope.timeSelected = function(index, id) {
+      $scope.idToBeClear = id;
     for (var key in $scope.timeSlots9To12) {
       if ($scope.timeSlots9To12[key].id != id) {
   /** using jquery to remove the class */
@@ -259,7 +260,8 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
                 // success
               }, function (error) {
                 // error
-              });        }
+              });
+        }
       }
     }
     for (var key in $scope.timeSlots3To6) {
@@ -315,6 +317,15 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
 
   ///////////////////////////////////////////date change  ////////////////////////////////
   $scope.rightArrowClicked = function() {
+
+      $('#'+$scope.idToBeClear).removeClass('selected-time');
+
+      delete window.localStorage.chosenTime;
+      delete window.localStorage.appointmentDate;
+      $scope.active_slot_1 = false;
+      $scope.active_slot_2 = false;
+      $scope.active_slot_3 = false;
+      $scope.active_slot_4 = false;
     $scope.countForward++;
     if ($scope.countForward < 7) {
       var nextDay = new Date();
@@ -349,21 +360,67 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
 
   $scope.leftArrowClicked = function() {
     $scope.countForward = 0;
-    if (($scope.date > (new Date()).getDate()) && ($scope.month >= (new Date()).getMonth())) {
-      var previousDay = new Date();
-      if (previousDay.getMonth() != $scope.month) {
-        previousDay.setMonth($scope.month);
+      delete window.localStorage.chosenTime;
+      delete window.localStorage.appointmentDate;
+      $('#'+$scope.idToBeClear).removeClass('selected-time');
+      $scope.active_slot_1 = false;
+      $scope.active_slot_2 = false;
+      $scope.active_slot_3 = false;
+      $scope.active_slot_4 = false;
+      console.log($scope.date,$scope.month)
+      if($scope.month == new Date().getMonth()){
+          if (($scope.date > (new Date()).getDate())) {
+              var previousDay = new Date();
+              if (previousDay.getMonth() != $scope.month) {
+                  previousDay.setMonth($scope.month);
+              }
+              if (previousDay.getFullYear() != $scope.year) {
+                  previousDay.setFullYear($scope.year);
+              }
+              previousDay.setDate($scope.date - 1);
+              $scope.date = previousDay.getDate();
+              $scope.month = previousDay.getMonth();
+              $scope.year = previousDay.getFullYear();
+              $scope.day = weekday[previousDay.getDay()];
+              $scope.currentMonth = $scope.monthName[$scope.month];
+          }
+          else {
+              $ionicPopup.alert({
+                  title: 'Select Appropriate Date',
+                  template: 'Please select a valid date!'
+              });
+          }
       }
-      if (previousDay.getFullYear() != $scope.year) {
-        previousDay.setFullYear($scope.year);
+      else if($scope.month > new Date().getMonth()){
+          if($scope.date == 1){
+              var dayCount = new Date($scope.year, new Date().getMonth()+1, 0).getDate();
+              $scope.date = dayCount;
+              $scope.month = new Date().getMonth();
+              console.log($scope.month)
+              $scope.year = new Date().getFullYear();
+              console.log($scope.year,$scope.month,$scope.date )
+              $scope.day = weekday[new Date($scope.year,$scope.month, $scope.date).getDay()];
+              $scope.currentMonth = $scope.monthName[$scope.month];
+          }
+          else{
+              var previousDay = new Date();
+              if (previousDay.getMonth() != $scope.month) {
+                  previousDay.setMonth($scope.month);
+              }
+              if (previousDay.getFullYear() != $scope.year) {
+                  previousDay.setFullYear($scope.year);
+              }
+              previousDay.setDate($scope.date - 1);
+              $scope.date = previousDay.getDate();
+              $scope.month = previousDay.getMonth();
+              $scope.year = previousDay.getFullYear();
+              $scope.day = weekday[new Date($scope.year,$scope.month, $scope.date).getDay()];
+              $scope.currentMonth = $scope.monthName[$scope.month];
+
+          }
+
       }
-      previousDay.setDate($scope.date - 1);
-      $scope.date = previousDay.getDate();  
-      $scope.month = previousDay.getMonth();
-      $scope.year = previousDay.getFullYear();
-      $scope.day = weekday[previousDay.getDay()];
-      $scope.currentMonth = $scope.monthName[$scope.month]; 
-    } else {
+    else {
       $ionicPopup.alert({
          title: 'Select Appropriate Date',
          template: 'Please select a valid date!'

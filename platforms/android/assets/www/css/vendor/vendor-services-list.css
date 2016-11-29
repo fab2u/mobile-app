@@ -162,14 +162,15 @@
 #vendor-services .item .p-15{
 	/*padding-top: 18px;*/
 	line-height: 20px;
+	background: #fff;
 }
 #vendor-services .item .price-view{
 	text-align:right;
 	font-color:black;
 }
-#vendor-services .item .price-view span{
-	font-size: 0.9em;
-}
+/*#vendor-services .item .price-view span{*/
+	/*font-size: 0.9em;*/
+/*}*/
 #vendor-services .list-heading{
     background-color: rgba(234, 234, 234, 0.27);
     color: #444;
@@ -217,7 +218,6 @@
 
 #vendor-services .striked-text {
 	color: black;
-	font-size: 0.9em;
 	text-decoration: line-through;
 }
 
@@ -356,10 +356,9 @@ body, .ionic-body{
 .serviceList-gender{
 	font-size: 13px;
 	display: inline-block;
-	width:85%;
 	margin:0 5px 0 0;
 	vertical-align: top;
-	padding: 8px 0;
+	padding: 10px 0;
 }
 
 .serviceList-gender span{
@@ -369,12 +368,19 @@ body, .ionic-body{
 }
 
 .selected-bar{
-	background-color:#0dd1d1;
+	background-color:#0dd1d1 !important;
 	width:10%;
 	height:100%;
 	display: inline-block;
 	max-width: 10px;
 }
+
+
+.active-color{
+	max-width:10px;
+	background: #0dd1d1;
+}
+
 
 #vendor-services .slider-slide{
 	margin-top: 15px;

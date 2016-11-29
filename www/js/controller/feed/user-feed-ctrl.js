@@ -137,8 +137,8 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                 if(single_blog){
                     single_blog.profilePic = $scope.userPhoto;
                     if(single_blog.introduction){
-                        var temp = single_blog.introduction.replace(/\s/g, '');
-                        single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a>');
+                        var temp = single_blog.introduction;
+                        single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a><span>&nbsp;</span>');
                     }
                     if(single_blog.comments){
                         single_blog['commentCount'] = Object.keys(single_blog.comments).length;

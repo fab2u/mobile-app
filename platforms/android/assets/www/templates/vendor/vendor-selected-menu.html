@@ -29,13 +29,15 @@
                      ng-repeat="(key1, value1) in selected_items"
                      ng-if="key == value1.id" style="width:45%">{{value1.name}}
                 </div>
-                <div id="y.id " class="item item-text-wrap row"
-                     id="custom-servicelist" ng-repeat="y in value"
-                     ng-click="selectItem($index, y.menuItemId,y)">
-                    <div class="col col-60 item-text-wrap p-15">
-                        <div ng-show="selectedServices[y.menuItemId]"
-                             class="selected-bar">
-                        </div>
+                <div id="y.id " class="item item-text-wrap row" id="custom-servicelist" ng-repeat="y in value"
+                     ng-click="selectItem($index, y.menuItemId,y)"
+                     ng-class="selectedServices[y.menuItemId]?'selected-item':'normal'">
+                    <div class="col" ng-class="selectedServices[y.menuItemId]?'col-10 active-item':'hide'">
+                        <div class="active-color">&nbsp;</div>
+                    </div>
+
+                    <div class="col col-60 item-text-wrap p-15" ng-class="selectedServices[y.menuItemId]?'col-50':'normal col-60'">
+
                         <span class="serviceList-gender"
                               ng-show="y.male == true && y.female==undefined && y.kids == undefined">
                                     {{y.menuItemName}}&nbsp;<span>(Male)</span>
@@ -52,15 +54,15 @@
                     </div>
                     <div class="col col-40 p-15 price-view"
                          ng-if="y.vendorPrice != y.customerPrice">
-                        <span class="striked-text">&#x20B9;{{y.vendorPrice}} </span>
+                        <span class="striked-text serviceList-gender">&#x20B9;{{y.vendorPrice}} </span>
 
-                        <span>
+                        <span class="serviceList-gender">
                                    &#x20B9; {{y.customerPrice}}
-                                 </span>
+                         </span>
                     </div>
                     <div class="col col-40 p-15 price-view"
                          ng-if="y.vendorPrice == y.customerPrice">
-                                <span>
+                                <span class="serviceList-gender">
                                    &#x20B9; {{y.customerPrice}}
                                  </span>
                     </div>

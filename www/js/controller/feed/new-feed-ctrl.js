@@ -45,9 +45,9 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
          var image = document.getElementById('myImage');
          image.src = imageURI;
          $scope.url = imageURI;
-          if(imageURI){
-              resizeImage(imageURI);
-          }
+          // if(imageURI){
+          //     resizeImage(imageURI);
+          // }
       }, function(err) {
          console.log(err);
       });
@@ -70,9 +70,9 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
          var image = document.getElementById('myImage');
          image.src = imageURI;
          $scope.url = imageURI;
-          if(imageURI){
-              resizeImage(imageURI);
-          }
+          // if(imageURI){
+          //     resizeImage(imageURI);
+          // }
       }, function(err) {
          console.log(err);
       });
@@ -94,11 +94,54 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
 
          $http.post("http://139.162.3.205/api/testupload", {path: dataURL})
          .success(function(response){
-            // alert('success: ' + response);
             $scope.image_url = response.Message;
             $(".upload").css("display", 'none');
+             var newBlogKey = db.ref().child("blogs").push().key;
+             blogData = {
+                 blog_id: newBlogKey,
+                 introduction: $scope.feed.introduction,
+                 photoUrl:$scope.image_url,
+                 user: {
+                     user_name: $scope.uname,
+                     user_id: localStorage.getItem("uid"),
+                     user_email: localStorage.getItem("email")
+                 },
+                 active: true,
+                 created_time: new Date().getTime(),
+                 city_id: locDetails.cityId,
+                 city_name: locDetails.cityName
+             };
+             var re = /#(\w+)(?!\w)/g, hashTag, tagsValue = [];
+             while (hashTag = re.exec($scope.feed.introduction)) {
+                 tagsValue.push(hashTag[1]);
+             }
+             // blog object update without tags, functional
+             var updateBlog = {};
+             updateBlog['/blogs/' + newBlogKey] = blogData;
+             updateBlog['/cityBlogs/'+blogData.city_id+"/blogs/"+newBlogKey] = true;
+             db.ref().update(updateBlog);
+             for(var i=0; i<tagsValue.length; i++){
+                 var tagsData = db.ref().child("tags").child(tagsValue[i]);
+                 var tag_blog =  tagsData.child("blogs");
+                 var obj = {};
+                 obj[newBlogKey] = true;
+                 console.log(obj);
+                 tag_blog.update(obj);
 
-             $ionicLoading.hide();
+                 var updates = {};
+                 updates['/blogs/'+newBlogKey+'/tags/' + tagsValue[i]] = true;
+                 db.ref().update(updates);
+             }
+             // user object update, functional
+             var authUpdate = {};
+             authUpdate['/users/data/'+ blogData.user.user_id+ '/blogs/' + newBlogKey] = true;// alert('4');
+             db.ref().update(authUpdate).then(function(){
+                 $timeout(function () {
+                     $ionicLoading.hide();
+                     $location.path("/feed");
+                 }, 0);
+             });
+
 
          })
          .error(function(response){
@@ -120,7 +163,7 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
 
     $scope.submitFeed = function(){
         if($scope.uid){
-            if(!$scope.feed.introduction && !$scope.image_url){
+            if(!$scope.feed.introduction && ! $scope.url){
                 $cordovaToast
                     .show('Please add an image and description.', 'long', 'center')
                     .then(function(success) {
@@ -129,7 +172,7 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
                         // error
                     });
             }
-            else if($scope.feed.introduction && !$scope.image_url){
+            else if($scope.feed.introduction && ! $scope.url){
                 $cordovaToast
                     .show('Please add an image', 'long', 'center')
                     .then(function(success) {
@@ -139,7 +182,7 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
                     });
 
             }
-            else if(!$scope.feed.introduction && $scope.image_url){
+            else if(!$scope.feed.introduction &&  $scope.url){
                 $cordovaToast
                     .show('Please add description.', 'long', 'center')
                     .then(function(success) {
@@ -149,52 +192,8 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
                     });
 
             }
-            else if($scope.feed.introduction && $scope.image_url){
-
-                var newBlogKey = db.ref().child("blogs").push().key;
-                blogData = {
-                    blog_id: newBlogKey,
-                    introduction: $scope.feed.introduction,
-                    photoUrl:$scope.image_url,
-                    user: {
-                        user_name: $scope.uname,
-                        user_id: localStorage.getItem("uid"),
-                        user_email: localStorage.getItem("email")
-                    },
-                    active: true,
-                    created_time: new Date().getTime(),
-                    city_id: locDetails.cityId,
-                    city_name: locDetails.cityName
-                };
-                var re = /#(\w+)(?!\w)/g, hashTag, tagsValue = [];
-                while (hashTag = re.exec($scope.feed.introduction)) {
-                    tagsValue.push(hashTag[1]);
-                }
-                // blog object update without tags, functional
-                var updateBlog = {};
-                updateBlog['/blogs/' + newBlogKey] = blogData;
-                updateBlog['/cityBlogs/'+blogData.city_id+"/blogs/"+newBlogKey] = true;
-                db.ref().update(updateBlog);
-                for(var i=0; i<tagsValue.length; i++){
-                    var tagsData = db.ref().child("tags").child(tagsValue[i]);
-                    var tag_blog =  tagsData.child("blogs");
-                    var obj = {};
-                    obj[newBlogKey] = true;
-                    console.log(obj);
-                    tag_blog.update(obj);
-
-                    var updates = {};
-                    updates['/blogs/'+newBlogKey+'/tags/' + tagsValue[i]] = true;
-                    db.ref().update(updates);
-                }
-                // user object update, functional
-                var authUpdate = {};
-                authUpdate['/users/data/'+ blogData.user.user_id+ '/blogs/' + newBlogKey] = true;// alert('4');
-                db.ref().update(authUpdate).then(function(){
-                    $timeout(function () {
-                        $location.path("/feed");
-                    }, 0);
-                });
+            else if($scope.feed.introduction &&  $scope.url){
+                resizeImage($scope.url);
 
                 //
                 // if($scope.feed.introduction.substring(0, 1) == '#'){

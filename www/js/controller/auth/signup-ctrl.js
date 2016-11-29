@@ -420,23 +420,19 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
 
                     $scope.updates['users/data/'+$scope.uid] = userData;
                     $scope.updates['referralCode/'+$scope.myReferral] = referralData;
-                    console.log("gdvhgvvdc",$scope.updates)
-                    db.ref().update($scope.updates).then(function(response){
-                        if(response == null){
-                            registerDevice();
-                        }
-                        else{
-                            console.log("458")
 
-                            $cordovaToast
-                                .show('Try again!', 'long', 'center')
-                                .then(function(success) {
-                                    // success
-                                }, function (error) {
-                                    // error
-                                });
-                        }
-                    });
+                    db.ref().update($scope.updates).then(function(response){
+                            if(response == null){
+                                registerDevice();
+                            }
+                            else{
+                                deleteUser();
+                            }
+                        },
+                        function (error) {
+                            deleteUser();
+                            console.log("error",error)
+                        });
                 })
 
             }
@@ -517,5 +513,20 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             }, function (error) {
                 // error
             });
+    }
+
+    function deleteUser() {
+        var user = firebase.auth().currentUser;
+        user.delete().then(function() {
+            $cordovaToast
+                .show('Registration failed, please try again!', 'long', 'center')
+                .then(function(success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
+        }, function(error) {
+            // An error happened.
+        });
     }
 });

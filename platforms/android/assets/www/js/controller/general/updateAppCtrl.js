@@ -14,7 +14,8 @@ app.controller('updateAppCtrl', function($scope, $cordovaInAppBrowser, $cordovaD
         }
         if(manufacture != 'Apple') {
             $cordovaInAppBrowser.open('https://play.google.com/store/apps/details?id=com.ionicframework.fab2u641617', '_system', options);
-        } else {
+        } else if(manufacture == 'Apple'){
+            $cordovaInAppBrowser.open('https://itunes.apple.com/in/app/fab2u/id1089939160?mt=8', '_system', options);
         }
     }
 

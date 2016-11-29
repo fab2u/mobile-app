@@ -224,7 +224,6 @@ app.controller('VendorListCtrl',
 
         $scope.toggleColor = function (val) {
             $ionicLoading.show();
-
             $timeout(function () {
                 $ionicLoading.hide();
             }, 200);

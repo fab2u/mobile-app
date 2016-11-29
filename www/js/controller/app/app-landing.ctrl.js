@@ -44,6 +44,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
 
             }
             else {
+                $ionicLoading.hide();
                 $state.go('under-construction');
             }
         });
@@ -288,8 +289,10 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
         };
         window.localStorage['appInfoNew'] = JSON.stringify(appInfoNew);
         if($scope.oldUser){
+            $ionicLoading.hide();
             $state.go('location');
         }else{
+            $ionicLoading.hide();
             $state.go('intro-slider');
         }
     }
@@ -325,8 +328,10 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
         };
         window.localStorage['appInfoNew'] = JSON.stringify(appInfoNew);
         if($scope.oldUser){
+            $ionicLoading.hide();
             $state.go('location');
         }else{
+            $ionicLoading.hide();
             $state.go('intro-slider');
         }
 
@@ -343,15 +348,18 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                     for(key in allBookingInfo){
                         if(allBookingInfo[key]< new Date().getTime()){
                             window.localStorage['BookingIdToMarkStatus'] = key;
+                            $ionicLoading.hide();
                             $state.go('bill');
                             return;
                         }
                         else{
+                            $ionicLoading.hide();
                             $state.go('app.home');
                         }
                     }
                 }
                 else{
+                    $ionicLoading.hide();
                     $state.go('app.home');
                 }
             }
@@ -359,10 +367,12 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                 getBookingTimings()
             }
             else{
+                $ionicLoading.hide();
                 $state.go('app.home');
             }
         }
         else{
+            $ionicLoading.hide();
             $state.go('app.home');
         }
     }
@@ -374,16 +384,19 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                for(key in allBookingInfo){
                    if(allBookingInfo[key]< new Date().getTime()){
                        window.localStorage['BookingIdToMarkStatus'] = key;
+                       $ionicLoading.hide();
                        $state.go('bill');
                        return;
                    }
                    else{
+                    $ionicLoading.hide();
                        $state.go('app.home');
                    }
                }
            }
            else{
               var allBookingInfo = {};
+              $ionicLoading.hide();
                $state.go('app.home');
            }
         })

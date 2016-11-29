@@ -54,7 +54,7 @@
                         <div class="item item-text-wrap list-heading"
                              ng-repeat="(key1, value1) in services"
                              ng-if="key == key1">{{value1.serviceName}}</div>
-                        <div id="y.id " class="item item-text-wrap row"
+                        <div id="y.id " class="item item-text-wrap row" ng-class="selectedServices[y.menuItemId]?'selected-item':'normal'"
                              id="custom-servicelist" ng-repeat="y in value"
                              ng-click="selectItem($index, y.menuItemId,y)">
 

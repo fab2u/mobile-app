@@ -1,17 +1,77 @@
-app.controller('LoginCtrl',function($scope,$state, AuthenticationService, $ionicPopup){
+app.controller('LoginCtrl',function($scope,$ionicHistory,$state, AuthenticationService, $ionicPopup){
 	AuthenticationService.Logout();
 	$scope.user = {
       user_email: '',
       user_password: ''
     };
     $scope.back = function () {
-        if(localStorage.getItem('confirmation') == 'true'){
-            localStorage.setItem('confirmation', '');
-            $state.go('confirmation');
+        // if(localStorage.getItem('confirmation') == 'true'){
+        //     localStorage.setItem('confirmation', '');
+        //     $state.go('confirmation');
+        // }
+        // else{
+        //     $state.go('app.home')
+        // }
+        console.log("else",$ionicHistory.viewHistory().histories.root)
+        if($ionicHistory.backView().stateName == 'signup'){
+            if($ionicHistory){
+                if($ionicHistory.viewHistory()){
+                    if($ionicHistory.viewHistory().histories){
+                        if($ionicHistory.viewHistory().histories.root){
+                            if($ionicHistory.viewHistory().histories.root.stack[0]){
+                                $state.go($ionicHistory.viewHistory().histories.root.stack[0].stateName)
+                            }
+                            else{
+                                $state.go('app.home')
+                            }
+                        }
+                        else{
+                            $state.go('app.home')
+                        }
+                    }
+                    else{
+                        $state.go('app.home')
+                    }
+                }
+                else{
+                    $state.go('app.home')
+                }
+            }
+            else{
+                $state.go('app.home')
+            }
+
         }
         else{
-            $state.go('app.home')
+            if($ionicHistory){
+                if($ionicHistory.viewHistory()){
+                    if($ionicHistory.viewHistory().histories){
+                        if($ionicHistory.viewHistory().histories.root){
+                            if($ionicHistory.viewHistory().histories.root.stack[1]){
+                                $state.go($ionicHistory.viewHistory().histories.root.stack[1].stateName)
+                            }
+                            else{
+                                $state.go('app.home')
+                            }
+                        }
+                        else{
+                            $state.go('app.home')
+                        }
+                    }
+                    else{
+                        $state.go('app.home')
+                    }
+                }
+                else{
+                    $state.go('app.home')
+                }
+            }
+            else{
+                $state.go('app.home')
+            }
+
         }
+
     };
 
 	$scope.loginEmail = function(){

@@ -29,9 +29,8 @@
                      ng-repeat="(key1, value1) in selected_items"
                      ng-if="key == value1.id" style="width:45%">{{value1.name}}
                 </div>
-                <div id="y.id " class="item item-text-wrap row"
-                     id="custom-servicelist" ng-repeat="y in value"
-                     ng-click="selectItem($index, y.menuItemId,y)">
+                <div id="y.id " class="item item-text-wrap row" id="custom-servicelist" ng-repeat="y in value"
+                     ng-click="selectItem($index, y.menuItemId,y)" ng-class="selectedServices[y.menuItemId]?'selected-item':'normal'">
                     <div class="col col-60 item-text-wrap p-15">
                         <div ng-show="selectedServices[y.menuItemId]"
                              class="selected-bar">

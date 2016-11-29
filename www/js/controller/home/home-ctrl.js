@@ -1,4 +1,4 @@
-app.controller('HomeCtrl',function($scope,$state,$timeout,$ionicLoading,$location,$cordovaToast,
+app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$location,$cordovaToast,
 								$ionicSlideBoxDelegate,$ionicHistory,allServiceList,homeServices) {
 	$ionicHistory.clearHistory();
 	$ionicHistory.clearCache();

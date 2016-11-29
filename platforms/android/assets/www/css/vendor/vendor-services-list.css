@@ -369,11 +369,17 @@ body, .ionic-body{
 }
 
 .selected-bar{
-	background-color:#0dd1d1;
+	background-color:#0dd1d1 !important;
 	width:10%;
 	height:100%;
 	display: inline-block;
 	max-width: 10px;
+}
+.selected-item{
+	color:#0dd1d1 !important;
+}
+.selected-item span{
+	color:#0dd1d1 !important;
 }
 
 #vendor-services .slider-slide{

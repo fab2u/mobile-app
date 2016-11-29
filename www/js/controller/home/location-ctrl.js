@@ -5,6 +5,7 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 		$ionicLoading.hide();
 	}, 5000);
 	$scope.backButtonValue = false;
+	$scope.localities = [];
 	function backButtonVisibility() {
 		if($ionicHistory.backView().stateName == 'app.home'){
 			$scope.backButtonValue = true;
@@ -16,7 +17,6 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 	backButtonVisibility();
 
 	function getCityList() {
-		console.log("dddd")
 		$ionicLoading.show();
 		LocationService.getAllCity().then(function (result) {
 			console.log(result)
@@ -52,12 +52,14 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 		$ionicLoading.show();
 		LocationService.getCityLocality($scope.cityId).then(function (result) {
 			if(result){
-				$scope.localities = result;
+				for(key in result){
+					$scope.localities.push(result[key]);
+				}
 				$scope.location.show();
 				$ionicLoading.hide();
 			}
 			else{
-				$scope.localities = '';
+				$scope.localities = [];
 				$ionicLoading.hide();
 			}
 		})

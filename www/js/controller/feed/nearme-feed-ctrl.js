@@ -331,7 +331,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
                 }
                 feed.numLikes += 1;
                 var updates = {};
-                updates["users/data/"+$scope.myUid+'/likedBlogs/'+feed.blog_id] = true;
+                updates["users/data/"+$scope.uid+'/likedBlogs/'+feed.blog_id] = true;
                 updates["blogs/" + feed.blog_id + "/likedBy/" + $scope.uid] = true;
                 db.ref().update(updates).then(function () {
                     $timeout(function () {

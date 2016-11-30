@@ -18,6 +18,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
             var newStatus = snapshot.val();
             if (newStatus.live == true) {
                 if (newStatus.version > appVersion) {
+                    $ionicLoading.hide();
                     $state.go('updateApp');
                 }
                 else {

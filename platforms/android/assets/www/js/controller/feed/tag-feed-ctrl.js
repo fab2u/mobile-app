@@ -326,7 +326,8 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                 feed.numLikes += 1;
                 var updates = {};
                 updates["blogs/" + feed.blog_id + "/likedBy/" + $scope.uid] = true;
-                updates["users/data/"+$scope.uid+"/likedBlogs/"+feed.blog_id] = true;                db.ref().update(updates).then(function () {
+                updates["users/data/"+$scope.uid+"/likedBlogs/"+feed.blog_id] = true;
+                db.ref().update(updates).then(function () {
                     $timeout(function () {
                         feed.liked = true;
                     },0)

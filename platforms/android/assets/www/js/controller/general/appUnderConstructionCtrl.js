@@ -1,4 +1,5 @@
-app.controller('AppUnderConstructionCtrl', function($scope){
-    $ionicHistory.clearHistory();
-    $ionicHistory.clearCache();
+app.controller('AppUnderConstructionCtrl', function($scope,$ionicHistory){
+
+     $ionicHistory.clearHistory();
+     $ionicHistory.clearCache();
 });

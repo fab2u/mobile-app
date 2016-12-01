@@ -258,9 +258,25 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             "crossDomain": true
         }) .success(function (data, status, headers, config) {
             if(status == 200){
-                $timeout( function() {
-                    $ionicLoading.hide();
-                },300);
+                var otpData = {
+                    mobileNumber: $scope.user.mobile_num,
+                    sendTime:new Date().getTime(),
+                    otp:$scope.generatedCode
+                }
+                var otpInfo = {};
+                otpInfo['otp/sendOtp/' +  $scope.user.mobile_num] = otpData;
+                db.ref().update(otpInfo).then(function(response){
+                        if(response == null){
+                            $timeout( function() {
+                                $ionicLoading.hide();
+                            },300);
+                        }
+                        else{
+                            $timeout( function() {
+                                $ionicLoading.hide();
+                            },300);
+                        }
+                })
                 $scope.otp = $scope.generatedCode;
                 storedOTP.push($scope.otp);
                 window.localStorage['previousOtp'] = JSON.stringify(storedOTP);
@@ -293,13 +309,29 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         $ionicLoading.show();
         $http({
             method: 'POST',
-            url:'http://139.162.27.64/api/send-otp?otp='+$scope.generatedCode+'&mobile='+
+            url:'http://139.162.27.64/api/resend-otp?otp='+$scope.generatedCode+'&mobile='+
             $scope.user.mobile_num
         }) .success(function (data, status, headers, config) {
             if(status == 200){
-                $timeout( function() {
-                    $ionicLoading.hide();
-                },300);
+                var otpInfo1 = {};
+                var otpData1 = {
+                    mobileNumber: $scope.user.mobile_num,
+                    sendTime:new Date().getTime(),
+                    otp:$scope.generatedCode
+                }
+                otpInfo1['otp/resendOtp/' +  $scope.user.mobile_num] = otpData1;
+                db.ref().update(otpInfo1).then(function(response){
+                    if(response == null){
+                        $timeout( function() {
+                            $ionicLoading.hide();
+                        },300);
+                    }
+                    else{
+                        $timeout( function() {
+                            $ionicLoading.hide();
+                        },300);
+                    }
+                })
                 $scope.otp = $scope.generatedCode;
                 storedOTP.push($scope.otp);
                 window.localStorage['previousOtp'] = JSON.stringify(storedOTP);

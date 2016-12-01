@@ -264,7 +264,8 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 							}
 						});
 					});
-			}else{
+			}
+			else{
 				$cordovaToast
 					.show('Please enter a coupon code!', 'long', 'center')
 					.then(function(success) {
@@ -362,16 +363,45 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	            // check if min cart value is applicable
 	            if($scope.customer_price>=promotionCodeInfo.minCartAmount){
 	                // continue with booking
-	                console.log(promotionCodeInfo.amount);
-	                $scope.discountAmount = promotionCodeInfo.amount;
-	                $scope.promoCodeApplied = true;
-	                $scope.calculateAmountPayable();
-	                $ionicLoading.hide();
-	                $ionicPopup.alert({
-	                	title: 'Promo Code Applied',
-	                	template: 'Successfully applied '+coupon
-	                })
-	                console.log("promo code is valid, apply promo code");
+					if(promotionCodeInfo.amountType == 'fixed'){
+						console.log(promotionCodeInfo.amount);
+						$scope.promoAmount = promotionCodeInfo.amount;
+						$scope.discountAmount = promotionCodeInfo.amount;
+						$scope.promoCodeApplied = true;
+						$scope.calculateAmountPayable();
+						$ionicLoading.hide();
+						$ionicPopup.alert({
+							title: 'Promo Code Applied',
+							template: 'Successfully applied '+coupon
+						})
+						console.log("promo code is valid, apply promo code");
+					}
+					else if(promotionCodeInfo.amountType == 'percentage'){
+						var discountUpTo = Math.round(($scope.customer_price * promotionCodeInfo.amount)/100);
+						if(discountUpTo <= promotionCodeInfo.maxDiscount){
+							$scope.discountAmount = discountUpTo;
+							$scope.promoAmount = promotionCodeInfo.maxDiscount;
+							$scope.promoCodeApplied = true;
+							$scope.calculateAmountPayable();
+							$ionicLoading.hide();
+							$ionicPopup.alert({
+								title: 'Promo Code Applied',
+								template: 'Successfully applied '+coupon
+							})
+						}
+						else{
+							$scope.discountAmount = promotionCodeInfo.maxDiscount;
+							$scope.promoAmount = promotionCodeInfo.maxDiscount;
+							$scope.promoCodeApplied = true;
+							$scope.calculateAmountPayable();
+							$ionicLoading.hide();
+							$ionicPopup.alert({
+								title: 'Promo Code Applied',
+								template: 'Successfully applied '+coupon
+							})
+						}
+					}
+
 	            }else{
 	                // min cart value does not meet required condition
 	                $ionicLoading.hide();
@@ -462,6 +492,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 			    'vendorLandmark':window.localStorage.getItem("vendorLandmark"),
 			    'vendorAmount': $scope.total_original,
                 'serviceInfo': newCart,
+				'promoAmount':$scope.promoAmount,
                 'createdDate': new Date().getTime(),
                 'appointmentTime': $scope.appointmentTime,
                 'versionNumber': $scope.version,

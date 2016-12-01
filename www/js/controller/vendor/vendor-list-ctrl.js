@@ -1,6 +1,6 @@
 app.controller('VendorListCtrl',
-    function ($scope,allVendorService, LocationService,$timeout, $ionicHistory, $state, $stateParams,
-              $ionicLoading,$ionicModal, $ionicPopover, $rootScope, $cordovaToast) {
+    function ($scope,allVendorService, LocationService,$timeout, $ionicHistory, $state, $stateParams,$timeout,
+              $ionicLoading,$ionicModal,$ionicScrollDelegate, $ionicPopover, $rootScope, $cordovaToast) {
 
         delete window.localStorage.mapStorage;
         $timeout(function () {
@@ -402,6 +402,9 @@ app.controller('VendorListCtrl',
             }
             start_filtering(filters);
             $scope.filter_screen.hide();
+            $timeout(function () {
+                $ionicScrollDelegate.scrollTop();
+            },500)
         }
 
 

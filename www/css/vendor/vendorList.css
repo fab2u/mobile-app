@@ -46,17 +46,9 @@
 .vendorList .fab{
     line-height:45px;
     width:49%;
-    height:115%;
-    margin-top:-6px;
+    height:100%;
     background:#d9d9d9;
     float:left;
-    -webkit-transform: perspective(300px) rotateX(30deg);
-    -o-transform: perspective(300px) rotateX(30deg);
-    -moz-transform: perspective(300px) rotateX(30deg);
-    -webkit-transform-origin: 50% 50%;
-    -moz-transform-origin: 100% 50%;
-    -o-transform-origin: 100% 50%;
-    transform-origin: 100% 50%;
 }
 
 .vendorList .fab-book {

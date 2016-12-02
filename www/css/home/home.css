@@ -42,6 +42,8 @@
     height:100%;
     background:#d9d9d9;
     float:left;
+    font-weight: 500;
+    font-size: 15px;
 }
 
 #home-page .no-border {

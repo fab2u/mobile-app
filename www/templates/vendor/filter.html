@@ -30,7 +30,9 @@
                 <p class="pull-left text-bold">Locations
                     <i class="icon ion-chevron-right"></i>
                 </p>
-                <p>All Locations</p>
+                <p class="selectedLocality">
+                   <span ng-repeat="(key,value) in locationName">{{key}}</span>
+                </p>
             </div>
         </div>
         <div class="filter_row">

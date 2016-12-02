@@ -373,12 +373,16 @@ app.controller('VendorListCtrl',
                 $scope.active_button3 = true;
             }
         };
-        $scope.location_selected = function (val, isChecked) {
-            if ($scope.selectedLocation[val]) {
+        $scope.locationName = {};
+        $scope.location_selected = function (val, isChecked,location) {
+            console.log("location",location)
+            if ($scope.selectedLocation[val] && $scope.locationName[location.locationName]) {
                 delete $scope.selectedLocation[val];
+                delete $scope.locationName[location.locationName];
             }
             else {
                 $scope.selectedLocation[val] = true;
+                $scope.locationName[location.locationName] = true;
             }
         };
         $scope.refresh = function () {

@@ -318,7 +318,9 @@ body, .ionic-body{
 	background: #f2f2f2;
 	float:left;
 	text-align: center;
-	    color: #444;
+	color: #444;
+	font-weight: 500;
+	font-size: 15px;
 }
 #vendor-services .fab{
 	line-height:45px;
@@ -326,6 +328,8 @@ body, .ionic-body{
 	height:100%;
 	background:#d9d9d9;
 	float:left;
+	font-weight: 500;
+	font-size: 15px;
 }
 #vendor-services .fab-book {
 	width: 50%;

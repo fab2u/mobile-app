@@ -34,6 +34,7 @@ app.controller('VendorSelectedServicesListCtrl',function(allVendorService,$scope
         $scope.selectMain = function(val){
             if(val == 1){
                 $scope.fabSelected = false;
+                window.localStorage.setItem("selectedTab", true)
             } else {
                 $scope.fabSelected = true;
                 if(_.size($scope.selectedServices)>0){
@@ -47,6 +48,7 @@ app.controller('VendorSelectedServicesListCtrl',function(allVendorService,$scope
                             $state.go('vendorMenu',{vendor_id:$scope.vendorId});
                             delete window.localStorage.slectedItems;
                             delete window.localStorage.BegItems;
+                            delete window.localStorage.selectedTab;
                             $rootScope.$broadcast('cart', { message: 'cart length changed' });
                         } else {
                             console.log('You are not sure');
@@ -54,7 +56,7 @@ app.controller('VendorSelectedServicesListCtrl',function(allVendorService,$scope
                     });
                 }
                 else{
-                    window.localStorage.setItem("selectedTab", true)
+                    delete window.localStorage.selectedTab;
                     $state.go('vendorMenu',{vendor_id:$scope.vendorId});
                 }
             }

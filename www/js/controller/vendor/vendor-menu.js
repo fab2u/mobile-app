@@ -311,10 +311,16 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
                     window.localStorage.setItem("vendorMobile",$scope.vendor_detail.contactDetails.phone);
                     window.localStorage.setItem("vendorLandline",$scope.vendor_detail.contactDetails.landline);
                     window.localStorage.setItem("vendorLandmark",$scope.vendor_detail.address.landmark);
-                    $ionicLoading.hide();
+                    $timeout(function () {
+                        $ionicLoading.hide();
+                        $scope.dataLoaded = true;
+                    },500)
                 }
                 else{
-                    $ionicLoading.hide();
+                    $timeout(function () {
+                        $ionicLoading.hide();
+                        $scope.dataLoaded = true;
+                    },500)
                 }
             })
         }

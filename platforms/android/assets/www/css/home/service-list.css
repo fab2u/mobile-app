@@ -19,7 +19,7 @@
     min-width: 30px;
     max-width: 55px;
     left: 0%;
-    top: 3%;
+    top: 25px;
     border-top-right-radius: 5em;
     border-bottom-right-radius: 5em;
     text-align: center;
@@ -29,10 +29,8 @@
 
 #servicelistslider .searchButton {
     position: absolute;
-    height: 35px;
-    width: 35px;
-    right: 5%;
-    top: 3%;
+    right: 50px;
+    top: 15px;
     text-align: center;
     padding-top: 5px;
     background-color: transparent !important;

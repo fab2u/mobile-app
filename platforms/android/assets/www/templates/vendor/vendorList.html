@@ -20,8 +20,7 @@
                  ng-click="toggleColor(2)">FEMALE
             </div>
             <div class="fab" ng-class="genSelected? 'with-border':'no-border'"
-                 ng-click="toggleColor(1)"></div>
-            <div class="fab-book" ng-click="toggleColor(1)">MALE</div>
+                 ng-click="toggleColor(1)">MALE</div>
         </div>
         <div class="card m-5 fab_card" ng-show="bindedVendors.length !='0'"
              ng-repeat="vendor in bindedVendors| orderBy : sortValue |limitTo:limit">

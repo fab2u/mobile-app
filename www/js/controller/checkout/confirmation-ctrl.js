@@ -293,7 +293,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	        var today = (new Date).getTime();
 	        // check if the promo code is active
 	        // Note +86400000 because the endate entered is 12 AM. the code should continue till the end of the day
-	        if(today > promotionCodeInfo.startDate && today < (promotionCodeInfo.endDate+86400000)){
+	        if(today > promotionCodeInfo.startDate && today < (promotionCodeInfo.endDate)){
 	            // check if the promo code is appicable to the user selected city
 	            if(applicableCities!= undefined || applicableCities!=null){
 	                angular.forEach(applicableCities, function(city, key){

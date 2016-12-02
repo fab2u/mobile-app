@@ -77,6 +77,15 @@
   .servicelist{
     position:relative;bottom:42px;
   }
+.locationList{
+    position:relative;
+}
+.searchservices .locationListing{
+    margin:3px auto;
+    background-color:#F0F0F0;
+    border-bottom:1px solid #A4A4A4;
+    border-top:1px solid #A4A4A4;
+}
   .searchservices .vendorservicelist{
     margin:3px auto;
     background-color:#F0F0F0;

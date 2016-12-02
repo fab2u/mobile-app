@@ -6,9 +6,9 @@
     <div class="bar bar-header search-services-header" ng-hide="backButtonValue">
         <h1 class="title">LOCATIONS</h1>
     </div>
-    <ion-content>
-        <ion-list class="servicelist">
-            <ion-item ng-repeat="item in cityList" class="vendorservicelist" ng-click="selected_city(item)">
+    <ion-content class="has-header">
+        <ion-list class="locationList">
+            <ion-item ng-repeat="item in cityList" class="locationListing" ng-click="selected_city(item)">
                 {{item.cityName}}
             </ion-item>
         </ion-list>

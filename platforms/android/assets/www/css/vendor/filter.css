@@ -88,12 +88,15 @@ div.stars {
     margin-right: 10px;
 }
 .loc p{
-    margin-left: 20px;
+    /*margin-left: 20px;*/
 }
 .loc i{
     font-size: 20px;
     /*margin-left: 260px;*/
     float: right;
+}
+.loc p span{
+    margin-left: 10px;
 }
 
 .filter .amenities{
@@ -128,16 +131,37 @@ div.stars {
 }
 
 .locality_icon{
-    font-size: 20px;
+    font-size: 30px;
     color: #FF8385;
     float: right;
     position: absolute;
-    top:5px;
-    right: 5px;
+    top: 10px;
+    right: 15px;
 }
 
 .third_modal{
     width: 70%;
     float: right;
     position: absolute;right:0;top:0;
+}
+.locality_title{
+    display: block;
+    position: absolute;
+    top: 0;
+     /*right: 0;*/
+    left: 15px;
+    z-index: 0;
+    overflow: hidden;
+    margin: 0 0px;
+    min-width: 30px;
+    /* height: 43px; */
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 45px;
+}
+.selectedLocality{
+    padding: 7px;
 }

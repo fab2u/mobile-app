@@ -293,7 +293,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	        var today = (new Date).getTime();
 	        // check if the promo code is active
 	        // Note +86400000 because the endate entered is 12 AM. the code should continue till the end of the day
-	        if(today > promotionCodeInfo.startDate && today < (promotionCodeInfo.endDate+86400000)){
+	        if(today > promotionCodeInfo.startDate && today < (promotionCodeInfo.endDate)){
 	            // check if the promo code is appicable to the user selected city
 	            if(applicableCities!= undefined || applicableCities!=null){
 	                angular.forEach(applicableCities, function(city, key){
@@ -365,6 +365,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	                // continue with booking
 					if(promotionCodeInfo.amountType == 'fixed'){
 						console.log(promotionCodeInfo.amount);
+						$scope.promoAmount = promotionCodeInfo.amount;
 						$scope.discountAmount = promotionCodeInfo.amount;
 						$scope.promoCodeApplied = true;
 						$scope.calculateAmountPayable();
@@ -379,6 +380,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 						var discountUpTo = Math.round(($scope.customer_price * promotionCodeInfo.amount)/100);
 						if(discountUpTo <= promotionCodeInfo.maxDiscount){
 							$scope.discountAmount = discountUpTo;
+							$scope.promoAmount = promotionCodeInfo.maxDiscount;
 							$scope.promoCodeApplied = true;
 							$scope.calculateAmountPayable();
 							$ionicLoading.hide();
@@ -389,6 +391,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 						}
 						else{
 							$scope.discountAmount = promotionCodeInfo.maxDiscount;
+							$scope.promoAmount = promotionCodeInfo.maxDiscount;
 							$scope.promoCodeApplied = true;
 							$scope.calculateAmountPayable();
 							$ionicLoading.hide();
@@ -489,6 +492,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 			    'vendorLandmark':window.localStorage.getItem("vendorLandmark"),
 			    'vendorAmount': $scope.total_original,
                 'serviceInfo': newCart,
+				'promoAmount':$scope.promoAmount,
                 'createdDate': new Date().getTime(),
                 'appointmentTime': $scope.appointmentTime,
                 'versionNumber': $scope.version,

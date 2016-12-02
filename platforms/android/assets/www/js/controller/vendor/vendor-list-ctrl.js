@@ -1,6 +1,6 @@
 app.controller('VendorListCtrl',
-    function ($scope,allVendorService, LocationService,$timeout, $ionicHistory, $state, $stateParams,
-              $ionicLoading,$ionicModal, $ionicPopover, $rootScope, $cordovaToast) {
+    function ($scope,allVendorService, LocationService,$timeout, $ionicHistory, $state, $stateParams,$timeout,
+              $ionicLoading,$ionicModal,$ionicScrollDelegate, $ionicPopover, $rootScope, $cordovaToast) {
 
         delete window.localStorage.mapStorage;
         $timeout(function () {
@@ -373,12 +373,16 @@ app.controller('VendorListCtrl',
                 $scope.active_button3 = true;
             }
         };
-        $scope.location_selected = function (val, isChecked) {
-            if ($scope.selectedLocation[val]) {
+        $scope.locationName = {};
+        $scope.location_selected = function (val, isChecked,location) {
+            console.log("location",location)
+            if ($scope.selectedLocation[val] && $scope.locationName[location.locationName]) {
                 delete $scope.selectedLocation[val];
+                delete $scope.locationName[location.locationName];
             }
             else {
                 $scope.selectedLocation[val] = true;
+                $scope.locationName[location.locationName] = true;
             }
         };
         $scope.refresh = function () {
@@ -402,6 +406,9 @@ app.controller('VendorListCtrl',
             }
             start_filtering(filters);
             $scope.filter_screen.hide();
+            $timeout(function () {
+                $ionicScrollDelegate.scrollTop();
+            },500)
         }
 
 

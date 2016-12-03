@@ -338,6 +338,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 		});
 		confirmPopup.then(function(res) {
 			if(res) {
+				$ionicLoading.hide();
 				$state.go('login')
 			} else {
 				console.log('You are not sure');

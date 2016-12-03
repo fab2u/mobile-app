@@ -346,6 +346,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
         });
         confirmPopup.then(function(res) {
             if(res) {
+                $ionicLoading.hide();
                 $state.go('login')
             } else {
                 console.log('You are not sure');

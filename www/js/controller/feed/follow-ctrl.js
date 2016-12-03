@@ -29,9 +29,11 @@ app.controller("followCtrl", function(userServices,$scope,$stateParams,$state,$t
     }
 
     $scope.viewPosts = function (followId) {
+        $ionicLoading.hide();
         $state.go('followPosts',{followId:followId})
     };
     $scope.goBack = function(){
+        $ionicLoading.hide();
         $state.go('userFeed',{user_id:$stateParams.uid})
     };
 })

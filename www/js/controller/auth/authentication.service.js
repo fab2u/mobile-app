@@ -58,21 +58,31 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                      }
                   }
                   else{
+                     console.log("else:")
                      $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-                     // $cordovaToast
-                     //     .show('Logged in successfully!', 'long', 'center')
-                     //     .then(function(success) {
-                     //        // success
-                     //     }, function (error) {
-                     //        // error
-                     //     });
+                     $cordovaToast
+                         .show('Logged in successfully!', 'long', 'center')
+                         .then(function(success) {
+                            // success
+                         }, function (error) {
+                            // error
+                         });
                      $ionicLoading.hide();
                      if($ionicHistory){
                         if($ionicHistory.viewHistory()){
                            if($ionicHistory.viewHistory().histories){
                               if($ionicHistory.viewHistory().histories.root){
-                                 if($ionicHistory.viewHistory().histories.root.stack[1]){
-                                    $state.go($ionicHistory.viewHistory().histories.root.stack[1].stateName)
+                                 console.log($ionicHistory.viewHistory().histories.root)
+                                 console.log($ionicHistory.viewHistory().histories.root.stack.length)
+                                 var id = $ionicHistory.viewHistory().histories.root.stack.length;
+                                 if(id>3){
+                                    var num = id-2
+                                 }
+                                 else{
+                                    var num = 1;
+                                 }
+                                 if($ionicHistory.viewHistory().histories.root.stack[num]){
+                                    $state.go($ionicHistory.viewHistory().histories.root.stack[num].stateName)
                                  }
                                  else{
                                     $state.go('app.home')
@@ -96,16 +106,51 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                   }
                }
                else{
-                  $state.go('app.home');
+                  console.log("else:")
                   $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-                  $ionicLoading.hide();
                   $cordovaToast
-                      .show('User not found. Please signup to continue.', 'long', 'center')
+                      .show('Logged in successfully!', 'long', 'center')
                       .then(function(success) {
                          // success
                       }, function (error) {
                          // error
                       });
+                  $ionicLoading.hide();
+                  if($ionicHistory){
+                     if($ionicHistory.viewHistory()){
+                        if($ionicHistory.viewHistory().histories){
+                           if($ionicHistory.viewHistory().histories.root){
+                              console.log($ionicHistory.viewHistory().histories.root)
+                              console.log($ionicHistory.viewHistory().histories.root.stack.length)
+                              var id = $ionicHistory.viewHistory().histories.root.stack.length;
+                              if(id>3){
+                                 var num = id-2
+                              }
+                              else{
+                                 var num = 1;
+                              }
+                              if($ionicHistory.viewHistory().histories.root.stack[num]){
+                                 $state.go($ionicHistory.viewHistory().histories.root.stack[num].stateName)
+                              }
+                              else{
+                                 $state.go('app.home')
+                              }
+                           }
+                           else{
+                              $state.go('app.home')
+                           }
+                        }
+                        else{
+                           $state.go('app.home')
+                        }
+                     }
+                     else{
+                        $state.go('app.home')
+                     }
+                  }
+                  else{
+                     $state.go('app.home')
+                  }
                }
 
             }

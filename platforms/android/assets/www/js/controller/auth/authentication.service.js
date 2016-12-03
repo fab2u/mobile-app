@@ -14,28 +14,32 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
       $ionicLoading.show();
       firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
          db.ref().child("users").child("data").child(user.uid).on("value", function (snapshot) {
-            console.log(snapshot.val());
             if(snapshot.val()){
                window.localStorage.setItem("name", snapshot.val().name);
                window.localStorage.setItem("mobileNumber", snapshot.val().mobile.mobileNum);
                window.localStorage.setItem("email", email);
                window.localStorage.setItem("uid", user.uid);
-               if($ionicHistory.backView().stateName == 'signup'){
-                  $cordovaToast
-                      .show('Logged in successfully!', 'long', 'center')
-                      .then(function(success) {
-                         // success
-                      }, function (error) {
-                         // error
-                      });
-                  $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-                  $ionicLoading.hide();
-                  if($ionicHistory){
-                     if($ionicHistory.viewHistory()){
-                        if($ionicHistory.viewHistory().histories){
-                           if($ionicHistory.viewHistory().histories.root){
-                              if($ionicHistory.viewHistory().histories.root.stack[0]){
-                                 $state.go($ionicHistory.viewHistory().histories.root.stack[0].stateName)
+               if($ionicHistory.backView()){
+                  if($ionicHistory.backView().stateName == 'signup'){
+                     $cordovaToast
+                         .show('Logged in successfully!', 'long', 'center')
+                         .then(function(success) {
+                            // success
+                         }, function (error) {
+                            // error
+                         });
+                     $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
+                     $ionicLoading.hide();
+                     if($ionicHistory){
+                        if($ionicHistory.viewHistory()){
+                           if($ionicHistory.viewHistory().histories){
+                              if($ionicHistory.viewHistory().histories.root){
+                                 if($ionicHistory.viewHistory().histories.root.stack[0]){
+                                    $state.go($ionicHistory.viewHistory().histories.root.stack[0].stateName)
+                                 }
+                                 else{
+                                    $state.go('app.home')
+                                 }
                               }
                               else{
                                  $state.go('app.home')
@@ -54,46 +58,56 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                      }
                   }
                   else{
-                     $state.go('app.home')
+                     $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
+                     // $cordovaToast
+                     //     .show('Logged in successfully!', 'long', 'center')
+                     //     .then(function(success) {
+                     //        // success
+                     //     }, function (error) {
+                     //        // error
+                     //     });
+                     $ionicLoading.hide();
+                     if($ionicHistory){
+                        if($ionicHistory.viewHistory()){
+                           if($ionicHistory.viewHistory().histories){
+                              if($ionicHistory.viewHistory().histories.root){
+                                 if($ionicHistory.viewHistory().histories.root.stack[1]){
+                                    $state.go($ionicHistory.viewHistory().histories.root.stack[1].stateName)
+                                 }
+                                 else{
+                                    $state.go('app.home')
+                                 }
+                              }
+                              else{
+                                 $state.go('app.home')
+                              }
+                           }
+                           else{
+                              $state.go('app.home')
+                           }
+                        }
+                        else{
+                           $state.go('app.home')
+                        }
+                     }
+                     else{
+                        $state.go('app.home')
+                     }
                   }
                }
                else{
+                  $state.go('app.home');
                   $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
+                  $ionicLoading.hide();
                   $cordovaToast
-                      .show('Logged in successfully!', 'long', 'center')
+                      .show('User not found. Please signup to continue.', 'long', 'center')
                       .then(function(success) {
                          // success
                       }, function (error) {
                          // error
                       });
-                  $ionicLoading.hide();
-                  if($ionicHistory){
-                     if($ionicHistory.viewHistory()){
-                        if($ionicHistory.viewHistory().histories){
-                           if($ionicHistory.viewHistory().histories.root){
-                              if($ionicHistory.viewHistory().histories.root.stack[1]){
-                                 $state.go($ionicHistory.viewHistory().histories.root.stack[1].stateName)
-                              }
-                              else{
-                                 $state.go('app.home')
-                              }
-                           }
-                           else{
-                              $state.go('app.home')
-                           }
-                        }
-                        else{
-                           $state.go('app.home')
-                        }
-                     }
-                     else{
-                        $state.go('app.home')
-                     }
-                  }
-                  else{
-                     $state.go('app.home')
-                  }
                }
+
             }
             else{
                $ionicLoading.hide();

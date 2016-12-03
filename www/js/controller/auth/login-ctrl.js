@@ -13,13 +13,18 @@ app.controller('LoginCtrl',function($scope,$ionicHistory,$state, AuthenticationS
         //     $state.go('app.home')
         // }
         console.log("else",$ionicHistory.viewHistory().histories.root)
-        if($ionicHistory.backView().stateName == 'signup'){
-            if($ionicHistory){
-                if($ionicHistory.viewHistory()){
-                    if($ionicHistory.viewHistory().histories){
-                        if($ionicHistory.viewHistory().histories.root){
-                            if($ionicHistory.viewHistory().histories.root.stack[0]){
-                                $state.go($ionicHistory.viewHistory().histories.root.stack[0].stateName)
+        if($ionicHistory.backView()){
+            if($ionicHistory.backView().stateName == 'signup'){
+                if($ionicHistory){
+                    if($ionicHistory.viewHistory()){
+                        if($ionicHistory.viewHistory().histories){
+                            if($ionicHistory.viewHistory().histories.root){
+                                if($ionicHistory.viewHistory().histories.root.stack[0]){
+                                    $state.go($ionicHistory.viewHistory().histories.root.stack[0].stateName)
+                                }
+                                else{
+                                    $state.go('app.home')
+                                }
                             }
                             else{
                                 $state.go('app.home')
@@ -36,11 +41,11 @@ app.controller('LoginCtrl',function($scope,$ionicHistory,$state, AuthenticationS
                 else{
                     $state.go('app.home')
                 }
+
             }
             else{
                 $state.go('app.home')
             }
-
         }
         else{
             if($ionicHistory){

@@ -325,6 +325,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
         });
         confirmPopup.then(function(res) {
             if(res) {
+                $ionicLoading.hide();
                 $state.go('login')
             } else {
                 console.log('You are not sure');
@@ -333,9 +334,11 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
     }
     $scope.goBack = function(){
         if(window.localStorage.getItem("follower")=='true') {
+            $ionicLoading.hide();
             $state.go('follower', {uid: $scope.myUid});
         }
         else{
+            $ionicLoading.hide();
             $state.go('follow',{uid:$scope.myUid})
         }
     };

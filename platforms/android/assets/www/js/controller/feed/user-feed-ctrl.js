@@ -485,8 +485,10 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
         });
         confirmPopup.then(function(res) {
             if(res) {
+                $ionicLoading.hide();
                 $state.go('login')
             } else {
+                $ionicLoading.hide();
                $state.go('feed')
             }
         });

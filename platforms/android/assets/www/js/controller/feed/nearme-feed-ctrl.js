@@ -356,6 +356,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
         });
         confirmPopup.then(function(res) {
             if(res) {
+                $ionicLoading.hide();
                 $state.go('login')
             } else {
                 console.log('You are not sure');

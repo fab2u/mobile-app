@@ -43,7 +43,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="config.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
@@ -63,7 +63,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="confirmation-ctrl.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="confirmation-ctrl.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-1092">
@@ -519,12 +519,12 @@
       <workItem from="1480678588388" duration="626000" />
       <workItem from="1480742783049" duration="6003000" />
       <workItem from="1480754960632" duration="6285000" />
-      <workItem from="1480832696103" duration="22136000" />
+      <workItem from="1480832696103" duration="22735000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="915712000" />
+    <option name="totallyTimeSpent" value="916311000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
@@ -963,14 +963,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="58" selection-start-line="1" selection-start-column="58" selection-end-line="1" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controller/auth/authentication.service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="124">
@@ -983,6 +975,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1092">
           <caret line="6" column="27" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="58" selection-start-line="1" selection-start-column="58" selection-end-line="1" selection-end-column="58" />
           <folding />
         </state>
       </provider>

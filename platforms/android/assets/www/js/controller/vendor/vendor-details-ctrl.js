@@ -121,18 +121,19 @@ app.controller('VendorDetailsCtrl',
         }
         ///////////////////////ratings         /////////////////////////////
         $scope.starrating=function(rating) {
-            return new Array(rating);   //ng-repeat will run as many times as size of array
+            if(rating){
+                var newRating = Math.round(rating)
+                return new Array(newRating);
+            }//ng-repeat will run as many times as size of array
         };
 
 
         //////////////////////////vendor service timings   //////////////////////
         $scope.showVendorTiming = function(time_info){
-            angular.forEach(time_info, function(value, key) {
-                if(key == n){
-                    $scope.today_end_time = value.pm;
-                }
-                $scope.days.push({name : key,Times:value})
-            });
+            $scope.days = [];
+            for(key in time_info){
+                $scope.days.push({name : key,Times:time_info[key]})
+            }
             $scope.more = !$scope.more;
         };
 

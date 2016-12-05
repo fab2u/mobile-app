@@ -2,49 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a19b0620-cff9-4e6d-8bd1-61ce48c491d8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/js/services/auth/backServices.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/.gradle/2.13/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/platforms/android/.gradle/2.13/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/.gradle/2.13/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/platforms/android/.gradle/2.13/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/.gradle/2.13/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/platforms/android/.gradle/2.13/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/.gradle/2.13/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/platforms/android/.gradle/2.13/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/.gradle/2.13/tasks/_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/platforms/android/.gradle/2.13/tasks/_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/.gradle/2.13/tasks/_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/platforms/android/.gradle/2.13/tasks/_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/index.html" afterPath="$PROJECT_DIR$/platforms/android/assets/www/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/js/config.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/js/config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/auth/authentication.service.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/auth/authentication.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/auth/login-ctrl.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/auth/login-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/auth/signup-ctrl.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/auth/signup-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/checkout/confirmation-ctrl.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/checkout/confirmation-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/feed/feed-ctrl.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/feed/feed-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/feed/follow-post-ctrl.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/feed/follow-post-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/feed/nearme-feed-ctrl.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/feed/nearme-feed-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/feed/new-feed-ctrl.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/feed/new-feed-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/feed/tag-feed-ctrl.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/feed/tag-feed-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/feed/user-feed-ctrl.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/feed/user-feed-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/home/app-ctrl.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/js/controller/home/app-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/templates/feed/feed.html" afterPath="$PROJECT_DIR$/platforms/android/assets/www/templates/feed/feed.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/templates/feed/nearme-feed.html" afterPath="$PROJECT_DIR$/platforms/android/assets/www/templates/feed/nearme-feed.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/templates/feed/user-feed.html" afterPath="$PROJECT_DIR$/platforms/android/assets/www/templates/feed/user-feed.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/index.html" afterPath="$PROJECT_DIR$/www/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/config.js" afterPath="$PROJECT_DIR$/www/js/config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/auth/authentication.service.js" afterPath="$PROJECT_DIR$/www/js/controller/auth/authentication.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/auth/login-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/auth/login-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/auth/signup-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/auth/signup-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/checkout/confirmation-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/feed/feed-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/feed/feed-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/feed/follow-post-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/feed/follow-post-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/feed/new-feed-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/feed/new-feed-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/feed/tag-feed-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/feed/tag-feed-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/home/app-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/home/app-ctrl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/home/search-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/home/search-ctrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js" afterPath="$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controller/vendor/vendor-menu.js" afterPath="$PROJECT_DIR$/www/js/controller/vendor/vendor-menu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/feed/feed.html" afterPath="$PROJECT_DIR$/www/templates/feed/feed.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/feed/nearme-feed.html" afterPath="$PROJECT_DIR$/www/templates/feed/nearme-feed.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/feed/user-feed.html" afterPath="$PROJECT_DIR$/www/templates/feed/user-feed.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/home/search.html" afterPath="$PROJECT_DIR$/www/templates/home/search.html" />
     </list>
     <ignored path="mobile-app.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -74,100 +33,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="search-ctrl.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/js/controller/home/search-ctrl.js">
+      <file leaf-file-name="vendorDetails.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/templates/vendor/vendorDetails.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+            <state relative-caret-position="303">
+              <caret line="75" column="63" selection-start-line="75" selection-start-column="47" selection-end-line="75" selection-end-column="63" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/templates/home/search.html">
+      <file leaf-file-name="vendor-details-ctrl.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="56" selection-start-line="5" selection-start-column="56" selection-end-line="5" selection-end-column="56" />
+            <state relative-caret-position="224">
+              <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="follow-post-ctrl.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/js/controller/feed/follow-post-ctrl.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="9" selection-end-column="7" />
-              <folding>
-                <element signature="e#2432#4611#0" expanded="false" />
-                <marker date="1480936525420" expanded="true" signature="5239:5245" ph=" " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="follower-ctrl.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/js/controller/feed/follower-ctrl.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="34" column="52" selection-start-line="34" selection-start-column="7" selection-end-line="34" selection-end-column="52" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nearme-feed-ctrl.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/js/controller/feed/nearme-feed-ctrl.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="127" column="22" selection-start-line="127" selection-start-column="22" selection-end-line="127" selection-end-column="22" />
-              <folding>
-                <element signature="e#2197#4440#0" expanded="false" />
-                <marker date="1480936920788" expanded="true" signature="4921:4927" ph=" " />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="new-feed-ctrl.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/js/controller/feed/new-feed-ctrl.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1584">
-              <caret line="1" column="97" selection-start-line="1" selection-start-column="97" selection-end-line="1" selection-end-column="97" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="signup-ctrl.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/js/controller/auth/signup-ctrl.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="135" column="31" selection-start-line="135" selection-start-column="28" selection-end-line="135" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vendor-menu.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/vendor-menu.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="322" column="24" selection-start-line="322" selection-start-column="24" selection-end-line="322" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vendor-menu.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/templates/vendor/vendor-menu.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="65" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="65" />
-              <folding>
-                <element signature="n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -194,7 +75,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/www/js/controller/checkout/cart-ctrl.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/www/js/controller/home/home-ctrl.js" />
         <option value="$PROJECT_DIR$/www/js/controller/auth/test.js" />
@@ -245,6 +125,7 @@
         <option value="$PROJECT_DIR$/www/js/controller/feed/user-feed-ctrl.js" />
         <option value="$PROJECT_DIR$/www/js/controller/auth/signup-ctrl.js" />
         <option value="$PROJECT_DIR$/www/js/controller/vendor/vendor-menu.js" />
+        <option value="$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js" />
       </list>
     </option>
   </component>
@@ -876,12 +757,12 @@
       <workItem from="1480678588388" duration="626000" />
       <workItem from="1480742783049" duration="6003000" />
       <workItem from="1480754960632" duration="6285000" />
-      <workItem from="1480832696103" duration="18146000" />
+      <workItem from="1480832696103" duration="20105000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="911722000" />
+    <option name="totallyTimeSpent" value="913681000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
@@ -1072,22 +953,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/vendor/vendorDetails.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="123" column="37" selection-start-line="123" selection-start-column="19" selection-end-line="123" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1320,20 +1185,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/vendor/vendor-menu.html">
+    <entry file="file://$PROJECT_DIR$/www/templates/vendor/vendorDetails.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="65" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="65" />
-          <folding>
-            <element signature="n#ion-content#0;n#ion-view#0;n#!!top" expanded="false" />
-          </folding>
+        <state relative-caret-position="303">
+          <caret line="75" column="63" selection-start-line="75" selection-start-column="47" selection-end-line="75" selection-end-column="63" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/vendor-menu.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="322" column="24" selection-start-line="322" selection-start-column="24" selection-end-line="322" selection-end-column="24" />
+        <state relative-caret-position="121">
+          <caret line="322" column="23" selection-start-line="322" selection-start-column="23" selection-end-line="322" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/vendor/vendor-menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="17" column="65" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controller/vendor/vendor-details-ctrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -27,26 +27,26 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                   if(stateObj) {
                      if (stateObj.stateName != 'tagFeed') {
                         $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-                        // $cordovaToast
-                        //     .show('Logged in successfully!', 'long', 'center')
-                        //     .then(function(success) {
-                        //        // success
-                        //     }, function (error) {
-                        //        // error
-                        //     });
+                        $cordovaToast
+                            .show('Logged in successfully!', 'long', 'center')
+                            .then(function(success) {
+                               // success
+                            }, function (error) {
+                               // error
+                            });
                         $ionicLoading.hide();
                        $rootScope.from = {};
                         $state.go(stateObj.stateName);
                      }
                      else {
                         $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-                        // $cordovaToast
-                        //     .show('Logged in successfully!', 'long', 'center')
-                        //     .then(function(success) {
-                        //        // success
-                        //     }, function (error) {
-                        //        // error
-                        //     });
+                        $cordovaToast
+                            .show('Logged in successfully!', 'long', 'center')
+                            .then(function(success) {
+                               // success
+                            }, function (error) {
+                               // error
+                            });
                         $ionicLoading.hide();
                         $rootScope.from = {};
                         $state.go(stateObj.stateName, {tag: stateObj.params});
@@ -55,13 +55,13 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                   }
                   else{
                      $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-                     // $cordovaToast
-                     //     .show('Logged in successfully!', 'long', 'center')
-                     //     .then(function(success) {
-                     //        // success
-                     //     }, function (error) {
-                     //        // error
-                     //     });
+                     $cordovaToast
+                         .show('Logged in successfully!', 'long', 'center')
+                         .then(function(success) {
+                            // success
+                         }, function (error) {
+                            // error
+                         });
                      $ionicLoading.hide();
                      $state.go('app.home')
                   }
@@ -69,13 +69,13 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                }
                else{
                   $ionicLoading.hide();
-                  // $cordovaToast
-                  //     .show('User not found. Please signup to continue.', 'long', 'center')
-                  //     .then(function(success) {
-                  //        // success
-                  //     }, function (error) {
-                  //        // error
-                  //     });
+                  $cordovaToast
+                      .show('User not found. Please signup to continue.', 'long', 'center')
+                      .then(function(success) {
+                         // success
+                      }, function (error) {
+                         // error
+                      });
                }
 
             });

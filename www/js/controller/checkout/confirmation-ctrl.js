@@ -4,6 +4,7 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	$timeout(function () {
 		$ionicLoading.hide();
 	}, 5000);
+	$scope.promoAmount = 0;
 	var loggedIn = checkLocalStorage('uid');
 	$scope.appointmentTime = '';
 	$scope.goBack = function(){

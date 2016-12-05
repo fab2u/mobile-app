@@ -15,6 +15,17 @@ app.controller('VendorDetailsCtrl',
         $scope.currentValue = 0;
         $scope.liked = false;
         var d = new Date();
+        var sorter = {
+            // "sunday": 0, // << if sunday is first day of week
+            "monday": 1,
+            "tuesday": 2,
+            "wednesday": 3,
+            "thursday": 4,
+            "friday": 5,
+            "saturday": 6,
+            "sunday": 7
+        }
+
         var weekday = new Array(7);
         weekday[0]=  "sunday";
         weekday[1] = "monday";
@@ -135,7 +146,16 @@ app.controller('VendorDetailsCtrl',
                 $scope.days.push({name : key,Times:time_info[key]})
             }
             $scope.more = !$scope.more;
+            daySorter();
         };
+
+        function daySorter() {
+            $scope.days.sort(function sortByDay(a, b) {
+                var day1 = a.name.toLowerCase();
+                var day2 = b.name.toLowerCase();
+                return sorter[day1] > sorter[day2];
+            });
+        }
 
         ////////////////////Gallery image show up and down   ///////////////////
         $ionicModal.fromTemplateUrl('templates/vendor/image.html', {

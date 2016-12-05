@@ -12,6 +12,10 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	if(!loggedIn){
 		localStorage.setItem('confirmation', true);
 		$ionicLoading.hide();
+		$rootScope.from ={
+			stateName: 'confirmation',
+			params:''
+		}
 		$state.go('login');
 	} else {
 		function referralDetail() {

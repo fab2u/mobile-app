@@ -32,6 +32,7 @@ app.controller('SearchCtrl', function($state, $scope,$http,$timeout,$ionicLoadin
             }
             else {
                 $scope.vendorNames = JSON.parse(window.localStorage['vendorsName'])
+                console.log( $scope.vendorNames)
             }
         })
     }

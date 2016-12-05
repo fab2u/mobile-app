@@ -12,53 +12,48 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
 
    function LoginEmail(email,password) {
       $ionicLoading.show();
-      firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
-         db.ref().child("users").child("data").child(user.uid).on("value", function (snapshot) {
-            if(snapshot.val()){
-               window.localStorage.setItem("name", snapshot.val().name);
-               window.localStorage.setItem("mobileNumber", snapshot.val().mobile.mobileNum);
-               window.localStorage.setItem("email", email);
-               window.localStorage.setItem("uid", user.uid);
-               if($ionicHistory.backView()){
-                  if($ionicHistory.backView().stateName == 'signup'){
-                     $cordovaToast
-                         .show('Logged in successfully!', 'long', 'center')
-                         .then(function(success) {
-                            // success
-                         }, function (error) {
-                            // error
-                         });
-                     $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-                     $ionicLoading.hide();
-                     if($ionicHistory){
-                        if($ionicHistory.viewHistory()){
-                           if($ionicHistory.viewHistory().histories){
-                              if($ionicHistory.viewHistory().histories.root){
-                                 if($ionicHistory.viewHistory().histories.root.stack[0]){
-                                    $state.go($ionicHistory.viewHistory().histories.root.stack[0].stateName)
-                                 }
-                                 else{
-                                    $state.go('app.home')
-                                 }
-                              }
-                              else{
-                                 $state.go('app.home')
-                              }
-                           }
-                           else{
-                              $state.go('app.home')
-                           }
-                        }
-                        else{
-                           $state.go('app.home')
-                        }
+      if(firebase.auth().currentUser){
+         console.log("logged in")
+      }
+      else{
+         firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
+            db.ref().child("users").child("data").child(user.uid).once("value", function (snapshot) {
+               if(snapshot.val()){
+                  window.localStorage.setItem("name", snapshot.val().name);
+                  window.localStorage.setItem("mobileNumber", snapshot.val().mobile.mobileNum);
+                  window.localStorage.setItem("email", email);
+                  window.localStorage.setItem("uid", user.uid);
+                  var stateObj = $rootScope.from;
+                  if(stateObj) {
+                     if (stateObj.stateName != 'tagFeed') {
+                        $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
+                        $cordovaToast
+                            .show('Logged in successfully!', 'long', 'center')
+                            .then(function(success) {
+                               // success
+                            }, function (error) {
+                               // error
+                            });
+                        $ionicLoading.hide();
+                       $rootScope.from = {};
+                        $state.go(stateObj.stateName);
                      }
-                     else{
-                        $state.go('app.home')
+                     else {
+                        $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
+                        $cordovaToast
+                            .show('Logged in successfully!', 'long', 'center')
+                            .then(function(success) {
+                               // success
+                            }, function (error) {
+                               // error
+                            });
+                        $ionicLoading.hide();
+                        $rootScope.from = {};
+                        $state.go(stateObj.stateName, {tag: stateObj.params});
+
                      }
                   }
                   else{
-                     console.log("else:")
                      $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
                      $cordovaToast
                          .show('Logged in successfully!', 'long', 'center')
@@ -68,146 +63,66 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                             // error
                          });
                      $ionicLoading.hide();
-                     if($ionicHistory){
-                        if($ionicHistory.viewHistory()){
-                           if($ionicHistory.viewHistory().histories){
-                              if($ionicHistory.viewHistory().histories.root){
-                                 console.log($ionicHistory.viewHistory().histories.root)
-                                 console.log($ionicHistory.viewHistory().histories.root.stack.length)
-                                 var id = $ionicHistory.viewHistory().histories.root.stack.length;
-                                 if(id>3){
-                                    var num = id-2
-                                 }
-                                 else{
-                                    var num = 1;
-                                 }
-                                 if($ionicHistory.viewHistory().histories.root.stack[num]){
-                                    $state.go($ionicHistory.viewHistory().histories.root.stack[num].stateName)
-                                 }
-                                 else{
-                                    $state.go('app.home')
-                                 }
-                              }
-                              else{
-                                 $state.go('app.home')
-                              }
-                           }
-                           else{
-                              $state.go('app.home')
-                           }
-                        }
-                        else{
-                           $state.go('app.home')
-                        }
-                     }
-                     else{
-                        $state.go('app.home')
-                     }
+                     $state.go('app.home')
                   }
+
                }
                else{
-                  console.log("else:")
-                  $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
+                  $ionicLoading.hide();
                   $cordovaToast
-                      .show('Logged in successfully!', 'long', 'center')
+                      .show('User not found. Please signup to continue.', 'long', 'center')
                       .then(function(success) {
                          // success
                       }, function (error) {
                          // error
                       });
-                  $ionicLoading.hide();
-                  if($ionicHistory){
-                     if($ionicHistory.viewHistory()){
-                        if($ionicHistory.viewHistory().histories){
-                           if($ionicHistory.viewHistory().histories.root){
-                              console.log($ionicHistory.viewHistory().histories.root)
-                              console.log($ionicHistory.viewHistory().histories.root.stack.length)
-                              var id = $ionicHistory.viewHistory().histories.root.stack.length;
-                              if(id>3){
-                                 var num = id-2
-                              }
-                              else{
-                                 var num = 1;
-                              }
-                              if($ionicHistory.viewHistory().histories.root.stack[num]){
-                                 $state.go($ionicHistory.viewHistory().histories.root.stack[num].stateName)
-                              }
-                              else{
-                                 $state.go('app.home')
-                              }
-                           }
-                           else{
-                              $state.go('app.home')
-                           }
-                        }
-                        else{
-                           $state.go('app.home')
-                        }
-                     }
-                     else{
-                        $state.go('app.home')
-                     }
-                  }
-                  else{
-                     $state.go('app.home')
-                  }
                }
 
-            }
-            else{
-               $ionicLoading.hide();
+            });
+         }).catch(function(error) {
+            $ionicLoading.hide();
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if(errorCode === 'auth/invalid-email'){
                $cordovaToast
-                   .show('User not found. Please signup to continue.', 'long', 'center')
+                   .show('You entered wrong email address!', 'long', 'center')
                    .then(function(success) {
                       // success
                    }, function (error) {
                       // error
                    });
             }
-
+            else if(errorCode === 'auth/user-disabled'){
+               $cordovaToast
+                   .show('Your access is temporary denied!', 'long', 'center')
+                   .then(function(success) {
+                      // success
+                   }, function (error) {
+                      // error
+                   });
+            }
+            else if(errorCode === 'auth/user-not-found'){
+               $cordovaToast
+                   .show('Sorry,currently you are not registered with us!', 'long', 'center')
+                   .then(function(success) {
+                      // success
+                   }, function (error) {
+                      // error
+                   });
+            }
+            else if(errorCode === 'auth/wrong-password'){
+               $cordovaToast
+                   .show('You entered wrong password!', 'long', 'center')
+                   .then(function(success) {
+                      // success
+                   }, function (error) {
+                      // error
+                   });
+            }
          });
-      }).catch(function(error) {
-         $ionicLoading.hide();
-         // Handle Errors here.
-         var errorCode = error.code;
-         var errorMessage = error.message;
-         if(errorCode === 'auth/invalid-email'){
-            $cordovaToast
-                .show('You entered wrong email address!', 'long', 'center')
-                .then(function(success) {
-                   // success
-                }, function (error) {
-                   // error
-                });
-         }
-         else if(errorCode === 'auth/user-disabled'){
-            $cordovaToast
-                .show('Your access is temporary denied!', 'long', 'center')
-                .then(function(success) {
-                   // success
-                }, function (error) {
-                   // error
-                });
-         }
-         else if(errorCode === 'auth/user-not-found'){
-            $cordovaToast
-                .show('Sorry,currently you are not registered with us!', 'long', 'center')
-                .then(function(success) {
-                   // success
-                }, function (error) {
-                   // error
-                });
-         }
-         else if(errorCode === 'auth/wrong-password'){
-            $cordovaToast
-                .show('You entered wrong password!', 'long', 'center')
-                .then(function(success) {
-                   // success
-                }, function (error) {
-                   // error
-                });
-         }
-      });
+      }
+
 
    }
 

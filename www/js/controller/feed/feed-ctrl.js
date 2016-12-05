@@ -1,10 +1,13 @@
 app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $ionicLoading,
 										  $ionicModal,userInfoService,$cordovaToast,
-									      $ionicPopup,$state,$sce){
+									      $ionicPopup,$state,$sce,$rootScope){
 
 	if(checkLocalStorage('uid')){
 		$scope.uid = window.localStorage.getItem("uid");
 	}
+	$rootScope.$on('logged_in', function (event, args) {
+		$scope.uid = window.localStorage.getItem('uid');
+	});
 	$scope.blogLength = 0;
 	var count = 0;
 	$scope.blogArr = [];
@@ -15,12 +18,19 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 	$scope.blogIdList = {};
 
 	$scope.goBack = function(){
+		$ionicLoading.hide();
 		$location.path("/app/home");
-	}
+	};
 
 	$scope.createNew = function(){
-		$location.path("/new-feed");
-	}
+		if($scope.uid){
+			$ionicLoading.hide();
+			$location.path("/new-feed");
+		}
+		else{
+			showLoginSignUp();
+		}
+	};
 
 	$timeout(function () {
 		$ionicLoading.hide();
@@ -68,9 +78,9 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 	$scope.commentToggle = function(feedId) {
 		$("#"+feedId+"-commentsBlock").toggle();
 	};
-	$scope.$on('$stateChangeSuccess', function() {
-		$scope.loadMore();
-	});
+	// $scope.$on('$stateChangeSuccess', function() {
+	// 	$scope.loadMore();
+	// });
 	$scope.toTrustedHTML = function( html ){
 		return $sce.trustAsHtml( html );
 	};
@@ -126,7 +136,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 			});
 		}
 	};
-
+	$scope.loadMore();
 	function blogAlgo(i){
 		count++;
 		var blogData = db.ref().child("blogs").child(i);
@@ -267,6 +277,13 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 				$('.' + id + '-follow').hide();
 				$("."+id+'-unfollow').css("display", "block");
 				$ionicLoading.hide();
+				$cordovaToast
+					.show('This user added to your follow list', 'long', 'center')
+					.then(function(success) {
+						// success
+					}, function (error) {
+						// error
+					});
 				$state.go('feed')
 			});
 		}
@@ -286,6 +303,13 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 				$('.'+id+'-follow').show();
 				$("."+id+'-unfollow').css("display", "none");
 				$ionicLoading.hide();
+				$cordovaToast
+					.show('This user removed from your follow list', 'long', 'center')
+					.then(function(success) {
+						// success
+					}, function (error) {
+						// error
+					});
 				$state.go('feed')
 			});
 		}
@@ -300,6 +324,13 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 					db.ref("users/data/"+$scope.uid+'/likedBlogs/'+feed.blog_id).remove().then(function () {
 						$timeout(function(){
 							feed.liked = false;
+							$cordovaToast
+								.show('This post removed from your liked list', 'long', 'center')
+								.then(function(success) {
+									// success
+								}, function (error) {
+									// error
+								});
 						},0);
 					})
 				});
@@ -316,12 +347,20 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 				}).then(function(){
 					$timeout(function(){
 						feed.liked = true;
+						$cordovaToast
+							.show('This post added to your liked list', 'long', 'center')
+							.then(function(success) {
+								// success
+							}, function (error) {
+								// error
+							});
 					},0);
 				});
 			}
 			db.ref("blogs/"+feed.blog_id+"/likedBy").on("value", function(snap){
 				$ionicLoading.hide();
 				feed.numLikes = snap.numChildren();
+				$state.go('feed')
 			});
 
 		}
@@ -339,6 +378,10 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 		confirmPopup.then(function(res) {
 			if(res) {
 				$ionicLoading.hide();
+				$rootScope.from ={
+					stateName: 'feed',
+					params:''
+				}
 				$state.go('login')
 			} else {
 				console.log('You are not sure');

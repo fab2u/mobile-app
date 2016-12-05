@@ -531,13 +531,8 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         window.localStorage.setItem("uid", $scope.uid);
         window.localStorage.setItem("referralCode", $scope.user.referral_code);
         $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-        if(localStorage.getItem('confirmation') == 'true'){
-            localStorage.setItem('confirmation', '');
-            $state.go('confirmation');
-        }
-        else{
-            $state.go('app.home');
-        }
+        var stateObj = $rootScope.from;
+
         $cordovaToast
             .show('Your account is successfully created.', 'long', 'center')
             .then(function(success) {
@@ -545,6 +540,22 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             }, function (error) {
                 // error
             });
+        if(stateObj) {
+            if (stateObj.stateName != 'tagFeed') {
+                $rootScope.from = {};
+                $ionicLoading.hide();
+                $state.go(stateObj.stateName);
+            }
+            else {
+                $rootScope.from = {};
+                $ionicLoading.hide();
+                $state.go(stateObj.stateName, {tag: stateObj.params});
+            }
+        }
+        else{
+            $ionicLoading.hide();
+            $state.go('app.home')
+        }
     }
 
     function deleteUser() {

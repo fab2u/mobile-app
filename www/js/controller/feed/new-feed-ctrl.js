@@ -1,7 +1,10 @@
 app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $timeout,$cordovaToast,
-                                      $cordovaCamera, $ionicLoading){
+                                      $cordovaCamera,$ionicPopup,$state, $ionicLoading,$rootScope){
 
     $scope.uid = localStorage.getItem("uid");
+    $rootScope.$on('logged_in', function (event, args) {
+        $scope.uid = window.localStorage.getItem('uid');
+    });
    var blogData;
    var locDetails = JSON.parse(localStorage.getItem('selectedLocation'));
 
@@ -14,13 +17,7 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
         getUserInfo();
     }
     else{
-        $cordovaToast
-            .show('Please login/SignUp for create post.', 'long', 'center')
-            .then(function(success) {
-                // success
-            }, function (error) {
-                // error
-            });
+        showLoginSignUp()
     }
 
     function getUserInfo() {

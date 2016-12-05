@@ -1,9 +1,12 @@
 app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeout,$sce, $state,
                                        $location, $ionicLoading, $ionicModal,$cordovaToast,
-                                       $ionicPopup){
+                                       $ionicPopup,$rootScope){
 
 	$ionicLoading.show();
 	$scope.uid = window.localStorage.getItem("uid");
+    $rootScope.$on('logged_in', function (event, args) {
+        $scope.uid = window.localStorage.getItem('uid');
+    });
     $scope.moreMessagesScroll = true;
     $scope.moreMessagesRefresh = true;
     $scope.tagName = $stateParams.tag;
@@ -54,9 +57,9 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
     else{
         $scope.userName = '';
     }
-    $scope.$on('$stateChangeSuccess', function() {
-        $scope.loadMore();
-    });
+    // $scope.$on('$stateChangeSuccess', function() {
+    //     $scope.loadMore();
+    // });
 
 	$scope.loadMore = function(){
         $ionicLoading.show();
@@ -110,6 +113,8 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
 			})
 		}
 	}
+
+	$scope.loadMore();
     function blogAlgo(i){
         count++;
         var blogData = db.ref().child("blogs").child(i);
@@ -276,6 +281,13 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                 $('.' + id + '-follow').hide();
                 $("."+id+'-unfollow').css("display", "block");
                 $ionicLoading.hide();
+                $cordovaToast
+                    .show('This user added to your follow list', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
                 $state.go('tagFeed',{tag:$stateParams.tag})
 
             });
@@ -296,6 +308,13 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                 $('.'+id+'-follow').show();
                 $("."+id+'-unfollow').css("display", "none");
                 $ionicLoading.hide();
+                $cordovaToast
+                    .show('This user removed from your follow list', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
                 $state.go('tagFeed',{tag:$stateParams.tag})
             });
         }
@@ -315,6 +334,13 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                     db.ref("users/data/"+$scope.uid+'/likedBlogs/'+feed.blog_id).remove().then(function () {
                         $timeout(function(){
                             feed.liked = false;
+                            $cordovaToast
+                                .show('This post removed from your liked list', 'long', 'center')
+                                .then(function(success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
                         },0);
                     })
                 });
@@ -330,12 +356,20 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                 db.ref().update(updates).then(function () {
                     $timeout(function () {
                         feed.liked = true;
+                        $cordovaToast
+                            .show('This post added to your liked list', 'long', 'center')
+                            .then(function(success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
                     },0)
                 });
             }
             db.ref("blogs/"+feed.blog_id+"/likedBy").on("value", function(snap){
                 $ionicLoading.hide();
                 feed.numLikes = snap.numChildren();
+                $state.go('tagFeed',{tag:$scope.tagName})
             });
         }
     };
@@ -347,6 +381,10 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
         confirmPopup.then(function(res) {
             if(res) {
                 $ionicLoading.hide();
+                $rootScope.from ={
+                    stateName: 'tagFeed',
+                    params:$scope.tagName
+                }
                 $state.go('login')
             } else {
                 console.log('You are not sure');
@@ -359,6 +397,12 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
     };
 
     $scope.createNew = function(){
-        $location.path("/new-feed");
+        if($scope.uid){
+            $ionicLoading.hide();
+            $location.path("/new-feed");
+        }
+        else{
+            showLoginSignUp();
+        }
     };
 });

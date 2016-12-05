@@ -1,6 +1,6 @@
-app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $location, $ionicLoading,
+app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLoading,
                                            $ionicModal,userInfoService, $ionicPopup, $state,
-                                           $sce,$cordovaToast) {
+                                           $sce,$cordovaToast,$rootScope) {
 
     $ionicLoading.show();
     $scope.blogLength = 0;
@@ -8,9 +8,12 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
     if(checkLocalStorage('uid')){
         $scope.uid = window.localStorage.getItem("uid");
     }
+    $rootScope.$on('logged_in', function (event, args) {
+        $scope.uid = window.localStorage.getItem('uid');
+    });
     $scope.moreMessagesScroll = true;
     $scope.moreMessagesRefresh = true;
-    $scope.cityId = $stateParams.cityId;
+    $scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
     $scope.blogIdList = {};
     $scope.blogArr = [];
     $scope.dataLoaded = false;
@@ -67,9 +70,9 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
         return $sce.trustAsHtml(html);
     };
 
-    $scope.$on('$stateChangeSuccess', function () {
-        $scope.loadMore();
-    });
+    // $scope.$on('$stateChangeSuccess', function () {
+    //     $scope.loadMore();
+    // });
 
     $scope.loadMore = function () {
         $ionicLoading.show();
@@ -121,6 +124,8 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
             })
         }
     }
+
+    $scope.loadMore();
 
     function blogAlgo(i) {
         count++;
@@ -287,7 +292,14 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
                 $('.' + id + '-follow').hide();
                 $("." + id + '-unfollow').css("display", "block");
                 $ionicLoading.hide();
-                $state.go('nearmeFeed', {cityId: $stateParams.cityId})
+                $cordovaToast
+                    .show('This user added to your follow list', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+                $state.go('nearmeFeed', {cityId: $scope.cityId})
 
             });
         }
@@ -307,7 +319,14 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
                 $('.' + id + '-follow').show();
                 $("." + id + '-unfollow').css("display", "none");
                 $ionicLoading.hide();
-                $state.go('nearmeFeed', {cityId: $stateParams.cityId})
+                $cordovaToast
+                    .show('This user removed from your follow list', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+                $state.go('nearmeFeed', {cityId: $scope.cityId})
             });
         }
     }
@@ -321,6 +340,13 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
                     db.ref("users/data/"+$scope.uid+'/likedBlogs/'+feed.blog_id).remove().then(function () {
                         $timeout(function(){
                             feed.liked = false;
+                            $cordovaToast
+                                .show('This post removed from your liked list', 'long', 'center')
+                                .then(function(success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
                         },0);
                     })
                 });
@@ -336,12 +362,20 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
                 db.ref().update(updates).then(function () {
                     $timeout(function () {
                         feed.liked = true;
+                        $cordovaToast
+                            .show('This post added to your liked list', 'long', 'center')
+                            .then(function(success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
                     },0)
                 });
             }
             db.ref("blogs/" + feed.blog_id + "/likedBy").on("value", function (snap) {
                 $ionicLoading.hide();
                 feed.numLikes = snap.numChildren();
+                $state.go('nearmeFeed', {cityId: $scope.cityId})
             });
         }
         else{
@@ -357,6 +391,10 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
         confirmPopup.then(function(res) {
             if(res) {
                 $ionicLoading.hide();
+                $rootScope.from ={
+                    stateName: 'nearmeFeed',
+                    params:''
+                }
                 $state.go('login')
             } else {
                 console.log('You are not sure');
@@ -364,11 +402,19 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $stateParams, $loca
         });
     }
     $scope.goBack = function () {
+        $ionicLoading.hide();
         $location.path("/app/home");
     };
 
     $scope.createNew = function () {
-        $location.path("/new-feed");
+        if($scope.uid){
+            $ionicLoading.hide();
+            $location.path("/new-feed");
+        }
+        else{
+            showLoginSignUp();
+        }
+
     };
 
 });

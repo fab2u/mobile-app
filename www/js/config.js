@@ -235,16 +235,16 @@ app
 	});
 
 
-	$stateProvider.state('profile', {
-		url: '/profile',
-		templateUrl: 'templates/user/profile.html',
-		controller: 'profileCtrl',
-		resolve: {
-			currentAuth: function(AuthenticationService){
-				return AuthenticationService.checkAuthentication();
-			}
-		}
-	});
+	// $stateProvider.state('profile', {
+	// 	url: '/profile',
+	// 	templateUrl: 'templates/user/profile.html',
+	// 	controller: 'profileCtrl',
+	// 	resolve: {
+	// 		currentAuth: function(AuthenticationService){
+	// 			return AuthenticationService.checkAuthentication();
+	// 		}
+	// 	}
+	// });
 
 	$stateProvider
 		.state('feed', {
@@ -278,7 +278,7 @@ app
 			controller: 'tagFeedCtrl'
 		})
 		.state('userFeed', {
-			url: '/user/:user_id',
+			url: '/user',
 			cache:false,
 			templateUrl: 'templates/feed/user-feed.html',
 			controller: 'userFeedCtrl'
@@ -287,15 +287,15 @@ app
 			url: '/new-feed',
 			cache:false,
 			templateUrl: 'templates/feed/new-feed.html',
-			controller: 'newFeedCtrl',
-			resolve: {
-				currentAuth: function(AuthenticationService){
-					return AuthenticationService.checkAuthentication();
-				}
-			}
+			controller: 'newFeedCtrl'
+			// resolve: {
+			// 	currentAuth: function(AuthenticationService){
+			// 		return AuthenticationService.checkAuthentication();
+			// 	}
+			// }
 		})
 		.state('nearmeFeed', {
-			url: '/nearme/:cityId',
+			url: '/nearme',
 			cache:false,
 			templateUrl: 'templates/feed/nearme-feed.html',
 			controller: 'nearmeFeedCtrl'

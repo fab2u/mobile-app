@@ -7,6 +7,10 @@ app.controller('AppCtrl', function($scope,$state,$rootScope,$ionicPopup,$ionicLo
 	$scope.vendorNames = [];
 	$scope.location_info = JSON.parse(window.localStorage['selectedLocation']);
 	$scope.uid = window.localStorage.getItem('uid');
+	$rootScope.from ={
+		stateName: 'app.home',
+		params:''
+	}
 
 	$rootScope.$on('logged_in', function (event, args) {
 		$scope.uid = window.localStorage.getItem('uid');

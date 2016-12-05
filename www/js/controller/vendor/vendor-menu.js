@@ -314,13 +314,13 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
                     $timeout(function () {
                         $ionicLoading.hide();
                         $scope.dataLoaded = true;
-                    },500)
+                    },2000)
                 }
                 else{
                     $timeout(function () {
                         $ionicLoading.hide();
                         $scope.dataLoaded = true;
-                    },500)
+                    },2000)
                 }
             })
         }

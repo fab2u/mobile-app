@@ -1,10 +1,13 @@
 app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$state,$timeout,
                                            $ionicLoading,$location,$ionicPopup,$cordovaToast,
-                                           $ionicModal,$sce){
+                                           $ionicModal,$rootScope,$sce){
 
     if(checkLocalStorage('uid')){
         $scope.myUid = window.localStorage.getItem("uid");
     }
+    $rootScope.$on('logged_in', function (event, args) {
+        $scope.myUid = window.localStorage.getItem('uid');
+    });
     var followId = $stateParams.followId;
     $scope.uid = window.localStorage.getItem("uid");
     $scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
@@ -70,9 +73,9 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
     $scope.commentToggle = function(feedId) {
         $("#"+feedId+"-commentsBlock").toggle();
     };
-    $scope.$on('$stateChangeSuccess', function() {
-        $scope.loadMore();
-    });
+    // $scope.$on('$stateChangeSuccess', function() {
+    //     $scope.loadMore();
+    // });
 
     $scope.loadMore = function(){
         $ionicLoading.show()
@@ -126,7 +129,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
             });
         }
     };
-
+    $scope.loadMore();
     $scope.toTrustedHTML = function( html ){
         return $sce.trustAsHtml( html );
     };
@@ -251,6 +254,13 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                     db.ref("users/data/"+$scope.myUid+'/likedBlogs/'+feed.blog_id).remove().then(function () {
                         $timeout(function(){
                             feed.liked = false;
+                            $cordovaToast
+                                .show('This post removed from your liked list', 'long', 'center')
+                                .then(function(success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
                         },0);
                     })
                 });
@@ -266,12 +276,20 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                 db.ref().update(updates).then(function () {
                     $timeout(function () {
                         feed.liked = true;
+                        $cordovaToast
+                            .show('This post added to your liked list', 'long', 'center')
+                            .then(function(success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
                     }, 0);
                 });
             }
             db.ref("blogs/"+feed.blog_id+"/likedBy").on("value", function(snap){
                 feed.numLikes = snap.numChildren();
                 $ionicLoading.hide()
+                $state.go('followPosts',{followId:followId})
             });
 
         }
@@ -295,6 +313,13 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                 $('.' + id + '-follow').hide();
                 $("."+id+'-unfollow').css("display", "block");
                 $ionicLoading.hide()
+                $cordovaToast
+                    .show('This user added to your follow list', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
                 $state.go('feed')
             });
         }
@@ -314,6 +339,13 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                 $('.'+id+'-follow').show();
                 $("."+id+'-unfollow').css("display", "none");
                 $ionicLoading.hide()
+                $cordovaToast
+                    .show('This user removed from your follow list', 'long', 'center')
+                    .then(function(success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
                 $state.go('feed')
             });
         }
@@ -344,6 +376,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
     };
 
     $scope.createNew = function(){
+        $ionicLoading.hide();
         $location.path("/new-feed");
     };
 

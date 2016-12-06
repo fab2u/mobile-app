@@ -15,6 +15,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
     $scope.moreMessagesScroll = true;
     $scope.blogArr = [];
     $scope.dataLoaded = false;
+    $scope.blogLength = 0;
     var count = 0;
     $timeout(function () {
         $ionicLoading.hide();
@@ -89,7 +90,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                 else{
                     $scope.oldBottomKey = $scope.bottomKey;
                     $scope.bottomKey = Object.keys(snap.val())[0];
-                    $scope.blogLength = Object.keys(snap.val()).length;
+                    $scope.blogLength = Object.keys(snap.val()).length - 1;
                     count = 0;
                     for(var i in snap.val()){
                         if (i != $scope.oldBottomKey){

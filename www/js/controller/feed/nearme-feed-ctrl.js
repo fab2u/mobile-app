@@ -46,7 +46,8 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
     });
 
     $scope.showImage = function (source) {
-        $scope.imageSrc = source;
+        $scope.imageSrc = source;show
+        alert('show image called:')
         $scope.openModal();
     }
     // ----------------------------------------------------------------------
@@ -113,7 +114,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                 else {
                     $scope.oldBottomKey = $scope.bottomKey;
                     $scope.bottomKey = Object.keys(snap.val())[0];
-                    $scope.blogLength = Object.keys(snap.val()).length;
+                    $scope.blogLength = Object.keys(snap.val()).length - 1;
                     count = 0;
                     for (var i in snap.val()) {
                         if (i != $scope.oldBottomKey) {

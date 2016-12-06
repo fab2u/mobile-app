@@ -1,5 +1,5 @@
 app.controller('LoginCtrl',function($scope,$ionicHistory,$state, AuthenticationService,
-                                    $ionicPopup,$rootScope,$ionicLoading){
+                                    $ionicPopup,$cordovaToast,$rootScope,$ionicLoading){
 	AuthenticationService.Logout();
 	$scope.user = {
       user_email: '',
@@ -50,7 +50,7 @@ app.controller('LoginCtrl',function($scope,$ionicHistory,$state, AuthenticationS
 
          buttons: [
             { text: 'Cancel' }, {
-               text: '<b>Send Link</b>',
+               text: '<b style="color:#fff !important;">Send Link</b>',
                type: 'pinkcolor',
                   onTap: function(e) {
                      if (!$scope.data.model) {
@@ -63,6 +63,13 @@ app.controller('LoginCtrl',function($scope,$ionicHistory,$state, AuthenticationS
 									sentPopup();
 						      }, function(error) {
 						         console.log(error);
+                                  $cordovaToast
+                                      .show(error.message, 'long', 'center')
+                                      .then(function(success) {
+                                          // success
+                                      }, function (error) {
+                                          // error
+                                      });
 						      });
                         return $scope.data.model;
                      }

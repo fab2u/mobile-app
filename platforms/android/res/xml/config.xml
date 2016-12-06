@@ -44,7 +44,7 @@
     <author email="contact@fab2u.com" href="http://fab2u.com/">
       Team Fab2u
     </author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.1.100:8100" />
     <access origin="*" />
     <access launch-external="yes" origin="tel:*" />
     <allow-intent href="*" />

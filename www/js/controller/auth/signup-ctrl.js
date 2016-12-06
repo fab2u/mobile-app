@@ -30,6 +30,10 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         $state.go('login');
     };
 
+    $timeout(function () {
+        $ionicLoading.hide();
+    },60000)
+
 
     ////////////////   To check device is registered or not    /////////////////
 
@@ -512,7 +516,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         window.localStorage.setItem("referralCode", $scope.user.referral_code);
         $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
         var stateObj = $rootScope.from;
-                                            $cordovaToast
+        $cordovaToast
             .show('Your account is successfully created.', 'long', 'center')
             .then(function(success) {
                 // success
@@ -540,6 +544,14 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
     function deleteUser() {
         $ionicLoading.hide();
         var user = firebase.auth().currentUser;
+        $scope.user = {
+            name: '',
+            email: '',
+            mobile_num: '',
+            referral_code: '',
+            gender: '',
+            password:''
+        };
         user.delete().then(function() {
             $cordovaToast
                 .show('Registration failed, please try again!', 'long', 'center')

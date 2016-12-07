@@ -12,6 +12,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
     $scope.tagName = $stateParams.tag;
     $scope.blogIdList = {};
     $scope.dataLoaded = false;
+    $scope.blogLength = 0;
     var count = 0;
 
     // ----------------------------------------------------------------------
@@ -63,29 +64,10 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
 
 	$scope.loadMore = function(){
         $ionicLoading.show();
-		if(Object.keys($scope.blogIdList).length > 0){
-			db.ref("tags/"+$scope.tagName+"/blogs").orderByKey().limitToFirst(6).endAt($scope.bottomKey).once("value", function(snap){
-				if(snap.numChildren() == 1){
-					$scope.moreMessagesScroll = false;
-                    $ionicLoading.hide();
-					$scope.$broadcast('scroll.infiniteScrollComplete');
-				}
-				else{
-					$scope.oldBottomKey = $scope.bottomKey;
-					$scope.bottomKey = Object.keys(snap.val())[0];
-					for(var i in snap.val()){
-						if (i != $scope.oldBottomKey){
-							blogAlgo(i);
-						}
-					}
-					$scope.$broadcast('scroll.infiniteScrollComplete');
-				}
-			});
-		}
-		else if(Object.keys($scope.blogIdList).length == 0){
-			db.ref('tags').child($scope.tagName).child("blogs").limitToLast(5).once('value', function(snapshot){
-				$ionicLoading.hide();
-				$scope.blogIdList = snapshot.val();
+        if(Object.keys($scope.blogIdList).length == 0){
+            db.ref('tags').child($scope.tagName).child("blogs").limitToLast(5).once('value', function(snapshot){
+                $ionicLoading.hide();
+                $scope.blogIdList = snapshot.val();
                 if(snapshot.val()){
                     $scope.bottomKey = Object.keys($scope.blogIdList)[0];
                     $scope.topKey = Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1];
@@ -108,9 +90,30 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                             // error
                         });
                 }
-				$timeout(function () {
-				}, 0);
-			})
+                $timeout(function () {
+                }, 0);
+            })
+        }
+
+        else if(Object.keys($scope.blogIdList).length > 0){
+			db.ref("tags/"+$scope.tagName+"/blogs").orderByKey().limitToFirst(6).endAt($scope.bottomKey).once("value", function(snap){
+				if(snap.numChildren() == 1){
+					$scope.moreMessagesScroll = false;
+                    $ionicLoading.hide();
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+				}
+				else{
+					$scope.oldBottomKey = $scope.bottomKey;
+					$scope.bottomKey = Object.keys(snap.val())[0];
+                    $scope.blogLength = Object.keys(snap.val()).length - 1;
+                    for(var i in snap.val()){
+						if (i != $scope.oldBottomKey){
+							blogAlgo(i);
+						}
+					}
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+				}
+			});
 		}
 	}
 

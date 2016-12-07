@@ -158,6 +158,7 @@ app
 	//State for login
 	$stateProvider.state('login', {
 		url: '/login',
+		cache:false,
 		templateUrl: 'templates/auth/login.html',
 		controller: 'LoginCtrl'
 	});
@@ -165,6 +166,7 @@ app
 	//State for signup
 	$stateProvider.state('signup', {
 		url: '/signup',
+		cache:false,
 		templateUrl: 'templates/auth/signup.html',
 		controller: 'SignupCtrl'
 	});

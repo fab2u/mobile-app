@@ -439,7 +439,6 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         }
         $scope.updates['users/data/'+$scope.uid] = userData;
         $scope.updates['referralCode/'+$scope.myReferral] = referralData;
-
         registerDevice();
 
         console.log("update",$scope.updates);

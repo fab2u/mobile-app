@@ -17,6 +17,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
     $scope.followingIds = {};
     $scope.myFollowersDetail = {};
     $scope.blogIdList = {};
+    $scope.blogLength = 0;
     var blogsNum= 0;
     var blogCount = 0;
     var count = 0;
@@ -117,7 +118,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                     else{
                         $scope.oldBottomKey = $scope.bottomKey;
                         $scope.bottomKey = Object.keys(snap.val())[0];
-                        $scope.blogLength = Object.keys(snap.val()).length;
+                        $scope.blogLength = Object.keys(snap.val()).length - 1;
                         count1 = 0;
                         for(var key in snap.val()){
                             if (key != $scope.oldBottomKey){

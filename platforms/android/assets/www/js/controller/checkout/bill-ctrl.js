@@ -167,7 +167,7 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
                     updates['bookings/' + $scope.bookingInformation.bookingId + '/' + 'reviewId'] = reviewId;
                     db.ref().update(updates).then(function () {
                         var status = 'Availed';
-                       updateBookingInfo();
+                       updateBookingInfo(status);
                     });
 
                 }
@@ -210,9 +210,11 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
                 $rootScope.$broadcast('booking', { message: 'booking changed' });
             }
             else if(status === 'notAvailed'){
+                console.log("inside else if for not availed")
                 delete allBookingInfo[$scope.bookingIdToMarkStatus];
                 window.localStorage['allBookingInfo'] = JSON.stringify(allBookingInfo);
-                delete window.localStorage.BookingIdToMarkStatus;                $state.go('app.home');
+                delete window.localStorage.BookingIdToMarkStatus;
+                $state.go('app.home');
                 $rootScope.$broadcast('booking', { message: 'booking changed' });
             }
             $ionicLoading.hide();

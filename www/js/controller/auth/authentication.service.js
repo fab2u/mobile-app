@@ -13,6 +13,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
    function LoginEmail(email,password) {
       $ionicLoading.show();
       if(firebase.auth().currentUser){
+         $ionicLoading.hide();
          console.log("logged in")
       }
       else{

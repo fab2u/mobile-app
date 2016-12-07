@@ -46,7 +46,8 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
     });
 
     $scope.showImage = function (source) {
-        $scope.imageSrc = source;
+        $scope.imageSrc = source;show
+        alert('show image called:')
         $scope.openModal();
     }
     // ----------------------------------------------------------------------
@@ -76,28 +77,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
 
     $scope.loadMore = function () {
         $ionicLoading.show();
-        if (Object.keys($scope.blogIdList).length > 0) {
-            db.ref("cityBlogs/" + $scope.cityId + "/blogs").orderByKey().limitToFirst(6).endAt($scope.bottomKey).once("value", function (snap) {
-                if (snap.numChildren() == 1) {
-                    $scope.moreMessagesScroll = false;
-                    $ionicLoading.hide();
-                    $scope.$broadcast('scroll.infiniteScrollComplete');
-                }
-                else {
-                    $scope.oldBottomKey = $scope.bottomKey;
-                    $scope.bottomKey = Object.keys(snap.val())[0];
-                    $scope.blogLength = Object.keys(snap.val()).length;
-                    count = 0;
-                    for (var i in snap.val()) {
-                        if (i != $scope.oldBottomKey) {
-                            blogAlgo(i);
-                        }
-                    }
-                    $scope.$broadcast('scroll.infiniteScrollComplete');
-                }
-            });
-        }
-        else if (Object.keys($scope.blogIdList).length == 0) {
+        if (Object.keys($scope.blogIdList).length == 0) {
             db.ref("cityBlogs/" + $scope.cityId + "/blogs").limitToLast(5).once('value', function (snapshot) {
                 if(snapshot.val()){
                     $scope.blogIdList = snapshot.val();
@@ -122,6 +102,28 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                         });
                 }
             })
+        }
+
+        else if (Object.keys($scope.blogIdList).length > 0) {
+            db.ref("cityBlogs/" + $scope.cityId + "/blogs").orderByKey().limitToFirst(6).endAt($scope.bottomKey).once("value", function (snap) {
+                if (snap.numChildren() == 1) {
+                    $scope.moreMessagesScroll = false;
+                    $ionicLoading.hide();
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }
+                else {
+                    $scope.oldBottomKey = $scope.bottomKey;
+                    $scope.bottomKey = Object.keys(snap.val())[0];
+                    $scope.blogLength = Object.keys(snap.val()).length - 1;
+                    count = 0;
+                    for (var i in snap.val()) {
+                        if (i != $scope.oldBottomKey) {
+                            blogAlgo(i);
+                        }
+                    }
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }
+            });
         }
     }
 
@@ -153,8 +155,8 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
 
         });
         if (count == $scope.blogLength) {
-            $scope.moreMessagesScroll = true;
             $ionicLoading.hide();
+            $scope.moreMessagesScroll = true;
         }
     }
     function checkFollowOrFollowerUser(single_blog,i) {

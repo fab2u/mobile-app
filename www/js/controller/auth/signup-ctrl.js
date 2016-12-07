@@ -9,6 +9,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
     $scope.referralContact = '';
     $scope.referralCodeFlag = false;
     var appInfoNew = {};
+    $scope.tempOtpByFirebase = '';
     $scope.user_device_register = false;
     $scope.user = {
         name: '',
@@ -128,8 +129,10 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         }
         $ionicLoading.show();
         $scope.generatedCode = generateVerificationCode();
+        getTempOtp(); ///get temp  otp from firebase
         console.log($scope.generatedCode)
             /////  do http request  to send otp to user //////////
+
             $http({
                 url: 'http://139.162.27.64/api/send-otp?otp='+$scope.generatedCode+'&mobile='+
                 $scope.user.mobile_num,
@@ -183,6 +186,21 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         return verificationCode;
     }
 
+    function getTempOtp() {
+        firebase.database().ref('tempOtp/')
+            .once('value', function (response) {
+                console.log(response.val());
+                if(response.val()){
+                    if(response.val().otp !='NaN'){
+                        $scope.tempOtpByFirebase = response.val().otp;
+                    }
+                }
+
+        },function (error) {
+               console.log("error",error)
+        })
+    }
+
     $scope.verifyOtpByUser = function() {
         $scope.data = {};
         $ionicPopup.show({
@@ -215,6 +233,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
     function reSendOtp(){
         $ionicLoading.show();
         $scope.generatedCode = generateVerificationCode();
+        getTempOtp();  ///// get otp from firebase ///
         console.log($scope.generatedCode)
             $http({
                 method: 'POST',
@@ -267,6 +286,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         console.log(storedOTP);
         var verified = false;
         if(_.contains(storedOTP, $scope.newOtp.code)){
+            console.log("if")
             verified = true;
             $ionicLoading.hide();
             $ionicPopup.alert({
@@ -279,7 +299,6 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                     $scope.myReferral = generateMyReferralCode($scope.user.name);
                     if($scope.user.referral_code){
                         updateWalletInfo($scope.user.referral_code);
-
                     }
                     else{
                         console.log("else");
@@ -291,7 +310,54 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
 
             })
         }
-      else {
+        else if($scope.tempOtpByFirebase){
+            console.log("if else")
+            if($scope.newOtp.code == $scope.tempOtpByFirebase){
+                console.log("inside temp otp")
+                verified = true;
+                $ionicLoading.hide();
+                $ionicPopup.alert({
+                    title: 'Mobile Number Verified'
+                }).then(function(){
+                    $ionicLoading.show();
+                    window.localStorage.setItem('mobile_verify','true');
+                    var otpUsedUserDetail = {
+                        mobileNumber: $scope.user.mobile_num,
+                        usedTime:new Date().getTime(),
+                        tempOtp:$scope.tempOtpByFirebase
+                    }
+                    $scope.updates['tempOtpUsedUserList/'+$scope.user.mobile_num] = otpUsedUserDetail;
+                    signUpService.signUp($scope.user.email,$scope.user.password,$scope.user.name).then(function(res){
+                        $scope.uid = res;
+                        $scope.myReferral = generateMyReferralCode($scope.user.name);
+                        if($scope.user.referral_code){
+                            updateWalletInfo($scope.user.referral_code);
+
+                        }
+                        else{
+                            console.log("else");
+                            pushUserInfo()
+                        }
+                    },function (error) {
+                        /////////error to be here in case of authentication /////////////
+                    })
+
+                })
+            }
+            else{
+                //////  stay on same page with error msg  //////
+                $ionicLoading.hide();
+                $ionicPopup.alert({
+                    title: 'Incorrect otp'
+                }).then(function () {
+                    $scope.newOtp = {
+                        code: ''
+                    }
+                    $scope.verifyOtpByUser();
+                })
+            }
+        }
+       else {
             //////  stay on same page with error msg  //////
             $ionicLoading.hide();
 

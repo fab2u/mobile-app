@@ -159,26 +159,30 @@ app.controller('VendorSelectedServicesListCtrl',function(allVendorService,$scope
                        vendorDetail();
                    }
                    else{
-                       $cordovaToast
-                           .show('No,menu found for this vendor,please select another vendor!', 'long', 'center')
-                           .then(function(success) {
-                               // success
-                           }, function (error) {
-                               // error
-                           });
+                       if($rootScope.mobileDevice) {
+                           $cordovaToast
+                               .show('No,menu found for this vendor,please select another vendor!', 'long', 'center')
+                               .then(function (success) {
+                                   // success
+                               }, function (error) {
+                                   // error
+                               });
+                       }
                        $ionicLoading.hide();
                    }
                })
            }
            else{
                $ionicLoading.hide();
-               $cordovaToast
-                   .show('Please select some other services, don not find any detail for your selected services', 'long', 'center')
-                   .then(function(success) {
-                       // success
-                   }, function (error) {
-                       // error
-                   });
+               if($rootScope.mobileDevice) {
+                   $cordovaToast
+                       .show('Please select some other services, don not find any detail for your selected services', 'long', 'center')
+                       .then(function (success) {
+                           // success
+                       }, function (error) {
+                           // error
+                       });
+               }
            }
        }
 
@@ -285,13 +289,15 @@ app.controller('VendorSelectedServicesListCtrl',function(allVendorService,$scope
 
             }
             else{
-                $cordovaToast
-                    .show('Please select at least one service', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('Please select at least one service', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
             }
         };
 

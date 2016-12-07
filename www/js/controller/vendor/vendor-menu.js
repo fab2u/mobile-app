@@ -293,13 +293,15 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
                 }
                 else{
                     $ionicLoading.hide();
-                    $cordovaToast
-                        .show('No,menu found for this vendor,please select another vendor!', 'long', 'center')
-                        .then(function(success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
+                    if($rootScope.mobileDevice) {
+                        $cordovaToast
+                            .show('No,menu found for this vendor,please select another vendor!', 'long', 'center')
+                            .then(function (success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
+                    }
                 }
             })
         }
@@ -520,6 +522,7 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
 
             // handel on click overview buttonmySubArray,
             $scope.overviewButton = function() {
+                $ionicLoading.hide()
                 $state.go('vendorDetails',{'ven_id':$stateParams.vendor_id})
                 // TODO
             };
@@ -528,17 +531,20 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
             // handel on click proceed button
             $scope.proceedButton = function() {
                 if(_.size($scope.selectedServices)>0){
+                    $ionicLoading.hide()
                     $state.go('cart',{'ven_id':$stateParams.vendor_id});
 
                 }
                 else{
-                    $cordovaToast
-                        .show('Please, select some services!', 'long', 'center')
-                        .then(function(success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
+                    if($rootScope.mobileDevice) {
+                        $cordovaToast
+                            .show('Please, select some services!', 'long', 'center')
+                            .then(function (success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
+                    }
                 }
             };
 

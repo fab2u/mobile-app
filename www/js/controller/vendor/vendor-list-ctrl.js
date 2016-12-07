@@ -1,6 +1,7 @@
 app.controller('VendorListCtrl',
     function ($scope,allVendorService, LocationService,$timeout, $ionicHistory, $state, $stateParams,$timeout,
-              $ionicLoading,$ionicModal,$ionicScrollDelegate, $ionicPopover, $rootScope, $cordovaToast) {
+              $ionicLoading,$ionicModal,$ionicScrollDelegate, $ionicPopover, $rootScope,
+              $cordovaToast) {
 
         delete window.localStorage.mapStorage;
         $timeout(function () {
@@ -134,13 +135,15 @@ app.controller('VendorListCtrl',
 
         function start_filtering(filters) {
             if ($scope.vendorsForFilter.length == 0) {
-                $cordovaToast
-                    .show('No,vendor found for selected criteria.', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('No,vendor found for selected criteria.', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
             }
             else {
                 $scope.bindedVendors = [];

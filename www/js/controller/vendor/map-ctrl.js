@@ -1,4 +1,4 @@
-app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $ionicLoading,
+app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $ionicLoading,$rootScope,
                                    $cordovaLaunchNavigator,$ionicHistory, $stateParams,$cordovaToast){
 
     $scope.showPrevious = function(){
@@ -59,13 +59,15 @@ app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $io
         $cordovaLaunchNavigator.navigate(destination, start).then(function() {
             console.log("Navigator launched");
         }, function (err) {
-            $cordovaToast
-                .show(err, 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
+            if($rootScope.mobileDevice) {
+                $cordovaToast
+                    .show(err, 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
             console.error(err);
         });
     };

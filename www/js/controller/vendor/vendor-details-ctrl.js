@@ -341,36 +341,42 @@ app.controller('VendorDetailsCtrl',
                                 $state.reload();
                                 $ionicLoading.hide();
                                 $rootScope.$broadcast('reviewList', { message: 'review list changed' });
-                                $cordovaToast
-                                    .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
-                                    .then(function(success) {
-                                        // success
-                                    }, function (error) {
-                                        // error
-                                    });
+                                if($rootScope.mobileDevice) {
+                                    $cordovaToast
+                                        .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
+                                        .then(function (success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
+                                }
                                 $scope.rate_vendor.hide();
                             });
                         }
                         else{
-                            $cordovaToast
-                                .show('Something went wrong!', 'long', 'center')
-                                .then(function(success) {
-                                    // success
-                                }, function (error) {
-                                    // error
-                                });
+                            if($rootScope.mobileDevice) {
+                                $cordovaToast
+                                    .show('Something went wrong!', 'long', 'center')
+                                    .then(function (success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+                            }
                         }
                     })
                 }
             }
             else{
-                $cordovaToast
-                    .show('Please login first!', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('Please login first!', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
             }
         };
 
@@ -389,13 +395,15 @@ app.controller('VendorDetailsCtrl',
         $scope.storeEditReview = function(data){
             if(localStorage.getItem('uid')){
                 if($scope.custReview.rating == 0){
-                    $cordovaToast
-                        .show('Please, select rating', 'long', 'center')
-                        .then(function(success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
+                    if($rootScope.mobileDevice) {
+                        $cordovaToast
+                            .show('Please, select rating', 'long', 'center')
+                            .then(function (success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
+                    }
                 }
                 else{
                     var updates = {};
@@ -447,36 +455,42 @@ app.controller('VendorDetailsCtrl',
                                 $state.reload();
                                 $ionicLoading.hide();
                                 $rootScope.$broadcast('reviewList', { message: 'review list changed' });
-                                $cordovaToast
-                                    .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
-                                    .then(function(success) {
-                                        // success
-                                    }, function (error) {
-                                        // error
-                                    });
+                                if($rootScope.mobileDevice) {
+                                    $cordovaToast
+                                        .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
+                                        .then(function (success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
+                                }
                                 $scope.edit_rate_vendor.hide();
                             });
                         }
                         else{
-                            $cordovaToast
-                                .show('Something went wrong!', 'long', 'center')
-                                .then(function(success) {
-                                    // success
-                                }, function (error) {
-                                    // error
-                                });
+                            if($rootScope.mobileDevice) {
+                                $cordovaToast
+                                    .show('Something went wrong!', 'long', 'center')
+                                    .then(function (success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+                            }
                         }
                     })
                 }
             }
             else{
-                $cordovaToast
-                    .show('Please login first!', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('Please login first!', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
             }
         }
 
@@ -519,33 +533,39 @@ app.controller('VendorDetailsCtrl',
                     .set(favouriteData,function(response) {
                         if(response ==null){
                             $scope.liked  = !$scope.liked ;
-                            $cordovaToast
-                                .show('Vendor added to your favorite list.', 'long', 'center')
-                                .then(function(success) {
-                                    // success
-                                }, function (error) {
-                                    // error
-                                });
+                            if($rootScope.mobileDevice) {
+                                $cordovaToast
+                                    .show('Vendor added to your favorite list.', 'long', 'center')
+                                    .then(function (success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+                            }
                         }
                         else{
-                            $cordovaToast
-                                .show('Sorry, we can not added this vendor to your favourite vendor list. Please try again!', 'long', 'center')
-                                .then(function(success) {
-                                    // success
-                                }, function (error) {
-                                    // error
-                                });
+                            if($rootScope.mobileDevice) {
+                                $cordovaToast
+                                    .show('Sorry, we can not added this vendor to your favourite vendor list. Please try again!', 'long', 'center')
+                                    .then(function (success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+                            }
                         }
                     })
             }
             else{
-                $cordovaToast
-                    .show('Please login/SignUp first!.', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('Please login/SignUp first!.', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
             }
 
         };
@@ -563,24 +583,29 @@ app.controller('VendorDetailsCtrl',
 
         $scope.cart = function(){
             if(_.size($scope.selectedServices)>0){
+                $ionicLoading.hide();
                 $state.go('cart',{'ven_id':$stateParams.ven_id});
             }
             else{
-                $cordovaToast
-                    .show('Please select at least one service.', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('Please select at least one service.', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
             }
         };
 
         $scope.vendorMenu = function(){
             if(window.localStorage.getItem("selectedTab")=='true'){
+                $ionicLoading.hide()
                 $state.go('vendorSelectedMenu',{vendor_id:$stateParams.ven_id});
             }
             else{
+                $ionicLoading.hide();
                 $state.go('vendorMenu',{'vendor_id':$stateParams.ven_id})
 
             }

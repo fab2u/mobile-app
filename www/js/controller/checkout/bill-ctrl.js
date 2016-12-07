@@ -114,13 +114,15 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
 
     $scope.storeReview = function(){
         if($scope.custReview.rating == 0){
-            $cordovaToast
-                .show('Please, select ratings!', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
+            if($rootScope.mobileDevice) {
+                $cordovaToast
+                    .show('Please, select ratings!', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
         }
         else{
             var updates = {};
@@ -172,13 +174,15 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
 
                 }
                 else{
-                    $cordovaToast
-                        .show('Something went wrong!', 'long', 'center')
-                        .then(function(success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
+                    if($rootScope.mobileDevice) {
+                        $cordovaToast
+                            .show('Something went wrong!', 'long', 'center')
+                            .then(function (success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
+                    }
                 }
             })
 
@@ -199,13 +203,15 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
                     window.localStorage['allBookingInfo'] = JSON.stringify(allBookingInfo);
                 }
                 delete window.localStorage.BookingIdToMarkStatus;
-                $cordovaToast
-                    .show('Your review has been submitted successfully!', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('Your review has been submitted successfully!', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
                 $scope.rate_vendor.hide();
                 $state.go('app.home');
                 $rootScope.$broadcast('booking', { message: 'booking changed' });

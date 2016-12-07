@@ -74,14 +74,15 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                                 registerOldUser();
                             }
                             else{
-                                $cordovaToast
-                                    .show('Please enter at-least six digit password!', 'long', 'center')
-                                    .then(function (success) {
-                                        // success
-                                    }, function (error) {
-                                        // error
-                                    });
-
+                                if($rootScope.mobileDevice) {
+                                    $cordovaToast
+                                        .show('Please enter at-least six digit password!', 'long', 'center')
+                                        .then(function (success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
+                                }
                                 signUpOldUser();
                             }
                         }
@@ -187,13 +188,15 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                 // $state.go('intro-slider');
                 $scope.oldUser = true;
                 initialiseAppInfo();
-                $cordovaToast
-                    .show('Thank you.Your password set successfully!', 'long', 'center')
-                    .then(function (success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('Thank you.Your password set successfully!', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
             }
             else{
 

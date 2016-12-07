@@ -81,14 +81,15 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                 }
                 else{
                     $scope.dataLoaded = true;
-
-                    $cordovaToast
-                        .show('This feed is not available!', 'long', 'center')
-                        .then(function(success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
+                  if($rootScope.mobileDevice) {
+                      $cordovaToast
+                          .show('This feed is not available!', 'long', 'center')
+                          .then(function (success) {
+                              // success
+                          }, function (error) {
+                              // error
+                          });
+                  }
                 }
                 $timeout(function () {
                 }, 0);
@@ -284,13 +285,15 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                 $('.' + id + '-follow').hide();
                 $("."+id+'-unfollow').css("display", "block");
                 $ionicLoading.hide();
-                $cordovaToast
-                    .show('This user added to your follow list', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('This user added to your follow list', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
                 $state.go('tagFeed',{tag:$stateParams.tag})
 
             });
@@ -311,13 +314,15 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                 $('.'+id+'-follow').show();
                 $("."+id+'-unfollow').css("display", "none");
                 $ionicLoading.hide();
-                $cordovaToast
-                    .show('This user removed from your follow list', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('This user removed from your follow list', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
                 $state.go('tagFeed',{tag:$stateParams.tag})
             });
         }
@@ -337,13 +342,15 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                     db.ref("users/data/"+$scope.uid+'/likedBlogs/'+feed.blog_id).remove().then(function () {
                         $timeout(function(){
                             feed.liked = false;
-                            $cordovaToast
-                                .show('This post removed from your liked list', 'long', 'center')
-                                .then(function(success) {
-                                    // success
-                                }, function (error) {
-                                    // error
-                                });
+                            if($rootScope.mobileDevice) {
+                                $cordovaToast
+                                    .show('This post removed from your liked list', 'long', 'center')
+                                    .then(function (success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+                            }
                         },0);
                     })
                 });
@@ -359,13 +366,15 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                 db.ref().update(updates).then(function () {
                     $timeout(function () {
                         feed.liked = true;
-                        $cordovaToast
-                            .show('This post added to your liked list', 'long', 'center')
-                            .then(function(success) {
-                                // success
-                            }, function (error) {
-                                // error
-                            });
+                        if($rootScope.mobileDevice) {
+                            $cordovaToast
+                                .show('This post added to your liked list', 'long', 'center')
+                                .then(function (success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                        }
                     },0)
                 });
             }

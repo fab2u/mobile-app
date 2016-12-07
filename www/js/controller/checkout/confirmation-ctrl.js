@@ -223,13 +223,15 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 		$scope.toggleCheckbox = function(){
 			$scope.isChecked = !$scope.isChecked;
 			if($scope.isChecked == true){
-				$cordovaToast
-					.show('You can utilize only 50% of booking amount from wallet maximum upto Rs. 200 in one booking.', 'long', 'center')
-					.then(function(success) {
-						// success
-					}, function (error) {
-						// error
-					});
+				if($rootScope.mobileDevice) {
+					$cordovaToast
+						.show('You can utilize only 50% of booking amount from wallet maximum upto Rs. 200 in one booking.', 'long', 'center')
+						.then(function (success) {
+							// success
+						}, function (error) {
+							// error
+						});
+				}
 			}
 			$scope.calculateAmountPayable();
 		};
@@ -259,25 +261,29 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 								verifyPromoCode(snapshot.val(), couponCode);
 							}else{
 								$ionicLoading.hide();
-								$cordovaToast
-									.show('Enter a valid promo code, not found.', 'long', 'center')
-									.then(function(success) {
-										// success
-									}, function (error) {
-										// error
-									});
+								if($rootScope.mobileDevice) {
+									$cordovaToast
+										.show('Enter a valid promo code, not found.', 'long', 'center')
+										.then(function (success) {
+											// success
+										}, function (error) {
+											// error
+										});
+								}
 							}
 						});
 					});
 			}
 			else{
-				$cordovaToast
-					.show('Please enter a coupon code!', 'long', 'center')
-					.then(function(success) {
-						// success
-					}, function (error) {
-						// error
-					});
+				if($rootScope.mobileDevice) {
+					$cordovaToast
+						.show('Please enter a coupon code!', 'long', 'center')
+						.then(function (success) {
+							// success
+						}, function (error) {
+							// error
+						});
+				}
 			}
 		}
 
@@ -309,13 +315,15 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	                });
 	                if(!isValidPromo){
 	                	$ionicLoading.hide();
-						$cordovaToast
-							.show('Sorry the promo code you entered is not applicable to your current city.', 'long', 'center')
-							.then(function(success) {
-								// success
-							}, function (error) {
-								// error
-							});
+						if($rootScope.mobileDevice) {
+							$cordovaToast
+								.show('Sorry the promo code you entered is not applicable to your current city.', 'long', 'center')
+								.then(function (success) {
+									// success
+								}, function (error) {
+									// error
+								});
+						}
 						return;
 	                }else{
 	                    console.log("valid for city");
@@ -336,13 +344,15 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 
 	                if(!isValidPromo){
 	                	$ionicLoading.hide();
-						$cordovaToast
-							.show('Sorry the promo code you entered is not applicable to this vendor.', 'long', 'center')
-							.then(function(success) {
-								// success
-							}, function (error) {
-								// error
-							});
+						if($rootScope.mobileDevice) {
+							$cordovaToast
+								.show('Sorry the promo code you entered is not applicable to this vendor.', 'long', 'center')
+								.then(function (success) {
+									// success
+								}, function (error) {
+									// error
+								});
+						}
 						return;
 	                }else{
 	                    console.log("valid for vendor");
@@ -351,13 +361,15 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	        }else{
 	            isValidPromo = false;
 	            $ionicLoading.hide();
-				$cordovaToast
-					.show('Not a valid promo code, not active', 'long', 'center')
-					.then(function(success) {
-						// success
-					}, function (error) {
-						// error
-					});
+				if($rootScope.mobileDevice) {
+					$cordovaToast
+						.show('Not a valid promo code, not active', 'long', 'center')
+						.then(function (success) {
+							// success
+						}, function (error) {
+							// error
+						});
+				}
 	            return;
 	        } // is active
 
@@ -410,24 +422,28 @@ app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $time
 	            }else{
 	                // min cart value does not meet required condition
 	                $ionicLoading.hide();
-					$cordovaToast
-						.show('Your cart value is less than min cart value ('+promotionCodeInfo.minCartAmount+')', 'long', 'center')
-						.then(function(success) {
-							// success
-						}, function (error) {
-							// error
-						});
+					if($rootScope.mobileDevice) {
+						$cordovaToast
+							.show('Your cart value is less than min cart value (' + promotionCodeInfo.minCartAmount + ')', 'long', 'center')
+							.then(function (success) {
+								// success
+							}, function (error) {
+								// error
+							});
+					}
 	            }
 
 	        }else{
 	        	$ionicLoading.hide();
-				$cordovaToast
-					.show('Not a valid promo code.', 'long', 'center')
-					.then(function(success) {
-						// success
-					}, function (error) {
-						// error
-					});
+				if($rootScope.mobileDevice) {
+					$cordovaToast
+						.show('Not a valid promo code.', 'long', 'center')
+						.then(function (success) {
+							// success
+						}, function (error) {
+							// error
+						});
+				}
 	        }// isValidPromo
 	    }
 

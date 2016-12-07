@@ -196,13 +196,15 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
             }
             else{
                 $ionicLoading.hide();
-                $cordovaToast
-                    .show('You do not have any liked post yet.For more liked post use our services and create post.', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('You do not have any liked post yet.For more liked post use our services and create post.', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
             }
         };
 
@@ -219,13 +221,15 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
             }
             else{
                 $ionicLoading.hide();
-                $cordovaToast
-                    .show('You do not have any follower yet.For more follower use our services and create post.', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('You do not have any follower yet.For more follower use our services and create post.', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
             }
         };
 
@@ -242,13 +246,15 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
             }
             else{
                 $ionicLoading.hide();
-                $cordovaToast
-                    .show('You do not have any follow yet.For more follow  see Fabbook', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('You do not have any follow yet.For more follow  see Fabbook', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
             }
         };
 
@@ -262,13 +268,15 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                         db.ref("users/data/"+$scope.myUid+'/likedBlogs/'+feed.blog_id).remove().then(function () {
                             $timeout(function(){
                                 feed.liked = false;
-                                $cordovaToast
-                                    .show('This post removed from your liked list', 'long', 'center')
-                                    .then(function(success) {
-                                        // success
-                                    }, function (error) {
-                                        // error
-                                    });
+                                if($rootScope.mobileDevice) {
+                                    $cordovaToast
+                                        .show('This post removed from your liked list', 'long', 'center')
+                                        .then(function (success) {
+                                            // success
+                                        }, function (error) {
+                                            // error
+                                        });
+                                }
                             },0);
                             delete $scope.likeBlogIds[feed.blog_id];
                         })
@@ -285,13 +293,15 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                     db.ref().update(updates).then(function () {
                         $timeout(function(){
                             feed.liked = true;
-                            $cordovaToast
-                                .show('This post added to your liked list', 'long', 'center')
-                                .then(function(success) {
-                                    // success
-                                }, function (error) {
-                                    // error
-                                });
+                            if($rootScope.mobileDevice) {
+                                $cordovaToast
+                                    .show('This post added to your liked list', 'long', 'center')
+                                    .then(function (success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+                            }
                         },0);
                         if(!$scope.likeBlogIds){
                             $scope.likeBlogIds = {};
@@ -468,13 +478,15 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                         window.localStorage.setItem("userPhoto", response.Message);
                         db.ref().update(updates1).then(function(){
                                 $ionicLoading.hide();
+                            if($rootScope.mobileDevice) {
                                 $cordovaToast
-                                .show('Photo updated successfully!', 'long', 'center')
-                                .then(function(success) {
-                                    // success
-                                }, function (error) {
-                                    // error
-                                });
+                                    .show('Photo updated successfully!', 'long', 'center')
+                                    .then(function (success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+                            }
                                  location.reload();
                                 $scope.modal1.hide();
                         });
@@ -483,13 +495,15 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                     .error(function(response){
                         $ionicLoading.hide();
                         console.log(JSON.stringify(response));
-                        $cordovaToast
-                            .show('Something went wrong,please try again!', 'long', 'center')
-                            .then(function(success) {
-                                // success
-                            }, function (error) {
-                                // error
-                            });
+                        if($rootScope.mobileDevice) {
+                            $cordovaToast
+                                .show('Something went wrong,please try again!', 'long', 'center')
+                                .then(function (success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                        }
                     });
             });
         }

@@ -143,13 +143,15 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
          })
          .error(function(response){
              $scope.url = '';
-             $cordovaToast
-                 .show('Please try after some time', 'long', 'center')
-                 .then(function(success) {
-                     // success
-                 }, function (error) {
-                     // error
-                 });
+             if($rootScope.mobileDevice) {
+                 $cordovaToast
+                     .show('Please try after some time', 'long', 'center')
+                     .then(function (success) {
+                         // success
+                     }, function (error) {
+                         // error
+                     });
+             }
              $ionicLoading.hide();
 
          });
@@ -161,32 +163,38 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
     $scope.submitFeed = function(){
         if($scope.uid){
             if(!$scope.feed.introduction && ! $scope.url){
-                $cordovaToast
-                    .show('Please add an image and description.', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('Please add an image and description.', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
             }
             else if($scope.feed.introduction && ! $scope.url){
-                $cordovaToast
-                    .show('Please add an image', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('Please add an image', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
 
             }
             else if(!$scope.feed.introduction &&  $scope.url){
-                $cordovaToast
-                    .show('Please add description.', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('Please add description.', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
 
             }
             else if($scope.feed.introduction &&  $scope.url){

@@ -1,5 +1,5 @@
 app.controller('UserWalletCtrl',function($scope,$state,userServices,$ionicLoading,
-										 $timeout,$cordovaToast){
+										 $timeout,$rootScope,$cordovaToast){
 
 	$timeout(function () {
 		$ionicLoading.hide();
@@ -13,13 +13,15 @@ app.controller('UserWalletCtrl',function($scope,$state,userServices,$ionicLoadin
 		getWalletInfo();
 	}
 	else{
-		$cordovaToast
-			.show('Please login/SignUp first!', 'long', 'center')
-			.then(function(success) {
-				// success
-			}, function (error) {
-				// error
-			});
+		if($rootScope.mobileDevice) {
+			$cordovaToast
+				.show('Please login/SignUp first!', 'long', 'center')
+				.then(function (success) {
+					// success
+				}, function (error) {
+					// error
+				});
+		}
 	}
 
 	// To get user wallet information for wallet money and transactions

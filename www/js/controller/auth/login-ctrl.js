@@ -63,13 +63,15 @@ app.controller('LoginCtrl',function($scope,$ionicHistory,$state, AuthenticationS
 									sentPopup();
 						      }, function(error) {
 						         console.log(error);
-                                  $cordovaToast
-                                      .show(error.message, 'long', 'center')
-                                      .then(function(success) {
-                                          // success
-                                      }, function (error) {
-                                          // error
-                                      });
+                                  if($rootScope.mobileDevice) {
+                                      $cordovaToast
+                                          .show(error.message, 'long', 'center')
+                                          .then(function (success) {
+                                              // success
+                                          }, function (error) {
+                                              // error
+                                          });
+                                  }
 						      });
                         return $scope.data.model;
                      }

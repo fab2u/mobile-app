@@ -20,7 +20,7 @@ app.factory('signUpService', function ($q,$ionicLoading,$cordovaToast,$rootScope
                     console.log(error)
                     var errorCode = error.code;
                     var errorMessage = error.message;
-                    if (errorCode == 'auth/email-already-in-use') {
+                    if ((errorCode == 'auth/email-already-in-use') && $rootScope.mobileDevice) {
                         $cordovaToast
                             .show('Already exists an account with the given email address.Please try with another email address.', 'long', 'center')
                             .then(function (success) {
@@ -29,7 +29,7 @@ app.factory('signUpService', function ($q,$ionicLoading,$cordovaToast,$rootScope
                                 // error
                             });
                     }
-                    else if (errorCode == 'auth/invalid-email') {
+                    else if ((errorCode == 'auth/invalid-email') && $rootScope.mobileDevice) {
                         $cordovaToast
                             .show('The given email address is not valid.Please try with another email address.', 'long', 'center')
                             .then(function (success) {
@@ -38,7 +38,7 @@ app.factory('signUpService', function ($q,$ionicLoading,$cordovaToast,$rootScope
                                 // error
                             });
                     }
-                    else if (errorCode == 'auth/operation-not-allowed') {
+                    else if ((errorCode == 'auth/operation-not-allowed') && $rootScope.mobileDevice) {
                         $cordovaToast
                             .show('Sorry, you can not sign Up by using email and password.', 'long', 'center')
                             .then(function (success) {
@@ -47,7 +47,7 @@ app.factory('signUpService', function ($q,$ionicLoading,$cordovaToast,$rootScope
                                 // error
                             });
                     }
-                    else if (errorCode == 'auth/weak-password') {
+                    else if ((errorCode == 'auth/weak-password') && $rootScope.mobileDevice) {
                         $cordovaToast
                             .show('The password is too weak.Please enter at-least six digit password', 'long', 'center')
                             .then(function (success) {
@@ -56,7 +56,7 @@ app.factory('signUpService', function ($q,$ionicLoading,$cordovaToast,$rootScope
                                 // error
                             });
                     }
-                    else if (errorCode == 'Sorry network error.Please try again!') {
+                    else if ((errorCode == 'Sorry network error.Please try again!') && $rootScope.mobileDevice) {
                         $cordovaToast
                             .show('Already exists an account with the given email address.Please try with another email address.', 'long', 'center')
                             .then(function (success) {
@@ -91,57 +91,67 @@ app.factory('signUpService', function ($q,$ionicLoading,$cordovaToast,$rootScope
                     var errorCode = error.code;
                     var errorMessage = error.message;
                     if (errorCode == 'auth/email-already-in-use') {
-                        $cordovaToast
-                            .show('Already exists an account with the given email address.Please try with another email address.', 'long', 'center')
-                            .then(function (success) {
-                                // success
-                            }, function (error) {
-                                // error
-                            });
+                        if($rootScope.mobileDevice) {
+                            $cordovaToast
+                                .show('Already exists an account with the given email address.Please try with another email address.', 'long', 'center')
+                                .then(function (success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                        }
                         $rootScope.$broadcast('oldUserError', { message: 'usr logged in' });
 
                     }
                     else if (errorCode == 'auth/invalid-email') {
-                        $cordovaToast
-                            .show('The given email address is not valid.Please try with another email address.', 'long', 'center')
-                            .then(function (success) {
-                                // success
-                            }, function (error) {
-                                // error
-                            });
+                        if($rootScope.mobileDevice) {
+                            $cordovaToast
+                                .show('The given email address is not valid.Please try with another email address.', 'long', 'center')
+                                .then(function (success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                        }
                         $rootScope.$broadcast('oldUserError', { message: 'usr logged in' });
 
                     }
                     else if (errorCode == 'auth/operation-not-allowed') {
-                        $cordovaToast
-                            .show('Sorry, you can not sign Up by using email and password.', 'long', 'center')
-                            .then(function (success) {
-                                // success
-                            }, function (error) {
-                                // error
-                            });
+                        if($rootScope.mobileDevice) {
+                            $cordovaToast
+                                .show('Sorry, you can not sign Up by using email and password.', 'long', 'center')
+                                .then(function (success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                        }
 
                         $rootScope.$broadcast('oldUserError', { message: 'usr logged in' });
 
                     }
                     else if (errorCode == 'auth/weak-password') {
-                        $cordovaToast
-                            .show('The password is too weak.Please enter at-least six digit password', 'long', 'center')
-                            .then(function (success) {
-                                // success
-                            }, function (error) {
-                                // error
-                            });
+                        if($rootScope.mobileDevice) {
+                            $cordovaToast
+                                .show('The password is too weak.Please enter at-least six digit password', 'long', 'center')
+                                .then(function (success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                        }
                         $rootScope.$broadcast('oldUserError', { message: 'usr logged in' });
                     }
                     else if (errorCode == 'auth/network-request-failed') {
-                        $cordovaToast
-                            .show('Sorry network error.Please try again!', 'long', 'center')
-                            .then(function (success) {
-                                // success
-                            }, function (error) {
-                                // error
-                            });
+                        if($rootScope.mobileDevice) {
+                            $cordovaToast
+                                .show('Sorry network error.Please try again!', 'long', 'center')
+                                .then(function (success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                        }
                         $rootScope.$broadcast('oldUserError', { message: 'usr logged in' });
                     }
                     console.log("errorCode",errorCode,errorMessage)

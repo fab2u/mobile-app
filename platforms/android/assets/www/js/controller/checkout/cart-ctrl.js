@@ -59,9 +59,11 @@ app.controller("CartCtrl", function ($scope, $rootScope, $stateParams, $cordovaT
 
     $scope.edit_cart = function () {
         if (window.localStorage.getItem("selectedTab") == 'true') {
+            $ionicLoading.hide();
             $state.go('vendorSelectedMenu', {vendor_id: $stateParams.ven_id});
         }
         else {
+            $ionicLoading.hide();
             $state.go('vendorMenu', {'vendor_id': $stateParams.ven_id});
         }
     };
@@ -69,9 +71,11 @@ app.controller("CartCtrl", function ($scope, $rootScope, $stateParams, $cordovaT
     $scope.backButton = function () {
         //later on back history will be here////////
         if (window.localStorage.getItem("selectedTab") == 'true') {
+            $ionicLoading.hide();
             $state.go('vendorSelectedMenu', {vendor_id: $stateParams.ven_id});
         }
         else {
+            $ionicLoading.hide();
             $state.go('vendorMenu', {'vendor_id': $stateParams.ven_id});
         }
 
@@ -79,16 +83,20 @@ app.controller("CartCtrl", function ($scope, $rootScope, $stateParams, $cordovaT
 
     $scope.select_time = function () {
         if (_.size($scope.selectedServices) > 0) {
+            $ionicLoading.hide();
             $state.go('dateTime');
         }
         else {
-            $cordovaToast
-                .show('Please, select some service!', 'long', 'center')
-                .then(function (success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
+            $ionicLoading.hide();
+            if($rootScope.mobileDevice) {
+                $cordovaToast
+                    .show('Please, select some service!', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
         }
     };
 

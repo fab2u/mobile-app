@@ -229,13 +229,15 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
           window.localStorage.setItem("chosenTime", $scope.chosenTime);
         }
         else{
-          $cordovaToast
-              .show('Booking can only be done after 30 min from current time', 'long', 'center')
-              .then(function(success) {
-                // success
-              }, function (error) {
-                // error
-              });
+            if($rootScope.mobileDevice) {
+                $cordovaToast
+                    .show('Booking can only be done after 30 min from current time', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
 
         }
       }
@@ -254,13 +256,15 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
           window.localStorage.setItem("chosenTime", $scope.chosenTime);
         }
         else{
-          $cordovaToast
-              .show('Booking can only be done after 30 min from current time', 'long', 'center')
-              .then(function(success) {
-                // success
-              }, function (error) {
-                // error
-              });
+            if($rootScope.mobileDevice) {
+                $cordovaToast
+                    .show('Booking can only be done after 30 min from current time', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
         }
       }
     }
@@ -278,13 +282,15 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
           window.localStorage.setItem("chosenTime", $scope.chosenTime);
         }
         else{
-          $cordovaToast
-              .show('Booking can only be done after 30 min from current time', 'long', 'center')
-              .then(function(success) {
-                // success
-              }, function (error) {
-                // error
-              });
+            if($rootScope.mobileDevice) {
+                $cordovaToast
+                    .show('Booking can only be done after 30 min from current time', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
         }
       }
     }
@@ -302,13 +308,15 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
           window.localStorage.setItem("chosenTime", $scope.chosenTime);
         }
         else{
-          $cordovaToast
-              .show('Booking can only be done after 30 min from current time', 'long', 'center')
-              .then(function(success) {
-                // success
-              }, function (error) {
-                // error
-              });
+            if($rootScope.mobileDevice) {
+                $cordovaToast
+                    .show('Booking can only be done after 30 min from current time', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
         }
       }
     }
@@ -447,13 +455,15 @@ app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$c
       $state.go('confirmation');
     }
     else{
-      $cordovaToast
-          .show('Please select time for appointment', 'long', 'center')
-          .then(function(success) {
-            // success
-          }, function (error) {
-            // error
-          });
+        if($rootScope.mobileDevice) {
+            $cordovaToast
+                .show('Please select time for appointment', 'long', 'center')
+                .then(function (success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
+        }
     }
   };
 

@@ -1,11 +1,12 @@
 app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$location,$cordovaToast,
-								$ionicSlideBoxDelegate,$ionicHistory,allServiceList,homeServices) {
+								$ionicSlideBoxDelegate,$ionicHistory,allServiceList,$rootScope,
+								   homeServices) {
 	$ionicHistory.clearHistory();
 	$ionicHistory.clearCache();
 	$timeout(function () {
 		$ionicLoading.hide();
 	}, 10000);
-
+     console.log( $rootScope.mobileDevice)
 
 	/// clear all the un-required local Storage ////////////
 
@@ -166,23 +167,27 @@ app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$loca
 				$state.go('vendorList',{vendorPage:'serviceList'});
 			}
 			else{
+				if($rootScope.mobileDevice){
+					$cordovaToast
+						.show('No,vendor found for selected services.', 'long', 'center')
+						.then(function(success) {
+							// success
+						}, function (error) {
+							// error
+						});
+				}
+			}
+		}
+		else{
+			if($rootScope.mobileDevice) {
 				$cordovaToast
-					.show('No,vendor found for selected services.', 'long', 'center')
-					.then(function(success) {
+					.show('Please, select some services!', 'long', 'center')
+					.then(function (success) {
 						// success
 					}, function (error) {
 						// error
 					});
 			}
-		}
-		else{
-			$cordovaToast
-				.show('Please, select some services!', 'long', 'center')
-				.then(function(success) {
-					// success
-				}, function (error) {
-					// error
-				});
 		}
 	}
 

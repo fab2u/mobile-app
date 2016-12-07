@@ -1,5 +1,5 @@
 app.controller('ContactCtrl', function($state, $scope,$cordovaToast,$timeout,LocationService,
-                                       $ionicLoading) {
+                                       $ionicLoading,$rootScope) {
 
     $timeout(function () {
         $ionicLoading.hide();
@@ -31,25 +31,28 @@ app.controller('ContactCtrl', function($state, $scope,$cordovaToast,$timeout,Loc
             if(error){
                 $ionicLoading.hide();
                 $scope.user = {};
-                $cordovaToast
-                    .show('Please try again!', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
-                location.reload();
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('Please try again!', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
             }
             else{
                 $ionicLoading.hide();
                 $scope.user = {};
-                $cordovaToast
-                    .show('Thanks for submitting your query. We will soon get back to you.', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('Thanks for submitting your query. We will soon get back to you.', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
                 $state.go('app.home')
             }
         });

@@ -1,5 +1,5 @@
 app.controller('ReferCtrl',function($scope,userServices,$state,$cordovaSocialSharing,
-									$ionicLoading,$timeout,$cordovaToast){
+									$ionicLoading,$timeout,$cordovaToast,$rootScope){
 
     var uId = window.localStorage.getItem('uid');
 	$timeout(function () {
@@ -9,13 +9,15 @@ app.controller('ReferCtrl',function($scope,userServices,$state,$cordovaSocialSha
 		myReferral();
 	}
 	else{
-		$cordovaToast
-			.show('Please login/SignUp first!', 'long', 'center')
-			.then(function(success) {
-				// success
-			}, function (error) {
-				// error
-			});
+		if($rootScope.mobileDevice) {
+			$cordovaToast
+				.show('Please login/SignUp first!', 'long', 'center')
+				.then(function (success) {
+					// success
+				}, function (error) {
+					// error
+				});
+		}
 	}
 	 function myReferral() {
 		$ionicLoading.show();

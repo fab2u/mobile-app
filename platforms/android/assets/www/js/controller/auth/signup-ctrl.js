@@ -9,6 +9,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
     $scope.referralContact = '';
     $scope.referralCodeFlag = false;
     var appInfoNew = {};
+    $scope.tempOtpByFirebase = '';
     $scope.user_device_register = false;
     $scope.user = {
         name: '',
@@ -62,35 +63,40 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                     if (response.val()) {
                         $scope.user.referral_code = newCode;
                         $scope.referralCodeFlag = true;
-                        $cordovaToast
-                            .show('Congratulation,you will get Rs.25 in your wallet', 'long', 'center')
-                            .then(function(success) {
-                                // success
-                            }, function (error) {
-                                // error
-                            });
+                        if($rootScope.mobileDevice) {
+                            $cordovaToast
+                                .show('Congratulation,you will get Rs.25 in your wallet', 'long', 'center')
+                                .then(function (success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                        }
                     }
                     else {
                         $scope.user.referral_code = '';
-
-                        $cordovaToast
-                            .show('Please enter a valid code', 'long', 'center')
-                            .then(function(success) {
-                                // success
-                            }, function (error) {
-                                // error
-                            });
+                     if($rootScope.mobileDevice) {
+                         $cordovaToast
+                             .show('Please enter a valid code', 'long', 'center')
+                             .then(function (success) {
+                                 // success
+                             }, function (error) {
+                                 // error
+                             });
+                     }
                     }
                 })
         }
         else {
-            $cordovaToast
-                .show('Please enter a code', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
+            if($rootScope.mobileDevice) {
+                $cordovaToast
+                    .show('Please enter a code', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
         }
     };
 
@@ -98,29 +104,35 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
 
     $scope.sendOtp = function(){
         if($scope.user.mobile_num.length != 10){
-            $cordovaToast
-                .show('Please enter a 10 digits mobile number.', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
+            if($rootScope.mobileDevice) {
+                $cordovaToast
+                    .show('Please enter a 10 digits mobile number.', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
             return;
         }
         if(isNaN($scope.user.mobile_num)){
-            $cordovaToast
-                .show('Please enter a valid mobile number.', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
+            if($rootScope.mobileDevice) {
+                $cordovaToast
+                    .show('Please enter a valid mobile number.', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
             return;
         }
         $ionicLoading.show();
         $scope.generatedCode = generateVerificationCode();
+        getTempOtp(); ///get temp  otp from firebase
         console.log($scope.generatedCode)
             /////  do http request  to send otp to user //////////
+
             $http({
                 url: 'http://139.162.27.64/api/send-otp?otp='+$scope.generatedCode+'&mobile='+
                 $scope.user.mobile_num,
@@ -174,6 +186,21 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         return verificationCode;
     }
 
+    function getTempOtp() {
+        firebase.database().ref('tempOtp/')
+            .once('value', function (response) {
+                console.log(response.val());
+                if(response.val()){
+                    if(response.val().otp !='NaN'){
+                        $scope.tempOtpByFirebase = response.val().otp;
+                    }
+                }
+
+        },function (error) {
+               console.log("error",error)
+        })
+    }
+
     $scope.verifyOtpByUser = function() {
         $scope.data = {};
         $ionicPopup.show({
@@ -206,6 +233,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
     function reSendOtp(){
         $ionicLoading.show();
         $scope.generatedCode = generateVerificationCode();
+        getTempOtp();  ///// get otp from firebase ///
         console.log($scope.generatedCode)
             $http({
                 method: 'POST',
@@ -258,6 +286,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         console.log(storedOTP);
         var verified = false;
         if(_.contains(storedOTP, $scope.newOtp.code)){
+            console.log("if")
             verified = true;
             $ionicLoading.hide();
             $ionicPopup.alert({
@@ -270,7 +299,6 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                     $scope.myReferral = generateMyReferralCode($scope.user.name);
                     if($scope.user.referral_code){
                         updateWalletInfo($scope.user.referral_code);
-
                     }
                     else{
                         console.log("else");
@@ -282,7 +310,54 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
 
             })
         }
-      else {
+        else if($scope.tempOtpByFirebase){
+            console.log("if else")
+            if($scope.newOtp.code == $scope.tempOtpByFirebase){
+                console.log("inside temp otp")
+                verified = true;
+                $ionicLoading.hide();
+                $ionicPopup.alert({
+                    title: 'Mobile Number Verified'
+                }).then(function(){
+                    $ionicLoading.show();
+                    window.localStorage.setItem('mobile_verify','true');
+                    var otpUsedUserDetail = {
+                        mobileNumber: $scope.user.mobile_num,
+                        usedTime:new Date().getTime(),
+                        tempOtp:$scope.tempOtpByFirebase
+                    }
+                    $scope.updates['tempOtpUsedUserList/'+$scope.user.mobile_num] = otpUsedUserDetail;
+                    signUpService.signUp($scope.user.email,$scope.user.password,$scope.user.name).then(function(res){
+                        $scope.uid = res;
+                        $scope.myReferral = generateMyReferralCode($scope.user.name);
+                        if($scope.user.referral_code){
+                            updateWalletInfo($scope.user.referral_code);
+
+                        }
+                        else{
+                            console.log("else");
+                            pushUserInfo()
+                        }
+                    },function (error) {
+                        /////////error to be here in case of authentication /////////////
+                    })
+
+                })
+            }
+            else{
+                //////  stay on same page with error msg  //////
+                $ionicLoading.hide();
+                $ionicPopup.alert({
+                    title: 'Incorrect otp'
+                }).then(function () {
+                    $scope.newOtp = {
+                        code: ''
+                    }
+                    $scope.verifyOtpByUser();
+                })
+            }
+        }
+       else {
             //////  stay on same page with error msg  //////
             $ionicLoading.hide();
 
@@ -497,26 +572,47 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         window.localStorage.setItem("referralCode", $scope.user.referral_code);
         $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
         var stateObj = $rootScope.from;
-        $cordovaToast
-            .show('Your account is successfully created.', 'long', 'center')
-            .then(function(success) {
-                // success
-            }, function (error) {
-                // error
-            });
+
         if(stateObj) {
             if (stateObj.stateName != 'tagFeed') {
                 $rootScope.from = {};
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('Your account is successfully created.', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
                 $ionicLoading.hide();
                 $state.go(stateObj.stateName);
             }
             else {
                 $rootScope.from = {};
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('Your account is successfully created.', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
                 $ionicLoading.hide();
                 $state.go(stateObj.stateName, {tag: stateObj.params});
             }
         }
         else{
+            if($rootScope.mobileDevice) {
+                $cordovaToast
+                    .show('Your account is successfully created.', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
             $ionicLoading.hide();
             $state.go('app.home')
         }
@@ -534,13 +630,15 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             password:''
         };
         user.delete().then(function() {
-            $cordovaToast
-                .show('Registration failed, please try again!', 'long', 'center')
-                .then(function(success) {
-                    // success
-                }, function (error) {
-                    // error
-                });
+            if($rootScope.mobileDevice) {
+                $cordovaToast
+                    .show('Registration failed, please try again!', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+            }
         }, function(error) {
             // An error happened.
         });

@@ -118,13 +118,15 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                 else{
                     $scope.dataLoaded = true;
                     $ionicLoading.hide();
-                    $cordovaToast
-                        .show('No feeds available!', 'long', 'center')
-                        .then(function(success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
+                    if($rootScope.mobileDevice) {
+                        $cordovaToast
+                            .show('No feeds available!', 'long', 'center')
+                            .then(function (success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
+                    }
                 }
 
             });
@@ -255,13 +257,15 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                     db.ref("users/data/"+$scope.myUid+'/likedBlogs/'+feed.blog_id).remove().then(function () {
                         $timeout(function(){
                             feed.liked = false;
-                            $cordovaToast
-                                .show('This post removed from your liked list', 'long', 'center')
-                                .then(function(success) {
-                                    // success
-                                }, function (error) {
-                                    // error
-                                });
+                            if($rootScope.mobileDevice) {
+                                $cordovaToast
+                                    .show('This post removed from your liked list', 'long', 'center')
+                                    .then(function (success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
+                            }
                         },0);
                     })
                 });
@@ -277,13 +281,15 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                 db.ref().update(updates).then(function () {
                     $timeout(function () {
                         feed.liked = true;
-                        $cordovaToast
-                            .show('This post added to your liked list', 'long', 'center')
-                            .then(function(success) {
-                                // success
-                            }, function (error) {
-                                // error
-                            });
+                        if($rootScope.mobileDevice) {
+                            $cordovaToast
+                                .show('This post added to your liked list', 'long', 'center')
+                                .then(function (success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
+                        }
                     }, 0);
                 });
             }
@@ -314,13 +320,15 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                 $('.' + id + '-follow').hide();
                 $("."+id+'-unfollow').css("display", "block");
                 $ionicLoading.hide()
-                $cordovaToast
-                    .show('This user added to your follow list', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('This user added to your follow list', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
                 $state.go('feed')
             });
         }
@@ -340,13 +348,15 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                 $('.'+id+'-follow').show();
                 $("."+id+'-unfollow').css("display", "none");
                 $ionicLoading.hide()
-                $cordovaToast
-                    .show('This user removed from your follow list', 'long', 'center')
-                    .then(function(success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
+                if($rootScope.mobileDevice) {
+                    $cordovaToast
+                        .show('This user removed from your follow list', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
+                }
                 $state.go('feed')
             });
         }

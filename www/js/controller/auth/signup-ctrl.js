@@ -49,7 +49,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             console.log("else")
         }
     }
-    //deviceRegistered();
+    deviceRegistered();
 
     /////////////////////////////// To check apply referral code valid or not ////////////////
 

@@ -135,7 +135,7 @@ app.controller('VendorListCtrl',
 
         function start_filtering(filters) {
             if ($scope.vendorsForFilter.length == 0) {
-                if($rootScope.mobileDevice) {
+
                     $cordovaToast
                         .show('No,vendor found for selected criteria.', 'long', 'center')
                         .then(function (success) {
@@ -143,7 +143,7 @@ app.controller('VendorListCtrl',
                         }, function (error) {
                             // error
                         });
-                }
+
             }
             else {
                 $scope.bindedVendors = [];

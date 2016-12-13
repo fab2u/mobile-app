@@ -341,7 +341,7 @@ app.controller('VendorDetailsCtrl',
                                 $state.reload();
                                 $ionicLoading.hide();
                                 $rootScope.$broadcast('reviewList', { message: 'review list changed' });
-                                if($rootScope.mobileDevice) {
+
                                     $cordovaToast
                                         .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
                                         .then(function (success) {
@@ -349,12 +349,11 @@ app.controller('VendorDetailsCtrl',
                                         }, function (error) {
                                             // error
                                         });
-                                }
+
                                 $scope.rate_vendor.hide();
                             });
                         }
                         else{
-                            if($rootScope.mobileDevice) {
                                 $cordovaToast
                                     .show('Something went wrong!', 'long', 'center')
                                     .then(function (success) {
@@ -362,13 +361,13 @@ app.controller('VendorDetailsCtrl',
                                     }, function (error) {
                                         // error
                                     });
-                            }
+
                         }
                     })
                 }
             }
             else{
-                if($rootScope.mobileDevice) {
+
                     $cordovaToast
                         .show('Please login first!', 'long', 'center')
                         .then(function (success) {
@@ -376,7 +375,7 @@ app.controller('VendorDetailsCtrl',
                         }, function (error) {
                             // error
                         });
-                }
+
             }
         };
 
@@ -395,7 +394,7 @@ app.controller('VendorDetailsCtrl',
         $scope.storeEditReview = function(data){
             if(localStorage.getItem('uid')){
                 if($scope.custReview.rating == 0){
-                    if($rootScope.mobileDevice) {
+
                         $cordovaToast
                             .show('Please, select rating', 'long', 'center')
                             .then(function (success) {
@@ -403,7 +402,7 @@ app.controller('VendorDetailsCtrl',
                             }, function (error) {
                                 // error
                             });
-                    }
+
                 }
                 else{
                     var updates = {};
@@ -455,7 +454,7 @@ app.controller('VendorDetailsCtrl',
                                 $state.reload();
                                 $ionicLoading.hide();
                                 $rootScope.$broadcast('reviewList', { message: 'review list changed' });
-                                if($rootScope.mobileDevice) {
+
                                     $cordovaToast
                                         .show('Thanks for reviewing, your feedback is important to us.', 'long', 'center')
                                         .then(function (success) {
@@ -463,12 +462,12 @@ app.controller('VendorDetailsCtrl',
                                         }, function (error) {
                                             // error
                                         });
-                                }
+
                                 $scope.edit_rate_vendor.hide();
                             });
                         }
                         else{
-                            if($rootScope.mobileDevice) {
+
                                 $cordovaToast
                                     .show('Something went wrong!', 'long', 'center')
                                     .then(function (success) {
@@ -476,13 +475,13 @@ app.controller('VendorDetailsCtrl',
                                     }, function (error) {
                                         // error
                                     });
-                            }
                         }
+
                     })
                 }
             }
             else{
-                if($rootScope.mobileDevice) {
+
                     $cordovaToast
                         .show('Please login first!', 'long', 'center')
                         .then(function (success) {
@@ -490,7 +489,7 @@ app.controller('VendorDetailsCtrl',
                         }, function (error) {
                             // error
                         });
-                }
+
             }
         }
 
@@ -533,7 +532,7 @@ app.controller('VendorDetailsCtrl',
                     .set(favouriteData,function(response) {
                         if(response ==null){
                             $scope.liked  = !$scope.liked ;
-                            if($rootScope.mobileDevice) {
+
                                 $cordovaToast
                                     .show('Vendor added to your favorite list.', 'long', 'center')
                                     .then(function (success) {
@@ -541,10 +540,10 @@ app.controller('VendorDetailsCtrl',
                                     }, function (error) {
                                         // error
                                     });
-                            }
+
                         }
                         else{
-                            if($rootScope.mobileDevice) {
+
                                 $cordovaToast
                                     .show('Sorry, we can not added this vendor to your favourite vendor list. Please try again!', 'long', 'center')
                                     .then(function (success) {
@@ -552,12 +551,12 @@ app.controller('VendorDetailsCtrl',
                                     }, function (error) {
                                         // error
                                     });
-                            }
+
                         }
                     })
             }
             else{
-                if($rootScope.mobileDevice) {
+
                     $cordovaToast
                         .show('Please login/SignUp first!.', 'long', 'center')
                         .then(function (success) {
@@ -565,7 +564,7 @@ app.controller('VendorDetailsCtrl',
                         }, function (error) {
                             // error
                         });
-                }
+
             }
 
         };
@@ -587,7 +586,7 @@ app.controller('VendorDetailsCtrl',
                 $state.go('cart',{'ven_id':$stateParams.ven_id});
             }
             else{
-                if($rootScope.mobileDevice) {
+
                     $cordovaToast
                         .show('Please select at least one service.', 'long', 'center')
                         .then(function (success) {
@@ -595,7 +594,7 @@ app.controller('VendorDetailsCtrl',
                         }, function (error) {
                             // error
                         });
-                }
+
             }
         };
 

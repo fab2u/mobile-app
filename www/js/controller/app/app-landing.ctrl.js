@@ -74,7 +74,6 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                                 registerOldUser();
                             }
                             else{
-                                if($rootScope.mobileDevice) {
                                     $cordovaToast
                                         .show('Please enter at-least six digit password!', 'long', 'center')
                                         .then(function (success) {
@@ -82,7 +81,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                                         }, function (error) {
                                             // error
                                         });
-                                }
+
                                 signUpOldUser();
                             }
                         }
@@ -188,7 +187,6 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                 // $state.go('intro-slider');
                 $scope.oldUser = true;
                 initialiseAppInfo();
-                if($rootScope.mobileDevice) {
                     $cordovaToast
                         .show('Thank you.Your password set successfully!', 'long', 'center')
                         .then(function (success) {
@@ -196,7 +194,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                         }, function (error) {
                             // error
                         });
-                }
+
             }
             else{
 

@@ -82,7 +82,7 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 		$rootScope.$broadcast('location', { message: 'location changed' });
 		$timeout( function() {
 			$scope.location.hide();
-			$state.go('app.home');
+			$state.go('feed');
 		}, 500);
 	};
 });

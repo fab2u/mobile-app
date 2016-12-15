@@ -6,7 +6,6 @@ app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$loca
 	$timeout(function () {
 		$ionicLoading.hide();
 	}, 10000);
-     console.log( $rootScope.mobileDevice)
 
 	/// clear all the un-required local Storage ////////////
 
@@ -190,5 +189,7 @@ app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$loca
 
 		}
 	}
+
+
 
 });

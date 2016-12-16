@@ -13,7 +13,7 @@ app.controller('UserWalletCtrl',function($scope,$state,userServices,$ionicLoadin
 		getWalletInfo();
 	}
 	else{
-		if($rootScope.mobileDevice) {
+
 			$cordovaToast
 				.show('Please login/SignUp first!', 'long', 'center')
 				.then(function (success) {
@@ -21,7 +21,7 @@ app.controller('UserWalletCtrl',function($scope,$state,userServices,$ionicLoadin
 				}, function (error) {
 					// error
 				});
-		}
+
 	}
 
 	// To get user wallet information for wallet money and transactions

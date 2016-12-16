@@ -107,10 +107,9 @@
 
 #vendor-services .cart-price {
 	float: right;
-	width: -moz-max-content;
-	width: -webkit-max-content;
 	width: max-content;
 	padding: 0px 5px;
+	max-width: 95%;
 
 }
 #vendor-services .cart-price .gender{

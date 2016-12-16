@@ -28,7 +28,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                   if(stateObj) {
                      if (stateObj.stateName != 'tagFeed') {
                         $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-                        if($rootScope.mobileDevice) {
+
                            $cordovaToast
                                .show('Logged in successfully!', 'long', 'center')
                                .then(function (success) {
@@ -36,14 +36,14 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                                }, function (error) {
                                   // error
                                });
-                        }
+
                         $ionicLoading.hide();
                        $rootScope.from = {};
                         $state.go(stateObj.stateName);
                      }
                      else {
                         $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-                        if($rootScope.mobileDevice) {
+
                            $cordovaToast
                                .show('Logged in successfully!', 'long', 'center')
                                .then(function (success) {
@@ -51,7 +51,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                                }, function (error) {
                                   // error
                                });
-                        }
+
                         $ionicLoading.hide();
                         $rootScope.from = {};
                         $state.go(stateObj.stateName, {tag: stateObj.params});
@@ -60,7 +60,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                   }
                   else{
                      $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-                     if($rootScope.mobileDevice) {
+
                         $cordovaToast
                             .show('Logged in successfully!', 'long', 'center')
                             .then(function (success) {
@@ -68,7 +68,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                             }, function (error) {
                                // error
                             });
-                     }
+
                      $ionicLoading.hide();
                      $state.go('app.home')
                   }
@@ -76,7 +76,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                }
                else{
                   $ionicLoading.hide();
-                  if($rootScope.mobileDevice) {
+
                      $cordovaToast
                          .show('User not found. Please signup to continue.', 'long', 'center')
                          .then(function (success) {
@@ -84,7 +84,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                          }, function (error) {
                             // error
                          });
-                  }
+
                }
 
             });
@@ -93,7 +93,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-            if(errorCode === 'auth/invalid-email' && $rootScope.mobileDevice){
+            if(errorCode === 'auth/invalid-email'){
                $cordovaToast
                    .show('You entered wrong email address!', 'long', 'center')
                    .then(function(success) {
@@ -102,7 +102,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                       // error
                    });
             }
-            else if(errorCode === 'auth/user-disabled' && $rootScope.mobileDevice){
+            else if(errorCode === 'auth/user-disabled'){
                $cordovaToast
                    .show('Your access is temporary denied!', 'long', 'center')
                    .then(function(success) {
@@ -111,7 +111,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                       // error
                    });
             }
-            else if(errorCode === 'auth/user-not-found' && $rootScope.mobileDevice){
+            else if(errorCode === 'auth/user-not-found'){
                $cordovaToast
                    .show('Sorry,currently you are not registered with us!', 'long', 'center')
                    .then(function(success) {
@@ -120,7 +120,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                       // error
                    });
             }
-            else if(errorCode === 'auth/wrong-password' && $rootScope.mobileDevice){
+            else if(errorCode === 'auth/wrong-password'){
                $cordovaToast
                    .show('You entered wrong password!', 'long', 'center')
                    .then(function(success) {

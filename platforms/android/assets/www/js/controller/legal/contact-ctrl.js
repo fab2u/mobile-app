@@ -31,7 +31,7 @@ app.controller('ContactCtrl', function($state, $scope,$cordovaToast,$timeout,Loc
             if(error){
                 $ionicLoading.hide();
                 $scope.user = {};
-                if($rootScope.mobileDevice) {
+
                     $cordovaToast
                         .show('Please try again!', 'long', 'center')
                         .then(function (success) {
@@ -39,12 +39,12 @@ app.controller('ContactCtrl', function($state, $scope,$cordovaToast,$timeout,Loc
                         }, function (error) {
                             // error
                         });
-                }
+
             }
             else{
                 $ionicLoading.hide();
                 $scope.user = {};
-                if($rootScope.mobileDevice) {
+
                     $cordovaToast
                         .show('Thanks for submitting your query. We will soon get back to you.', 'long', 'center')
                         .then(function (success) {
@@ -52,7 +52,7 @@ app.controller('ContactCtrl', function($state, $scope,$cordovaToast,$timeout,Loc
                         }, function (error) {
                             // error
                         });
-                }
+
                 $state.go('app.home')
             }
         });

@@ -293,7 +293,7 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
                 }
                 else{
                     $ionicLoading.hide();
-                    if($rootScope.mobileDevice) {
+
                         $cordovaToast
                             .show('No,menu found for this vendor,please select another vendor!', 'long', 'center')
                             .then(function (success) {
@@ -301,7 +301,7 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
                             }, function (error) {
                                 // error
                             });
-                    }
+
                 }
             })
         }
@@ -536,7 +536,7 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
 
                 }
                 else{
-                    if($rootScope.mobileDevice) {
+
                         $cordovaToast
                             .show('Please, select some services!', 'long', 'center')
                             .then(function (success) {
@@ -544,7 +544,7 @@ app.controller('VendorServicesListCtrl',function($scope, $ionicSlideBoxDelegate,
                             }, function (error) {
                                 // error
                             });
-                    }
+
                 }
             };
 

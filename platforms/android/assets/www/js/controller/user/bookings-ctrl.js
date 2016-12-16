@@ -188,7 +188,7 @@ var count3 = 0;
 			$state.go('app.home');
 			$ionicLoading.hide();
 			if($scope.bookingInformation.walletAmount>0){
-				if($rootScope.mobileDevice) {
+
 					$cordovaToast
 						.show('Your booking is cancelled. Rs.' + $scope.bookingInformation.walletAmount + 'is successfully refunded in your wallet', 'long', 'center')
 						.then(function (success) {
@@ -196,10 +196,10 @@ var count3 = 0;
 						}, function (error) {
 							// error
 						});
-				}
+
 			}
 			else{
-				if($rootScope.mobileDevice) {
+
 					$cordovaToast
 						.show('Your booking is cancelled.', 'long', 'center')
 						.then(function (success) {
@@ -207,7 +207,7 @@ var count3 = 0;
 						}, function (error) {
 							// error
 						});
-				}
+
 			}
 		});
 	}

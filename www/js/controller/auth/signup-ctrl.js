@@ -445,15 +445,18 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                     };
                     $scope.referredByUid = response.val().uid;
                     if($scope.referredByUid) {
-                        firebase.database().ref('users/data/' + $scope.referredByUid)
+                            firebase.database().ref('users/data/' + $scope.referredByUid)
                             .once('value', function (response) {
+                                console.log("response",JSON.stringify(response.val()))
                                 $scope.referralName = response.val().name;
                                 $scope.referralContact = response.val().mobile.mobileNum;
+                                pushUserInfo();
                             })
-
                     }
                     else {
                         $scope.referredByUid = '';
+                        pushUserInfo();
+
                     }
                     var referredUserInfo = {
                         userUid:$scope.uid,
@@ -468,8 +471,9 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                 }
                 else{
                     $ionicLoading.hide();
+                    pushUserInfo();
+
                 }
-                pushUserInfo();
             })
     }
 
@@ -627,7 +631,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             password:''
         };
         user.delete().then(function() {
-
+                //
                 $cordovaToast
                     .show('Registration failed, please try again!', 'long', 'center')
                     .then(function (success) {

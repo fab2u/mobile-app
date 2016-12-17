@@ -1,6 +1,6 @@
 app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeout,$sce, $state,
                                        $location, $ionicLoading, $ionicModal,$cordovaToast,
-                                       $ionicPopup,$rootScope){
+                                       $ionicPopup,$rootScope, $ionicPopover){
 
 	$ionicLoading.show();
 	$scope.uid = window.localStorage.getItem("uid");
@@ -417,4 +417,19 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
             showLoginSignUp();
         }
     };
+          // dg ionic popver code start
+    $ionicPopover.fromTemplateUrl('templates/popover.html', {
+        scope: $scope,
+    }).then(function(popover) {
+        $scope.popover = popover;
+    });
+
+    $scope.demo = 'ios';
+    $scope.setPlatform = function(p) {
+        document.body.classList.remove('platform-ios');
+        document.body.classList.remove('platform-android');
+        document.body.classList.add('platform-' + p);
+        $scope.demo = p;
+    }
+    // dg ionic popover code end
 });

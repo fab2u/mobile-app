@@ -160,7 +160,8 @@ float:right;
 
 .fabFeed a{
 	text-decoration: none;
-	font-size: 15px;
+	font-size: 14px; 
+	
 }
 
 .fabFeed .follow-btn{

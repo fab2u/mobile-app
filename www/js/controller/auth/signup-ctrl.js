@@ -574,11 +574,9 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         window.localStorage.setItem("referralCode", $scope.user.referral_code);
         $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
         var stateObj = $rootScope.from;
-
-        if(stateObj) {
+        if(stateObj && (Object.keys(stateObj).length > 0)) {
             if (stateObj.stateName != 'tagFeed') {
                 $rootScope.from = {};
-
                     $cordovaToast
                         .show('Your account is successfully created.', 'long', 'center')
                         .then(function (success) {

@@ -1,6 +1,6 @@
 app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLoading,
                                            $ionicModal,userInfoService, $ionicPopup, $state,
-                                           $sce,$cordovaToast,$rootScope) {
+                                           $sce,$cordovaToast,$rootScope, $ionicPopover) {
 
     $ionicLoading.show();
     $scope.blogLength = 0;
@@ -428,6 +428,22 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
         }
 
     };
+
+    // dg ionic popver code start
+    $ionicPopover.fromTemplateUrl('templates/popover.html', {
+        scope: $scope,
+    }).then(function(popover) {
+        $scope.popover = popover;
+    });
+
+    $scope.demo = 'ios';
+    $scope.setPlatform = function(p) {
+        document.body.classList.remove('platform-ios');
+        document.body.classList.remove('platform-android');
+        document.body.classList.add('platform-' + p);
+        $scope.demo = p;
+    }
+    // dg ionic popover code end
 
 });
 

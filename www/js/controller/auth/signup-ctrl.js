@@ -49,7 +49,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             console.log("else")
         }
     }
-    deviceRegistered();
+//    deviceRegistered();
 
     /////////////////////////////// To check apply referral code valid or not ////////////////
 
@@ -481,8 +481,8 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         var userData = {
             activeFlag:true,
             createdTime:new Date().getTime(),
-            deviceId: $cordovaDevice.getDevice().uuid,
-            deviceName:$cordovaDevice.getDevice().manufacturer,
+            // deviceId: $cordovaDevice.getDevice().uuid,
+            // deviceName:$cordovaDevice.getDevice().manufacturer,
             email:{
                 userEmail:$scope.user.email,
                 verifiedTime:'',
@@ -573,49 +573,58 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         window.localStorage.setItem("uid", $scope.uid);
         window.localStorage.setItem("referralCode", $scope.user.referral_code);
         $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
-        var stateObj = $rootScope.from;
-        if(stateObj && (Object.keys(stateObj).length > 0)) {
-            if (stateObj.stateName != 'tagFeed') {
-                $rootScope.from = {};
-                    $cordovaToast
-                        .show('Your account is successfully created.', 'long', 'center')
-                        .then(function (success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
-
-                $ionicLoading.hide();
-                $state.go(stateObj.stateName);
-            }
-            else {
-                $rootScope.from = {};
-
-                    $cordovaToast
-                        .show('Your account is successfully created.', 'long', 'center')
-                        .then(function (success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
-
-                $ionicLoading.hide();
-                $state.go(stateObj.stateName, {tag: stateObj.params});
-            }
-        }
-        else{
-
-                $cordovaToast
-                    .show('Your account is successfully created.', 'long', 'center')
-                    .then(function (success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
-
-            $ionicLoading.hide();
-            $state.go('app.home')
-        }
+        $ionicLoading.hide();
+        // $cordovaToast
+        //     .show('Your account is successfully created.', 'long', 'center')
+        //     .then(function (success) {
+        //         // success
+        //     }, function (error) {
+        //         // error
+        //     });
+        $state.go('interests');
+        // var stateObj = $rootScope.from;
+        // if(stateObj && (Object.keys(stateObj).length > 0)) {
+        //     if (stateObj.stateName != 'tagFeed') {
+        //         $rootScope.from = {};
+        //             $cordovaToast
+        //                 .show('Your account is successfully created.', 'long', 'center')
+        //                 .then(function (success) {
+        //                     // success
+        //                 }, function (error) {
+        //                     // error
+        //                 });
+        //
+        //         $ionicLoading.hide();
+        //         $state.go(stateObj.stateName);
+        //     }
+        //     else {
+        //         $rootScope.from = {};
+        //
+        //             $cordovaToast
+        //                 .show('Your account is successfully created.', 'long', 'center')
+        //                 .then(function (success) {
+        //                     // success
+        //                 }, function (error) {
+        //                     // error
+        //                 });
+        //
+        //         $ionicLoading.hide();
+        //         $state.go(stateObj.stateName, {tag: stateObj.params});
+        //     }
+        // }
+        // else{
+        //
+        //         $cordovaToast
+        //             .show('Your account is successfully created.', 'long', 'center')
+        //             .then(function (success) {
+        //                 // success
+        //             }, function (error) {
+        //                 // error
+        //             });
+        //
+        //     $ionicLoading.hide();
+        //     $state.go('app.home')
+        // }
     }
 
     function deleteUser() {

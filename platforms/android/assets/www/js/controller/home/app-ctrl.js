@@ -55,7 +55,7 @@ app.controller('AppCtrl', function($scope,$state,$rootScope,$ionicPopup,$ionicLo
 	};
 	$rootScope.$on('logout', function (event, args) {
 		$scope.uid = '';
-		if($rootScope.mobileDevice) {
+
 			$cordovaToast
 				.show('Logged out successfully!', 'long', 'center')
 				.then(function (success) {
@@ -63,7 +63,7 @@ app.controller('AppCtrl', function($scope,$state,$rootScope,$ionicPopup,$ionicLo
 				}, function (error) {
 					// error
 				});
-		}
+
 	});
 
 	////////////Rate us over play store or iTunes   ////////////////////////////////

@@ -5,7 +5,7 @@
         <form name="signupForm">
             <div id="detailsform">
                 <center>
-                    <img src="img/fab2u.png" width=50%; height=50%>
+                    <img src="img/logo-app-new.png" width=50%; height=50%>
                 </center>
                 <div class="create" style="">
                     <center>
@@ -47,12 +47,6 @@
                     </div>
                 </div>
             </div>
-            <center>
-                <input type="radio" name="gender" value="male" ng-model="user.gender"
-                       style="height: 25px;width: 25px;vertical-align: middle" required> Male
-                <input type="radio" name="gender" value="female" ng-model="user.gender"
-                       style="height: 25px;width: 25px; vertical-align: middle" required> Female
-            </center>
             <button class="button button-block button-balanced" ng-click="sendOtp()" ng-disabled="signupForm.$invalid">
                 SIGN UP
             </button>

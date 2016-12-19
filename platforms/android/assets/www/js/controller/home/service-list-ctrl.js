@@ -370,7 +370,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
     $scope.findVendors = function() {
         var itemLength = _.size($scope.selectedServices);
         if(itemLength == 0){
-            if($rootScope.mobileDevice) {
+
                 $cordovaToast
                     .show('Please select at least one service', 'long', 'center')
                     .then(function (success) {
@@ -378,7 +378,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                     }, function (error) {
                         // error
                     });
-            }
+
         }
         else{
             $scope.serviceIds = [];
@@ -420,7 +420,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                 $state.go('vendorList',{vendorPage:'serviceList'});
             }
             else{
-                if($rootScope.mobileDevice) {
+
                     $cordovaToast
                         .show('No,vendor found for selected services.', 'long', 'center')
                         .then(function (success) {
@@ -428,7 +428,7 @@ app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate
                         }, function (error) {
                             // error
                         });
-                }
+
             }
         }
     };

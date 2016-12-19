@@ -214,6 +214,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
 
         $scope.myFollowers = function(val){
             $ionicLoading.show();
+            console.log("val",val)
             if(val){
                 window.localStorage['myFollowers'] = JSON.stringify($scope.myFollowersDetail);
                 $ionicLoading.hide();

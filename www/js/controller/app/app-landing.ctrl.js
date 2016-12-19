@@ -356,13 +356,13 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                         }
                         else{
                             $ionicLoading.hide();
-                            $state.go('app.home');
+                            $state.go('feed');
                         }
                     }
                 }
                 else{
                     $ionicLoading.hide();
-                    $state.go('app.home');
+                    $state.go('feed');
                 }
             }
             else if((!hasCurrentBooking) && (localStorage.getItem('uid'))){
@@ -370,12 +370,12 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
             }
             else{
                 $ionicLoading.hide();
-                $state.go('app.home');
+                $state.go('feed');
             }
         }
         else{
             $ionicLoading.hide();
-            $state.go('app.home');
+            $state.go('feed');
         }
     }
 
@@ -392,14 +392,14 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
                    }
                    else{
                     $ionicLoading.hide();
-                       $state.go('app.home');
+                       $state.go('feed');
                    }
                }
            }
            else{
               var allBookingInfo = {};
               $ionicLoading.hide();
-               $state.go('app.home');
+               $state.go('feed');
            }
         })
     }

@@ -1,4 +1,4 @@
-app.controller("followCtrl", function(userServices,$scope,$stateParams,$state,$timeout,$ionicLoading){
+app.controller("followCtrl", function(userServices,$scope,$stateParams,$cordovaToast,$state,$timeout,$ionicLoading){
 
     var FollowIds = JSON.parse(window.localStorage['iFollowingIds']);
     $scope.IfollowingUserDetail = [];
@@ -19,8 +19,14 @@ app.controller("followCtrl", function(userServices,$scope,$stateParams,$state,$t
         $ionicLoading.show();
         for(key in info){
             userServices.getUserInfo(key).then(function (result) {
+                if(result.blogs){
                     result.postNum = Object.keys(result.blogs).length;
                     $scope.IfollowingUserDetail.push(result);
+                }
+                else{
+                    $scope.IfollowingUserDetail.push(result);
+                }
+
             })
         }
         $timeout(function () {
@@ -28,9 +34,22 @@ app.controller("followCtrl", function(userServices,$scope,$stateParams,$state,$t
         }, 1500);
     }
 
-    $scope.viewPosts = function (followId) {
-        $ionicLoading.hide();
-        $state.go('followPosts',{followId:followId})
+    $scope.viewPosts = function (followId,postNum) {
+        if(postNum){
+            $ionicLoading.hide();
+            $state.go('followPosts',{followId:followId})
+        }
+        else{
+            $ionicLoading.hide();
+            $cordovaToast
+                .show('Sorry we do not found any post regarding to select user.', 'long', 'center')
+                .then(function (success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
+        }
+
     };
     $scope.goBack = function(){
         $ionicLoading.hide();

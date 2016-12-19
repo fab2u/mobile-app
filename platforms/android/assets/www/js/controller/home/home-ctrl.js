@@ -6,7 +6,6 @@ app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$loca
 	$timeout(function () {
 		$ionicLoading.hide();
 	}, 10000);
-     console.log( $rootScope.mobileDevice)
 
 	/// clear all the un-required local Storage ////////////
 
@@ -32,10 +31,6 @@ app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$loca
 	}
 	$scope.fabSelected = false;
 	var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
-	$scope.offers = [
-		{offer: 'Refer a friend and get hidden gift', image: 'img/home/slider/slider1.jpg'},
-		{offer: 'Refer a friend and get hidden gift', image: 'img/home/slider/slider2.jpg'}
-	];
 
 	$scope.categories = [
 		{catHeading: 'Salons', catSubheading: 'Be Bold, Be Daring, Be Fabulous', catImg: 'img/home/cat/salon.jpg'},
@@ -57,7 +52,7 @@ app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$loca
 	};
 
 	/////////////////////////////Get home banners for selected city////////////////////////
-	function get_banners(){
+	function getBanners(){
 		$ionicLoading.show();
 		homeServices.getSelectedCityBanner(locationInfo.cityId).then(function(result){
 			if(result){
@@ -74,21 +69,12 @@ app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$loca
 			}
 		})
 	}
-	get_banners();
+	getBanners();
 
 
 	//////////////////////end get banners function /////////////////////////////////
 	///////////////////////Get vendor list regarding to their services /////////////
 
-	function getVendorServiceList(){
-		allServiceList.getAllServices(locationInfo.cityId).then(function (response) {
-			var result = response;
-			var version = response.version;
-			window.localStorage['VendorServiceList'] = JSON.stringify(result);
-			window.localStorage['VendorServiceListVersion'] = version;
-			$scope.VendorIdForService  = response;
-		})
-	}
 	if(!checkLocalStorage('VendorServiceList')){
 		getVendorServiceList()
 	}
@@ -101,6 +87,15 @@ app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$loca
 			else{
 				$scope.VendorIdForService = JSON.parse(window.localStorage['VendorServiceList']);
 			}
+		})
+	}
+	function getVendorServiceList(){
+		allServiceList.getAllServices(locationInfo.cityId).then(function (response) {
+			var result = response;
+			var version = response.version;
+			window.localStorage['VendorServiceList'] = JSON.stringify(result);
+			window.localStorage['VendorServiceListVersion'] = version;
+			$scope.VendorIdForService  = response;
 		})
 	}
 
@@ -134,7 +129,6 @@ app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$loca
 
 	function VendorIdsForSelectedCategory(serviceId) {
 		if(serviceId){
-			console.log("serviceId",serviceId)
 			$scope.finalServiceIds = _.uniq(serviceId)
 			$scope.vendorIds = [];
 			var count = 0;
@@ -167,7 +161,7 @@ app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$loca
 				$state.go('vendorList',{vendorPage:'serviceList'});
 			}
 			else{
-				if($rootScope.mobileDevice){
+
 					$cordovaToast
 						.show('No,vendor found for selected services.', 'long', 'center')
 						.then(function(success) {
@@ -175,11 +169,11 @@ app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$loca
 						}, function (error) {
 							// error
 						});
-				}
+
 			}
 		}
 		else{
-			if($rootScope.mobileDevice) {
+
 				$cordovaToast
 					.show('Please, select some services!', 'long', 'center')
 					.then(function (success) {
@@ -187,8 +181,10 @@ app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$loca
 					}, function (error) {
 						// error
 					});
-			}
+
 		}
 	}
+
+
 
 });

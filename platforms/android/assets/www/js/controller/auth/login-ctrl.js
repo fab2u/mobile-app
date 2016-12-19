@@ -63,7 +63,7 @@ app.controller('LoginCtrl',function($scope,$ionicHistory,$state, AuthenticationS
 									sentPopup();
 						      }, function(error) {
 						         console.log(error);
-                                  if($rootScope.mobileDevice) {
+
                                       $cordovaToast
                                           .show(error.message, 'long', 'center')
                                           .then(function (success) {
@@ -71,7 +71,7 @@ app.controller('LoginCtrl',function($scope,$ionicHistory,$state, AuthenticationS
                                           }, function (error) {
                                               // error
                                           });
-                                  }
+
 						      });
                         return $scope.data.model;
                      }

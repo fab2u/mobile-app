@@ -9,7 +9,7 @@ app.controller('LoginCtrl',function($scope,$ionicHistory,$state, AuthenticationS
         console.log("else",$ionicHistory.viewHistory().histories.root)
         var stateObj = $rootScope.from;
         console.log("stateName",stateObj);
-        if(stateObj){
+        if(stateObj && (Object.keys(stateObj).length > 0)){
             if(stateObj.stateName == 'confirmation'){
                 $ionicLoading.hide();
                 $state.go('dateTime')

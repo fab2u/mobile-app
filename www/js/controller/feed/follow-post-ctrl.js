@@ -78,6 +78,31 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
     //     $scope.loadMore();
     // });
 
+
+    $scope.doRefresh = function () {
+        console.log("top key",$scope.topKey)
+        db.ref("users/data/"+followId+"/blogs").orderByKey().startAt($scope.topKey).once("value", function (snapshot) {
+            console.log(snapshot.val());
+            if (snapshot.numChildren() == 1) {
+                console.log('one child');
+                $scope.moreMessagesRefresh = false;
+            }
+            else {
+                console.log(snapshot.val());
+                $scope.prevTopKey = $scope.topKey;
+                $scope.topKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1];
+                var single_blog = {};
+                for (var i in snapshot.val()) {
+                    // console.log(i); // i is the key of blogs object or the id of each blog
+                    if (i != $scope.prevTopKey) {
+                        blogAlgo(i);
+                    }
+                }
+            }
+            $scope.$broadcast('scroll.refreshComplete');
+        })
+    };
+
     $scope.loadMore = function(){
         $ionicLoading.show()
         if(Object.keys($scope.blogIdList).length > 0){
@@ -107,6 +132,8 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                     $scope.blogIdList = snapshot.val();
                     if($scope.blogIdList !== null){
                         $scope.bottomKey = Object.keys($scope.blogIdList)[0];
+                        $scope.topKey = Object.keys($scope.blogIdList)[Object.keys($scope.blogIdList).length - 1];
+
                     }
                     $scope.blogLength = Object.keys($scope.blogIdList).length;
                     for(var i in $scope.blogIdList){

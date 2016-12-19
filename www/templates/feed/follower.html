@@ -5,7 +5,7 @@
     </ion-header-bar>
     <ion-content>
         <div class="list" ng-show="followerUserDetail">
-            <a class="item item-avatar list_item" ng-click="viewPosts(followerDetail.userId)"
+            <a class="item item-avatar list_item" ng-click="viewPosts(followerDetail.userId,followerDetail.postNum)"
                ng-repeat="followerDetail in followerUserDetail">
                 <img ng-src="{{followerDetail.photoUrl ||'img/person.jpg'}}">
                 <span ng-if="followerDetail.postNum>0">View Posts</span>

@@ -16,7 +16,6 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         email: '',
         mobile_num: '',
         referral_code: '',
-        gender: '',
         password:''
     };
     $scope.showMobileVerify = false;
@@ -50,7 +49,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             console.log("else")
         }
     }
-    deviceRegistered();
+    //deviceRegistered();
 
     /////////////////////////////// To check apply referral code valid or not ////////////////
 
@@ -63,7 +62,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                     if (response.val()) {
                         $scope.user.referral_code = newCode;
                         $scope.referralCodeFlag = true;
-                        if($rootScope.mobileDevice) {
+
                             $cordovaToast
                                 .show('Congratulation,you will get Rs.25 in your wallet', 'long', 'center')
                                 .then(function (success) {
@@ -71,11 +70,11 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                                 }, function (error) {
                                     // error
                                 });
-                        }
+
                     }
                     else {
                         $scope.user.referral_code = '';
-                     if($rootScope.mobileDevice) {
+
                          $cordovaToast
                              .show('Please enter a valid code', 'long', 'center')
                              .then(function (success) {
@@ -83,12 +82,12 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                              }, function (error) {
                                  // error
                              });
-                     }
+
                     }
                 })
         }
         else {
-            if($rootScope.mobileDevice) {
+
                 $cordovaToast
                     .show('Please enter a code', 'long', 'center')
                     .then(function (success) {
@@ -96,7 +95,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                     }, function (error) {
                         // error
                     });
-            }
+
         }
     };
 
@@ -104,7 +103,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
 
     $scope.sendOtp = function(){
         if($scope.user.mobile_num.length != 10){
-            if($rootScope.mobileDevice) {
+
                 $cordovaToast
                     .show('Please enter a 10 digits mobile number.', 'long', 'center')
                     .then(function (success) {
@@ -112,11 +111,11 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                     }, function (error) {
                         // error
                     });
-            }
+
             return;
         }
         if(isNaN($scope.user.mobile_num)){
-            if($rootScope.mobileDevice) {
+
                 $cordovaToast
                     .show('Please enter a valid mobile number.', 'long', 'center')
                     .then(function (success) {
@@ -124,7 +123,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                     }, function (error) {
                         // error
                     });
-            }
+
             return;
         }
         $ionicLoading.show();
@@ -446,15 +445,18 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                     };
                     $scope.referredByUid = response.val().uid;
                     if($scope.referredByUid) {
-                        firebase.database().ref('users/data/' + $scope.referredByUid)
+                            firebase.database().ref('users/data/' + $scope.referredByUid)
                             .once('value', function (response) {
+                                console.log("response",JSON.stringify(response.val()))
                                 $scope.referralName = response.val().name;
                                 $scope.referralContact = response.val().mobile.mobileNum;
+                                pushUserInfo();
                             })
-
                     }
                     else {
                         $scope.referredByUid = '';
+                        pushUserInfo();
+
                     }
                     var referredUserInfo = {
                         userUid:$scope.uid,
@@ -469,8 +471,9 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                 }
                 else{
                     $ionicLoading.hide();
+                    pushUserInfo();
+
                 }
-                pushUserInfo();
             })
     }
 
@@ -495,7 +498,6 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             referralName:$scope.referralName,
             referralContact:$scope.referralContact,
             userId:$scope.uid,
-            gender: $scope.user.gender,
             userLocation:locationInfo
         };
 
@@ -572,11 +574,13 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         window.localStorage.setItem("referralCode", $scope.user.referral_code);
         $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
         var stateObj = $rootScope.from;
-
-        if(stateObj) {
+        alert("state577"+JSON.stringify(stateObj))
+        alert("length"+Object.keys(stateObj).length)
+        if(stateObj && (Object.keys(stateObj).length > 0)) {
+            alert("inside if")
             if (stateObj.stateName != 'tagFeed') {
                 $rootScope.from = {};
-                if($rootScope.mobileDevice) {
+
                     $cordovaToast
                         .show('Your account is successfully created.', 'long', 'center')
                         .then(function (success) {
@@ -584,13 +588,14 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                         }, function (error) {
                             // error
                         });
-                }
+
                 $ionicLoading.hide();
                 $state.go(stateObj.stateName);
             }
             else {
+                alert("else")
                 $rootScope.from = {};
-                if($rootScope.mobileDevice) {
+
                     $cordovaToast
                         .show('Your account is successfully created.', 'long', 'center')
                         .then(function (success) {
@@ -598,13 +603,13 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                         }, function (error) {
                             // error
                         });
-                }
+
                 $ionicLoading.hide();
                 $state.go(stateObj.stateName, {tag: stateObj.params});
             }
         }
         else{
-            if($rootScope.mobileDevice) {
+
                 $cordovaToast
                     .show('Your account is successfully created.', 'long', 'center')
                     .then(function (success) {
@@ -612,7 +617,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                     }, function (error) {
                         // error
                     });
-            }
+
             $ionicLoading.hide();
             $state.go('app.home')
         }
@@ -626,11 +631,10 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             email: '',
             mobile_num: '',
             referral_code: '',
-            gender: '',
             password:''
         };
         user.delete().then(function() {
-            if($rootScope.mobileDevice) {
+                //
                 $cordovaToast
                     .show('Registration failed, please try again!', 'long', 'center')
                     .then(function (success) {
@@ -638,7 +642,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                     }, function (error) {
                         // error
                     });
-            }
+
         }, function(error) {
             // An error happened.
         });

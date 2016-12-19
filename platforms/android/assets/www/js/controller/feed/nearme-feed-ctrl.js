@@ -93,7 +93,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                 else{
                     $scope.dataLoaded = true;
                     $ionicLoading.hide();
-                    if($rootScope.mobileDevice) {
+
                         $cordovaToast
                             .show('No feeds available!', 'long', 'center')
                             .then(function (success) {
@@ -101,7 +101,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                             }, function (error) {
                                 // error
                             });
-                    }
+
                 }
             })
         }
@@ -296,7 +296,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                 $('.' + id + '-follow').hide();
                 $("." + id + '-unfollow').css("display", "block");
                 $ionicLoading.hide();
-                if($rootScope.mobileDevice) {
+
                     $cordovaToast
                         .show('This user added to your follow list', 'long', 'center')
                         .then(function (success) {
@@ -304,7 +304,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                         }, function (error) {
                             // error
                         });
-                }
+
                 $state.go('nearmeFeed', {cityId: $scope.cityId})
 
             });
@@ -325,7 +325,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                 $('.' + id + '-follow').show();
                 $("." + id + '-unfollow').css("display", "none");
                 $ionicLoading.hide();
-                if($rootScope.mobileDevice) {
+
                     $cordovaToast
                         .show('This user removed from your follow list', 'long', 'center')
                         .then(function (success) {
@@ -333,7 +333,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                         }, function (error) {
                             // error
                         });
-                }
+
                 $state.go('nearmeFeed', {cityId: $scope.cityId})
             });
         }
@@ -348,7 +348,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                     db.ref("users/data/"+$scope.uid+'/likedBlogs/'+feed.blog_id).remove().then(function () {
                         $timeout(function(){
                             feed.liked = false;
-                            if($rootScope.mobileDevice) {
+
                                 $cordovaToast
                                     .show('This post removed from your liked list', 'long', 'center')
                                     .then(function (success) {
@@ -356,7 +356,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                                     }, function (error) {
                                         // error
                                     });
-                            }
+
                         },0);
                     })
                 });
@@ -372,7 +372,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                 db.ref().update(updates).then(function () {
                     $timeout(function () {
                         feed.liked = true;
-                        if($rootScope.mobileDevice) {
+
                             $cordovaToast
                                 .show('This post added to your liked list', 'long', 'center')
                                 .then(function (success) {
@@ -380,7 +380,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                                 }, function (error) {
                                     // error
                                 });
-                        }
+
                     },0)
                 });
             }

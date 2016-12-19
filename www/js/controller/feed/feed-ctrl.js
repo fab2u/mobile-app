@@ -70,7 +70,10 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 
     function getUserInfo() {
         userInfoService.getPersonalInfo($scope.uid).then(function(result) {
-            $scope.userName = result.name;
+            console.log("result",JSON.stringify(result))
+            if(result){
+                $scope.userName = result.name;
+            }
         })
     }
 
@@ -83,6 +86,30 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
     $scope.toTrustedHTML = function(html) {
         return $sce.trustAsHtml(html);
     };
+
+    $scope.doRefresh = function () {
+        db.ref("blogs/").orderByKey().startAt($scope.topKey).once("value", function (snapshot) {
+            console.log(snapshot.val());
+            if (snapshot.numChildren() == 1) {
+                console.log('one child');
+                $scope.moreMessagesRefresh = false;
+            }
+            else {
+                console.log(snapshot.val());
+                $scope.prevTopKey = $scope.topKey;
+                $scope.topKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length - 1];
+                var single_blog = {};
+                for (var i in snapshot.val()) {
+                    // console.log(i); // i is the key of blogs object or the id of each blog
+                    if (i != $scope.prevTopKey) {
+                        blogAlgo(i);
+                    }
+                }
+            }
+            $scope.$broadcast('scroll.refreshComplete');
+        })
+    };
+
     $scope.loadMore = function() {
         $ionicLoading.show();
         if (Object.keys($scope.blogIdList).length == 0) {

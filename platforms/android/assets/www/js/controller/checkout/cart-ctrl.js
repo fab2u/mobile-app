@@ -88,7 +88,7 @@ app.controller("CartCtrl", function ($scope, $rootScope, $stateParams, $cordovaT
         }
         else {
             $ionicLoading.hide();
-            if($rootScope.mobileDevice) {
+
                 $cordovaToast
                     .show('Please, select some service!', 'long', 'center')
                     .then(function (success) {
@@ -96,7 +96,7 @@ app.controller("CartCtrl", function ($scope, $rootScope, $stateParams, $cordovaT
                     }, function (error) {
                         // error
                     });
-            }
+
         }
     };
 

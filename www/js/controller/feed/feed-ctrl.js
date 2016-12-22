@@ -11,6 +11,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
     $scope.blogLength = 0;
     var count = 0;
     $scope.blogArr = [];
+    $scope.followOption = false;
     $scope.moreMessagesScroll = true;
     $scope.moreMessagesRefresh = true;
     $scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
@@ -200,6 +201,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
                 if (single_blog.user.user_id == $scope.uid) {
                     $timeout(function() {
                         $('.' + single_blog.user.user_id + '-follow').hide();
+                        $scope.followOption = true;
                     }, 0);
                 }
                 if (single_blog.likedBy) {
@@ -218,6 +220,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
                             $timeout(function() {
                                 $('.' + single_blog.user.user_id + '-follow').hide();
                                 $("." + single_blog.user.user_id + '-unfollow').css("display", "block");
+                                $scope.followOption = true;
                             }, 0);
                         }
                     }
@@ -288,6 +291,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 
 
     $scope.followUser = function(id) {
+        console.log("id",id)
         $ionicLoading.show();
         if (!$scope.uid) {
             $ionicLoading.hide();
@@ -299,8 +303,9 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
             db.ref().update(updateFollow).then(function() {
                 $('.' + id + '-follow').hide();
                 $("." + id + '-unfollow').css("display", "block");
+                $scope.followOption = true;
                 $ionicLoading.hide();
-
+                $scope.popover.hide();
                 $cordovaToast
                     .show('This user added to your follow list', 'long', 'center')
                     .then(function(success) {
@@ -326,8 +331,9 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
             db.ref().update(updateFollow).then(function() {
                 $('.' + id + '-follow').show();
                 $("." + id + '-unfollow').css("display", "none");
+                $scope.followOption = false;
                 $ionicLoading.hide();
-
+                $scope.popover.hide();
                 $cordovaToast
                     .show('This user removed from your follow list', 'long', 'center')
                     .then(function(success) {
@@ -335,7 +341,6 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
                     }, function(error) {
                         // error
                     });
-
                 $state.go('feed')
             });
         }
@@ -416,19 +421,83 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
         });
     }
 
-    // dg ionic popver code start
+
     $ionicPopover.fromTemplateUrl('templates/popover.html', {
         scope: $scope,
     }).then(function(popover) {
         $scope.popover = popover;
     });
 
-    $scope.demo = 'ios';
-    $scope.setPlatform = function(p) {
-        document.body.classList.remove('platform-ios');
-        document.body.classList.remove('platform-android');
-        document.body.classList.add('platform-' + p);
-        $scope.demo = p;
+    $scope.openPopover = function($event,Post) {
+        $scope.popover.show($event);
+        console.log("uidForPost",Post)
+        $scope.postInfo = Post
+    };
+
+    $scope.deletePost = function (post) {
+        if(post.$$hashKey){
+            delete post.$$hashKey;
+        }
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Are you sure?',
+            template: 'You want to delete this post.'
+        });
+        confirmPopup.then(function(res) {
+            if(res) {
+                console.log("post",post)
+                firebase.database().ref('deleted-blogs/' + post.blog_id).set(post).then(function() {
+
+                    var updates = {};
+
+                    for(key in post.likedBy){
+                        updates['users/data/'+key+'/likedBlogs/'+post.blog_id] = null;
+                    }
+
+                    updates['blogs/' + post.blog_id] = null;
+                    updates['users/data/'+post.user.user_id+'/blogs/'+post.blog_id] = null;
+                    updates['cityBlogs/'+post.city_id+'/blogs/'+post.blog_id] = null;
+                    firebase.database().ref().update(updates).then(function() {
+                        $scope.popover.hide();
+                        $cordovaToast
+                            .show('Post deleted successfully', 'long', 'center')
+                            .then(function (success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
+                       location.reload();
+                    });
+                });
+            }
+            else {
+                $scope.popover.hide();
+                console.log('You are not sure');
+            }
+        });
+
+    };
+
+    $scope.spamPost = function (postInfo) {
+        console.log("postInfo",postInfo)
+        var updates = {};
+        var spamPostInfo = {
+            spamTime:new Date().getTime(),
+            blogId:postInfo.blog_id
+        }
+
+        updates['spamPosts/' + postInfo.blog_id] = spamPostInfo;
+
+        firebase.database().ref().update(updates).then(function() {
+            $scope.popover.hide();
+            $cordovaToast
+                .show('Post spammed successfully', 'long', 'center')
+                .then(function (success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
+            location.reload();
+        });
     }
-    // dg ionic popover code end
+
 });

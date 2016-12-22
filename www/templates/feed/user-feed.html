@@ -105,6 +105,11 @@
                             {{feed.user.user_name}}</a> | {{feed.created_time | date:'d MMM yy'}}</p>
                         <p class="feed-city"><i class="ion ion-location"></i> {{feed.city_name}}</p>
                     </div>
+                    <div class="col col-20">
+                        <button class="button button-outline button-positive" ng-click="deletePost(feed)">
+                           Delete
+                        </button>
+                    </div>
                 </div>
             </div>
             <img ng-src="{{feed.photoUrl}}" class="feed-img" ng-click="showImage(feed.photoUrl)">

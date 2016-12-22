@@ -7,6 +7,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
     $rootScope.$on('logged_in', function (event, args) {
         $scope.uid = window.localStorage.getItem('uid');
     });
+    $scope.followOption = false;
     $scope.moreMessagesScroll = true;
     $scope.moreMessagesRefresh = true;
     $scope.tagName = $stateParams.tag;
@@ -154,6 +155,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                 if(single_blog.user.user_id == $scope.uid){
                     $timeout(function () {
                         $('.'+single_blog.user.user_id+'-follow').hide();
+                        $scope.followOption = true;
                     }, 0);
                 }
                 if(single_blog.likedBy){
@@ -172,6 +174,7 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                             $timeout(function () {
                                 $('.'+single_blog.user.user_id+'-follow').hide();
                                 $("."+single_blog.user.user_id+'-unfollow').css("display", "block");
+                                $scope.followOption = true;
                             }, 0);
                         }
                     }
@@ -284,8 +287,9 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                 console.log('success');
                 $('.' + id + '-follow').hide();
                 $("."+id+'-unfollow').css("display", "block");
+                $scope.followOption = true;
                 $ionicLoading.hide();
-
+                $scope.popover.hide();
                     $cordovaToast
                         .show('This user added to your follow list', 'long', 'center')
                         .then(function (success) {
@@ -313,8 +317,9 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                 console.log('success');
                 $('.'+id+'-follow').show();
                 $("."+id+'-unfollow').css("display", "none");
+                $scope.followOption = false;
                 $ionicLoading.hide();
-
+                $scope.popover.hide();
                     $cordovaToast
                         .show('This user removed from your follow list', 'long', 'center')
                         .then(function (success) {
@@ -417,19 +422,86 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
             showLoginSignUp();
         }
     };
-          // dg ionic popver code start
+
+
+
+
     $ionicPopover.fromTemplateUrl('templates/popover.html', {
         scope: $scope,
     }).then(function(popover) {
         $scope.popover = popover;
     });
 
-    $scope.demo = 'ios';
-    $scope.setPlatform = function(p) {
-        document.body.classList.remove('platform-ios');
-        document.body.classList.remove('platform-android');
-        document.body.classList.add('platform-' + p);
-        $scope.demo = p;
+    $scope.openPopover = function($event,Post) {
+        $scope.popover.show($event);
+        console.log("uidForPost",Post)
+        $scope.postInfo = Post
+    };
+
+    $scope.deletePost = function (post) {
+        if(post.$$hashKey){
+            delete post.$$hashKey;
+        }
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Are you sure?',
+            template: 'You want to delete this post.'
+        });
+        confirmPopup.then(function(res) {
+            if(res) {
+                console.log("post",post)
+                firebase.database().ref('deleted-blogs/' + post.blog_id).set(post).then(function() {
+
+                    var updates = {};
+
+                    for(key in post.likedBy){
+                        updates['users/data/'+key+'/likedBlogs/'+post.blog_id] = null;
+                    }
+
+                    updates['blogs/' + post.blog_id] = null;
+                    updates['users/data/'+post.user.user_id+'/blogs/'+post.blog_id] = null;
+                    updates['cityBlogs/'+post.city_id+'/blogs/'+post.blog_id] = null;
+                    firebase.database().ref().update(updates).then(function() {
+                        $scope.popover.hide();
+                        $cordovaToast
+                            .show('Post deleted successfully', 'long', 'center')
+                            .then(function (success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
+                        location.reload();
+                    });
+                });
+            }
+            else {
+                $scope.popover.hide();
+                console.log('You are not sure');
+            }
+        });
+
+    };
+
+    $scope.spamPost = function (postInfo) {
+        console.log("postInfo",postInfo)
+        var updates = {};
+        var spamPostInfo = {
+            spamTime:new Date().getTime(),
+            blogId:postInfo.blog_id
+        }
+
+        updates['spamPosts/' + postInfo.blog_id] = spamPostInfo;
+
+        firebase.database().ref().update(updates).then(function() {
+            $scope.popover.hide();
+            $cordovaToast
+                .show('Post spammed successfully', 'long', 'center')
+                .then(function (success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
+            location.reload();
+        });
     }
-    // dg ionic popover code end
+
 });

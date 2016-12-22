@@ -17,8 +17,11 @@ app.controller("followCtrl", function(userServices,$scope,$stateParams,$cordovaT
     }
     function iFollowingDetail(info) {
         $ionicLoading.show();
+        console.log("info",info)
         for(key in info){
+            console.log("key",key)
             userServices.getUserInfo(key).then(function (result) {
+                console.log("result",result)
                 if(result.blogs){
                     result.postNum = Object.keys(result.blogs).length;
                     $scope.IfollowingUserDetail.push(result);

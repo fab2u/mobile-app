@@ -53,7 +53,7 @@
                         <p class="feed-city"><i class="ion ion-location"></i> {{feed.city_name}}</p>
                     </div>
                     <div class="col col-offset-10 follow-wrap platform text-right">
-                        <a class="button button-icon icon ion-ios-more pdrt10" ng-click="popover.show($event)"></a>
+                        <a class="button button-icon icon ion-ios-more pdrt10" ng-click="openPopover($event,feed)"></a>
                         <!-- <span class="follow-btn {{feed.user.user_id}}-follow"
 							  ng-click="followUser(feed.user.user_id)">Follow</span>
 						<span class="unfollow-btn {{feed.user.user_id}}-unfollow"
@@ -97,18 +97,20 @@
     <ion-popover-view>
         <ion-content>
             <div class="list">
-                <a class="item" href="#">
-              link A
-            </a>
-                <a class="item" href="#">
-              link B
-            </a>
-                <a class="item" href="#">
-              link C
-            </a>
-                <a class="item" href="#">
-              link D
-            </a>
+                <a class="item" ng-if="(followOption == false && postInfo.user.user_id != uid)"
+                   ng-click="followUser(postInfo.user.user_id)">
+                    Follow
+                </a>
+                <a class="item" ng-if="(followOption == true && postInfo.user.user_id != uid)"
+                   ng-click="unfollowUser(postInfo.user.user_id)">
+                    Unfollow
+                </a>
+                <a class="item" ng-if="postInfo.user.user_id == uid" ng-click="deletePost(postInfo)">
+                    Delete
+                </a>
+                <a class="item" ng-if="postInfo.user.user_id != uid" ng-click="spamPost(postInfo)">
+                    Mark as spam
+                </a>
             </div>
         </ion-content>
     </ion-popover-view>

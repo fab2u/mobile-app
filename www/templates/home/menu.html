@@ -3,8 +3,8 @@
     <ion-nav-bar class="mainHeader" align-title="left">
       <ion-nav-back-button>
       </ion-nav-back-button>
-      <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+      <ion-nav-buttons side="left">     
+        <button class="button button-icon button-clear ion-navicon button-dark" menu-toggle="left">
         </button>
       </ion-nav-buttons>
       <ion-nav-title class="location" ng-click="selectLocation()">
@@ -12,13 +12,14 @@
       <span class="break">{{location_info.cityName}},{{location_info.locationName}}</span>
       </ion-nav-title>
       <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-ios-heart"
+        <button class="button button-icon button-clear button-dark ion-ios-heart-outline"
                 ng-class="uid? 'pink':'normal'" ng-click="favouriteVendorList()">
         </button>
-        <button class="button button-icon button-clear ion-android-search" ng-click="searchVendor()">
-        </button>
+        <button class="button button-icon button-clear button-dark ion-ios-search" ng-click="searchVendor()">
+         </button>
       </ion-nav-buttons>
     </ion-nav-bar>
+
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
@@ -26,10 +27,11 @@
     <ion-header-bar class="side-menu-header">
       <h1 class="title">Menu</h1>
     </ion-header-bar>
+    
     <ion-content>
       <ion-list>
         <ion-item menu-close href="#/login" ng-show="(uid =='' || uid == undefined || uid ==null)">
-          <i class="icon ion-log-in" id="login-icon"></i>
+          <i class="icon ion-log-in ilogin"></i>
           Login
         </ion-item>
         <!--<ion-item menu-close href="#/profile" ng-hide="(uid =='' || uid == undefined || uid ==null)">-->
@@ -48,16 +50,24 @@
           <img src="img/sideMenu/referFriend.png"> Rate Us
         </ion-item>
         <ion-item menu-close href="#/privacyPolicy">
-          <img src="img/sideMenu/privacyPolicy.png"> Privacy and Policy
+          <!-- <img src="img/sideMenu/privacyPolicy.png"> -->
+<i class="icon ion-document-text ilogin"></i>
+           Privacy and Policy
         </ion-item>
         <ion-item menu-close href="#/termsnConditions">
-          <img src="img/sideMenu/tnc.png">  Terms and Conditions
+         <!--  <img src="img/sideMenu/tnc.png">  -->
+<i class="icon ion-clipboard ilogin"></i>
+           Terms and Conditions
         </ion-item>
         <ion-item menu-close href="#/contact">
-          <img src="img/sideMenu/Contact-us.png">Contact Us
+          <!-- <img src="img/sideMenu/Contact-us.png"> -->
+<i class="icon ion-ios-telephone-outline ilogin"></i>
+          Contact Us
         </ion-item>
-        <ion-item menu-close ng-hide="(uid =='' || uid == undefined || uid ==null)" ng-click="logOut()">
-          <img src="img/sideMenu/logout.png"> Logout
+        <ion-item menu-close  ng-hide="(uid =='' || uid == undefined || uid ==null)" ng-click="logOut()">
+          <!-- <img src="img/sideMenu/logout.png"> -->
+          <i class="icon ion-log-out ilogin"></i> 
+          Logout
         </ion-item>
       </ion-list>
     </ion-content>

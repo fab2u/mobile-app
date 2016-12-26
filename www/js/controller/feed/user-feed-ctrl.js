@@ -61,7 +61,9 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
 
     // $scope.imageName = uid;
     $scope.imageUploadResponseFn = function(valueFromDirective) {
-        console.log(valueFromDirective);
+        console.log("gggg",JSON.stringify(valueFromDirective));
+        // var url = "http://cdn.roofpik.com/roofpik/projects/"+$scope.cityId+
+        //     '/residential/'+$scope.project.projectId+'/images/coverPhoto/'+$scope.project.images.coverPhoto+'-m.jpg'
         // db.ref('users/' + $scope.myUid + '/profileImage').set(valueFromDirective).then(function() {
         //     alert("Success", "Profile image successfully uploaded!", "success");
         // });

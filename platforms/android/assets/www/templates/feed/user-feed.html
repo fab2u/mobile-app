@@ -42,7 +42,7 @@
         <div class="row">
             <div class="col col-25 col-30">
                 <div class="row center">
-                    <!--<img ng-src="{{userDetails.photoUrl || 'img/person.jpg'}}" width="110" height="110" id="profile-pic" />-->
+                    <img ng-src="{{userDetails.photoUrl || 'img/person.jpg'}}" width="110" height="110" id="profile-pic" />
                     <!--<img id="profile-img" ng-src="{{uploadedImage}}"-->
                          <!--alt="http://www.e-codices.unifr.ch/documents/media/Collections/img-not-available_en.jpg" />-->
 
@@ -51,7 +51,7 @@
                                       boundry-height="400" image-type="{{imageType}}"
                                       image-upload-response="imageUploadResponseFn"
                                       upload-path="{{uploadPath}}"
-                                      image-name="{{imageName}}">
+                                      image-name="{{imageName}}" ng-show="showUploadOptions">
 
                         </image-upload>
 
@@ -64,7 +64,7 @@
                          </div>
                      </div> -->
 
-                    <!-- <canvas id="identicon" width="100" height="100" class="profile-pic"></canvas> -->
+                     <canvas id="identicon" width="100" height="100" class="profile-pic"></canvas>
                 </div>
                 <div class="center p-name">
                     {{userDetails.name}}

@@ -267,12 +267,13 @@ app.controller('imageUploadCtrl', function($scope,$cordovaCamera, $timeout, uplo
 });
 
 
-app.service('uploadImage', function($http) {
+app.service('uploadImage', function($http,$rootScope,$ionicLoading,$cordovaToast) {
 console.log("uploadImage service")
     return {
         upload: function(path, image, imgType, imgName, q) {
-            console.log(imgName);
             console.log("inside upload fun")
+            $ionicLoading.show()
+
             $http({
                 url: 'http://139.162.9.71/api/uploadImage',
                 method: "POST",
@@ -285,13 +286,33 @@ console.log("uploadImage service")
             })
                 .then(function(response) {
                         // success
-                        console.log(response);
-                    alert(JSON.stringify(response))
                         if (response.data.status == 200) {
+                            $ionicLoading.hide()
+                            alert('1')
+
+                            // var updates1 = {};
+                            // updates1["/users/data/"+$scope.myUid+"/photoUrl"] = response.Message;
+                            // window.localStorage.setItem("userPhoto", response.Message);
+                            // db.ref().update(updates1).then(function(){
+                            //     $ionicLoading.hide();
+                            //
+                            //     $cordovaToast
+                            //         .show('Photo updated successfully!', 'long', 'center')
+                            //         .then(function (success) {
+                            //             // success
+                            //         }, function (error) {
+                            //             // error
+                            //         });
+                            //
+                            //     location.reload();
+                            //     $scope.modal1.hide();
+                            // });
                             q.resolve({
                                 imgUrl: response.data.imageName
                             });
                         } else {
+                            $ionicLoading.hide()
+
                             // sweetAlert("Error", "Profile image cannot be uploaded!", "error");
                             q.reject({
                                 imgUrl: 'NA'
@@ -300,6 +321,8 @@ console.log("uploadImage service")
                     },
                     function(response) { // optional
                         // failed
+                        $ionicLoading.hide()
+
                         console.log(response);
                         q.reject({
                             imgUrl: 'NA'

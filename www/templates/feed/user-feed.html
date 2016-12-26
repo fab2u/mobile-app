@@ -40,15 +40,17 @@
             </a>
         </div> -->
         <div class="row">
-            <div class="col col-25 col-30">
+            <div class="col col-25 col-30">          
                 <div class="row center">
-                    <img ng-src="{{userDetails.photoUrl || 'img/person.jpg'}}" width="110" height="110" id="profile-pic" />
+                <span class="userprofile-img">                  
+                     <img ng-src="{{userDetails.photoUrl || 'img/person.jpg'}}" id="profile-pic" />
+                    </span>
                     <!--<img id="profile-img" ng-src="{{uploadedImage}}"-->
                          <!--alt="http://www.e-codices.unifr.ch/documents/media/Collections/img-not-available_en.jpg" />-->
                           <div ng-show="showUploadOptions">
                         <image-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"
-                                      view-port-width="300" view-port-height="300" boundry-width="400"
-                                      boundry-height="400" image-type="{{imageType}}"
+                                      view-port-width="250" view-port-height="250" boundry-width="270"
+                                      boundry-height="300" image-type="{{imageType}}"
                                       image-upload-response="imageUploadResponseFn"
                                       upload-path="{{uploadPath}}"
                                       image-name="{{imageName}}">
@@ -65,7 +67,7 @@
                          </div>
                      </div> -->
 
-                     <canvas id="identicon" width="100" height="100" class="profile-pic"></canvas>
+                     <!-- <canvas id="identicon" width="100" height="100" class="profile-pic"></canvas> -->
                 </div>
                 <div class="center p-name">
                     {{userDetails.name}}

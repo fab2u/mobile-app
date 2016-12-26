@@ -59,7 +59,6 @@ app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $io
         $cordovaLaunchNavigator.navigate(destination, start).then(function() {
             console.log("Navigator launched");
         }, function (err) {
-            if($rootScope.mobileDevice) {
                 $cordovaToast
                     .show(err, 'long', 'center')
                     .then(function (success) {
@@ -67,7 +66,7 @@ app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $io
                     }, function (error) {
                         // error
                     });
-            }
+
             console.error(err);
         });
     };

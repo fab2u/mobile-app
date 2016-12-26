@@ -55,6 +55,18 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
     }
     // ----------------------------------------------------------------------
 
+    $scope.imageType = 'profile';
+    $scope.uploadPath = 'fab2u/profile/'+$scope.myUid+'/profileImage/';
+    $scope.uploadedImage = 'http://www.e-codices.unifr.ch/documents/media/Collections/img-not-available_en.jpg';
+
+    // $scope.imageName = uid;
+    $scope.imageUploadResponseFn = function(valueFromDirective) {
+        console.log("gggg",JSON.stringify(valueFromDirective));
+        // db.ref('users/' + $scope.myUid + '/profileImage').set(valueFromDirective).then(function() {
+        //     alert("Success", "Profile image successfully uploaded!", "success");
+        // });
+    }
+
     if($scope.myUid){
         /////////////do all things here
 
@@ -96,15 +108,16 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
             // $ionicLoading.show();
             if(Object.keys($scope.blogIdList).length == 0){
                 db.ref("users/data/"+$scope.myUid +"/blogs").limitToLast(5).once("value", function(snapshot){
-                    $scope.blogIdList = snapshot.val();
-                    $scope.blogLength = Object.keys($scope.blogIdList).length;
-                    if($scope.blogIdList !== null){
-                        $scope.bottomKey = Object.keys($scope.blogIdList)[0];
-                    }
-                        for(var key in snapshot.val()){
-                            blogAlgo(key);
-                        }
-
+                   if(snapshot.val()){
+                       $scope.blogIdList = snapshot.val();
+                       $scope.blogLength = Object.keys($scope.blogIdList).length;
+                       if($scope.blogIdList !== null){
+                           $scope.bottomKey = Object.keys($scope.blogIdList)[0];
+                       }
+                       for(var key in snapshot.val()){
+                           blogAlgo(key);
+                       }
+                   }
                 });
             }		//db.ref("blogs").orderByKey().limitToFirst(6).endAt($scope.bottomKey)
             else if(Object.keys($scope.blogIdList).length > 0){
@@ -214,6 +227,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
 
         $scope.myFollowers = function(val){
             $ionicLoading.show();
+            console.log("val",val)
             if(val){
                 window.localStorage['myFollowers'] = JSON.stringify($scope.myFollowersDetail);
                 $ionicLoading.hide();
@@ -531,4 +545,46 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
             }
         });
     }
+
+    $scope.deletePost = function (post) {
+        if(post.$$hashKey){
+            delete post.$$hashKey;
+        }
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Are you sure?',
+            template: 'You want to delete this post.'
+        });
+        confirmPopup.then(function(res) {
+            if(res) {
+                console.log("post",post)
+                firebase.database().ref('deleted-blogs/' + post.blog_id).set(post).then(function() {
+
+                    var updates = {};
+
+                    for(key in post.likedBy){
+                        updates['users/data/'+key+'/likedBlogs/'+post.blog_id] = null;
+                    }
+
+                    updates['blogs/' + post.blog_id] = null;
+                    updates['users/data/'+post.user.user_id+'/blogs/'+post.blog_id] = null;
+                    updates['cityBlogs/'+post.city_id+'/blogs/'+post.blog_id] = null;
+                    firebase.database().ref().update(updates).then(function() {
+                        $cordovaToast
+                            .show('Post deleted successfully', 'long', 'center')
+                            .then(function (success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
+                        location.reload();
+                    });
+                });
+            }
+            else {
+                $scope.popover.hide();
+                console.log('You are not sure');
+            }
+        });
+
+    };
 });

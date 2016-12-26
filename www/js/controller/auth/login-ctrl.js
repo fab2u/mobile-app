@@ -29,7 +29,7 @@ app.controller('LoginCtrl',function($scope,$ionicHistory,$state, AuthenticationS
         }
         else{
             $ionicLoading.hide();
-            $state.go('app.home')
+            $state.go('feed')
         }
 
 

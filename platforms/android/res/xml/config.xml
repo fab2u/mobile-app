@@ -44,11 +44,14 @@
     <author email="contact@fab2u.com" href="http://fab2u.com/">
       Team Fab2u
     </author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.1.104:8100" />
     <access origin="*" />
     <access launch-external="yes" origin="tel:*" />
     <allow-intent href="*" />
     <allow-navigation href="http://fab2u.org/* " />
+    <allow-navigation href="http://192.168.1.102:8100" />
+    <allow-navigation href="http://192.168.1.102:8101" />
+    <allow-navigation href="http://192.168.1.104:8100" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />

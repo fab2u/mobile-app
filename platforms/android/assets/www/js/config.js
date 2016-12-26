@@ -171,6 +171,14 @@ app
 		controller: 'SignupCtrl'
 	});
 
+	//State for interest
+	$stateProvider.state('interests', {
+		url: '/interests',
+		cache:false,
+		templateUrl: 'templates/auth/interests.html',
+		controller: 'interestCtrl'
+	});
+
 	//State for vendorList
 	$stateProvider.state('vendorList', {
 		url: '/vendorList/:vendorPage',

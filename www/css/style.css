@@ -14,9 +14,10 @@
 @import url("home/sideMenu.css");
 @import url("auth/login.css");
 @import url("auth/signup.css");
+@import url("auth/interests.css");
 @import url("feed/feed.css");
 @import url("feed/fab-feed.css");
-@import url("auth/interests.css");
+@import url("feed/upload.css");
 
 /*@import url("home/new-slider.css");*/
 @import url("vendor/vendor-services-list.css");

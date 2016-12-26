@@ -1,4 +1,4 @@
-app.controller("followerCtrl", function(userServices,$scope,$stateParams,$state,$timeout,$ionicLoading){
+app.controller("followerCtrl", function(userServices,$scope,$stateParams,$cordovaToast,$state,$timeout,$ionicLoading){
 
     $ionicLoading.show();
 
@@ -16,12 +16,21 @@ app.controller("followerCtrl", function(userServices,$scope,$stateParams,$state,
         $scope.msg = true;
     }
     function FollowerDetail(info) {
+        console.log("info",info)
         $ionicLoading.show();
         for(key in info){
             userServices.getUserInfo(key).then(function (result) {
                 $ionicLoading.hide();
-                result.postNum = Object.keys(result.blogs).length;
-                $scope.followerUserDetail.push(result);
+                if(result){
+                    if(result.blogs){
+                        result.postNum = Object.keys(result.blogs).length;
+                        $scope.followerUserDetail.push(result);
+                    }
+                    else{
+                        $scope.followerUserDetail.push(result);
+                    }
+                }
+
             })
         }
         $timeout(function () {
@@ -29,10 +38,23 @@ app.controller("followerCtrl", function(userServices,$scope,$stateParams,$state,
         }, 1500);
     }
 
-    $scope.viewPosts = function (followId) {
-        window.localStorage.setItem("follower",true);
-        $ionicLoading.hide();
-        $state.go('followPosts',{followId:followId})
+    $scope.viewPosts = function (followId,postNumber) {
+        if(postNumber>0){
+            window.localStorage.setItem("follower",true);
+            $ionicLoading.hide();
+            $state.go('followPosts',{followId:followId})
+        }
+        else{
+            $ionicLoading.hide();
+            $cordovaToast
+                .show('Sorry we do not found any post regarding to select user.', 'long', 'center')
+                .then(function (success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
+        }
+
     };
     $scope.goBack = function(){
         $ionicLoading.hide();

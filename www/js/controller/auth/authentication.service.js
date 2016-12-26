@@ -70,7 +70,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                         //     });
 
                      $ionicLoading.hide();
-                     $state.go('app.home')
+                     $state.go('feed')
                   }
 
                }

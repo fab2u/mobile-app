@@ -12,4 +12,5 @@ app.controller('IntroSliderCtrl', function($scope, $ionicSlideBoxDelegate, $stat
             $ionicSlideBoxDelegate.next();
         }
     };
+
 });

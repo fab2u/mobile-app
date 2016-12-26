@@ -1,6 +1,6 @@
 app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLoading,
                                            $ionicModal,userInfoService, $ionicPopup, $state,
-                                           $sce,$cordovaToast,$rootScope) {
+                                           $sce,$cordovaToast,$rootScope, $ionicPopover) {
 
     $ionicLoading.show();
     $scope.blogLength = 0;
@@ -12,6 +12,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
         $scope.uid = window.localStorage.getItem('uid');
     });
     $scope.moreMessagesScroll = true;
+    $scope.followOption = false;
     $scope.moreMessagesRefresh = true;
     $scope.cityId = JSON.parse(window.localStorage.getItem('selectedLocation')).cityId;
     $scope.blogIdList = {};
@@ -167,6 +168,8 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                 if(single_blog.user.user_id == $scope.uid){
                     $timeout(function () {
                         $('.'+single_blog.user.user_id+'-follow').hide();
+                        $scope.followOption = true;
+
                     }, 0);
                 }
                 if(single_blog.likedBy){
@@ -185,6 +188,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                             $timeout(function () {
                                 $('.'+single_blog.user.user_id+'-follow').hide();
                                 $("."+single_blog.user.user_id+'-unfollow').css("display", "block");
+                                $scope.followOption = true;
                             }, 0);
                         }
                     }
@@ -295,8 +299,9 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
             db.ref().update(updateFollow).then(function () {
                 $('.' + id + '-follow').hide();
                 $("." + id + '-unfollow').css("display", "block");
+                $scope.followOption = true;
                 $ionicLoading.hide();
-
+                $scope.popover.hide();
                     $cordovaToast
                         .show('This user added to your follow list', 'long', 'center')
                         .then(function (success) {
@@ -324,8 +329,9 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
             db.ref().update(updateFollow).then(function () {
                 $('.' + id + '-follow').show();
                 $("." + id + '-unfollow').css("display", "none");
+                $scope.followOption = false;
                 $ionicLoading.hide();
-
+                $scope.popover.hide();
                     $cordovaToast
                         .show('This user removed from your follow list', 'long', 'center')
                         .then(function (success) {
@@ -428,6 +434,85 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
         }
 
     };
+
+    $ionicPopover.fromTemplateUrl('templates/popover.html', {
+        scope: $scope,
+    }).then(function(popover) {
+        $scope.popover = popover;
+    });
+
+    $scope.openPopover = function($event,Post) {
+        $scope.popover.show($event);
+        console.log("uidForPost",Post)
+        $scope.postInfo = Post
+    };
+
+    $scope.deletePost = function (post) {
+        if(post.$$hashKey){
+            delete post.$$hashKey;
+        }
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Are you sure?',
+            template: 'You want to delete this post.'
+        });
+        confirmPopup.then(function(res) {
+            if(res) {
+                console.log("post",post)
+                firebase.database().ref('deleted-blogs/' + post.blog_id).set(post).then(function() {
+
+                    var updates = {};
+
+                    for(key in post.likedBy){
+                        updates['users/data/'+key+'/likedBlogs/'+post.blog_id] = null;
+                    }
+
+                    updates['blogs/' + post.blog_id] = null;
+                    updates['users/data/'+post.user.user_id+'/blogs/'+post.blog_id] = null;
+                    updates['cityBlogs/'+post.city_id+'/blogs/'+post.blog_id] = null;
+                    firebase.database().ref().update(updates).then(function() {
+                        $scope.popover.hide();
+                        $cordovaToast
+                            .show('Post deleted successfully', 'long', 'center')
+                            .then(function (success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
+                        location.reload();
+                    });
+                });
+            }
+            else {
+                $scope.popover.hide();
+                console.log('You are not sure');
+            }
+        });
+
+    };
+
+    $scope.spamPost = function (postInfo) {
+        console.log("postInfo",postInfo)
+        var updates = {};
+        var spamPostInfo = {
+            spamTime:new Date().getTime(),
+            blogId:postInfo.blog_id
+        }
+
+        updates['spamPosts/' + postInfo.blog_id] = spamPostInfo;
+
+        firebase.database().ref().update(updates).then(function() {
+            $scope.popover.hide();
+            $cordovaToast
+                .show('Post spammed successfully', 'long', 'center')
+                .then(function (success) {
+                    // success
+                }, function (error) {
+                    // error
+                });
+            location.reload();
+        });
+    }
+
 
 });
 

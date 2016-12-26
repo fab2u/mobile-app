@@ -14,7 +14,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     var updates = {};
 
     function checkAppStatus() {
-        firebase.database().ref('appStatus').once('value', function (snapshot) {
+        firebase.database().ref('androidAppStatus').once('value', function (snapshot) {
             var newStatus = snapshot.val();
             if (newStatus.live == true) {
                 if (newStatus.version > appVersion) {

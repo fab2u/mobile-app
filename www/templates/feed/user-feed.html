@@ -42,16 +42,27 @@
         <div class="row">
             <div class="col col-25 col-30">
                 <div class="row center">
-                    <img ng-src="{{userDetails.photoUrl || 'img/person.jpg'}}" width="110" height="110" id="profile-pic" />
-                    
-                   <!--  <div class="row" ng-show="showUploadOptions">
-                        <div class="col">
-                            <a class="follow-btn" ng-click="cameraUpload()">Camera</a>
-                        </div>
-                        <div class="col">
-                            <a class="follow-btn" ng-click="galleryUpload()">Gallery</a>
-                        </div>
-                    </div> -->
+                    <!--<img ng-src="{{userDetails.photoUrl || 'img/person.jpg'}}" width="110" height="110" id="profile-pic" />-->
+                    <!--<img id="profile-img" ng-src="{{uploadedImage}}"-->
+                         <!--alt="http://www.e-codices.unifr.ch/documents/media/Collections/img-not-available_en.jpg" />-->
+
+                        <image-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"
+                                      view-port-width="300" view-port-height="300" boundry-width="400"
+                                      boundry-height="400" image-type="{{imageType}}"
+                                      image-upload-response="imageUploadResponseFn"
+                                      upload-path="{{uploadPath}}"
+                                      image-name="{{imageName}}">
+
+                        </image-upload>
+
+                    <!--  <div class="row" ng-show="showUploadOptions">
+                         <div class="col">
+                             <a class="follow-btn" ng-click="cameraUpload()">Camera</a>
+                         </div>
+                         <div class="col">
+                             <a class="follow-btn" ng-click="galleryUpload()">Gallery</a>
+                         </div>
+                     </div> -->
 
                     <!-- <canvas id="identicon" width="100" height="100" class="profile-pic"></canvas> -->
                 </div>

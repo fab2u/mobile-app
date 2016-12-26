@@ -50,6 +50,7 @@ app.controller('LocationCtrl', function($state, $scope,$timeout,$rootScope,$ioni
 	});
 	function openLocalityOption() {
 		$ionicLoading.show();
+		$scope.localities = [];
 		LocationService.getCityLocality($scope.cityId).then(function (result) {
 			if(result){
 				for(key in result){

@@ -1,11 +1,11 @@
 <ion-view class="fabFeed" cache-view="false">
-    <ion-header-bar align-title="center" class="bar-dark" title="FOLLOWERS" ng-click="goBack()">
-        <a class="button icon ion-chevron-left button-clear"></a>
+    <ion-header-bar align-title="center" class="bar-light" title="FOLLOWERS" ng-click="goBack()">
+        <a class="button icon ion-ios-arrow-left button-clear pdl5 ft24 mgn"></a>
         <h1 class="title">FOLLOWERS</h1>
     </ion-header-bar>
     <ion-content>
         <div class="list" ng-show="followerUserDetail">
-            <a class="item item-avatar list_item" ng-click="viewPosts(followerDetail.userId)"
+            <a class="item item-avatar list_item" ng-click="viewPosts(followerDetail.userId,followerDetail.postNum)"
                ng-repeat="followerDetail in followerUserDetail">
                 <img ng-src="{{followerDetail.photoUrl ||'img/person.jpg'}}">
                 <span ng-if="followerDetail.postNum>0">View Posts</span>

@@ -55,6 +55,18 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
     }
     // ----------------------------------------------------------------------
 
+    $scope.imageType = 'profile';
+    $scope.uploadPath = 'fab2u/profile/'+$scope.myUid+'/profileImage/';
+    $scope.uploadedImage = 'http://www.e-codices.unifr.ch/documents/media/Collections/img-not-available_en.jpg';
+
+    // $scope.imageName = uid;
+    $scope.imageUploadResponseFn = function(valueFromDirective) {
+        console.log(valueFromDirective);
+        // db.ref('users/' + $scope.myUid + '/profileImage').set(valueFromDirective).then(function() {
+        //     alert("Success", "Profile image successfully uploaded!", "success");
+        // });
+    }
+
     if($scope.myUid){
         /////////////do all things here
 

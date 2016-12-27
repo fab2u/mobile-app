@@ -167,11 +167,11 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
         var blogData = db.ref().child("blogs").child(i);
         blogData.once("value", function(snap) { //access individual blog
             single_blog = snap.val();
-            console.log("ddff",single_blog)
+            console.log("ddff",JSON.stringify(single_blog))
             if (single_blog) {
                 if(single_blog.photoUrl){
                     if(snap.val().photoUrl.indexOf('http')==-1){
-                        single_blog.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/post/"+snap.val().user_id+
+                        single_blog.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/post/"+snap.val().user.user_id+
                             "/postImage/"+snap.val().photoUrl+'-m.jpg';
                     }
                     else{
@@ -206,6 +206,7 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
         if (single_blog.user) {
             if ($scope.uid) {
                 if (single_blog.user.user_id == $scope.uid) {
+                    console.log("iff id matched")
                     $timeout(function() {
                         $('.' + single_blog.user.user_id + '-follow').hide();
                         $scope.followOption = true;
@@ -233,12 +234,25 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
                         }
                     }
                     if (snap.val().myFollowers) {
-                        if ($scope.uid in snap.val().myFollowers) {
-                            $timeout(function() {
-                                $('.' + single_blog.user.user_id + '-follow').hide();
-                                $("." + single_blog.user.user_id + '-unfollow').css("display", "block");
-                                $scope.followOption = true;
-                            }, 0);
+                        console.log("1111111111",JSON.stringify(snap.val().myFollowers),$scope.uid)
+
+                        // if ($scope.uid in snap.val().myFollowers) {
+                        //     $timeout(function() {
+                        //         $('.' + single_blog.user.user_id + '-follow').hide();
+                        //         $("." + single_blog.user.user_id + '-unfollow').css("display", "block");
+                        //         $scope.followOption = true;
+                        //     }, 0);
+                        // }
+
+                        for(key in snap.val().myFollowers){
+                            console.log("key",key)
+                            if($scope.uid  == key){
+                                $timeout(function() {
+                                    $('.' + single_blog.user.user_id + '-follow').hide();
+                                    $("." + single_blog.user.user_id + '-unfollow').css("display", "block");
+                                    $scope.followOption = true;
+                                }, 0);
+                            }
                         }
                     }
                 });
@@ -456,7 +470,8 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
 
     $scope.openPopover = function($event,Post) {
         $scope.popover.show($event);
-        console.log("uidForPost",Post)
+        console.log("uidForPost",JSON.stringify(Post))
+        console.log("uidForPost",$scope.uid)
         $scope.postInfo = Post
     };
 

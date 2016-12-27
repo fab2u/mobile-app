@@ -172,6 +172,15 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
            single_blog = snap.val();
             if(single_blog){
                 single_blog.profilePic = $scope.userPhoto;
+                if(single_blog.photoUrl){
+                    if(snap.val().photoUrl.indexOf('http')==-1){
+                        single_blog.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/post/"+snap.val().user_id+
+                            "/postImage/"+snap.val().photoUrl+'-m.jpg';
+                    }
+                    else{
+                        single_blog.photoUrl = snap.val().photoUrl;
+                    }
+                }
                 if(single_blog.introduction){
                     var temp = single_blog.introduction;
                     single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a><span>&nbsp;</span>');
@@ -192,7 +201,14 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                     }
                     db.ref("users/data/"+single_blog.user.user_id).once("value", function(snap){
                         if(snap.val().photoUrl){
-                            single_blog.profilePic = snap.val().photoUrl;
+                            // single_blog.profilePic = snap.val().photoUrl;
+                            if(snap.val().photoUrl.indexOf('http')==-1){
+                                single_blog.profilePic = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+snap.val().userId+
+                                    "/profileImage/"+snap.val().photoUrl+'-m.jpg';
+                            }
+                            else{
+                                single_blog.profilePic = snap.val().photoUrl;
+                            }
                         }
                         if(snap.val().myFollowers){
                             if ($scope.myUid in snap.val().myFollowers){

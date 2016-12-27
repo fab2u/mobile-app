@@ -292,10 +292,8 @@ console.log("uploadImage service")
                 .then(function(response) {
                         // success
                         console.log("response",JSON.stringify(response))
-alert(JSON.stringify(response))
                         if (response.data.status == 200) {
-                            $ionicLoading.hide()
-
+                            $ionicLoading.hide();
                             q.resolve({
                                 imgUrl: response.data.imageName
                             });
@@ -327,8 +325,6 @@ alert(JSON.stringify(response))
                         q.reject({
                             imgUrl: 'NA'
                         });
-
-
                     });
 
             return q.promise;

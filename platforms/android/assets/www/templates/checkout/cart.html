@@ -1,9 +1,9 @@
 <ion-view id="cartview">
-    <ion-header-bar class="bar-positive" title="CART" id="customheader">
-        <a class="icon icon-left ion-chevron-left" ng-click="backButton()"></a>
-        <h1 class="title">CART</h1>
+    <ion-header-bar class="bar-light" title="CART" id="customheader">
+        <a class="button icon ion-ios-arrow-left button-clear pdl5 ft24 mgn" ng-click="backButton()"></a>
+        <h1 class="title t-center">CART</h1>
         <div class="buttons buttons-right header-item">
-            <a class="button button-icon ion-android-cart">
+            <a class="button button-icon ion-android-cart t-red">
                 <span class="badge badge_color" id="cartbadge">{{cart_item}}</span>
             </a>
             <a class="icon ion-edit edit_icon" ng-click="edit_cart()"></a>
@@ -15,7 +15,6 @@
                 Selected Services
             </div>
             <div class="col-20">
-
             </div>
             <div class="col-20">
                 Price
@@ -23,43 +22,38 @@
         </div>
         <div class="row list_view aa" ng-repeat="data in cartItems">
             <div class="col col-50">
-                    <span class="cartdetails" ng-show="data.male == true && data.female==undefined">
+                <span class="cartdetails" ng-show="data.male == true && data.female==undefined">
                       {{data.menuItemName}}&nbsp; <span>(Male)</span>
-                    </span>
-                    <span class="cartdetails" ng-show="data.male == undefined && data.female==true">
+                </span>
+                <span class="cartdetails" ng-show="data.male == undefined && data.female==true">
                       {{data.menuItemName}}&nbsp; <span>(Female)</span>
-                    </span>
-                    <span class="cartdetails" ng-show="data.male == true && data.female==true">
+                </span>
+                <span class="cartdetails" ng-show="data.male == true && data.female==true">
                       {{data.menuItemName}}&nbsp; <span>(Unisex)</span>
-                    </span>
+                </span>
             </div>
             <div class="col col-20">
-                   <span class="cartoriginal">
+                <span class="cartoriginal">
 
                         <span>
                             <strong>
                                 <del>&#2352;</del>
                             </strong>{{data.vendorPrice}}&nbsp;
                         </span>
-
-
-                   </span>
+                </span>
             </div>
             <div class="col col-20">
-                 <span class="fab2uPrice">
+                <span class="fab2uPrice">
                     <strong>
                         <del>&#2352;</del>
                     </strong>{{data.customerPrice}}
                   </span>
             </div>
             <div class="col col-10" ng-click="list_changed(data.menuItemId,data.menuItemName)">
-
-                <i class="icon ion-trash-b"></i>
+                <i class="icon ion-ios-trash-outline"></i>
                 <!--<a class="button button-icon ion-ios-close-outline" id="closeiconcolor"></a>-->
-
             </div>
         </div>
-
         <div class="row cart-footer">
             <div class="col-50">
                 Total
@@ -73,10 +67,8 @@
                 {{total_customer}}
             </div>
         </div>
-
-
     </ion-content>
     <ion-footer-bar class="bar bar-stable" id="customfooter" ng-click="select_time()">
-            <span id="striketextcolor" class="button_title">SELECT DATE AND TIME</span>
+        <span id="striketextcolor" class="button_title">SELECT DATE AND TIME</span>
     </ion-footer-bar>
 </ion-view>

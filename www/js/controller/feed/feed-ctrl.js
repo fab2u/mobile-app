@@ -161,14 +161,13 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
         }
     };
 
-
-
     $scope.loadMore();
     function blogAlgo(i) {
         count++;
         var blogData = db.ref().child("blogs").child(i);
         blogData.once("value", function(snap) { //access individual blog
             single_blog = snap.val();
+            console.log("ddff",single_blog)
             if (single_blog) {
                 if(single_blog.photoUrl){
                     if(snap.val().photoUrl.indexOf('http')==-1){

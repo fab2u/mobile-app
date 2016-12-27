@@ -24,6 +24,16 @@ app.controller("followerCtrl", function(userServices,$scope,$stateParams,$cordov
 
                 console.log("resulyt",JSON.stringify(result))
                 if(result){
+                    if(result.photoUrl){
+                        if(result.photoUrl.indexOf('http')==-1){
+                            result.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+result.userId+
+                                "/profileImage/"+result.photoUrl+'-m.jpg';
+                        }
+                        else{
+                            result.photoUrl = result.photoUrl;
+
+                        }
+                    }
                     if(result.blogs){
                         result.postNum = Object.keys(result.blogs).length;
                         $scope.followerUserDetail.push(result);

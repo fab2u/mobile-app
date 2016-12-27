@@ -83,10 +83,14 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
             userInfoService.getPersonalInfo($scope.myUid).then(function (result) {
                 console.log(result)
                 $scope.userDetails = result;
-                if($scope.userDetails.photoUrl.indexOf('http')==-1){
-                    $scope.userDetails.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+$scope.myUid+
-                        "/profileImage/"+result.photoUrl+'-m.jpg';
+                if($scope.userDetails.photoUrl){
+                    if($scope.userDetails.photoUrl.indexOf('http')==-1){
+                        $scope.userDetails.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+$scope.myUid+
+                            "/profileImage/"+result.photoUrl+'-m.jpg';
+                    }
+
                 }
+
 
                 if($scope.userDetails.following){
                     $scope.following = Object.keys($scope.userDetails.following).length;

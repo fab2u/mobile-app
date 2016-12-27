@@ -47,16 +47,7 @@
                     </span>
                     <!--<img id="profile-img" ng-src="{{uploadedImage}}"-->
                          <!--alt="http://www.e-codices.unifr.ch/documents/media/Collections/img-not-available_en.jpg" />-->
-                          <div ng-show="showUploadOptions">
-                        <image-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"
-                                      view-port-width="250" view-port-height="250" boundry-width="270"
-                                      boundry-height="300" image-type="{{imageType}}"
-                                      image-upload-response="imageUploadResponseFn"
-                                      upload-path="{{uploadPath}}"
-                                      image-name="{{imageName}}">
-
-                        </image-upload>
-                          </div>
+                         
 
                     <!--  <div class="row" ng-show="showUploadOptions">
                          <div class="col">
@@ -107,6 +98,19 @@
                 <i class="icon ion-edit editcs" ng-click="showUploadOptions = !showUploadOptions"></i>
             </div>
         </div>
+        <div class="row pdtmn">
+             <div ng-show="showUploadOptions">
+                        <image-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"
+                                      view-port-width="250" view-port-height="250" boundry-width="270"
+                                      boundry-height="300" image-type="{{imageType}}"
+                                      image-upload-response="imageUploadResponseFn"
+                                      upload-path="{{uploadPath}}"
+                                      image-name="{{imageName}}">
+
+                        </image-upload>
+                          </div>
+
+        </div>
         <hr>
         <div class="feeds" ng-repeat="feed in blogArr | orderBy:'-created_time'">
             <div class="upper-row">
@@ -119,11 +123,14 @@
                             {{feed.user.user_name}}</a> | {{feed.created_time | date:'d MMM yy'}}</p>
                         <p class="feed-city"><i class="ion ion-location"></i> {{feed.city_name}}</p>
                     </div>
-                    <div class="col col-20">
+                    <div class="col col-offset-10 text-right">
+                        <a class="button button-icon icon ion-ios-more pdrt10" ></a>
+                        </div>
+                  <!--  <div class="col col-20 text-right">                                      
                         <button class="button button-outline button-positive" ng-click="deletePost(feed)">
                            Delete
                         </button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <img ng-src="{{feed.photoUrl}}" class="feed-img" ng-click="showImage(feed.photoUrl)">

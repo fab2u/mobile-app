@@ -1,6 +1,6 @@
 app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordovaCamera,
                                         $http,$state, $location,$ionicModal, $ionicLoading,$sce,
-                                        $ionicPopup,$cordovaToast,$rootScope){
+                                        $ionicPopup,$cordovaToast,$ionicPopover,$rootScope){
 
     if(checkLocalStorage('uid')){
         $scope.myUid = window.localStorage.getItem("uid");
@@ -462,6 +462,18 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
         });
     }
 
+    $ionicPopover.fromTemplateUrl('templates/popover.html', {
+        scope: $scope,
+    }).then(function(popover) {
+        $scope.popover = popover;
+    });
+
+    $scope.openPopover = function($event,Post) {
+        $scope.popover.show($event);
+        console.log("uidForPost",Post)
+        $scope.postInfo = Post
+    };
+
     $scope.deletePost = function (post) {
         if(post.$$hashKey){
             delete post.$$hashKey;
@@ -485,6 +497,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                     updates['users/data/'+post.user.user_id+'/blogs/'+post.blog_id] = null;
                     updates['cityBlogs/'+post.city_id+'/blogs/'+post.blog_id] = null;
                     firebase.database().ref().update(updates).then(function() {
+                        $scope.popover.hide();
                         $cordovaToast
                             .show('Post deleted successfully', 'long', 'center')
                             .then(function (success) {

@@ -103,36 +103,36 @@ app.controller('imageUploadCtrl', function($scope,$cordovaCamera, $timeout, uplo
         });
     };
 
-    document.getElementById("img-file").addEventListener("change", readFile, false);
-
-    function readFile() {
-/////   here to be option of camera with img.src as the path of image  //////
-        if (this.files && this.files[0]) {
-            var FR = new FileReader();
-            FR.onload = function(e) {
-                origImg64 = e.target.result;
-                origImg.src = e.target.result;
-                var checkSize = checkImageSize();
-                if (checkSize) {
-                    if ($scope.cropping == 'true') {
-                        cropBind();
-                    } else {
-                        img.src = e.target.result;
-                    }
-                } else {
-                    clearFile();
-                    // swal({
-                    //     title: "Image too small!!",
-                    //     text: "Please upload image bigger than size (height x width): " + $scope.minHeight + "px X " + $scope.minWidth + "px",
-                    //     type: "error",
-                    //     confirmButtonText: "Close"
-                    // });
-                }
-            };
-            FR.readAsDataURL(this.files[0]);
-
-        }
-    }
+//     document.getElementById("img-file").addEventListener("change", readFile, false);
+//
+//     function readFile() {
+// /////   here to be option of camera with img.src as the path of image  //////
+//         if (this.files && this.files[0]) {
+//             var FR = new FileReader();
+//             FR.onload = function(e) {
+//                 origImg64 = e.target.result;
+//                 origImg.src = e.target.result;
+//                 var checkSize = checkImageSize();
+//                 if (checkSize) {
+//                     if ($scope.cropping == 'true') {
+//                         cropBind();
+//                     } else {
+//                         img.src = e.target.result;
+//                     }
+//                 } else {
+//                     clearFile();
+//                     // swal({
+//                     //     title: "Image too small!!",
+//                     //     text: "Please upload image bigger than size (height x width): " + $scope.minHeight + "px X " + $scope.minWidth + "px",
+//                     //     type: "error",
+//                     //     confirmButtonText: "Close"
+//                     // });
+//                 }
+//             };
+//             FR.readAsDataURL(this.files[0]);
+//
+//         }
+//     }
 
 
 

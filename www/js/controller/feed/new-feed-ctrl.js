@@ -35,13 +35,6 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
     $scope.uploadedImage = 'http://www.e-codices.unifr.ch/documents/media/Collections/img-not-available_en.jpg';
 
 
-    $ionicPopover.fromTemplateUrl('templates/popover.html', {
-        scope: $scope,
-    }).then(function(popover) {
-        $scope.popover = popover;
-    });
-
-
 
     $scope.createFeed = function($event){
         if($scope.uid){

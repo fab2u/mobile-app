@@ -43,10 +43,10 @@
             <button class="button button-block activated pink-bg" type="submit" ng-click="createFeed($event)">Create Post</button>
          </div>
 
-         <div ng-show="demo">
+         <div ng-show="demo" class="row">
             <image-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"
-                          view-port-width="300" view-port-height="300" boundry-width="400"
-                          boundry-height="400" image-type="{{imageType}}"
+                          view-port-width="250" view-port-height="250" boundry-width="270"
+                          boundry-height="300" image-type="{{imageType}}"
                           image-upload-response="imageUploadResponseFn"
                           upload-path="{{uploadPath}}"
                           image-name="{{imageName}}">

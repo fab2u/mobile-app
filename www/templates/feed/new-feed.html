@@ -7,27 +7,29 @@
       <div class="des">
          <label>CREATE POST</label>
       </div>
-      <section ng-click="showUploadOptions = !showUploadOptions">
-         <div class="upload">
-            <img src="img/gallery.png" border="0" >
-            <br>
-            <label>Upload a photo<br> from gallery or camera.</label>
-         </div>
-      </section>
-      <div class="upload1">
-         <img id="myImage" style="width:50%; height:auto;"
-              ng-click="showUploadOptions = !showUploadOptions">
-      </div>
-      <div class="profile-details">
-         <div class="row" ng-show="showUploadOptions">
-            <div class="col">
-               <a class="follow-btn" ng-click="cameraUpload()">Camera</a>
-            </div>
-            <div class="col">
-               <a class="follow-btn" ng-click="galleryUpload()">Gallery</a>
-            </div>
-         </div>
-      </div>
+      <!--<section ng-click="showUploadOptions = !showUploadOptions">-->
+         <!--<div class="upload">-->
+            <!--<img src="img/gallery.png" border="0" >-->
+            <!--<br>-->
+            <!--<label>Upload a photo<br> from gallery or camera.</label>-->
+         <!--</div>-->
+      <!--</section>-->
+      <!--<div class="upload1">-->
+         <!--<img id="myImage" style="width:50%; height:auto;"-->
+              <!--ng-click="showUploadOptions = !showUploadOptions">-->
+      <!--</div>-->
+      <!--<div class="profile-details">-->
+         <!--<div class="row" ng-show="showUploadOptions">-->
+            <!--<image-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"-->
+                          <!--view-port-width="300" view-port-height="300" boundry-width="400"-->
+                          <!--boundry-height="400" image-type="{{imageType}}"-->
+                          <!--image-upload-response="imageUploadResponseFn"-->
+                          <!--upload-path="{{uploadPath}}"-->
+                          <!--image-name="{{imageName}}">-->
+
+            <!--</image-upload>-->
+         <!--</div>-->
+      <!--</div>-->
       <div class="des1">
          <label>Describe Your Look</label>
       </div>
@@ -38,8 +40,33 @@
                       ng-model="feed.introduction"></textarea>
          </label>
          <div class="padding">
-            <button class="button button-block activated pink-bg" type="submit" ng-click="submitFeed()">Create</button>
+            <button class="button button-block activated pink-bg" type="submit" ng-click="createFeed($event)">Create Post</button>
+         </div>
+
+         <div ng-show="demo">
+            <image-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"
+                          view-port-width="300" view-port-height="300" boundry-width="400"
+                          boundry-height="400" image-type="{{imageType}}"
+                          image-upload-response="imageUploadResponseFn"
+                          upload-path="{{uploadPath}}"
+                          image-name="{{imageName}}">
+            </image-upload>
          </div>
       </form>
    </ion-content>
 </ion-view>
+<!--<script id="templates/popover.html" type="text/ng-template">-->
+   <!--<ion-popover-view>-->
+      <!--<ion-content>-->
+         <!--<div class="list">-->
+            <!--<image-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"-->
+                          <!--view-port-width="300" view-port-height="300" boundry-width="400"-->
+                          <!--boundry-height="400" image-type="{{imageType}}"-->
+                          <!--image-upload-response="imageUploadResponseFn"-->
+                          <!--upload-path="{{uploadPath}}"-->
+                          <!--image-name="{{imageName}}">-->
+            <!--</image-upload>-->
+         <!--</div>-->
+      <!--</ion-content>-->
+   <!--</ion-popover-view>-->
+<!--</script>-->

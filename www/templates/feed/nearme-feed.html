@@ -108,6 +108,7 @@
                 <a class="item" ng-if="postInfo.user.user_id == uid" ng-click="deletePost(postInfo)">
                     Delete
                 </a>
+
                 <a class="item" ng-if="postInfo.user.user_id != uid" ng-click="spamPost(postInfo)">
                     Mark as spam
                 </a>

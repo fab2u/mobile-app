@@ -40,21 +40,14 @@
             </a>
         </div> -->
         <div class="row">
-            <div class="col col-25 col-30">
+            <div class="col col-25 col-30">          
                 <div class="row center">
-                    <img ng-src="{{userDetails.photoUrl || 'img/person.jpg'}}" width="110" height="110" id="profile-pic" />
+                <span class="userprofile-img">                  
+                     <img ng-src="{{userDetails.photoUrl || 'img/person.jpg'}}" id="profile-pic" />
+                    </span>
                     <!--<img id="profile-img" ng-src="{{uploadedImage}}"-->
                          <!--alt="http://www.e-codices.unifr.ch/documents/media/Collections/img-not-available_en.jpg" />-->
-                          <div ng-show="showUploadOptions">
-                        <image-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"
-                                      view-port-width="300" view-port-height="300" boundry-width="400"
-                                      boundry-height="400" image-type="{{imageType}}"
-                                      image-upload-response="imageUploadResponseFn"
-                                      upload-path="{{uploadPath}}"
-                                      image-name="{{imageName}}">
 
-                        </image-upload>
-                          </div>
 
                     <!--  <div class="row" ng-show="showUploadOptions">
                          <div class="col">
@@ -65,7 +58,7 @@
                          </div>
                      </div> -->
 
-                     <canvas id="identicon" width="100" height="100" class="profile-pic"></canvas>
+                     <!-- <canvas id="identicon" width="100" height="100" class="profile-pic"></canvas> -->
                 </div>
                 <div class="center p-name">
                     {{userDetails.name}}
@@ -105,6 +98,19 @@
                 <i class="icon ion-edit editcs" ng-click="showUploadOptions = !showUploadOptions"></i>
             </div>
         </div>
+        <div class="row pdtmn">
+             <div ng-show="showUploadOptions">
+                        <image-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"
+                                      view-port-width="250" view-port-height="250" boundry-width="270"
+                                      boundry-height="300" image-type="{{imageType}}"
+                                      image-upload-response="imageUploadResponseFn"
+                                      upload-path="{{uploadPath}}"
+                                      image-name="{{imageName}}">
+
+                        </image-upload>
+                          </div>
+
+        </div>
         <hr>
         <div class="feeds" ng-repeat="feed in blogArr | orderBy:'-created_time'">
             <div class="upper-row">
@@ -117,20 +123,23 @@
                             {{feed.user.user_name}}</a> | {{feed.created_time | date:'d MMM yy'}}</p>
                         <p class="feed-city"><i class="ion ion-location"></i> {{feed.city_name}}</p>
                     </div>
-                    <div class="col col-20">
+                    <div class="col col-offset-10 text-right">
+                        <a class="button button-icon icon ion-ios-more pdrt10" ></a>
+                        </div>
+                  <!--  <div class="col col-20 text-right">                                      
                         <button class="button button-outline button-positive" ng-click="deletePost(feed)">
                            Delete
                         </button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <img ng-src="{{feed.photoUrl}}" class="feed-img" ng-click="showImage(feed.photoUrl)">
             <div class="row upper-row1">
-                <div class="col col-25 likenum text-left">
+                <div class="col col-33 likenum text-left">
                     <i class="like-btn icon ion-ios-heart-outline ft25" ng-class="feed.liked?'clicked':'normal'" ng-click="likeThisFeed(feed)"></i>
                     <span>{{feed.numLikes || 0}} likes</span>
                 </div>
-                <div class="col col-40 likenum text-left">
+                <div class="col col-50 likenum text-left">
                     <i class="comment-btn icon ion-ios-chatbubble-outline ft25" ng-click="commentPost(feed.blog_id)"></i>
                     <span ng-click="commentToggle(feed.blog_id)">{{feed.commentCount || 0}} comments</span>
                 </div>

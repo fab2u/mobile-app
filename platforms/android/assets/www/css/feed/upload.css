@@ -85,6 +85,9 @@ input#img-file:focus {
     color: #3c3c3c;
 }
 
+.backdrop{z-index: 999 !important;}
+.loading-container{z-index: 99999 !important;}
+
 /*Image Dialog*/
 
 #crop-dialog, #upload-dialog{
@@ -101,6 +104,7 @@ input#img-file:focus {
     -webkit-box-shadow: 3px 3px 15px -1px rgba(0,0,0,0.75);
     -moz-box-shadow: 3px 3px 15px -1px rgba(0,0,0,0.75);
     box-shadow: 3px 3px 15px -1px rgba(0,0,0,0.75);
+    z-index: -1;
 }
 
 .ui-widget-header{
@@ -128,12 +132,12 @@ input#img-file:focus {
 }
 
 #upload-dialog #img-canvas{
-    max-width: 600px;
-    max-height: 400px;
+    max-width: 250px;
+    max-height: 300px;
 }
 
 
-.popup-footer input[type=button] {
+/*.popup-footer input[type=button] {
     -moz-box-shadow: 0px 4px 13px -7px #276873;
     -webkit-box-shadow: 0px 4px 13px -7px #276873;
     box-shadow: 0px 4px 13px -7px #276873;
@@ -160,7 +164,7 @@ input#img-file:focus {
 
 .popup-footer .popup-cancel{
     background-color:#687d85;
-}
+}*/
 
 #upload-dialog #img-canvas{
     margin:0 auto;
@@ -205,10 +209,13 @@ input#img-file:focus {
     margin: 0 auto;
 }
 
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+
 
 
 

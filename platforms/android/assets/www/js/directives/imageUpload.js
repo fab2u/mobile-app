@@ -27,7 +27,7 @@ app.directive('imageUpload', function() {
     }
 });
 app.controller('imageUploadCtrl', function($scope,$cordovaCamera, $timeout, uploadImage, $q, $http) {
-    console.log("imageUploadCtrl called")
+    console.log("imageUploadCtrl called");
     var can = document.getElementById('img-canvas');
     var ctx = can.getContext('2d');
     var img = new Image();
@@ -103,36 +103,36 @@ app.controller('imageUploadCtrl', function($scope,$cordovaCamera, $timeout, uplo
         });
     };
 
-    // document.getElementById("img-file").addEventListener("change", readFile, false);
+    document.getElementById("img-file").addEventListener("change", readFile, false);
 
-//     function readFile() {
-// /////   here to be option of camera with img.src as the path of image  //////
-//         if (this.files && this.files[0]) {
-//             var FR = new FileReader();
-//             FR.onload = function(e) {
-//                 origImg64 = e.target.result;
-//                 origImg.src = e.target.result;
-//                 var checkSize = checkImageSize();
-//                 if (checkSize) {
-//                     if ($scope.cropping == 'true') {
-//                         cropBind();
-//                     } else {
-//                         img.src = e.target.result;
-//                     }
-//                 } else {
-//                     clearFile();
-//                     swal({
-//                         title: "Image too small!!",
-//                         text: "Please upload image bigger than size (height x width): " + $scope.minHeight + "px X " + $scope.minWidth + "px",
-//                         type: "error",
-//                         confirmButtonText: "Close"
-//                     });
-//                 }
-//             };
-//             FR.readAsDataURL(this.files[0]);
-//
-//         }
-//     }
+    function readFile() {
+/////   here to be option of camera with img.src as the path of image  //////
+        if (this.files && this.files[0]) {
+            var FR = new FileReader();
+            FR.onload = function(e) {
+                origImg64 = e.target.result;
+                origImg.src = e.target.result;
+                var checkSize = checkImageSize();
+                if (checkSize) {
+                    if ($scope.cropping == 'true') {
+                        cropBind();
+                    } else {
+                        img.src = e.target.result;
+                    }
+                } else {
+                    clearFile();
+                    // swal({
+                    //     title: "Image too small!!",
+                    //     text: "Please upload image bigger than size (height x width): " + $scope.minHeight + "px X " + $scope.minWidth + "px",
+                    //     type: "error",
+                    //     confirmButtonText: "Close"
+                    // });
+                }
+            };
+            FR.readAsDataURL(this.files[0]);
+
+        }
+    }
 
 
 
@@ -210,8 +210,8 @@ app.controller('imageUploadCtrl', function($scope,$cordovaCamera, $timeout, uplo
         ctx.drawImage(img, 0, 0);
         $("#crop-dialog").dialog("close");
         $("#upload-dialog").dialog({
-            minHeight: 600,
-            minWidth: 650
+            minHeight: 300,
+            minWidth: 250
         });
         $("#upload-dialog").dialog("open");
 
@@ -221,11 +221,11 @@ app.controller('imageUploadCtrl', function($scope,$cordovaCamera, $timeout, uplo
         q = $q.defer();
         var upload = uploadImage.upload($scope.uploadPath, can.toDataURL(), $scope.imageType, $scope.imageName, q);
         upload.then(function(response) {
-            alert(JSON.stringify(response))
+            //alert(JSON.stringify(response))
             clearFile();
             $scope.imageUploadResponse(response.imgUrl);
         }, function(error) {
-            alert(JSON.stringify(error))
+           // alert(JSON.stringify(error))
             clearFile();
         });
     });
@@ -277,44 +277,37 @@ console.log("uploadImage service")
             $http({
                 url: 'http://139.162.9.71/api/uploadImage',
                 method: "POST",
+                // data: {
+                //     'path': 'test',
+                //     'img': image,
+                //     'imgType': 'project',
+                //     'imgName': 'test'
+                // }
                 data: {
-                    'path': 'test',
+                    'path': path,
                     'img': image,
-                    'imgType': 'project',
-                    'imgName': 'test'
+                    'imgType': imgType
                 }
             })
                 .then(function(response) {
                         // success
-                    alert(JSON.stringify(response))
+                        console.log("response",JSON.stringify(response))
+alert(JSON.stringify(response))
                         if (response.data.status == 200) {
                             $ionicLoading.hide()
-                            alert('1')
 
-                            // var updates1 = {};
-                            // updates1["/users/data/"+$scope.myUid+"/photoUrl"] = response.Message;
-                            // window.localStorage.setItem("userPhoto", response.Message);
-                            // db.ref().update(updates1).then(function(){
-                            //     $ionicLoading.hide();
-                            //
-                            //     $cordovaToast
-                            //         .show('Photo updated successfully!', 'long', 'center')
-                            //         .then(function (success) {
-                            //             // success
-                            //         }, function (error) {
-                            //             // error
-                            //         });
-                            //
-                            //     location.reload();
-                            //     $scope.modal1.hide();
-                            // });
                             q.resolve({
                                 imgUrl: response.data.imageName
                             });
                         } else {
                             $ionicLoading.hide()
-
-                            // sweetAlert("Error", "Profile image cannot be uploaded!", "error");
+                            $cordovaToast
+                                    .show('Profile image cannot be uploaded!', 'long', 'center')
+                                    .then(function (success) {
+                                        // success
+                                    }, function (error) {
+                                        // error
+                                    });
                             q.reject({
                                 imgUrl: 'NA'
                             });
@@ -323,7 +316,13 @@ console.log("uploadImage service")
                     function(response) { // optional
                         // failed
                         $ionicLoading.hide()
-                         alert('fail'+JSON.stringify(response))
+                        $cordovaToast
+                                .show('Internal server error, please try again after sometime.', 'long', 'center')
+                                .then(function (success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
                         console.log(response);
                         q.reject({
                             imgUrl: 'NA'

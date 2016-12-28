@@ -5,15 +5,15 @@
 
 
 #vendor-services .m-navColor {
-	background-color: #424242;
+	background-color: #fff;
 }
 #vendor-services .m-navColor .title {
-	text-decoration: #EEEEEE;
-	color: #EEEEEE;
+	/*text-decoration: #EEEEEE;*/
+	color: #444;
 }
 #vendor-services .m-navColor a.button {
-	text-decoration: #EEEEEE;
-	color: #EEEEEE;
+	/*text-decoration: #EEEEEE;*/
+	color: #444;
 }
 #vendor-services .backButton {
 	background-color:#fff;
@@ -69,7 +69,7 @@
 	padding-top: 20px;
 }
 #vendor-services .title {
-	width: 100%;
+	width: 71.5%;
 	height: auto;
 	margin-left: 35px;
 }
@@ -107,9 +107,10 @@
 
 #vendor-services .cart-price {
 	float: right;
+	width: -moz-max-content;
+	width: -webkit-max-content;
 	width: max-content;
 	padding: 0px 5px;
-	max-width: 95%;
 
 }
 #vendor-services .cart-price .gender{
@@ -124,10 +125,10 @@
 	border-bottom-left-radius: 15px;
 }
 #vendor-services .price {
-	background-color: #FFFFFF;
-	padding:7px;
-	border-top-right-radius: 15px;
-	border-bottom-right-radius: 15px;
+	background-color: #fff;
+	padding:7px; border:solid 1px #0dd1d1;
+/*	border-top-right-radius: 15px;
+	border-bottom-right-radius: 15px;*/
 }
 
 #vendor-services #scrollTabs {
@@ -164,7 +165,7 @@
 	background: #fff;
 }
 #vendor-services .item .price-view{
-	text-align:right;
+	text-align:center;
 	font-color:black;
 }
 /*#vendor-services .item .price-view span{*/
@@ -256,7 +257,7 @@
 	right: 20px;
 	height: 60px;
 	width: 60px;
-	background-color: #ff8386;
+	background-color: rgba(255, 131, 134,0.9);
 	border-radius: 50%;
 	text-align: center;
 	color: white;
@@ -312,8 +313,8 @@ body, .ionic-body{
 #vendor-services .services{
 	line-height:40px;
 	width:51%;
-	height:90%;
-	margin-top:4px;
+	height:100%;
+
 	background: #f2f2f2;
 	float:left;
 	text-align: center;
@@ -322,10 +323,10 @@ body, .ionic-body{
 	font-size: 15px;
 }
 #vendor-services .fab{
-	line-height:45px;
+	line-height:44px;
 	width:49%;
 	height:100%;
-	background:#d9d9d9;
+	background:#ddd;
 	float:left;
 	font-weight: 500;
 	font-size: 15px;
@@ -340,11 +341,11 @@ body, .ionic-body{
 	color:#5a5a5a;
 }
 #vendor-services .no-border {
-	border-bottom:0px solid #ff8386;
+	border-bottom:6px solid #ccc;
 }
 
 #vendor-services .with-border {
-	border-bottom:4px solid #ff8386;
+	border-bottom:6px solid #ff8386;
 }
 
 
@@ -389,3 +390,4 @@ body, .ionic-body{
 #vendor-services .title{
 	left:0px !important;
 }
+.ellipsis{overflow: hidden;white-space: nowrap; text-overflow: ellipsis;}

@@ -21,6 +21,8 @@ app.controller("followerCtrl", function(userServices,$scope,$stateParams,$cordov
         for(key in info){
             userServices.getUserInfo(key).then(function (result) {
                 $ionicLoading.hide();
+
+                console.log("resulyt",JSON.stringify(result))
                 if(result){
                     if(result.blogs){
                         result.postNum = Object.keys(result.blogs).length;

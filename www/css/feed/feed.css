@@ -258,9 +258,11 @@ float:right;
 
 .fabFeed .likenum span{
 	color: #525252;
-	position: absolute;
+	position: absolute; width: 100%;
 	padding-left: 10px; display: inline-block;
 }
+.popover-open .popover {margin-top: 10px;}
+
 
 
 .fabFeed .feedend{

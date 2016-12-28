@@ -141,7 +141,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
             if(single_blog){
                 if(single_blog.photoUrl){
                     if(snap.val().photoUrl.indexOf('http')==-1){
-                        single_blog.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/post/"+snap.val().user_id+
+                        single_blog.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/post/"+snap.val().user.user_id+
                             "/postImage/"+snap.val().photoUrl+'-m.jpg';
                     }
                     else{
@@ -203,13 +203,25 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                         }
                     }
                     if(snap.val().myFollowers){
-                        if ($scope.uid in snap.val().myFollowers){
-                            $timeout(function () {
-                                $('.'+single_blog.user.user_id+'-follow').hide();
-                                $("."+single_blog.user.user_id+'-unfollow').css("display", "block");
-                                $scope.followOption = true;
-                            }, 0);
+
+                        for(key in snap.val().myFollowers){
+                            console.log("key",key)
+                            if($scope.uid  == key){
+                                $timeout(function() {
+                                    $('.' + single_blog.user.user_id + '-follow').hide();
+                                    $("." + single_blog.user.user_id + '-unfollow').css("display", "block");
+                                    $scope.followOption = true;
+                                }, 0);
+                            }
                         }
+                        //
+                        // if ($scope.uid in snap.val().myFollowers){
+                        //     $timeout(function () {
+                        //         $('.'+single_blog.user.user_id+'-follow').hide();
+                        //         $("."+single_blog.user.user_id+'-unfollow').css("display", "block");
+                        //         $scope.followOption = true;
+                        //     }, 0);
+                        // }
                     }
                 });
             }

@@ -173,7 +173,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                     single_blog.profilePic = $scope.userPhoto;
                     if(single_blog.photoUrl){
                         if(snap.val().photoUrl.indexOf('http')==-1){
-                            single_blog.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/post/"+snap.val().user_id+
+                            single_blog.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/post/"+snap.val().user.user_id+
                                 "/postImage/"+snap.val().photoUrl+'-m.jpg';
                         }
                         else{

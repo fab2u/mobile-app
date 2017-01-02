@@ -1,13 +1,24 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.ionicframework.fab2u641617" version="2.0.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="ActionSheet">
+        <param name="android-package" value="nl.xservices.plugins.actionsheet.ActionSheet" />
+    </feature>
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
     </feature>
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
+    <feature name="FCMPlugin">
+        <param name="android-package" value="com.gae.scaffolder.plugin.FCMPlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
     </feature>
     <feature name="DeviceFeedback">
         <param name="android-package" value="cz.Velda.cordova.plugin.devicefeedback.DeviceFeedback" />
@@ -20,19 +31,8 @@
     <feature name="SocialSharing">
         <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
     </feature>
-    <feature name="FCMPlugin">
-        <param name="android-package" value="com.gae.scaffolder.plugin.FCMPlugin" />
-        <param name="onload" value="true" />
-    </feature>
     <feature name="Toast">
         <param name="android-package" value="nl.xservices.plugins.Toast" />
-    </feature>
-    <feature name="SplashScreen">
-        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="ActionSheet">
-        <param name="android-package" value="nl.xservices.plugins.actionsheet.ActionSheet" />
     </feature>
     <feature name="LaunchNavigator">
         <param name="android-package" value="uk.co.workingedge.phonegap.plugin.LaunchNavigator" />

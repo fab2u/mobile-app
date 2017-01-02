@@ -9,6 +9,10 @@
                 "parents": {
                     "/*": [
                         {
+                            "xml": "<feature name=\"ActionSheet\"><param name=\"android-package\" value=\"nl.xservices.plugins.actionsheet.ActionSheet\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
                             "count": 1
                         },
@@ -17,7 +21,15 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"FCMPlugin\"><param name=\"android-package\" value=\"com.gae.scaffolder.plugin.FCMPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
                         {
@@ -33,19 +45,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"FCMPlugin\"><param name=\"android-package\" value=\"com.gae.scaffolder.plugin.FCMPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Toast\"><param name=\"android-package\" value=\"nl.xservices.plugins.Toast\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"ActionSheet\"><param name=\"android-package\" value=\"nl.xservices.plugins.actionsheet.ActionSheet\" /></feature>",
                             "count": 1
                         },
                         {
@@ -76,57 +76,59 @@
                             "xml": "<service android:name=\"com.gae.scaffolder.plugin.MyFirebaseInstanceIDService\"><intent-filter><action android:name=\"com.google.firebase.INSTANCE_ID_EVENT\" /></intent-filter></service>",
                             "count": 1
                         }
-                    ],
-                    "/manifest": []
-                }
-            },
-            "config.xml": {
-                "parents": {
-                    "/*": []
+                    ]
                 }
             }
         }
     },
     "installed_plugins": {
+        "cordova-plugin-actionsheet": {
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
+        },
         "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.fab2u"
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         },
         "cordova-plugin-camera": {
-            "PACKAGE_NAME": "com.fab2u"
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.fab2u"
-        },
-        "cordova-plugin-inappbrowser": {
-            "PACKAGE_NAME": "com.fab2u"
-        },
-        "cordova-plugin-velda-devicefeedback": {
-            "PACKAGE_NAME": "com.fab2u"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.fab2u"
-        },
-        "cordova-plugin-x-socialsharing": {
-            "PACKAGE_NAME": "com.fab2u"
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         },
         "cordova-plugin-fcm": {
-            "PACKAGE_NAME": "com.fab2u"
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         },
-        "cordova-plugin-x-toast": {
-            "PACKAGE_NAME": "com.fab2u"
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.fab2u"
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         },
-        "cordova-plugin-actionsheet": {
-            "PACKAGE_NAME": "com.fab2u"
+        "cordova-plugin-velda-devicefeedback": {
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         },
         "uk.co.workingedge.phonegap.plugin.launchnavigator": {
-            "PACKAGE_NAME": "com.fab2u"
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         }
     },
     "dependent_plugins": {},
     "modules": [
+        {
+            "id": "cordova-plugin-actionsheet.ActionSheet",
+            "file": "plugins/cordova-plugin-actionsheet/www/ActionSheet.js",
+            "pluginId": "cordova-plugin-actionsheet",
+            "clobbers": [
+                "window.plugins.actionsheet"
+            ]
+        },
         {
             "id": "cordova-plugin-camera.Camera",
             "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
@@ -168,12 +170,28 @@
             ]
         },
         {
+            "id": "cordova-plugin-fcm.FCMPlugin",
+            "file": "plugins/cordova-plugin-fcm/www/FCMPlugin.js",
+            "pluginId": "cordova-plugin-fcm",
+            "clobbers": [
+                "FCMPlugin"
+            ]
+        },
+        {
             "id": "cordova-plugin-inappbrowser.inappbrowser",
             "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
             "pluginId": "cordova-plugin-inappbrowser",
             "clobbers": [
                 "cordova.InAppBrowser.open",
                 "window.open"
+            ]
+        },
+        {
+            "id": "cordova-plugin-splashscreen.SplashScreen",
+            "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+            "pluginId": "cordova-plugin-splashscreen",
+            "clobbers": [
+                "navigator.splashscreen"
             ]
         },
         {
@@ -193,14 +211,6 @@
             ]
         },
         {
-            "id": "cordova-plugin-fcm.FCMPlugin",
-            "file": "plugins/cordova-plugin-fcm/www/FCMPlugin.js",
-            "pluginId": "cordova-plugin-fcm",
-            "clobbers": [
-                "FCMPlugin"
-            ]
-        },
-        {
             "id": "cordova-plugin-x-toast.Toast",
             "file": "plugins/cordova-plugin-x-toast/www/Toast.js",
             "pluginId": "cordova-plugin-x-toast",
@@ -212,22 +222,6 @@
             "id": "cordova-plugin-x-toast.tests",
             "file": "plugins/cordova-plugin-x-toast/test/tests.js",
             "pluginId": "cordova-plugin-x-toast"
-        },
-        {
-            "id": "cordova-plugin-splashscreen.SplashScreen",
-            "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-            "pluginId": "cordova-plugin-splashscreen",
-            "clobbers": [
-                "navigator.splashscreen"
-            ]
-        },
-        {
-            "id": "cordova-plugin-actionsheet.ActionSheet",
-            "file": "plugins/cordova-plugin-actionsheet/www/ActionSheet.js",
-            "pluginId": "cordova-plugin-actionsheet",
-            "clobbers": [
-                "window.plugins.actionsheet"
-            ]
         },
         {
             "id": "uk.co.workingedge.phonegap.plugin.launchnavigator.Common",
@@ -247,17 +241,17 @@
         }
     ],
     "plugin_metadata": {
+        "cordova-plugin-actionsheet": "2.3.1",
         "cordova-plugin-compat": "1.0.0",
         "cordova-plugin-camera": "2.2.0",
         "cordova-plugin-device": "1.1.2",
+        "cordova-plugin-fcm": "1.1.4",
         "cordova-plugin-inappbrowser": "1.5.0",
+        "cordova-plugin-splashscreen": "4.0.0",
         "cordova-plugin-velda-devicefeedback": "0.0.2",
         "cordova-plugin-whitelist": "1.2.3-dev",
         "cordova-plugin-x-socialsharing": "5.1.2",
-        "cordova-plugin-fcm": "1.1.4",
         "cordova-plugin-x-toast": "2.5.2",
-        "cordova-plugin-splashscreen": "4.0.0",
-        "cordova-plugin-actionsheet": "2.3.1",
         "uk.co.workingedge.phonegap.plugin.launchnavigator": "3.2.1"
     }
 }

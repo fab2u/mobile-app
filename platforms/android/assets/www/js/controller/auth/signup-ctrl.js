@@ -49,7 +49,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             console.log("else")
         }
     }
-    //deviceRegistered();
+    deviceRegistered();
 
     /////////////////////////////// To check apply referral code valid or not ////////////////
 
@@ -573,14 +573,19 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
         window.localStorage.setItem("uid", $scope.uid);
         window.localStorage.setItem("referralCode", $scope.user.referral_code);
         $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
+        $ionicLoading.hide();
+        $cordovaToast
+            .show('Your account is successfully created.', 'long', 'center')
+            .then(function (success) {
+                // success
+            }, function (error) {
+                // error
+            });
+        // $state.go('interests');
         var stateObj = $rootScope.from;
-        alert("state577"+JSON.stringify(stateObj))
-        alert("length"+Object.keys(stateObj).length)
         if(stateObj && (Object.keys(stateObj).length > 0)) {
-            alert("inside if")
             if (stateObj.stateName != 'tagFeed') {
                 $rootScope.from = {};
-
                     $cordovaToast
                         .show('Your account is successfully created.', 'long', 'center')
                         .then(function (success) {
@@ -593,7 +598,6 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                 $state.go(stateObj.stateName);
             }
             else {
-                alert("else")
                 $rootScope.from = {};
 
                     $cordovaToast
@@ -619,7 +623,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
                     });
 
             $ionicLoading.hide();
-            $state.go('app.home')
+            $state.go('feed')
         }
     }
 

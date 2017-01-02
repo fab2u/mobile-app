@@ -8,42 +8,42 @@
     },
     "installed_plugins": {
         "cordova-plugin-camera": {
-            "PACKAGE_NAME": "com.fab2u"
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.fab2u"
-        },
-        "cordova-plugin-inappbrowser": {
-            "PACKAGE_NAME": "com.fab2u"
-        },
-        "cordova-plugin-velda-devicefeedback": {
-            "PACKAGE_NAME": "com.fab2u"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.fab2u"
-        },
-        "cordova-plugin-x-socialsharing": {
-            "PACKAGE_NAME": "com.fab2u"
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         },
         "cordova-plugin-fcm": {
-            "PACKAGE_NAME": "com.fab2u"
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         },
-        "cordova-plugin-x-toast": {
-            "PACKAGE_NAME": "com.fab2u"
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.fab2u"
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
+        },
+        "cordova-plugin-velda-devicefeedback": {
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         },
         "uk.co.workingedge.phonegap.plugin.launchnavigator": {
-            "PACKAGE_NAME": "com.fab2u"
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         }
     },
     "dependent_plugins": {
-        "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.fab2u"
-        },
         "cordova-plugin-actionsheet": {
-            "PACKAGE_NAME": "com.fab2u"
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.fab2u641617"
         }
     }
 }

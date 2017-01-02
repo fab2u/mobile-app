@@ -55,6 +55,7 @@ app.controller('HomeCtrl',function($scope,$q,$state,$timeout,$ionicLoading,$loca
 	function getBanners(){
 		$ionicLoading.show();
 		homeServices.getSelectedCityBanner(locationInfo.cityId).then(function(result){
+			console.log("result",JSON.stringify(result))
 			if(result){
 				$scope.banners = result;
 				$ionicSlideBoxDelegate.update();

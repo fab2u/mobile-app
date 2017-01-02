@@ -25,7 +25,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                   window.localStorage.setItem("email", email);
                   window.localStorage.setItem("uid", user.uid);
                   var stateObj = $rootScope.from;
-                  if(stateObj) {
+                  if(stateObj && (Object.keys(stateObj).length > 0)) {
                      if (stateObj.stateName != 'tagFeed') {
                         $rootScope.$broadcast('logged_in', { message: 'usr logged in' });
 
@@ -70,7 +70,7 @@ app.factory("AuthenticationService", function($http, $location,$rootScope,$state
                             });
 
                      $ionicLoading.hide();
-                     $state.go('app.home')
+                     $state.go('feed')
                   }
 
                }

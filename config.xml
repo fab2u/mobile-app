@@ -12,6 +12,10 @@
   <access launch-external="yes" origin="tel:*"/>
   <allow-intent href="*"/>
   <allow-navigation href="http://fab2u.org/* "/>
+  <allow-navigation href="http://192.168.1.102:8100"/>
+  <allow-navigation href="http://192.168.1.102:8101"/>
+  <allow-navigation href="http://192.168.1.104:8100"/>
+  <allow-navigation href="http://192.168.1.103:8100"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>

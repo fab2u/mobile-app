@@ -17,6 +17,7 @@
 @import url("auth/interests.css");
 @import url("feed/feed.css");
 @import url("feed/fab-feed.css");
+@import url("feed/upload.css");
 
 /*@import url("home/new-slider.css");*/
 @import url("vendor/vendor-services-list.css");
@@ -25,6 +26,8 @@
 @import url("home/service-list.css");
 @import url("vendor/map.css");
 @import url("vendor/filter.css");
+
+@import url("common/common.css");
 
 /*
 **********************************************************

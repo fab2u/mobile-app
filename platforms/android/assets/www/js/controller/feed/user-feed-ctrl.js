@@ -1,6 +1,6 @@
 app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordovaCamera,
                                         $http,$state, $location,$ionicModal, $ionicLoading,$sce,
-                                        $ionicPopup,$cordovaToast,$rootScope){
+                                        $ionicPopup,$cordovaToast,$ionicPopover,$rootScope){
 
     if(checkLocalStorage('uid')){
         $scope.myUid = window.localStorage.getItem("uid");
@@ -55,6 +55,27 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
     }
     // ----------------------------------------------------------------------
 
+    $scope.imageType = 'profile';
+    $scope.uploadPath = 'fab2u/profile/'+$scope.myUid+'/profileImage';
+    $scope.uploadedImage = 'http://www.e-codices.unifr.ch/documents/media/Collections/img-not-available_en.jpg';
+
+    // $scope.imageName = uid;
+    $scope.imageUploadResponseFn = function(valueFromDirective) {
+        // var url = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+$scope.myUid+"/profileImage/"+valueFromDirective+-m.jpg
+        db.ref('/users/data/' + $scope.myUid + '/photoUrl').set(valueFromDirective).then(function() {
+            $scope.userDetails.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+$scope.myUid+
+                "/profileImage/"+valueFromDirective+'-m.jpg';
+
+            $cordovaToast
+            .show('Photo updated successfully!', 'long', 'center')
+            .then(function (success) {
+                // success
+            }, function (error) {
+                // error
+            });
+         });
+    }
+
     if($scope.myUid){
         /////////////do all things here
 
@@ -62,6 +83,15 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
             userInfoService.getPersonalInfo($scope.myUid).then(function (result) {
                 console.log(result)
                 $scope.userDetails = result;
+                if($scope.userDetails.photoUrl){
+                    if($scope.userDetails.photoUrl.indexOf('http')==-1){
+                        $scope.userDetails.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+$scope.myUid+
+                            "/profileImage/"+result.photoUrl+'-m.jpg';
+                    }
+
+                }
+
+
                 if($scope.userDetails.following){
                     $scope.following = Object.keys($scope.userDetails.following).length;
                     $scope.followingIds = $scope.userDetails.following;
@@ -141,6 +171,15 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                 single_blog = snap.val();
                 if(single_blog){
                     single_blog.profilePic = $scope.userPhoto;
+                    if(single_blog.photoUrl){
+                        if(snap.val().photoUrl.indexOf('http')==-1){
+                            single_blog.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/post/"+snap.val().user.user_id+
+                                "/postImage/"+snap.val().photoUrl+'-m.jpg';
+                        }
+                        else{
+                            single_blog.photoUrl = snap.val().photoUrl;
+                        }
+                    }
                     if(single_blog.introduction){
                         var temp = single_blog.introduction;
                         single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a><span>&nbsp;</span>');
@@ -399,117 +438,6 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
             getPostInfo();
         };
 
-        //////////////////////image upload  to user profile//////////////////////////////////
-
-        var basic;
-        $ionicModal.fromTemplateUrl('templates/user/image-crop.html', {
-            scope: $scope
-        }).then(function(modal) {
-            $scope.modal1 = modal;
-        });
-
-        $scope.galleryUpload = function() {
-            var options = {
-                destinationType : Camera.DestinationType.DATA_URL,
-                sourceType :	Camera.PictureSourceType.PHOTOLIBRARY, //, Camera.PictureSourceType.CAMERA,
-                allowEdit : false,
-                encodingType: Camera.EncodingType.JPEG,
-                popoverOptions: CameraPopoverOptions,
-            };
-            $cordovaCamera.getPicture(options).then(function(imageURI) {
-                var image = document.getElementById('profile-pic');
-                image.src = "data:image/jpeg;base64,"+imageURI;
-                $scope.url = imageURI;
-                $scope.image_base_64 = image.src;
-                cropImage($scope.image_base_64);
-                // resizeImage(imageURI);
-            }, function(err) {
-                console.log(err);
-            });
-        };
-
-
-        $scope.cameraUpload = function() {
-            var options = {
-                destinationType : Camera.DestinationType.DATA_URL,
-                sourceType :	Camera.PictureSourceType.CAMERA,
-                allowEdit : false,
-                encodingType: Camera.EncodingType.JPEG,
-                popoverOptions: CameraPopoverOptions,
-            };
-
-            $cordovaCamera.getPicture(options).then(function(imageURI) {
-                var image = document.getElementById('profile-pic');
-                image.src = "data:image/jpeg;base64,"+imageURI;
-                $scope.url = imageURI;
-                $scope.image_base_64 = image.src;
-                cropImage($scope.image_base_64);
-            }, function(err) {
-                console.log(err);
-            });
-        };
-
-        function cropImage(source){
-            $scope.modal1.show();
-            basic = $('.demo').croppie({
-                viewport: {
-                    width: 200,
-                    height: 200,
-                    type: 'circle'
-                }
-            });
-            basic.croppie('bind', {
-                url: source
-            });
-        }
-
-        $scope.cropClick = function(){
-            $ionicLoading.show({
-                template: 'Loading! Please wait...'
-            });
-            basic.croppie('result', {
-                type: 'canvas',
-                format: 'jpeg',
-                circle: true
-            }).then(function (resp) {
-                // alert(JSON.stringify(resp));
-                $http.post("http://139.162.3.205/api/testupload", {path: resp})
-                    .success(function(response){
-                        var updates1 = {};
-                        updates1["/users/data/"+$scope.myUid+"/photoUrl"] = response.Message;
-                        window.localStorage.setItem("userPhoto", response.Message);
-                        db.ref().update(updates1).then(function(){
-                                $ionicLoading.hide();
-
-                                $cordovaToast
-                                    .show('Photo updated successfully!', 'long', 'center')
-                                    .then(function (success) {
-                                        // success
-                                    }, function (error) {
-                                        // error
-                                    });
-
-                                 location.reload();
-                                $scope.modal1.hide();
-                        });
-
-                    })
-                    .error(function(response){
-                        $ionicLoading.hide();
-                        console.log(JSON.stringify(response));
-
-                            $cordovaToast
-                                .show('Something went wrong,please try again!', 'long', 'center')
-                                .then(function (success) {
-                                    // success
-                                }, function (error) {
-                                    // error
-                                });
-
-                    });
-            });
-        }
-
     }
     else{
        showLoginSignUp();
@@ -534,6 +462,18 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
         });
     }
 
+    $ionicPopover.fromTemplateUrl('templates/popover.html', {
+        scope: $scope,
+    }).then(function(popover) {
+        $scope.popover = popover;
+    });
+
+    $scope.openPopover = function($event,Post) {
+        $scope.popover.show($event);
+        console.log("uidForPost",Post)
+        $scope.postInfo = Post
+    };
+
     $scope.deletePost = function (post) {
         if(post.$$hashKey){
             delete post.$$hashKey;
@@ -557,6 +497,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                     updates['users/data/'+post.user.user_id+'/blogs/'+post.blog_id] = null;
                     updates['cityBlogs/'+post.city_id+'/blogs/'+post.blog_id] = null;
                     firebase.database().ref().update(updates).then(function() {
+                        $scope.popover.hide();
                         $cordovaToast
                             .show('Post deleted successfully', 'long', 'center')
                             .then(function (success) {

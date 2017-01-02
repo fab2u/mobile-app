@@ -126,6 +126,15 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
         blogData.once("value", function(snap){ //access individual blog
             single_blog = snap.val();
             if(single_blog){
+                if(single_blog.photoUrl){
+                    if(snap.val().photoUrl.indexOf('http')==-1){
+                        single_blog.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/post/"+snap.val().user.user_id+
+                            "/postImage/"+snap.val().photoUrl+'-m.jpg';
+                    }
+                    else{
+                        single_blog.photoUrl = snap.val().photoUrl;
+                    }
+                }
                 if(single_blog.introduction){
                     var temp = single_blog.introduction;
                     single_blog.introduction =  temp.replace(/#(\w+)(?!\w)/g,'<a href="#/tag/$1">#$1</a><span>&nbsp;</span>');
@@ -167,23 +176,52 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                 }
                 db.ref("users/data/"+single_blog.user.user_id).once("value", function(snap){
                     if(snap.val().photoUrl){
-                        single_blog.profilePic = snap.val().photoUrl;
+                        // single_blog.profilePic = snap.val().photoUrl;
+
+                        if(snap.val().photoUrl.indexOf('http')==-1){
+                            single_blog.profilePic = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+snap.val().userId+
+                                "/profileImage/"+snap.val().photoUrl+'-m.jpg';
+                        }
+                        else{
+                            single_blog.profilePic = snap.val().photoUrl;
+
+                        }
                     }
                     if(snap.val().myFollowers){
-                        if ($scope.uid in snap.val().myFollowers){
-                            $timeout(function () {
-                                $('.'+single_blog.user.user_id+'-follow').hide();
-                                $("."+single_blog.user.user_id+'-unfollow').css("display", "block");
-                                $scope.followOption = true;
-                            }, 0);
+
+                        for(key in snap.val().myFollowers){
+                            console.log("key",key)
+                            if($scope.uid  == key){
+                                $timeout(function() {
+                                    $('.' + single_blog.user.user_id + '-follow').hide();
+                                    $("." + single_blog.user.user_id + '-unfollow').css("display", "block");
+                                    $scope.followOption = true;
+                                }, 0);
+                            }
                         }
+                        // if ($scope.uid in snap.val().myFollowers){
+                        //     $timeout(function () {
+                        //         $('.'+single_blog.user.user_id+'-follow').hide();
+                        //         $("."+single_blog.user.user_id+'-unfollow').css("display", "block");
+                        //         $scope.followOption = true;
+                        //     }, 0);
+                        // }
                     }
                 });
             }
             else{
                 db.ref("users/data/"+single_blog.user.user_id).once("value", function(snap) {
                     if (snap.val().photoUrl) {
-                        single_blog.profilePic = snap.val().photoUrl;
+                        // single_blog.profilePic = snap.val().photoUrl;
+
+                        if(snap.val().photoUrl.indexOf('http')==-1){
+                            single_blog.profilePic = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+snap.val().userId+
+                                "/profileImage/"+snap.val().photoUrl+'-m.jpg';
+                        }
+                        else{
+                            single_blog.profilePic = snap.val().photoUrl;
+
+                        }
                     }
                 })
             }

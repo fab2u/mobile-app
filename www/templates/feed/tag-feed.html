@@ -33,12 +33,12 @@
 			</div>
 			<img ng-src="{{feed.photoUrl}}" class="feed-img" ng-click="showImage(feed.photoUrl)">
 			<div class="row upper-row1">
-				<div class="col col-25 likenum text-left">
+				<div class="col col-33 likenum text-left">
 					<i class="like-btn icon ion-ios-heart-outline ft25" ng-class="feed.liked?'clicked':'normal'"
 					   ng-click="likeThisFeed(feed)"></i>
 					<span>{{feed.numLikes || 0}} likes</span>
 				</div>
-				<div class="col col-40 likenum text-left" ng-click="commentToggle(feed.blog_id)">
+				<div class="col col-50 likenum text-left" ng-click="commentToggle(feed.blog_id)">
 					<i class="comment-btn icon ion-ios-chatbubble-outline ft25"
 					   ng-click="showPopup(feed.blog_id)"></i>
 					<span>{{feed.commentCount || 0}} comments</span>

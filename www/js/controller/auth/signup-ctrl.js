@@ -46,7 +46,7 @@ app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordo
             });
         }
         else{
-            console.log("else")
+            console.log("device not registered with us.")
         }
     }
     deviceRegistered();

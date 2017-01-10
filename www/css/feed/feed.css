@@ -248,6 +248,8 @@ float:right;
 
 .fabFeed .likenum{
 	line-height: 30px;
+	position: relative;
+	 display: inline-block;
 }
 
 .fabFeed .likenum i{
@@ -256,9 +258,11 @@ float:right;
 
 .fabFeed .likenum span{
 	color: #525252;
-	position: absolute;
-	padding-left: 10px;
+	position: absolute; width: 100%;
+	padding-left: 10px; display: inline-block;
 }
+.popover-open .popover {margin-top: 10px;}
+
 
 
 .fabFeed .feedend{

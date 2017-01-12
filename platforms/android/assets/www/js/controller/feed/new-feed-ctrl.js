@@ -30,8 +30,8 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
         })
     }
 
-    $scope.imageType = 'profile';
-    $scope.uploadPath = 'fab2u/post/'+$scope.uid+'/postImage';
+    $scope.imageType = 'blogs';
+    $scope.uploadPath = 'fab2u/blogs/'+$scope.uid+'/blogImage';
     $scope.uploadedImage = 'http://www.e-codices.unifr.ch/documents/media/Collections/img-not-available_en.jpg';
 
 
@@ -78,8 +78,8 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
 
 
         console.log("valueFromDirective",valueFromDirective)
-        // $scope.image_url = "http://cdn.roofpik.com/roofpik/fab2u/post/"+$scope.uid+
-        //     "/postImage/"+valueFromDirective+'-m.jpg';
+        alert(valueFromDirective)
+        $scope.image_url = valueFromDirective;
 
 
         $scope.image_url = valueFromDirective;

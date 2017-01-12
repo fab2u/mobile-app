@@ -60,11 +60,10 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
     $scope.uploadedImage = 'http://www.e-codices.unifr.ch/documents/media/Collections/img-not-available_en.jpg';
 
     // $scope.imageName = uid;
+    // http://1272343129.rsc.cdn77.org/fab2u/general/854b6f33-2b00-4f91-b637-2a36e61cebf0-m.jpeg
     $scope.imageUploadResponseFn = function(valueFromDirective) {
-        // var url = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+$scope.myUid+"/profileImage/"+valueFromDirective+-m.jpg
         db.ref('/users/data/' + $scope.myUid + '/photoUrl').set(valueFromDirective).then(function() {
-            $scope.userDetails.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+$scope.myUid+
-                "/profileImage/"+valueFromDirective+'-m.jpg';
+            $scope.userDetails.photoUrl = valueFromDirective;
 
             $cordovaToast
             .show('Photo updated successfully!', 'long', 'center')
@@ -74,6 +73,8 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                 // error
             });
          });
+        alert(valueFromDirective)
+        console.log("valueFromDirective",valueFromDirective)
     }
 
     if($scope.myUid){

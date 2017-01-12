@@ -271,11 +271,11 @@ app.service('uploadImage', function($http,$rootScope,$ionicLoading,$cordovaToast
 console.log("uploadImage service")
     return {
         upload: function(path, image, imgType, imgName, q) {
-            console.log("inside upload fun")
+            console.log("inside upload fun",path, image, imgType)
             $ionicLoading.show()
-
             $http({
-                url: 'http://139.162.9.71/api/uploadImage',
+                // url: 'http://139.162.9.71/api/uploadImage',
+                url: 'http://139.162.27.64/api/image-upload-base64',
                 method: "POST",
                 // data: {
                 //     'path': 'test',
@@ -284,9 +284,12 @@ console.log("uploadImage service")
                 //     'imgName': 'test'
                 // }
                 data: {
-                    'path': path,
-                    'img': image,
-                    'imgType': imgType
+                    // 'path': path,
+                    // 'img': image,
+                    // 'imgType': imgType
+                    'imgType':imgType,
+                    'path':path,
+                    'img':image
                 }
             })
                 .then(function(response) {
@@ -295,7 +298,7 @@ console.log("uploadImage service")
                         if (response.data.status == 200) {
                             $ionicLoading.hide();
                             q.resolve({
-                                imgUrl: response.data.imageName
+                                imgUrl: response.data.url
                             });
                         } else {
                             $ionicLoading.hide()

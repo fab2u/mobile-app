@@ -47,10 +47,14 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
     });
 
     $scope.showImage = function (source) {
-        $scope.imageSrc = source;show
-        alert('show image called:')
+        $scope.imageSrc = source;
         $scope.openModal();
     }
+
+    // $scope.showImage = function(source) {
+    //     $scope.imageSrc = source;
+    //     $scope.openModal();
+    // }
     // ----------------------------------------------------------------------
     if($scope.uid){
         myInfo();
@@ -79,7 +83,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
     $scope.loadMore = function () {
         $ionicLoading.show();
         if (Object.keys($scope.blogIdList).length == 0) {
-            db.ref("cityBlogs/" + $scope.cityId + "/blogs").limitToLast(5).once('value', function (snapshot) {
+            db.ref("cityFeeds/" + $scope.cityId).limitToLast(5).once('value', function (snapshot) {
                 if(snapshot.val()){
 
                     $scope.blogIdList = snapshot.val();
@@ -109,7 +113,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
         }
 
         else if (Object.keys($scope.blogIdList).length > 0) {
-            db.ref("cityBlogs/" + $scope.cityId + "/blogs").orderByKey().limitToFirst(6).endAt($scope.bottomKey).once("value", function (snap) {
+            db.ref("cityFeeds/" + $scope.cityId).orderByKey().limitToFirst(6).endAt($scope.bottomKey).once("value", function (snap) {
                 if (snap.numChildren() == 1) {
                     $scope.moreMessagesScroll = false;
                     $ionicLoading.hide();
@@ -135,18 +139,23 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
 
     function blogAlgo(i) {
         count++;
-        var blogData = db.ref().child("blogs").child(i);
+        var blogData = db.ref().child("feeds").child(i);
         blogData.once("value", function (snap) { //access individual blog
             single_blog = snap.val();
             if(single_blog){
                 if(single_blog.photoUrl){
-                    if(snap.val().photoUrl.indexOf('http')==-1){
-                        single_blog.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/post/"+snap.val().user.user_id+
-                            "/postImage/"+snap.val().photoUrl+'-m.jpg';
-                    }
-                    else{
-                        single_blog.photoUrl = snap.val().photoUrl;
-                    }
+                    single_blog.photoUrl = "http://1272343129.rsc.cdn77.org/fab2u/feeds/"+
+                        single_blog.blog_id+"/"+single_blog.photoUrl+'-m.jpg';
+                    // if(snap.val().photoUrl.indexOf('http')==-1){
+                    //     single_blog.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/post/"+snap.val().user.user_id+
+                    //         "/postImage/"+snap.val().photoUrl+'-m.jpg';
+                    //
+                    //     // single_blog.photoUrl = "http://1272343129.rsc.cdn77.org/fab2u/feeds/"+
+                    //     //     single_blog.blog_id+"/"+single_blog.photoUrl+"-m.jpg";
+                    // }
+                    // else{
+                    //     single_blog.photoUrl = snap.val().photoUrl;
+                    // }
                 }
                 if(single_blog.introduction){
                     var temp = single_blog.introduction;
@@ -193,14 +202,17 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                     if(snap.val().photoUrl){
                         // single_blog.profilePic = snap.val().photoUrl;
 
-                        if(snap.val().photoUrl.indexOf('http')==-1){
-                            single_blog.profilePic = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+snap.val().userId+
-                                "/profileImage/"+snap.val().photoUrl+'-m.jpg';
-                        }
-                        else{
-                            single_blog.profilePic = snap.val().photoUrl;
+                        single_blog.profilePic = "http://1272343129.rsc.cdn77.org/fab2u/users/"+single_blog.user.user_id+
+                            "/"+snap.val().photoUrl+"-xs.jpg";
 
-                        }
+                        // if(snap.val().photoUrl.indexOf('http')==-1){
+                        //     single_blog.profilePic = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+snap.val().userId+
+                        //         "/profileImage/"+snap.val().photoUrl+'-m.jpg';
+                        // }
+                        // else{
+                        //     single_blog.profilePic = snap.val().photoUrl;
+                        //
+                        // }
                     }
                     if(snap.val().myFollowers){
 
@@ -230,14 +242,17 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                     if (snap.val().photoUrl) {
                         // single_blog.profilePic = snap.val().photoUrl;
 
-                        if(snap.val().photoUrl.indexOf('http')==-1){
-                            single_blog.profilePic = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+snap.val().userId+
-                                "/profileImage/"+snap.val().photoUrl+'-m.jpg';
-                        }
-                        else{
-                            single_blog.profilePic = snap.val().photoUrl;
+                        single_blog.profilePic = "http://1272343129.rsc.cdn77.org/fab2u/users/"+single_blog.user.user_id+
+                            "/"+snap.val().photoUrl+"-xs.jpg";
 
-                        }
+                        // if(snap.val().photoUrl.indexOf('http')==-1){
+                        //     single_blog.profilePic = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+snap.val().userId+
+                        //         "/profileImage/"+snap.val().photoUrl+'-m.jpg';
+                        // }
+                        // else{
+                        //     single_blog.profilePic = snap.val().photoUrl;
+                        //
+                        // }
                     }
                 })
             }
@@ -247,7 +262,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
 
 
     $scope.doRefresh = function () {
-        db.ref("cityBlogs/" + $scope.cityId + "/blogs").orderByKey().startAt($scope.topKey).once("value", function (snapshot) {
+        db.ref("cityFeeds/" + $scope.cityId).orderByKey().startAt($scope.topKey).once("value", function (snapshot) {
             console.log(snapshot.val());
             if (snapshot.numChildren() == 1) {
                 console.log('one child');
@@ -295,7 +310,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                                     userName: $scope.userName
                                 };
                                 var updateComment = {};
-                                updateComment['blogs/' + id + '/comments/' + newCommentKey] = commentObject_blog;
+                                updateComment['feeds/' + id + '/comments/' + newCommentKey] = commentObject_blog;
                                 db.ref().update(updateComment).then(function () {
                                     // start: adding comment to particular feed
                                     var result = $.grep($scope.blogArr, function (e) {
@@ -390,7 +405,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
         if($scope.uid) {
             if (feed.liked) {
                 feed.numLikes -= 1;
-                db.ref("blogs/"+feed.blog_id+"/likedBy/"+$scope.uid).remove().then(function(){
+                db.ref("feeds/"+feed.blog_id+"/likedBy/"+$scope.uid).remove().then(function(){
                     db.ref("users/data/"+$scope.uid+'/likedBlogs/'+feed.blog_id).remove().then(function () {
                         $timeout(function(){
                             feed.liked = false;
@@ -414,7 +429,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                 feed.numLikes += 1;
                 var updates = {};
                 updates["users/data/"+$scope.uid+'/likedBlogs/'+feed.blog_id] = true;
-                updates["blogs/" + feed.blog_id + "/likedBy/" + $scope.uid] = true;
+                updates["feeds/" + feed.blog_id + "/likedBy/" + $scope.uid] = true;
                 db.ref().update(updates).then(function () {
                     $timeout(function () {
                         feed.liked = true;
@@ -430,7 +445,7 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                     },0)
                 });
             }
-            db.ref("blogs/" + feed.blog_id + "/likedBy").on("value", function (snap) {
+            db.ref("feeds/" + feed.blog_id + "/likedBy").on("value", function (snap) {
                 $ionicLoading.hide();
                 feed.numLikes = snap.numChildren();
                 $state.go('nearmeFeed', {cityId: $scope.cityId})
@@ -506,9 +521,10 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
                         updates['users/data/'+key+'/likedBlogs/'+post.blog_id] = null;
                     }
 
-                    updates['blogs/' + post.blog_id] = null;
-                    updates['users/data/'+post.user.user_id+'/blogs/'+post.blog_id] = null;
-                    updates['cityBlogs/'+post.city_id+'/blogs/'+post.blog_id] = null;
+                    updates['feeds/' + post.blog_id] = null;
+                    updates['userFeeds/'+post.user.user_id+'/'+post.blog_id] = null;
+                    updates['cityFeeds/'+post.city_id+'/'+post.blog_id] = null;
+
                     firebase.database().ref().update(updates).then(function() {
                         $scope.popover.hide();
                         $cordovaToast

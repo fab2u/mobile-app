@@ -30,8 +30,10 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
         })
     }
 
-    $scope.imageType = 'blogs';
-    $scope.uploadPath = 'fab2u/blogs/'+$scope.uid+'/blogImage';
+    $scope.imageType = 'feeds';
+
+    $scope.feedPushKey = db.ref().child("blogs").push().key;
+    $scope.uploadPath = $scope.feedPushKey;
     $scope.uploadedImage = 'http://www.e-codices.unifr.ch/documents/media/Collections/img-not-available_en.jpg';
 
 
@@ -78,13 +80,9 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
 
 
         console.log("valueFromDirective",valueFromDirective)
-        alert(valueFromDirective)
         $scope.image_url = valueFromDirective;
 
-
-        $scope.image_url = valueFromDirective;
-
-        var newBlogKey = db.ref().child("blogs").push().key;
+        var newBlogKey = $scope.feedPushKey;
         blogData = {
             blog_id: newBlogKey,
             introduction: $scope.feed.introduction,
@@ -105,8 +103,8 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
         }
         // blog object update without tags, functional
         var updateBlog = {};
-        updateBlog['/blogs/' + newBlogKey] = blogData;
-        updateBlog['/cityBlogs/'+blogData.city_id+"/blogs/"+newBlogKey] = true;
+        updateBlog['/feeds/' + newBlogKey] = blogData;
+        updateBlog['/cityFeeds/'+blogData.city_id+"/"+newBlogKey] = true;
         db.ref().update(updateBlog);
         for(var i=0; i<tagsValue.length; i++){
             var tagsData = db.ref().child("tags").child(tagsValue[i]);
@@ -117,7 +115,7 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
             tag_blog.update(obj);
 
             var updates = {};
-            updates['/blogs/'+newBlogKey+'/tags/' + tagsValue[i]] = true;
+            updates['/feeds/'+newBlogKey+'/tags/' + tagsValue[i]] = true;
             db.ref().update(updates);
         }
         // user object update, functional
@@ -127,7 +125,16 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
             $timeout(function () {
                 $ionicLoading.hide();
                 $location.path("/feed");
-                alert('post creation completed')
+
+                $cordovaToast
+                    .show('Feed created successfully!', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
+
+                // alert('post creation completed')
             }, 0);
         });
 

@@ -1,7 +1,10 @@
 <ion-view class="vendorDetails">
 	<ion-content>
 		<div class="vendorImg">
-			<img ng-src ="{{vendor_detail.images.main.url|| 'img/vendorImage.jpeg'}}">
+			<!--<img ng-src ="{{vendor_detail.images.main.url|| 'img/vendorImage.jpeg'}}">-->
+			<img ng-show="!vendor_detail.images.main.url" ng-src ="{{'img/vendorImage.jpeg'}}">
+			<img ng-show="vendor_detail.images.main.url" ng-src ="{{'http://1272343129.rsc.cdn77.org/fab2u/vendors/'+location.cityId+'/'+vendorId+
+			'/main/'+vendor_detail.images.main.url+'-s.jpg'}}">
 			<div class="ratingNcategory">
 				<div class="rating">
 					<span ng-repeat="counter in starrating(vendor_detail.rating) track by $index" class="trueRating">&#9733</span>

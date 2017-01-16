@@ -55,15 +55,19 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
     }
     // ----------------------------------------------------------------------
 
-    $scope.imageType = 'profile';
-    $scope.uploadPath = 'fab2u/profile/'+$scope.myUid+'/profileImage';
+    $scope.imageType = 'users';
+    $scope.uploadPath = $scope.myUid;
     $scope.uploadedImage = 'http://www.e-codices.unifr.ch/documents/media/Collections/img-not-available_en.jpg';
 
     // $scope.imageName = uid;
     // http://1272343129.rsc.cdn77.org/fab2u/general/854b6f33-2b00-4f91-b637-2a36e61cebf0-m.jpeg
     $scope.imageUploadResponseFn = function(valueFromDirective) {
+
         db.ref('/users/data/' + $scope.myUid + '/photoUrl').set(valueFromDirective).then(function() {
-            $scope.userDetails.photoUrl = valueFromDirective;
+            // $scope.userDetails.photoUrl = valueFromDirective;
+
+            $scope.userDetails.photoUrl = "http://1272343129.rsc.cdn77.org/fab2u/users/"+$scope.myUid+
+            "/"+valueFromDirective+"-xs.jpg";
 
             $cordovaToast
             .show('Photo updated successfully!', 'long', 'center')
@@ -73,7 +77,6 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                 // error
             });
          });
-        alert(valueFromDirective)
         console.log("valueFromDirective",valueFromDirective)
     }
 
@@ -85,10 +88,8 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                 console.log(result)
                 $scope.userDetails = result;
                 if($scope.userDetails.photoUrl){
-                    if($scope.userDetails.photoUrl.indexOf('http')==-1){
-                        $scope.userDetails.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+$scope.myUid+
-                            "/profileImage/"+result.photoUrl+'-m.jpg';
-                    }
+                    $scope.userDetails.photoUrl = "http://1272343129.rsc.cdn77.org/fab2u/users/"+$scope.myUid+
+                        "/"+$scope.userDetails.photoUrl+"-xs.jpg";
 
                 }
 
@@ -167,19 +168,24 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
         /////////////////////        posts detail            //////////////////////
         function blogAlgo(i){
             count1++;
-            var blogData = db.ref().child("blogs").child(i);
+            var blogData = db.ref().child("feeds").child(i);
             blogData.once("value", function(snap){ //access individual blog
                 single_blog = snap.val();
+                console.log("single bloggg",JSON.stringify(single_blog))
                 if(single_blog){
                     single_blog.profilePic = $scope.userPhoto;
                     if(single_blog.photoUrl){
-                        if(snap.val().photoUrl.indexOf('http')==-1){
-                            single_blog.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/post/"+snap.val().user.user_id+
-                                "/postImage/"+snap.val().photoUrl+'-m.jpg';
-                        }
-                        else{
-                            single_blog.photoUrl = snap.val().photoUrl;
-                        }
+                        single_blog.photoUrl = "http://1272343129.rsc.cdn77.org/fab2u/feeds/"+
+                            single_blog.blog_id+"/"+single_blog.photoUrl+'-m.jpg';
+                        // if(snap.val().photoUrl.indexOf('http')==-1){
+                        //     // single_blog.photoUrl = "http://1272343129.rsc.cdn77.org/fab2u/feeds/"+
+                        //     //     single_blog.blog_id+"/"+single_blog.photoUrl+"-m.jpg";
+                        //     single_blog.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/post/"+snap.val().user.user_id+
+                        //         "/postImage/"+snap.val().photoUrl+'-m.jpg';
+                        // }
+                        // else{
+                        //     single_blog.photoUrl = snap.val().photoUrl;
+                        // }
                     }
                     if(single_blog.introduction){
                         var temp = single_blog.introduction;
@@ -306,7 +312,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
             $ionicLoading.show();
                 if(feed.liked){
                     feed.numLikes -= 1;
-                    db.ref("blogs/"+feed.blog_id+"/likedBy/"+$scope.myUid).remove().then(function(){
+                    db.ref("feeds/"+feed.blog_id+"/likedBy/"+$scope.myUid).remove().then(function(){
                         db.ref("users/data/"+$scope.myUid+'/likedBlogs/'+feed.blog_id).remove().then(function () {
                             $timeout(function(){
                                 feed.liked = false;
@@ -330,7 +336,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                     }
                     feed.numLikes += 1;
                     var updates = {};
-                    updates["blogs/" + feed.blog_id + "/likedBy/" + $scope.myUid] = true;
+                    updates["feeds/" + feed.blog_id + "/likedBy/" + $scope.myUid] = true;
                     updates["users/data/"+$scope.myUid+'/likedBlogs/'+feed.blog_id] = true;
                     db.ref().update(updates).then(function () {
                         $timeout(function(){
@@ -351,7 +357,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                         $scope.likeBlogIds[feed.blog_id] = true;
                     });
                 }
-                db.ref("blogs/"+feed.blog_id+"/likedBy").on("value", function(snap){
+                db.ref("feeds/"+feed.blog_id+"/likedBy").on("value", function(snap){
                     $ionicLoading.hide();
                     feed.numLikes = snap.numChildren();
                     getPersonalInfo();
@@ -388,7 +394,7 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                                     };
                                     console.log(commentObject_blog);
                                     var updateComment = {};
-                                    updateComment['blogs/' + id + '/comments/' + newCommentKey] = commentObject_blog;
+                                    updateComment['feeds/' + id + '/comments/' + newCommentKey] = commentObject_blog;
                                     // updateComment['users/data/'+myUid+"/comments/"+newCommentKey] = commentObject_user;
                                     db.ref().update(updateComment).then(function () {
                                         console.log('comment addedd successfully');
@@ -494,9 +500,9 @@ app.controller("userFeedCtrl", function($scope,userInfoService, $timeout,$cordov
                         updates['users/data/'+key+'/likedBlogs/'+post.blog_id] = null;
                     }
 
-                    updates['blogs/' + post.blog_id] = null;
+                    updates['feeds/' + post.blog_id] = null;
                     updates['users/data/'+post.user.user_id+'/blogs/'+post.blog_id] = null;
-                    updates['cityBlogs/'+post.city_id+'/blogs/'+post.blog_id] = null;
+                    updates['cityFeeds/'+post.city_id+'/'+post.blog_id] = null;
                     firebase.database().ref().update(updates).then(function() {
                         $scope.popover.hide();
                         $cordovaToast

@@ -8,6 +8,7 @@ app.controller('VendorListCtrl',
             $ionicLoading.hide();
         }, 10000);
         var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
+        $scope.cityId = locationInfo.cityId;
         $scope.limit= 4;
         $scope.sortValue = 'distance';
         $scope.active_button1 = false;

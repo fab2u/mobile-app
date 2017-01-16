@@ -61,7 +61,8 @@ app.controller('multipleMapCtrl', function($scope, $ionicPlatform, $state, $time
     function createInfo(vendor){
       var content =   ' <div class="card m-5 fab_card" style="text-decoration: none!important">' +
           '<div class="row"> <div class="col-33 image_display_1">'+
-              ' <img src="' + vendor.mainImage  +'" class="pkg-img"' +
+              ' <img ng-show="vendor.mainImage" src="http://1272343129.rsc.cdn77.org/fab2u/vendors/'+
+          $scope.centerLocation.cityId+'/'+vendor.vendorId+'/main/'+vendor.mainImage+'-xs.jpg" class="pkg-img"' +
           ' style="max-width:80px; margin-top:25px">'+
 
            ' </div>'+

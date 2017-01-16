@@ -25,14 +25,17 @@ app.controller("followerCtrl", function(userServices,$scope,$stateParams,$cordov
                 console.log("resulyt",JSON.stringify(result))
                 if(result){
                     if(result.photoUrl){
-                        if(result.photoUrl.indexOf('http')==-1){
-                            result.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+result.userId+
-                                "/profileImage/"+result.photoUrl+'-m.jpg';
-                        }
-                        else{
-                            result.photoUrl = result.photoUrl;
+                        result.photoUrl  = "http://1272343129.rsc.cdn77.org/fab2u/users/"+result.userId+
+                            "/"+result.photoUrl+"-xs.jpg";
 
-                        }
+                        // if(result.photoUrl.indexOf('http')==-1){
+                        //     result.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+result.userId+
+                        //         "/profileImage/"+result.photoUrl+'-m.jpg';
+                        // }
+                        // else{
+                        //     result.photoUrl = result.photoUrl;
+                        //
+                        // }
                     }
                     if(result.blogs){
                         result.postNum = Object.keys(result.blogs).length;

@@ -274,15 +274,8 @@ console.log("uploadImage service")
             console.log("inside upload fun",path, image, imgType)
             $ionicLoading.show()
             $http({
-                // url: 'http://139.162.9.71/api/uploadImage',
                 url: 'http://139.162.27.64/api/image-upload-base64',
                 method: "POST",
-                // data: {
-                //     'path': 'test',
-                //     'img': image,
-                //     'imgType': 'project',
-                //     'imgName': 'test'
-                // }
                 data: {
                     // 'path': path,
                     // 'img': image,
@@ -298,7 +291,7 @@ console.log("uploadImage service")
                         if (response.data.status == 200) {
                             $ionicLoading.hide();
                             q.resolve({
-                                imgUrl: response.data.url
+                                imgUrl: response.data.imageName
                             });
                         } else {
                             $ionicLoading.hide()

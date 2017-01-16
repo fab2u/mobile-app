@@ -12,6 +12,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     var appVersion = 6;///version increase when upload over play store last will be 7 in config.xml /////
     var appInfoNew = {};
     var updates = {};
+    
 
     function checkAppStatus() {
         firebase.database().ref('androidAppStatus').once('value', function (snapshot) {

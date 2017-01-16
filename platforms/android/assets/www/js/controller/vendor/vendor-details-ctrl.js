@@ -94,7 +94,10 @@ app.controller('VendorDetailsCtrl',
                     if($scope.vendor_detail.images){
                         if($scope.vendor_detail.images.gallery){
                             angular.forEach($scope.vendor_detail.images.gallery, function (value, key) {
-                                $scope.images.push({id: key, src: value.url})
+                                var imgUrl = 'http://1272343129.rsc.cdn77.org/fab2u/vendors/'+$scope.location.cityId+
+                                    '/'+$scope.vendorId+'/gallery/'+value.url+'-s.jpg'
+                                // $scope.images.push({id: key, src: value.url})
+                                $scope.images.push({id: key, src: imgUrl})
                             });
                         }
                         else{
@@ -203,7 +206,17 @@ app.controller('VendorDetailsCtrl',
                 if (result) {
                     $scope.reviews = result;
                     for (key in $scope.reviews) {
+                        if($scope.reviews[key].image){
+                            if($scope.reviews[key].image.indexOf('http')==-1){
+                                $scope.reviews[key].image = "http://1272343129.rsc.cdn77.org/fab2u/users/"+
+                                    $scope.reviews[key].userId+"/"+$scope.reviews[key].image+"-xs.jpg";
+                            }
+                            else{
+                                $scope.reviews[key].image = $scope.reviews[key].image;
+                            }
+                        }
                         $scope.review_info.push($scope.reviews[key]);
+
                     }
                     $scope.dataLoaded = true;
                     $ionicLoading.hide();
@@ -333,6 +346,7 @@ app.controller('VendorDetailsCtrl',
                             updates['reviews/'+$scope.location.cityId+'/'+ $scope.vendorId+
                             '/Reviews/'+$scope.reviewData.ReviewId] = $scope.reviewData;
                             updates['userReviews/'+localStorage.getItem('uid')+'/'+$scope.reviewData.ReviewId] = userReviewData;
+
                             db.ref().update(updates).then(function () {
                                 $scope.custReview ={
                                     review:'',

@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "/home/sonam/workspace/mobile-app/platforms/android/build/intermediates/incremental/mergeDebugResources/merged.dir/values-fr-rCA/values-fr-rCA.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 105,
+                    "endColumn": 290,
+                    "endOffset": 391
+                },
+                "from": {
+                    "file": "/home/sonam/workspace/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/res/values-fr-rCA/values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 335,
+                        "endColumn": 290,
+                        "endOffset": 621
+                    }
+                }
+            }
+        ]
+    }
+]

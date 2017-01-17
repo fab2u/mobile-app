@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "/home/sonam/workspace/mobile-app/platforms/android/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-ko/values-ko.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 105,
+                    "endColumn": 198,
+                    "endOffset": 299
+                },
+                "from": {
+                    "file": "/home/sonam/workspace/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/res/values-ko/values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 331,
+                        "endColumn": 198,
+                        "endOffset": 525
+                    }
+                }
+            }
+        ]
+    }
+]

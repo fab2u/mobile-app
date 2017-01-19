@@ -568,7 +568,9 @@ app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLo
             location.reload();
         });
     }
-
+    $scope.userSpecificFeeds = function(id){
+        $state.go('userSpecificPosts',{userIdForFeeds:id})
+    }
 
 });
 

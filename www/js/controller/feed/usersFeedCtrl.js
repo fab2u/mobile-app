@@ -1,4 +1,4 @@
-app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$state,$timeout,
+app.controller("usersFeedCtrl", function(userInfoService,$scope,$stateParams,$state,$timeout,
                                            $ionicLoading,$location,$ionicPopup,$cordovaToast,
                                            $ionicModal,$rootScope,$sce, $ionicPopover){
 
@@ -8,7 +8,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
     $rootScope.$on('logged_in', function (event, args) {
         $scope.myUid = window.localStorage.getItem('uid');
     });
-    var followId = $stateParams.followId;
+    var userIdForFeeds = $stateParams.userIdForFeeds;
     $scope.followOption = false;
 
     $scope.uid = window.localStorage.getItem("uid");
@@ -53,7 +53,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
     if($scope.myUid){
         myInfo();
     }
-    if(followId){
+    if(userIdForFeeds){
         followOrFollowerDetail();
     }
     else{
@@ -66,12 +66,12 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
         })
     }
     function followOrFollowerDetail() {
-        userInfoService.getPersonalInfo(followId).then(function (result) {
+        userInfoService.getPersonalInfo(userIdForFeeds).then(function (result) {
             $scope.userDetails = result;
             $scope.email = result.email.userEmail;
             // $scope.userPhoto = result.photoUrl;
             if(result.photoUrl){
-                $scope.userPhoto = "http://1272343129.rsc.cdn77.org/fab2u/users/"+followId+
+                $scope.userPhoto = "http://1272343129.rsc.cdn77.org/fab2u/users/"+userIdForFeeds+
                     "/"+result.photoUrl+"-xs.jpg";
             }
         })
@@ -87,7 +87,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
 
     $scope.doRefresh = function () {
         console.log("top key",$scope.topKey)
-        db.ref("users/data/"+followId+"/blogs").orderByKey().startAt($scope.topKey).once("value", function (snapshot) {
+        db.ref("users/data/"+userIdForFeeds+"/blogs").orderByKey().startAt($scope.topKey).once("value", function (snapshot) {
             console.log(snapshot.val());
             if (snapshot.numChildren() == 1) {
                 console.log('one child');
@@ -112,7 +112,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
     $scope.loadMore = function(){
         $ionicLoading.show()
         if(Object.keys($scope.blogIdList).length > 0){
-            db.ref("users/data/"+followId+"/blogs").orderByKey().limitToFirst(6).endAt($scope.bottomKey).once("value", function(snap){
+            db.ref("users/data/"+userIdForFeeds+"/blogs").orderByKey().limitToFirst(6).endAt($scope.bottomKey).once("value", function(snap){
                 if(snap.numChildren() == 1){
                     $scope.moreMessagesScroll = false;
                     $ionicLoading.hide();
@@ -133,7 +133,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
             })
         }
         else if(Object.keys($scope.blogIdList).length == 0){
-            db.ref("users/data/"+followId +"/blogs").limitToLast(5).once("value", function(snapshot){
+            db.ref("users/data/"+userIdForFeeds +"/blogs").limitToLast(5).once("value", function(snapshot){
                 if(snapshot.val()){
                     $scope.blogIdList = snapshot.val();
                     if($scope.blogIdList !== null){
@@ -152,13 +152,13 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                     $scope.dataLoaded = true;
                     $ionicLoading.hide();
 
-                        $cordovaToast
-                            .show('No feeds available!', 'long', 'center')
-                            .then(function (success) {
-                                // success
-                            }, function (error) {
-                                // error
-                            });
+                    $cordovaToast
+                        .show('No feeds available!', 'long', 'center')
+                        .then(function (success) {
+                            // success
+                        }, function (error) {
+                            // error
+                        });
 
                 }
 
@@ -173,21 +173,12 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
         count++;
         var blogData = db.ref().child("feeds").child(i);
         blogData.once("value", function(snap){ //access individual blog
-           single_blog = snap.val();
+            single_blog = snap.val();
             if(single_blog){
                 single_blog.profilePic = $scope.userPhoto;
                 if(single_blog.photoUrl){
                     single_blog.photoUrl = "http://1272343129.rsc.cdn77.org/fab2u/feeds/"+
                         single_blog.blog_id+"/"+single_blog.photoUrl+'-m.jpg';
-                    // if(snap.val().photoUrl.indexOf('http')==-1){
-                    //     single_blog.photoUrl = "http://cdn.roofpik.com/roofpik/fab2u/post/"+snap.val().user.user_id+
-                    //         "/postImage/"+snap.val().photoUrl+'-m.jpg';
-                    //     // single_blog.photoUrl = "http://1272343129.rsc.cdn77.org/fab2u/feeds/"+
-                    //     //     single_blog.blog_id+"/"+single_blog.photoUrl+"-m.jpg";
-                    // }
-                    // else{
-                    //     single_blog.photoUrl = snap.val().photoUrl;
-                    // }
                 }
                 if(single_blog.introduction){
                     var temp = single_blog.introduction;
@@ -209,19 +200,10 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                     }
                     db.ref("users/data/"+single_blog.user.user_id).once("value", function(snap){
                         if(snap.val().photoUrl){
-                            // single_blog.profilePic = snap.val().photoUrl;
-                            // if(snap.val().photoUrl.indexOf('http')==-1){
-                            //     single_blog.profilePic = "http://cdn.roofpik.com/roofpik/fab2u/profile/"+snap.val().userId+
-                            //         "/profileImage/"+snap.val().photoUrl+'-m.jpg';
-                            // }
-                            // else{
-                            //     single_blog.profilePic = snap.val().photoUrl;
-                            // }
                             single_blog.profilePic = "http://1272343129.rsc.cdn77.org/fab2u/users/"+single_blog.user.user_id+
                                 "/"+snap.val().photoUrl+"-xs.jpg";
                         }
                         if(snap.val().myFollowers){
-
                             for(key in snap.val().myFollowers){
                                 console.log("key",key)
                                 if($scope.myUid  == key){
@@ -232,14 +214,6 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                                     }, 0);
                                 }
                             }
-
-                            // if ($scope.myUid in snap.val().myFollowers){
-                            //     $timeout(function () {
-                            //         $('.'+single_blog.user.user_id+'-follow').hide();
-                            //         $("."+single_blog.user.user_id+'-unfollow').css("display", "block");
-                            //         $scope.followOption = true;
-                            //     }, 0);
-                            // }
                         }
                     });
                 })(single_blog);
@@ -328,13 +302,13 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                         $timeout(function(){
                             feed.liked = false;
 
-                                $cordovaToast
-                                    .show('This post removed from your liked list', 'long', 'center')
-                                    .then(function (success) {
-                                        // success
-                                    }, function (error) {
-                                        // error
-                                    });
+                            $cordovaToast
+                                .show('This post removed from your liked list', 'long', 'center')
+                                .then(function (success) {
+                                    // success
+                                }, function (error) {
+                                    // error
+                                });
 
                         },0);
                     })
@@ -352,13 +326,13 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                     $timeout(function () {
                         feed.liked = true;
 
-                            $cordovaToast
-                                .show('This post added to your liked list', 'long', 'center')
-                                .then(function (success) {
-                                    // success
-                                }, function (error) {
-                                    // error
-                                });
+                        $cordovaToast
+                            .show('This post added to your liked list', 'long', 'center')
+                            .then(function (success) {
+                                // success
+                            }, function (error) {
+                                // error
+                            });
 
                     }, 0);
                 });
@@ -366,7 +340,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
             db.ref("feeds/"+feed.blog_id+"/likedBy").on("value", function(snap){
                 feed.numLikes = snap.numChildren();
                 $ionicLoading.hide()
-                $state.go('followPosts',{followId:followId})
+                $state.go('followPosts',{userIdForFeeds:userIdForFeeds})
             });
 
         }
@@ -393,13 +367,13 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                 $ionicLoading.hide();
                 $scope.popover.hide();
 
-                    $cordovaToast
-                        .show('This user added to your follow list', 'long', 'center')
-                        .then(function (success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
+                $cordovaToast
+                    .show('This user added to your follow list', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
 
                 $state.go('feed')
             });
@@ -422,13 +396,13 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
                 $scope.followOption = false;
                 $ionicLoading.hide();
                 $scope.popover.hide();
-                    $cordovaToast
-                        .show('This user removed from your follow list', 'long', 'center')
-                        .then(function (success) {
-                            // success
-                        }, function (error) {
-                            // error
-                        });
+                $cordovaToast
+                    .show('This user removed from your follow list', 'long', 'center')
+                    .then(function (success) {
+                        // success
+                    }, function (error) {
+                        // error
+                    });
 
                 $state.go('feed')
             });
@@ -449,14 +423,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
         });
     }
     $scope.goBack = function(){
-        if(window.localStorage.getItem("follower")=='true') {
-            $ionicLoading.hide();
-            $state.go('follower', {uid: $scope.myUid});
-        }
-        else{
-            $ionicLoading.hide();
-            $state.go('follow',{uid:$scope.myUid})
-        }
+       $state.go('feed');
     };
 
     $scope.createNew = function(){
@@ -542,7 +509,6 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
         });
     }
 
-    $scope.userSpecificFeeds = function(id){
-        $state.go('userSpecificPosts',{userIdForFeeds:id})
-    }
+
 })
+

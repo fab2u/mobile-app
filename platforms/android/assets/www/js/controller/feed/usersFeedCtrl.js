@@ -1,6 +1,6 @@
 app.controller("usersFeedCtrl", function(userInfoService,$scope,$stateParams,$state,$timeout,
                                            $ionicLoading,$location,$ionicPopup,$cordovaToast,
-                                           $ionicModal,$rootScope,$sce, $ionicPopover){
+                                           $ionicModal,$rootScope,$sce,$ionicHistory, $ionicPopover){
 
     if(checkLocalStorage('uid')){
         $scope.myUid = window.localStorage.getItem("uid");
@@ -422,9 +422,19 @@ app.controller("usersFeedCtrl", function(userInfoService,$scope,$stateParams,$st
             }
         });
     }
+
+
     $scope.goBack = function(){
-       $state.go('feed');
-    };
+        $scope.hashistory = Object.keys($ionicHistory.viewHistory().views).length;
+
+        if($scope.hashistory != 1){
+            $ionicHistory.goBack();
+        }
+        else{
+            $state.go('feed');
+        }
+    }
+
 
     $scope.createNew = function(){
         $ionicLoading.hide();

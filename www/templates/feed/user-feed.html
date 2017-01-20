@@ -1,6 +1,6 @@
 <ion-view class="fabFeed" cache-view="false">
     <ion-header-bar align-title="center" class="bar-light" title="PROFILE" ng-click="goBack()">
-        <a class="button icon ion-android-home button-clear pdl5 ft24 mgn"></a>
+        <a class="pdl5"><img class="imgiconall" src="img/home/listn.png"></a>
         <h1 class="title">PROFILE</h1>
     </ion-header-bar>
     <div class="bar bar-subheader bg-fa">
@@ -64,6 +64,9 @@
                     {{userDetails.name}}
                 </div>
             </div>
+            <div class="col col-10">
+                <i class="icon ion-edit editcs" ng-click="showUploadOptions = !showUploadOptions"></i>
+            </div>
             <div class="col col-50 col-60">
             <div class="row mgt1">
                 <div class="col">
@@ -94,9 +97,7 @@
                 </div>
                 </div>
             </div>
-            <div class="col col-10">
-                <i class="icon ion-edit editcs" ng-click="showUploadOptions = !showUploadOptions"></i>
-            </div>
+
         </div>
         <div class="row pdtmn">
              <div ng-show="showUploadOptions">
@@ -133,6 +134,11 @@
                 </div>
             </div>
             <img ng-src="{{feed.photoUrl}}" class="feed-img" ng-click="showImage(feed.photoUrl)">
+            <div class="row mgtn2">
+                <div class="col pdl10">
+                    <p class="feed-introduction" ng-bind-html="toTrustedHTML(feed.introduction)">{{feed.introduction}}</p>
+                </div>
+            </div>
             <div class="row upper-row1">
                 <div class="col col-33 likenum text-left">
                     <i class="like-btn icon ion-ios-heart-outline ft25" ng-class="feed.liked?'clicked':'normal'" ng-click="likeThisFeed(feed)"></i>
@@ -154,11 +160,7 @@
                     </ion-item>
                 </ion-list>
             </div>
-            <div class="row mgtn2">
-                <div class="col pdl10">
-                    <p class="feed-introduction" ng-bind-html="toTrustedHTML(feed.introduction)">{{feed.introduction}}</p>
-                </div>
-            </div>
+
         </div>
         <div ng-hide="moreMessagesScroll" class="feedend">You are at the end of the feed</div>
         <ion-infinite-scroll ng-if="moreMessagesScroll" immediate-check="false" on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>

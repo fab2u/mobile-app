@@ -1,6 +1,6 @@
 <ion-view class="fabFeed" cache-view="false">
     <ion-header-bar align-title="center" class="bar-light" title="FOLLOW FEEDS" ng-show="dataLoaded">
-        <a class="button icon ion-ios-arrow-left button-clear pdl5 ft24 mgn" ng-click="goBack()"></a>
+        <a class="pdl5 mgn" ng-click="goBack()"><img class="imgiconall" src="img/home/nleft.png"></a>
         <h1 class="title">{{userDetails.name}}'s Feeds</h1>
         <button ng-click="createNew()" class="button button-clear button-positive mg-5"><i class="icon ion-ios-camera-outline" ></i></button>
 
@@ -26,6 +26,11 @@
                 </div>
             </div>
             <img ng-src="{{feed.photoUrl}}" class="feed-img" ng-click="showImage(feed.photoUrl)">
+            <div class="row mgtn2">
+                <div class="col pdl10">
+                    <p ng-bind-html="toTrustedHTML(feed.introduction)" class="feed-introduction"></p>
+                </div>
+            </div>
             <div class="row upper-row1">
                 <div class="col col-33 likenum text-left">
                     <i class="like-btn icon ion-ios-heart-outline ft25" ng-class="feed.liked?'clicked':'normal'"
@@ -49,11 +54,7 @@
                     </ion-item>
                 </ion-list>
             </div>
-            <div class="row mgtn2">
-                <div class="col pdl10">
-                    <p ng-bind-html="toTrustedHTML(feed.introduction)" class="feed-introduction"></p>
-                </div>
-            </div>
+
         </div>
         <div ng-hide="moreMessagesScroll" class="feedend">You are at the end of the feed</div>
         <ion-infinite-scroll ng-if="moreMessagesScroll" immediate-check="false"

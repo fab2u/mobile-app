@@ -1,6 +1,6 @@
 <ion-view class="fabFeed" cache-view="false">
     <ion-header-bar align-title="center" class="bar-light" title="PROFILE" ng-click="goBack()">
-        <a class="button icon ion-android-home button-clear pdl5 ft24 mgn"></a>
+        <a class="button icon ion-ios-list-outline button-clear pdl5 ft24 mgn"></a>
         <h1 class="title">PROFILE</h1>
     </ion-header-bar>
     <div class="bar bar-subheader bg-fa">
@@ -64,6 +64,9 @@
                     {{userDetails.name}}
                 </div>
             </div>
+            <div class="col col-10">
+                <i class="icon ion-edit editcs" ng-click="showUploadOptions = !showUploadOptions"></i>
+            </div>
             <div class="col col-50 col-60">
             <div class="row mgt1">
                 <div class="col">
@@ -94,9 +97,7 @@
                 </div>
                 </div>
             </div>
-            <div class="col col-10">
-                <i class="icon ion-edit editcs" ng-click="showUploadOptions = !showUploadOptions"></i>
-            </div>
+
         </div>
         <div class="row pdtmn">
              <div ng-show="showUploadOptions">

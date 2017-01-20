@@ -277,9 +277,6 @@ console.log("uploadImage service")
                 url: 'http://139.162.27.64/api/image-upload-base64',
                 method: "POST",
                 data: {
-                    // 'path': path,
-                    // 'img': image,
-                    // 'imgType': imgType
                     'imgType':imgType,
                     'path':path,
                     'img':image

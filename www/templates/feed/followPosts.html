@@ -33,6 +33,11 @@
                
             </div>
             <img ng-src="{{feed.photoUrl}}" class="feed-img" ng-click="showImage(feed.photoUrl)">
+            <div class="row mgtn2">
+                <div class="col pdl10">
+                    <p ng-bind-html="toTrustedHTML(feed.introduction)" class="feed-introduction"></p>
+                </div>
+            </div>
             <div class="row upper-row1">
                 <div class="col col-33 likenum text-left">
                     <i class="like-btn icon ion-ios-heart-outline ft25" ng-class="feed.liked?'clicked':'normal'"
@@ -56,11 +61,7 @@
                     </ion-item>
                 </ion-list>
             </div>
-             <div class="row mgtn2">                   
-                    <div class="col pdl10">
-                        <p ng-bind-html="toTrustedHTML(feed.introduction)" class="feed-introduction"></p>
-                    </div>
-                </div>
+
         </div>
 
         <div ng-hide="moreMessagesScroll" class="feedend">You are at the end of the feed</div>

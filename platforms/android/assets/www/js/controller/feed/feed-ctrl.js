@@ -553,4 +553,9 @@ app.controller("FeedCtrl", function($scope, $timeout, $stateParams, $location, $
         });
     }
 
+
+    $scope.userSpecificFeeds = function(id){
+        $state.go('userSpecificPosts',{userIdForFeeds:id})
+    }
+
 });

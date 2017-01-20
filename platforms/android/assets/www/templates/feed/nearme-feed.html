@@ -44,10 +44,10 @@
         <div class="feeds" ng-repeat="feed in blogArr | orderBy:'-created_time'">
             <div class="upper-row">
                 <div class="row pdtnone">
-                    <div class="fd-img">
+                    <div class="fd-img" ng-click="userSpecificFeeds(feed.user.user_id)">
                         <img class="user_icon img-circle" id="{{feed.blog_id}}" ng-src="{{feed.profilePic || 'img/person.jpg'}}" />
                     </div>
-                    <div class="col col-60">
+                    <div class="col col-60" ng-click="userSpecificFeeds(feed.user.user_id)">
                         <p class="feed-name"><a href="#/user/{{feed.user.user_id}}">
 							{{feed.user.user_name}}</a> | {{feed.created_time | date:'d MMM yy'}}</p>
                         <p class="feed-city"><i class="ion ion-location"></i> {{feed.city_name}}</p>

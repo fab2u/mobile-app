@@ -29,7 +29,9 @@
              ng-repeat="vendor in bindedVendors| orderBy : sortValue |limitTo:limit">
             <div class="row">
                 <div class="col-33 image_display_1" ng-click="vendor_menu(vendor.vendorId)">
-                    <img ng-src="{{vendor.mainImage || 'img/vendorImage.jpeg'}}" class="pkg-img">
+                    <!--<img ng-src="{{vendor.mainImage || 'img/vendorImage.jpeg'}}" class="pkg-img">-->
+                    <img ng-show="!vendor.mainImage" ng-src="{{'img/vendorImage.jpeg'}}" class="pkg-img">
+                    <img ng-show="vendor.mainImage" ng-src="{{'http://1272343129.rsc.cdn77.org/fab2u/vendors/'+cityId+'/'+vendor.vendorId+'/main/'+vendor.mainImage+'-xs.jpg'}}" class="pkg-img">
                 </div>
                 <div id="part2" class="col-67">
                     <div class="row" style="line-height: 0px;">

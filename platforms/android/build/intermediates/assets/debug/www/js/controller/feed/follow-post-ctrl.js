@@ -542,5 +542,7 @@ app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$
         });
     }
 
-
+    $scope.userSpecificFeeds = function(id){
+        $state.go('userSpecificPosts',{userIdForFeeds:id})
+    }
 })

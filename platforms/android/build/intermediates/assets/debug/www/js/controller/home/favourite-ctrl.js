@@ -15,11 +15,30 @@ app.controller('FavouriteCtrl', function($state,favouriteVendorsService,$timeout
                 // error
             });
     }
+    $scope.location = JSON.parse(window.localStorage['selectedLocation']);
+    $scope.vendorList = [];
+
     function getFavouriteVendor() {
         $ionicLoading.show();
         favouriteVendorsService.getFavVendors(localStorage.getItem('uid')).then(function(result){
             if(result){
-                $scope.vendorList = result;
+                // $scope.vendorList = result;
+                for(key in result){
+                    if(result[key].vendorDetail.images){
+                        if(result[key].vendorDetail.images.main){
+                            if(result[key].vendorDetail.images.main.url.indexOf('http')==-1){
+                                result[key].vendorDetail.images.main.url = "http://1272343129.rsc.cdn77.org/fab2u/vendors/"+
+                                    $scope.location.cityId+"/"+result[key].vendorId+"/main/"
+                                    +result[key].vendorDetail.images.main.url+"-xs.jpg";
+                            }
+                            else{
+                                result[key].vendorDetail.images.main.url = result[key].vendorDetail.images.main.url;
+                            }
+
+                        }
+                    }
+                    $scope.vendorList.push(result[key]);
+                }
                 $ionicLoading.hide();
             }
             else{

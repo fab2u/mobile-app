@@ -553,4 +553,8 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
         });
     }
 
+    $scope.userSpecificFeeds = function(id){
+        $state.go('userSpecificPosts',{userIdForFeeds:id})
+    }
+
 });

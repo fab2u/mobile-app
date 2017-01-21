@@ -9,8 +9,10 @@ body{color: #333 ! important;}
 .nofix {position: relative; top: 0;}
 .text-left{text-align: left !important;}
 .text-right{text-align: right !important;}
- .col-30{max-width: 30% !important;}
- .col-60{max-width: 60% !important}
- .col-15 { max-width: 15% !important; }
- .mgt30{margin-top: 30px;}
- .margin{margin:10px !important;}
+.col-30{max-width: 30% !important;}
+.col-60{max-width: 60% !important}
+.col-15 { max-width: 15% !important; }
+.mgt30{margin-top: 30px;}
+.margin{margin:10px !important;}
+.imgiconall{width: 22px; height: 22px; margin-top: 7px;}
+.pdt10{padding-top: 10px;}

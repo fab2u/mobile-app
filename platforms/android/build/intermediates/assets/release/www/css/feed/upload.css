@@ -1,3 +1,8 @@
+.wdnp{width: 99%; border:solid 1px #ddd !important; padding: 5px;}
+.dis-inpbox{z-index: 111;
+    position: absolute; line-height: 30px;
+    bottom: 65px; left:0;
+    background-color: #f5f5f5;}
 
 /*Jquery Dialog*/
 

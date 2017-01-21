@@ -2,5 +2,9 @@
     {
         "merged": "/home/sonam/workspace/mobile-app/platforms/android/build/intermediates/res/merged/release/mipmap-hdpi/icon.png",
         "source": "/home/sonam/workspace/mobile-app/platforms/android/res/mipmap-hdpi/icon.png"
+    },
+    {
+        "merged": "/home/puni/Desktop/mobile-app/platforms/android/build/intermediates/res/merged/release/mipmap-hdpi/icon.png",
+        "source": "/home/puni/Desktop/mobile-app/platforms/android/res/mipmap-hdpi/icon.png"
     }
 ]

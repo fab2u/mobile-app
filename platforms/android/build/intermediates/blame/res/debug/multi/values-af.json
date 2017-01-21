@@ -1,5 +1,29 @@
 [
     {
+        "outputFile": "/home/puni/Desktop/mobile-app/platforms/android/build/intermediates/incremental/mergeDebugResources/merged.dir/values-af/values-af.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 105,
+                    "endColumn": 250,
+                    "endOffset": 351
+                },
+                "from": {
+                    "file": "/home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/res/values-af/values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 331,
+                        "endColumn": 250,
+                        "endOffset": 577
+                    }
+                }
+            }
+        ]
+    },
+    {
         "outputFile": "/home/sonam/workspace/mobile-app/platforms/android/build/intermediates/incremental/mergeDebugResources/merged.dir/values-af/values-af.xml",
         "map": [
             {

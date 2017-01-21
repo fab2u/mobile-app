@@ -1,5 +1,9 @@
 [
     {
+        "merged": "/home/puni/Desktop/mobile-app/platforms/android/build/intermediates/res/merged/release/drawable-land-mdpi/screen.png",
+        "source": "/home/puni/Desktop/mobile-app/platforms/android/res/drawable-land-mdpi/screen.png"
+    },
+    {
         "merged": "/home/sonam/workspace/mobile-app/platforms/android/build/intermediates/res/merged/release/drawable-land-mdpi/screen.png",
         "source": "/home/sonam/workspace/mobile-app/platforms/android/res/drawable-land-mdpi/screen.png"
     }

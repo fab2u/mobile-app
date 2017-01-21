@@ -1,6 +1,6 @@
 <ion-view class="fabFeed" cache-view="false">
     <ion-header-bar align-title="center" class="bar-light" title="FOLLOW FEEDS" >
-       <a class="button icon ion-ios-arrow-left button-clear pdl5 ft24 mgn" ng-click="goBack()"></a>
+       <a class="pdl5" ng-click="goBack()"><img class="imgiconall" src="img/home/listn.png"></a>
         <h1 class="title">FOLLOW FEEDS</h1>
         <button ng-click="createNew()" class="button button-clear button-positive mg-5"><i class="icon ion-ios-camera-outline" ></i></button>
         
@@ -34,7 +34,7 @@
             </div>
             <img ng-src="{{feed.photoUrl}}" class="feed-img" ng-click="showImage(feed.photoUrl)">
             <div class="row mgtn2">
-                <div class="col pdl10">
+                <div class="col pdl10 pdt10">
                     <p ng-bind-html="toTrustedHTML(feed.introduction)" class="feed-introduction"></p>
                 </div>
             </div>

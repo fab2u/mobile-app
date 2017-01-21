@@ -1,72 +1,41 @@
 <ion-view class="new-feed" cache-view="false">
    <ion-header-bar align-title="center"  class="bar-light" title="Profile" ng-click="goBack()">
-      <a class="button icon ion-ios-arrow-left button-clear pdl5 ft24 mgn"></a>
+      <a class="pdl5"><img class="imgiconall" src="img/home/nleft.png"></a>
       <h1 class="title">Create New Feed</h1>
    </ion-header-bar>
    <ion-content class="has-header">
-      <div class="des">
-         <label>CREATE POST</label>
+      <div class="des1">
+         <label>Describe Your Look By Clicking Your Picture</label>
       </div>
-      <!--<section ng-click="showUploadOptions = !showUploadOptions">-->
-         <!--<div class="upload">-->
-            <!--<img src="img/gallery.png" border="0" >-->
-            <!--<br>-->
-            <!--<label>Upload a photo<br> from gallery or camera.</label>-->
+
+      <div class="row" ng-show="demo" style="margin-top: 30px;">
+         <feed-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"
+                      view-port-width="250" view-port-height="250" boundry-width="270"
+                      boundry-height="300" image-type="{{imageType}}"
+                      image-upload-response="imageUploadResponseFn"
+                      upload-path="{{uploadPath}}"
+                      image-name="{{imageName}}">
+         </feed-upload>
+      </div>
+      <!--<form name="newFeed" novalidate="true">-->
+         <!--<label class="item item-input feed-comment">-->
+            <!--<textarea rows="5" expanding-textarea-->
+                      <!--placeholder="Adding hashtags to your comment increases the reach of your post"-->
+                      <!--ng-model="feed.introduction"></textarea>-->
+         <!--</label>-->
+         <!--<div class="padding">-->
+            <!--<button class="button button-block activated pink-bg" type="submit" ng-click="createFeed($event)">Create Post</button>-->
          <!--</div>-->
-      <!--</section>-->
-      <!--<div class="upload1">-->
-         <!--<img id="myImage" style="width:50%; height:auto;"-->
-              <!--ng-click="showUploadOptions = !showUploadOptions">-->
-      <!--</div>-->
-      <!--<div class="profile-details">-->
-         <!--<div class="row" ng-show="showUploadOptions">-->
-            <!--<image-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"-->
-                          <!--view-port-width="300" view-port-height="300" boundry-width="400"-->
-                          <!--boundry-height="400" image-type="{{imageType}}"-->
+
+         <!--<div ng-show="demo" class="row">-->
+            <!--<feed-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"-->
+                          <!--view-port-width="250" view-port-height="250" boundry-width="270"-->
+                          <!--boundry-height="300" image-type="{{imageType}}"-->
                           <!--image-upload-response="imageUploadResponseFn"-->
                           <!--upload-path="{{uploadPath}}"-->
                           <!--image-name="{{imageName}}">-->
-
-            <!--</image-upload>-->
+            <!--</feed-upload>-->
          <!--</div>-->
-      <!--</div>-->
-      <div class="des1">
-         <label>Describe Your Look</label>
-      </div>
-      <form name="newFeed" novalidate="true">
-         <label class="item item-input feed-comment">
-            <textarea rows="5" expanding-textarea
-                      placeholder="Adding hashtags to your comment increases the reach of your post"
-                      ng-model="feed.introduction"></textarea>
-         </label>
-         <div class="padding">
-            <button class="button button-block activated pink-bg" type="submit" ng-click="createFeed($event)">Create Post</button>
-         </div>
-
-         <div ng-show="demo" class="row">
-            <image-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"
-                          view-port-width="250" view-port-height="250" boundry-width="270"
-                          boundry-height="300" image-type="{{imageType}}"
-                          image-upload-response="imageUploadResponseFn"
-                          upload-path="{{uploadPath}}"
-                          image-name="{{imageName}}">
-            </image-upload>
-         </div>
-      </form>
+      <!--</form>-->
    </ion-content>
 </ion-view>
-<!--<script id="templates/popover.html" type="text/ng-template">-->
-   <!--<ion-popover-view>-->
-      <!--<ion-content>-->
-         <!--<div class="list">-->
-            <!--<image-upload max-height="800" max-width="800" min-height="300" min-width="300" cropping="true"-->
-                          <!--view-port-width="300" view-port-height="300" boundry-width="400"-->
-                          <!--boundry-height="400" image-type="{{imageType}}"-->
-                          <!--image-upload-response="imageUploadResponseFn"-->
-                          <!--upload-path="{{uploadPath}}"-->
-                          <!--image-name="{{imageName}}">-->
-            <!--</image-upload>-->
-         <!--</div>-->
-      <!--</ion-content>-->
-   <!--</ion-popover-view>-->
-<!--</script>-->

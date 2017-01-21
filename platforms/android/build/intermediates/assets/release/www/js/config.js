@@ -281,6 +281,12 @@ app
 			templateUrl: 'templates/feed/followPosts.html',
 			controller: 'followPostsCtrl'
 		})
+        .state('userSpecificPosts', {
+            url: '/userSpecificPosts/:userIdForFeeds',
+            cache:false,
+            templateUrl: 'templates/feed/usersFeed.html',
+            controller: 'usersFeedCtrl'
+        })
 		.state('tagFeed', {
 			url: '/tag/:tag',
 			cache:false,

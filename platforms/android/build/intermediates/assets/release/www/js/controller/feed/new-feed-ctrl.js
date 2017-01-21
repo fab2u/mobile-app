@@ -38,28 +38,19 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
 
 
 
-    $scope.createFeed = function($event){
+    $scope.createFeed = function(){
         if($scope.uid){
-            if($scope.feed.introduction){
                $timeout(function () {
                    $scope.demo = true;
                    // $scope.popover.show($event);
                },100)
-            }
-            else{
-                $cordovaToast
-                    .show('Please add description regarding to your post.', 'long', 'center')
-                    .then(function (success) {
-                        // success
-                    }, function (error) {
-                        // error
-                    });
-            }
         }
         else{
            showLoginSignUp()
         }
     };
+    $scope.createFeed();
+
     function showLoginSignUp() {
         var confirmPopup = $ionicPopup.confirm({
             title: 'Not logged in',
@@ -76,16 +67,17 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
     }
 
 
-    $scope.imageUploadResponseFn = function(valueFromDirective) {
+    $scope.imageUploadResponseFn = function(valueFromDirective,feedDescription) {
 
-
+       // alert(feedDescription)
         console.log("valueFromDirective",valueFromDirective)
+
         $scope.image_url = valueFromDirective;
 
         var newBlogKey = $scope.feedPushKey;
         blogData = {
             blog_id: newBlogKey,
-            introduction: $scope.feed.introduction,
+            introduction: feedDescription,
             photoUrl:$scope.image_url,
             user: {
                 user_name: $scope.uname,
@@ -98,7 +90,7 @@ app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $ti
             city_name: locDetails.cityName
         };
         var re = /#(\w+)(?!\w)/g, hashTag, tagsValue = [];
-        while (hashTag = re.exec($scope.feed.introduction)) {
+        while (hashTag = re.exec(feedDescription)) {
             tagsValue.push(hashTag[1]);
         }
         // blog object update without tags, functional

@@ -22,5 +22,29 @@
                 }
             }
         ]
+    },
+    {
+        "outputFile": "/home/puni/Desktop/mobile-app/platforms/android/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-uz/values-uz.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 105,
+                    "endColumn": 280,
+                    "endOffset": 381
+                },
+                "from": {
+                    "file": "/home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/res/values-uz/values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 331,
+                        "endColumn": 280,
+                        "endOffset": 607
+                    }
+                }
+            }
+        ]
     }
 ]

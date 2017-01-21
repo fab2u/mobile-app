@@ -2,5 +2,9 @@
     {
         "merged": "/home/sonam/workspace/mobile-app/platforms/android/build/intermediates/res/merged/debug/drawable-port-xhdpi/screen.png",
         "source": "/home/sonam/workspace/mobile-app/platforms/android/res/drawable-port-xhdpi/screen.png"
+    },
+    {
+        "merged": "/home/puni/Desktop/mobile-app/platforms/android/build/intermediates/res/merged/debug/drawable-port-xhdpi/screen.png",
+        "source": "/home/puni/Desktop/mobile-app/platforms/android/res/drawable-port-xhdpi/screen.png"
     }
 ]

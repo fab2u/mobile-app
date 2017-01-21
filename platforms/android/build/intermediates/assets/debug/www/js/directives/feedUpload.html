@@ -22,8 +22,10 @@
         <div class="canvas-image">
             <canvas id="img-canvas" crossOrigin="Anonymous"></canvas>
         </div>
-        <div class="row dis-inpbox">
-           Description: <input type="text" class="wdnp" ng-model="description">
+        <div class="col dis-inpbox">
+            <label>Description:</label>
+           <!-- Description: <input type="textarea" class="wdnp" ng-model="description"> -->
+           <textarea class="wdnp" placehoder="Description" ng-model="description"></textarea>
         </div>
         <div class="popup-footer text-right">
             <input type="button" value="upload" class="button button-positive" id="uploadImage" />

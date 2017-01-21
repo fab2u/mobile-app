@@ -2,21 +2,21 @@
 manifest
 ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:2:1-31:12
 	package
-		ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:2:102-142
+		ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:2:103-143
 		INJECTED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml
 		INJECTED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml
 	android:versionName
-		ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:2:74-101
+		ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:2:75-102
 		INJECTED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml
 		INJECTED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml
 	android:hardwareAccelerated
 		ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:2:11-45
 	android:versionCode
-		ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:2:46-73
+		ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:2:46-74
 		INJECTED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml
 		INJECTED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml
 	xmlns:android
-		ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:2:143-201
+		ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:2:144-202
 supports-screens
 ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:3:5-191
 	android:largeScreens
@@ -42,13 +42,13 @@ application
 ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:5:5-28:19
 MERGED from [com.google.firebase:firebase-core:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-core/9.2.0/AndroidManifest.xml:5:5-20
 MERGED from [com.google.firebase:firebase-analytics:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.2.0/AndroidManifest.xml:26:5-41:19
-MERGED from [com.google.android.gms:play-services-basement:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/AndroidManifest.xml:20:5-24:19
-MERGED from [com.android.support:support-v4:23.0.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.firebase:firebase-analytics-impl:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.2.0/AndroidManifest.xml:26:5-41:19
+MERGED from [com.google.firebase:firebase-messaging:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.2.0/AndroidManifest.xml:20:5-32:19
+MERGED from [com.google.firebase:firebase-iid:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.2.0/AndroidManifest.xml:30:5-59:19
 MERGED from [com.google.firebase:firebase-common:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.2.0/AndroidManifest.xml:5:5-12:19
 MERGED from [com.google.android.gms:play-services-tasks:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.2.0/AndroidManifest.xml:5:5-20
-MERGED from [com.google.firebase:firebase-analytics-impl:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.2.0/AndroidManifest.xml:26:5-41:19
-MERGED from [com.google.firebase:firebase-iid:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.2.0/AndroidManifest.xml:30:5-59:19
-MERGED from [com.google.firebase:firebase-messaging:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.2.0/AndroidManifest.xml:20:5-32:19
+MERGED from [com.google.android.gms:play-services-basement:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/AndroidManifest.xml:20:5-24:19
+MERGED from [com.android.support:support-v4:23.0.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/AndroidManifest.xml:22:5-20
 	android:label
 		ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:5:81-113
 	android:supportsRtl
@@ -125,13 +125,13 @@ uses-sdk
 ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:29:5-74
 MERGED from [com.google.firebase:firebase-core:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-core/9.2.0/AndroidManifest.xml:4:5-42
 MERGED from [com.google.firebase:firebase-analytics:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.2.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.android.gms:play-services-basement:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:support-v4:23.0.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/AndroidManifest.xml:20:5-43
+MERGED from [com.google.firebase:firebase-analytics-impl:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.2.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.firebase:firebase-messaging:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.2.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.firebase:firebase-iid:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.2.0/AndroidManifest.xml:18:5-42
 MERGED from [com.google.firebase:firebase-common:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.2.0/AndroidManifest.xml:4:5-43
 MERGED from [com.google.android.gms:play-services-tasks:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.2.0/AndroidManifest.xml:4:5-43
-MERGED from [com.google.firebase:firebase-analytics-impl:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.2.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.firebase:firebase-iid:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.2.0/AndroidManifest.xml:18:5-42
-MERGED from [com.google.firebase:firebase-messaging:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.2.0/AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-basement:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:support-v4:23.0.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.0/AndroidManifest.xml:20:5-43
 MERGED from [android:CordovaLib:unspecified:release] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/android/CordovaLib/unspecified/release/AndroidManifest.xml:25:5-44
 	android:targetSdkVersion
 		ADDED from /home/puni/Desktop/mobile-app/platforms/android/AndroidManifest.xml:29:42-71
@@ -175,22 +175,12 @@ MERGED from [com.google.firebase:firebase-analytics-impl:9.2.0] /home/puni/Deskt
 		ADDED from [com.google.firebase:firebase-analytics:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.2.0/AndroidManifest.xml:39:11-35
 	android:name
 		ADDED from [com.google.firebase:firebase-analytics:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.2.0/AndroidManifest.xml:37:11-82
-meta-data#com.google.android.gms.version
-ADDED from [com.google.android.gms:play-services-basement:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/AndroidManifest.xml:21:9-23:69
-	android:value
-		ADDED from [com.google.android.gms:play-services-basement:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/AndroidManifest.xml:23:13-66
-	android:name
-		ADDED from [com.google.android.gms:play-services-basement:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/AndroidManifest.xml:22:13-58
-provider#com.google.firebase.provider.FirebaseInitProvider
-ADDED from [com.google.firebase:firebase-common:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.2.0/AndroidManifest.xml:7:9-11:39
-	android:authorities
-		ADDED from [com.google.firebase:firebase-common:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.2.0/AndroidManifest.xml:8:13-72
+service#com.google.firebase.messaging.FirebaseMessagingService
+ADDED from [com.google.firebase:firebase-messaging:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.2.0/AndroidManifest.xml:24:9-30:19
 	android:exported
-		ADDED from [com.google.firebase:firebase-common:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.2.0/AndroidManifest.xml:10:13-37
-	android:initOrder
-		ADDED from [com.google.firebase:firebase-common:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.2.0/AndroidManifest.xml:11:13-36
+		ADDED from [com.google.firebase:firebase-messaging:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.2.0/AndroidManifest.xml:26:13-36
 	android:name
-		ADDED from [com.google.firebase:firebase-common:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.2.0/AndroidManifest.xml:9:13-58
+		ADDED from [com.google.firebase:firebase-messaging:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.2.0/AndroidManifest.xml:25:13-82
 uses-permission#com.google.android.c2dm.permission.RECEIVE
 ADDED from [com.google.firebase:firebase-iid:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.2.0/AndroidManifest.xml:23:5-82
 	android:name
@@ -239,9 +229,19 @@ ADDED from [com.google.firebase:firebase-iid:9.2.0] /home/puni/Desktop/mobile-ap
 		ADDED from [com.google.firebase:firebase-iid:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.2.0/AndroidManifest.xml:53:13-36
 	android:name
 		ADDED from [com.google.firebase:firebase-iid:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.2.0/AndroidManifest.xml:52:13-77
-service#com.google.firebase.messaging.FirebaseMessagingService
-ADDED from [com.google.firebase:firebase-messaging:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.2.0/AndroidManifest.xml:24:9-30:19
+provider#com.google.firebase.provider.FirebaseInitProvider
+ADDED from [com.google.firebase:firebase-common:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.2.0/AndroidManifest.xml:7:9-11:39
+	android:authorities
+		ADDED from [com.google.firebase:firebase-common:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.2.0/AndroidManifest.xml:8:13-72
 	android:exported
-		ADDED from [com.google.firebase:firebase-messaging:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.2.0/AndroidManifest.xml:26:13-36
+		ADDED from [com.google.firebase:firebase-common:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.2.0/AndroidManifest.xml:10:13-37
+	android:initOrder
+		ADDED from [com.google.firebase:firebase-common:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.2.0/AndroidManifest.xml:11:13-36
 	android:name
-		ADDED from [com.google.firebase:firebase-messaging:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.2.0/AndroidManifest.xml:25:13-82
+		ADDED from [com.google.firebase:firebase-common:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.2.0/AndroidManifest.xml:9:13-58
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/AndroidManifest.xml:21:9-23:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/AndroidManifest.xml:23:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:9.2.0] /home/puni/Desktop/mobile-app/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.2.0/AndroidManifest.xml:22:13-58

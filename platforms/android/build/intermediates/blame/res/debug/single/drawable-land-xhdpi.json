@@ -1,9 +1,5 @@
 [
     {
-        "merged": "/home/sonam/workspace/mobile-app/platforms/android/build/intermediates/res/merged/debug/drawable-land-xhdpi/screen.png",
-        "source": "/home/sonam/workspace/mobile-app/platforms/android/res/drawable-land-xhdpi/screen.png"
-    },
-    {
         "merged": "/home/puni/Desktop/mobile-app/platforms/android/build/intermediates/res/merged/debug/drawable-land-xhdpi/screen.png",
         "source": "/home/puni/Desktop/mobile-app/platforms/android/res/drawable-land-xhdpi/screen.png"
     }

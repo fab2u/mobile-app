@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Sat Jan 21 15:14:15 IST 2017
+#Sat Jan 21 17:07:39 IST 2017
 20.base=/home/puni/Desktop/mobile-app/platforms/android/build/intermediates/assets/release
 143.base=/home/puni/Desktop/mobile-app/platforms/android/build/intermediates/assets/release
 493.base=/home/puni/Desktop/mobile-app/platforms/android/build/intermediates/assets/release

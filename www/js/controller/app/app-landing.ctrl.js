@@ -9,7 +9,7 @@ app.controller('appLandingCtrl', function($scope, $timeout, $ionicHistory, $ioni
     $scope.data = {};
     $scope.oldUserInfo = {};
 
-    var appVersion = 6;///version increase when upload over play store last will be 7 in config.xml /////
+    var appVersion = 7;///version increase when upload over play store last will be 7 in config.xml /////
     var appInfoNew = {};
     var updates = {};
     

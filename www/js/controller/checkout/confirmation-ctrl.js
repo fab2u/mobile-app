@@ -1,5 +1,10 @@
 app.controller('ConfirmationCtrl', function($scope, $ionicLoading, $state, $timeout,$ionicPopup,
 											$rootScope,$cordovaToast) {
+
+	// In this page user can confirm his booking after validating all the parameters.
+	// like promo code, wallet amount, vendor information and booking detail if booking confirmed
+	// then push data to local storage also for showing booking history.
+
 	$ionicLoading.show();
 	$timeout(function () {
 		$ionicLoading.hide();

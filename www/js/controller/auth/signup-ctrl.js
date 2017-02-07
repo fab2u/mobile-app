@@ -1,5 +1,11 @@
 app.controller("SignupCtrl", function($scope,signUpService, $http,$state, $cordovaDevice,$ionicLoading,
                                       $ionicPopup, $timeout,$rootScope,$cordovaToast){
+
+
+    // step for signUp
+    // 1.check the device is already registered or not if registered then no promo code apply option is shown.
+    //2.after authentication push the data in referral code, wallet , device information, send otp node,if any issue
+    // occur deleted the authentication as well.
     $scope.generatedCode = '';
     $scope.myReferral = '';
     $scope.walletMoney = 0;

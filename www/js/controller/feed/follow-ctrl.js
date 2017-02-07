@@ -1,5 +1,6 @@
 app.controller("followCtrl", function(userServices,$scope,$stateParams,$cordovaToast,$state,$timeout,$ionicLoading){
 
+   //To get the detail of follow user by using local storage of node iFollowingIds.
     var FollowIds = JSON.parse(window.localStorage['iFollowingIds']);
     $scope.IfollowingUserDetail = [];
     delete window.localStorage.follower;

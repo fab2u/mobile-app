@@ -1,6 +1,8 @@
 app.controller("followPostsCtrl", function(userInfoService,$scope,$stateParams,$state,$timeout,
                                            $ionicLoading,$location,$ionicPopup,$cordovaToast,
                                            $ionicModal,$rootScope,$sce, $ionicPopover){
+    //To get all the feeds from the feed node which are in list f follow or follower feeds.
+    // Then if user is logged in then he can like,unlike, comment and spam a feed also.
 
     if(checkLocalStorage('uid')){
         $scope.myUid = window.localStorage.getItem("uid");

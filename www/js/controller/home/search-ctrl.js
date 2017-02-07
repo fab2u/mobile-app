@@ -1,5 +1,6 @@
 app.controller('SearchCtrl', function($state, $scope,$http,$timeout,$ionicLoading) {
 
+    //To store the name fo vendors regarding to city choosen by an user.Than apply filter over them of name.
     $scope.searchQuery = '';
     clearUnUsedLocalStorage();
     function clearUnUsedLocalStorage() {

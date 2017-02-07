@@ -1,6 +1,8 @@
 app.controller("nearmeFeedCtrl", function ($scope, $timeout, $location, $ionicLoading,
                                            $ionicModal,userInfoService, $ionicPopup, $state,
                                            $sce,$cordovaToast,$rootScope, $ionicPopover) {
+    //To get all the feeds from the feed node regarding to user choosen city.
+    // Then if user is logged in then he can like,unlike, comment and spam a feed also.
 
     $ionicLoading.show();
     $scope.blogLength = 0;

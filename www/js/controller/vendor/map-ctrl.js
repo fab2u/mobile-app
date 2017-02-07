@@ -1,6 +1,7 @@
 app.controller('mapCtrl', function($scope, $ionicPlatform, $state, $timeout, $ionicLoading,$rootScope,
                                    $cordovaLaunchNavigator,$ionicHistory, $stateParams,$cordovaToast){
 
+   //Here map is shown regarding to particular vendor. with help of address information of a vendor.
     $scope.showPrevious = function(){
         $scope.hashistory = Object.keys($ionicHistory.viewHistory().views).length;
 

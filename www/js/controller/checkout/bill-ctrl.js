@@ -1,5 +1,9 @@
 app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$timeout,userServices,
                                     $ionicModal,$rootScope,$ionicHistory,allVendorService){
+
+   // On this page user can by booking detail or successful booking for which we store the booking Id
+    // and regarding to that get the information about booking
+    //And user can also mark the status as availed or not availed for his booking if time of booking has been passed.
     $ionicLoading.show();
     $ionicHistory.clearHistory();
     $ionicHistory.clearCache();
@@ -9,6 +13,8 @@ app.controller('BillCtrl', function($scope,$ionicLoading,$cordovaToast,$state,$t
     $scope.cancelButton = false;
     $scope.vendorAddress = '';
     $scope.bookingInformation = {};
+
+
     if(checkLocalStorage('allBookingInfo')){
         var allBookingInfo = JSON.parse(window.localStorage['allBookingInfo'])
     }

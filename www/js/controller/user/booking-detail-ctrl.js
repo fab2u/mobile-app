@@ -1,7 +1,7 @@
 app.controller('BookingDetailCtrl', function(userServices,$scope,$state,$ionicLoading,
                                              $stateParams,$timeout,allVendorService){
 
-
+//Regading to a booking id booking detail are shown to user from the bookings node of firebase.
     var locationInfo = JSON.parse(window.localStorage['selectedLocation']);
     var bookingId = $stateParams.bookingId;
     $scope.bookingInformation = {};

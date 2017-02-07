@@ -1,6 +1,7 @@
 app.controller('multipleMapCtrl', function($scope, $ionicPlatform, $state, $timeout,
                                            $ionicLoading, $ionicHistory, $stateParams) {
 
+    //Here map is shown regarding to multiple vendors. with help of address information of a vendor by using loops on the address.
 
     $scope.centerLocation = JSON.parse(window.localStorage['selectedLocation'] || '{}');
 

@@ -1,6 +1,9 @@
 app.controller('DateTimeCtrl', function($scope, $ionicPopup,$state,$rootScope,$cordovaToast,
                                         $ionicLoading,$timeout) {
 
+    // To show the time slots which are available currently and time difference will be 30 min from
+    // the current time and user can book the appointment only 7 days ago from current date.
+
     $scope.chosenTime = ''; // will store the time selected by the user*/
     delete window.localStorage.chosenTime;
     delete window.localStorage.appointmentDate;

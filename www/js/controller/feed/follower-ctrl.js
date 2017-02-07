@@ -1,5 +1,6 @@
 app.controller("followerCtrl", function(userServices,$scope,$stateParams,$cordovaToast,$state,$timeout,$ionicLoading){
 
+  //To get the list of users which are following me
     $ionicLoading.show();
 
     var FollowerIds = JSON.parse(window.localStorage['myFollowers']);

@@ -1,6 +1,8 @@
 app.controller("newFeedCtrl",function($scope,userServices, $http, $location, $timeout,$cordovaToast,
                                       $cordovaCamera,$ionicPopup,$state, $ionicLoading,$rootScope,$ionicPopover){
 
+   //If user is logged in then he can post a new feed. In this firstly feed id created then
+    // all the data will be pushed with image name in firebase with the path in Api databse for resizing the image.
     $scope.uid = localStorage.getItem("uid");
     $rootScope.$on('logged_in', function (event, args) {
         $scope.uid = window.localStorage.getItem('uid');

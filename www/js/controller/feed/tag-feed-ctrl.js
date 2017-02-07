@@ -2,7 +2,10 @@ app.controller("tagFeedCtrl", function(userServices,$scope, $stateParams, $timeo
                                        $location, $ionicLoading, $ionicModal,$cordovaToast,
                                        $ionicPopup,$rootScope, $ionicPopover){
 
-	$ionicLoading.show();
+    //To get all the feeds from the tags node regarding to the tags which was clicked by an user.
+    // Then if user is logged in then he can like,unlike, comment and spam a feed also.
+
+    $ionicLoading.show();
 	$scope.uid = window.localStorage.getItem("uid");
     $rootScope.$on('logged_in', function (event, args) {
         $scope.uid = window.localStorage.getItem('uid');

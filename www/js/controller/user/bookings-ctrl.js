@@ -1,6 +1,7 @@
 app.controller('BookingsCtrl', function($scope,$state,$ionicLoading,$ionicPopup,$rootScope,
 										$cordovaToast,$timeout,userServices){
 
+	//List of booking are shown here as them status may be availed, not availed, cancelled, upcoming.
 	$timeout(function () {
 		$ionicLoading.hide();
 	}, 10000);

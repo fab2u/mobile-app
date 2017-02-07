@@ -2,6 +2,8 @@ app.controller('VendorDetailsCtrl',
     function(allVendorService,$scope, $ionicSlideBoxDelegate, $ionicModal,$stateParams,$state
         ,$ionicLoading,$rootScope,$cordovaToast,$timeout,favouriteVendorsService){
 
+       //Vendor details are shown here in which vendors images, review and working time are shown here.
+
         $scope.vendorId = $stateParams.ven_id;
         $scope.images =[];
         $scope.dataLoaded = false;

@@ -1,5 +1,8 @@
 app.controller("CartCtrl", function ($scope, $rootScope, $stateParams, $cordovaToast, $state,
                                      $ionicLoading,$timeout) {
+
+    // All the services which was previously selected are shown here by using local storage.
+
     $ionicLoading.show();
     $scope.total_original = 0;
     $scope.total_fabtu = 0;

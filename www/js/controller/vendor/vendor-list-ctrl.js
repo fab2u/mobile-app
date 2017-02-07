@@ -2,7 +2,8 @@ app.controller('VendorListCtrl',
     function ($scope,allVendorService, LocationService,$timeout, $ionicHistory, $state, $stateParams,$timeout,
               $ionicLoading,$ionicModal,$ionicScrollDelegate, $ionicPopover, $rootScope,
               $cordovaToast) {
-
+//List of vendors shown here on the basis of user seletced services. In tjis page filter are also applied on the basis
+// of gender, location, amenties, price, type.All these things are done locally.
         delete window.localStorage.mapStorage;
         $timeout(function () {
             $ionicLoading.hide();

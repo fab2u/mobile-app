@@ -1,6 +1,8 @@
 app.controller('ServiceListCtrl', function($state, $scope,$ionicSlideBoxDelegate,$timeout,
                                            $ionicScrollDelegate, $rootScope,$cordovaToast,
                                            $ionicLoading,allVendorService) {
+   //To show the predefined services to user and after selecting the list of services by an user match them with local
+    // storage service ids which was fetched by firebase, if matched go to next page else  show an msg to user.
     $scope.selectedServices = {}; // Stores selected services
     $scope.categoryItems = {};
     $scope.index_number = 0;

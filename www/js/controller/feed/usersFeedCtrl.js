@@ -2,6 +2,9 @@ app.controller("usersFeedCtrl", function(userInfoService,$scope,$stateParams,$st
                                            $ionicLoading,$location,$ionicPopup,$cordovaToast,
                                            $ionicModal,$rootScope,$sce,$ionicHistory, $ionicPopover){
 
+    //To get all the feeds from the feed node with respect to user id.
+    // Then if user is logged in then he can like,unlike, comment and spam a feed also.
+
     if(checkLocalStorage('uid')){
         $scope.myUid = window.localStorage.getItem("uid");
     }
